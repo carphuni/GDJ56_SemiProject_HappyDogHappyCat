@@ -1,0 +1,207 @@
+/* Bootstrap */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+  
+  
+  /* Basic */
+  * {
+    font-family: "Poor Story";
+  }
+  
+  a{
+    color: inherit;
+    text-decoration: none !important;
+  }
+  
+  div#basic-line{
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    width: 100%; 
+    height: 1px; 
+    background-color: #ecf8a8;
+  }
+  
+  
+  /* Header */
+  #header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Logo */
+  #header #happy{
+    display: flex;
+  }
+  
+  #header #logo{
+    width: 100px;
+  }
+  
+  #header #logo  > img{
+    width: 100px;
+  }
+  
+  #header #logo-title span{
+    text-shadow: 2px 2px 2px gray
+    /* text-shadow: 4px 4px 0px #bdbdbd; */
+  }
+  
+  #header #logo-title h1 {
+    font-weight: bolder;
+    font-family: "Poor Story";
+  }
+  
+  #header #logo-title #H1{
+    color: #fbb6a9;
+  }
+  
+  #header #logo-title #appyDog{
+    color: #ecf8a8;
+  }
+  
+  #header #logo-title #H2{
+    color: #ecf8a8;
+    margin-left: 50px;
+  }
+  
+  #header #logo-title #appyCat{
+    color: #fbb6a9;
+  }
+  
+  /* Login */
+  #header #login{
+    display: flex;
+  }
+  
+  #header #login #line{
+    width: 1px;
+    height: 15px;
+    background-color: #ECF8A8;
+  }
+  
+  #header #login>a{
+    color:rgba(33, 37, 41, 1);
+    font-size: 0.8rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+  
+  #header #login a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Nav */
+  #nav{
+  
+  }
+  
+  #nav>ul{
+    justify-content: center;
+    background-color: #ECF8A8;
+    font-weight: bolder;
+    width: 100%;
+  }
+  
+  #nav ul.dropdown-menu{
+    border-color: rgba(236, 248, 168, 1);
+    border-width: 3px;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+  
+  }
+  
+  
+  /* Footer */
+  #footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: #e0e0e079;
+    color: #000;
+    text-align: center;
+  }
+  
+  /* Logo */
+  #footer #happy{
+  
+  }
+  
+  #footer #logo{
+    width: 100px;
+  }
+  
+  #footer #logo  > img{
+    width: 100px;
+  }
+  
+  #footer #logo-title span{
+    text-shadow: 2px 2px 2px gray
+    /* text-shadow: 4px 4px 0px #bdbdbd; */
+  }
+  
+  #footer #logo-title h1 {
+    font-weight: bolder;
+    
+  }
+  
+  #footer #logo-title #H1{
+    color: #fbb6a9;
+  }
+  
+  #footer #logo-title #appyDog{
+    color: #ecf8a8;
+  }
+  
+  #footer #logo-title #H2{
+    color: #ecf8a8;
+    margin-left: 50px;
+  }
+  
+  #footer #logo-title #appyCat{
+    color: #fbb6a9;
+  }
+  
+  /* Nav */
+  #footer #footer-nav{
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  #footer #footer-item li#head{
+    font-size: 1.3rem;
+    font-weight: bolder;
+  }
+  
+  #footer .list-group-item{
+    font-size: 1rem;
+  }
+  
+  #footer .list-group-item a{
+    color: black;
+  }
+  
+  /* Icon */
+  #footer #footer-icon a{
+    color: #000;
+    border-color: #000;
+  }
+  
+  #footer #footer-icon a:hover{
+    background-color: #fff;
+  }
+  
+  
+  /* Copyright */
+  .copyright {
+    background-color: #5e5e5e;
+  }
+  
+  

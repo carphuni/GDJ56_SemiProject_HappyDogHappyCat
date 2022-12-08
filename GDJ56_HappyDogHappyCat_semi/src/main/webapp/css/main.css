@@ -1,0 +1,56 @@
+/* Main */
+/* Menu */
+#menu{
+  justify-content: space-between;
+  text-align: center;
+}
+
+#menu .dh-menu-image {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  margin-top: 30px;
+  
+}
+
+#menu .img-thumbnail {
+  width: 240px;
+  /* height: 200px; */
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+#menu #menu-title{
+  position: absolute;
+  top: 75%;
+  right: 13%;
+  color: #fff;
+  text-align: right;
+  font-weight: bolder;
+  font-size: 1.25rem;
+}
+
+
+/* Card */
+#card{
+
+}
+
+#card>h1{
+  text-align: center;
+}
+
+#card #cardRow{
+  display: flex;
+  justify-content: space-evenly;
+  padding-right: 5rem;
+  padding-left: 5rem;
+  margin-top: 3rem
+}
+
+#card #card-content{
+  width: 12rem;
+}
+
+#card .card-body span{
+  margin-left: 5px;
+}

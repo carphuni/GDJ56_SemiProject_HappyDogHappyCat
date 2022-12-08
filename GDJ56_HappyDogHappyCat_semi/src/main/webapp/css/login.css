@@ -1,0 +1,57 @@
+/* Login */
+#login-container{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding: 3rem;
+    padding-bottom: 2rem;
+    border: 5px solid #ECF8A8;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+}
+
+#login-container>div{
+    margin-bottom: 0.5rem;
+}
+
+#login-container>div#birth{
+    display: flex;
+    justify-content: space-between;
+}
+
+#login-container h1{
+    font-weight: bolder;
+    margin-bottom: 1rem;
+}
+
+#login-container>input{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+#login-container>input[value="다음"]{
+    width: 15%;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+#login-container>#find{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+#login-container>#find>a{
+    color: #000;
+    font-size: 0.8rem;
+}
+
+#login-container #line{
+    width: 1px;
+    height: 15px;
+    background-color: #ECF8A8;
+}
