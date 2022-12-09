@@ -28,21 +28,20 @@
 					"@dbeaver-connection-type@": "BASIC",
 					"@dbeaver-sid-service@": "SID"
 				},
-				"auth-model": "oracle_native",
-				"handlers": {}
+				"auth-model": "oracle_native"
 			}
 		},
-		"oracle_thin-184f411132d-837be422364e752": {
+		"oracle_thin-184f4162071-1a8ba4c49b15764c": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
-			"name": "HappyDogHappyCat",
+			"name": "gudisemi",
 			"save-password": true,
 			"read-only": false,
 			"configuration": {
-				"host": "gd1class.iptime.org",
-				"port": "8877",
+				"host": "localhost",
+				"port": "1521",
 				"database": "XE",
-				"url": "jdbc:oracle:thin:@gd1class.iptime.org:8877:XE",
+				"url": "jdbc:oracle:thin:@localhost:1521:XE",
 				"home": "C:\\app\\gnsl2\\product\\18.0.0\\dbhomeXE",
 				"type": "dev",
 				"provider-properties": {
@@ -59,21 +58,20 @@
 					"@dbeaver-connection-type@": "BASIC",
 					"@dbeaver-sid-service@": "SID"
 				},
-				"auth-model": "oracle_native",
-				"handlers": {}
+				"auth-model": "oracle_native"
 			}
 		},
-		"oracle_thin-184f4162071-1a8ba4c49b15764c": {
+		"oracle_thin-184f5b91716-3e89d5c01107937a": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
-			"name": "gudisemi",
+			"name": "gd1class.iptime.org",
 			"save-password": true,
 			"read-only": false,
 			"configuration": {
-				"host": "localhost",
-				"port": "1521",
+				"host": "gd1class.iptime.org",
+				"port": "8877",
 				"database": "XE",
-				"url": "jdbc:oracle:thin:@localhost:1521:XE",
+				"url": "jdbc:oracle:thin:@gd1class.iptime.org:8877:XE",
 				"home": "C:\\app\\gnsl2\\product\\18.0.0\\dbhomeXE",
 				"type": "dev",
 				"provider-properties": {
