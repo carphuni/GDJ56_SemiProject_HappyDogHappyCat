@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.Volunteer;
 /**
  * Servlet implementation class VolWriteEndServlet
@@ -51,12 +52,26 @@ public class VolWriteEndServlet extends HttpServlet {
 					.vntManagerName(managerName)
 					.vntRecPeriod(recPeriod)
 					.vntActPeriod(actPeriod)
+					.vntRecPeriodEnd(recPeriod2)
 					.vntActPeriodEnd(actPeriod2)
 					.vntActDay(actDay)
 					.vntActContents(contents)
 					.vntSetPerson(setPerson)
 					.build();			
 		
+		int result= new VolunteerService().insertVolunteer(v);
+		String msg="", loc="";
+		if(result>0) {
+			msg="게시물 등록이 완료되었습니다";
+			loc="/volunteerList.do";
+		}else {
+			msg="게시글 등록이 실패했습니다. 다시 시도해주세요";
+			loc="/volwrite.do";
+		}
+		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**

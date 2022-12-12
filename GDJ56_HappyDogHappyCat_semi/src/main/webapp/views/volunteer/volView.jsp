@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List,com.happy.vol.model.vo.Volunteer" %>
+<%
+	List<Volunteer> list = (List<Volunteer>)request.getAttribute("volunteer");
+%>
 <%@ include file="/views/common/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volView.css"/>
 
@@ -22,19 +26,19 @@
 <div id="s1">
     <div class="s2">
     <table width="1000" border="0" cellpadding="0" cellspacing="0">
-        <tbody><tr>
-        <td width="100">1</td>
-        <td width="200 align="center"><img src="<%=request.getContextPath()%>/images/vol/chun.png" alt="" width="200" height="200" border="0"></a></td>
-        <td width="1700">
+        <tbody><% for(int i=0;i<list.size();i++){ %>
+	        <tr>
+	        <td width="100"><%=list.get(i).getVntBoardNo() %></td>
+	        <td width="200 align="center"><img src="<%=request.getContextPath()%>/images/vol/chun.png" alt="" width="200" height="200" border="0"></td>
+	        <td width="1700"></td>
         
           <table width="556" border="0" cellpadding="0" cellspacing="0">
-          <tbody><tr><td style="cursor:pointer;" height="25"><b><span class="fontredbold">유기견 입양센터 봉사활동</a></span></font></b></td></tr>
+          <tbody><tr><td style="cursor:pointer;" height="25"><b><span class="fontredbold"><%=list.get(i).getVntRecName() %></a></span></font></b></td></tr>
         </td>
         </tr>
        
           <tr>
-            <td>유기견 입양센터에서 유기견들을 위한 봉사활동 부탁드립니다. * 봉사 업무 내용 1. 실내외 견사, 운동장 청소
-                2. 배식 , 물갈아 주기, 설거지 3. 켄넬 씻기 , 빨래 4. 산책....</td>
+            <td><%=list.get(i).getVntActContents().substring(0,70) %></td>
 
           </tr>
             <table border="0">
@@ -42,7 +46,7 @@
                     <tr>
                         <hr>
                       <td width="100">단&nbsp;체&nbsp;명 &nbsp;:</td>
-                      <td width="120">미미보호소</td>
+                      <td width="120"><%=list.get(i).getVntAgencyNo() %></td>
                       <td width="100">지&nbsp;&nbsp;&nbsp;&nbsp;역 :</td>
                       <td width="120">울산시</td>
                       <td width="100">연락처 : </td>
@@ -50,22 +54,22 @@
                 </tr>
                 <tr>
                       <td>모집기간 :</td>
-                      <td>상시모집</td>
+                      <td><%=list.get(i).getVntRecPeriod()%> ~ <%=list.get(i).getVntRecPeriodEnd() %></td>
                       <td>봉사기간 :</td>
-                      <td colspan="3">2022-09-06 ~ 2022-12-05</span></td>
+                      <td colspan="3"><%=list.get(i).getVntActPeriod() %> ~ <%=list.get(i).getVntActPeriodEnd()%></td>
                 </tr>
                 <tr>
                       <td><span class="fontgray">등&nbsp;록&nbsp;일 &nbsp;: </span></td>
-                      <td><span class="fontgray">2022.11.25</span></td>
+                      <td><span class="fontgray"><%=list.get(i).getVntActWriteDate() %></span></td>
                       <td><span class="fontgray">조&nbsp;회&nbsp;수 :</span></td>
-                      <td colspan="3">250</td>
+                      <td colspan="3"><%=list.get(i).getVntActViews() %></td>
                 </tr>
                 </tbody></table>
           </tr>
         </table>
         <hr style="border:dotted gray 1px">
     </div>
-    <div class="s2"></div>
+    <%} %>
 
     <div id="board-search">
       <div class="container">
@@ -83,7 +87,8 @@
   </div>
     <div class="page_wrap">
       <div class="page_nation">
-         <a class="arrow prev" href="#"></a>
+      	<%=request.getAttribute("pageBar") %>
+<!--          <a class="arrow prev" href="#"></a>
          <a href="#" class="active">1</a>
          <a href="#">2</a>
          <a href="#">3</a>
@@ -94,7 +99,7 @@
          <a href="#">8</a>
          <a href="#">9</a>
          <a href="#">10</a>
-         <a class="arrow next" href="#"></a>
+         <a class="arrow next" href="#"></a> -->
       </div>
    </div>
     
