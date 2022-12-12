@@ -79,8 +79,10 @@ pageEncoding="UTF-8"%>
       	<%}else{ %>
       	  <a href="<%=request.getContextPath()%>/member/login.do">로그인</a>
       	<%} %>
-        <div id="line"></div>
-        <a href="<%=request.getContextPath()%>/member/enroll.do">회원가입</a>
+      	<%if(loginMember==null){ %>
+	        <div id="line"></div>
+	        <a href="<%=request.getContextPath()%>/member/enroll.do">회원가입</a>
+        <%} %>
         <div id="line"></div>
         <a href="<%=request.getContextPath()%>/member/enterMyPage.do">마이페이지</a>
       </div>

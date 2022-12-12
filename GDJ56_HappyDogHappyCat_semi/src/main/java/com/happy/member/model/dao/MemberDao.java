@@ -26,6 +26,7 @@ public class MemberDao {
 	}
 	
 	public static Member getMember(ResultSet rs) throws SQLException {
+		//쿼리문 결과 Member형 리턴
 		return Member.builder()
 				.memberNo(rs.getInt("member_no"))
 				.memberId(rs.getString("member_id"))
@@ -46,6 +47,7 @@ public class MemberDao {
 	}
 	
 	public Member memberLoginEnd(Connection conn, String memberId, String memberPw) {
+		//로그인
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		Member loginMember=null;
@@ -62,6 +64,26 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return loginMember;
+	}
+	
+	public int memberEnrollEnd(Connection conn, Member member) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("memberEnrollEnd"));
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getMemberPw());
+			pstmt.setString(3, member.getMemberName());
+			pstmt.setString(4, member.getMemberBirthDate());
+			pstmt.setString(5, member.getMemberEmail());
+			pstmt.setString(6, member.getMemberPw());
+			pstmt.setString(7, member.getMemberPw());
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }
