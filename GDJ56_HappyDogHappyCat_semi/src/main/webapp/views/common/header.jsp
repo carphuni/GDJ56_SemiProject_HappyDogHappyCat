@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ page import="com.happy.member.model.vo.*" %>
+<% Member loginMember=(Member)session.getAttribute("loginMember"); %>
+<% Cookie[] cookies=request.getCookies();
+	String saveId=null;
+	if(cookies!=null){
+		for(Cookie c : cookies){
+			if(c.getName().equals("saveId")){
+				saveId=c.getValue();
+				break;
+			}
+		}
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -61,7 +74,11 @@ pageEncoding="UTF-8"%>
       </div>
       <!-- Login-->
       <div id="login">
-        <a href="<%=request.getContextPath()%>/member/login.do">로그인</a>
+      	<%if(loginMember!=null){ %>
+      	  <a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a>
+      	<%}else{ %>
+      	  <a href="<%=request.getContextPath()%>/member/login.do">로그인</a>
+      	<%} %>
         <div id="line"></div>
         <a href="<%=request.getContextPath()%>/member/enroll.do">회원가입</a>
         <div id="line"></div>

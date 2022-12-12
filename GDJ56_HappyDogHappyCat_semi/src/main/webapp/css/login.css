@@ -33,6 +33,10 @@
     width: 100%;
 }
 
+#login-container .form-check{
+	float: right;
+}
+
 #login-container>input[value="다음"]{
     width: 15%;
     padding-top: 0.3rem;

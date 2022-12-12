@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class Member {
-	private int MemberNo;
+	private int memberNo;
 	private String memberId;
 	private String memberPw;
 	private String memberName;
