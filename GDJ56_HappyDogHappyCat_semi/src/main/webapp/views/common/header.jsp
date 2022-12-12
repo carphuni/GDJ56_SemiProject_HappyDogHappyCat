@@ -46,14 +46,14 @@ pageEncoding="UTF-8"%>
     <header id="header">
       <!-- Logo -->
       <div id="happy">
-        <a id="logo" href="javascript:void(0);" onclick="goMain();"
+        <a id="logo" href="<%=request.getContextPath()%>"
           ><img
             src="<%=request.getContextPath() %>/images/main/logo.png"
             class=""
             alt="로고"
         /></a>
         <div id="logo-title">
-          <a class="" href="javascript:void(0);" onclick="goMain();"
+          <a class="" href="<%=request.getContextPath()%>"
             ><h1><span id="H1">H</span><span id="appyDog">appyDog</span></h1>
             <h1><span id="H2">H</span><span id="appyCat">appyCat</span></h1></a
           >
@@ -61,11 +61,11 @@ pageEncoding="UTF-8"%>
       </div>
       <!-- Login-->
       <div id="login">
-        <a href="javascript:void(0);" onclick="goLogin();">로그인</a>
+        <a href="<%=request.getContextPath()%>/member/login.do">로그인</a>
         <div id="line"></div>
-        <a href="javascript:void(0);" onclick="goEnroll();">회원가입</a>
+        <a href="<%=request.getContextPath()%>/member/enroll.do">회원가입</a>
         <div id="line"></div>
-        <a href="javascript:void(0);" onclick="goEnterMyPage();">마이페이지</a>
+        <a href="<%=request.getContextPath()%>/member/enterMyPage.do">마이페이지</a>
       </div>
     </header>
 
