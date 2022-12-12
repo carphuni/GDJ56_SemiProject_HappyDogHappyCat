@@ -128,7 +128,6 @@ pageEncoding="UTF-8"%>
           >
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/volview.do">자원봉사 목록</a></li>
-            <li><a class="dropdown-item" href="#">자원봉사 등록하기</a></li>
             <li><a class="dropdown-item" href="#">자원봉사후기</a></li>
             <li><a class="dropdown-item" href="#">후원 목록</a></li>
           </ul>
