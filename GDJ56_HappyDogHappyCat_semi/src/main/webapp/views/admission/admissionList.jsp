@@ -128,8 +128,8 @@
                           </tbody>
                       </table>
                       <br>
-                      <button id="write" type="button" class="btn btn-lgbtn-link" 
-                      onclick="location.href='file:///C:/Users/songihyeon/Sproject/3_%EC%9E%85%EC%86%8C_%EC%8B%A0%EC%B2%AD_%EA%B8%80%EC%93%B0%EA%B8%B0.html'">글쓰기&#128062;</button>
+                      <button type="button" id="write" class="btn btn-lgbtn-link" 
+                     onclick="location.assign('<%=request.getContextPath()%>/admission/writeAdmission.do');">글쓰기&#128062;</button>
                   </div>
               </div>
           </section>
