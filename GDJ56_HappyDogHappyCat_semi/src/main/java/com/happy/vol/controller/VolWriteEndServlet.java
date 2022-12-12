@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,18 +32,17 @@ public class VolWriteEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+		
 		String title= request.getParameter("volTitle");
 		String managerName = request.getParameter("managerName");
-		DateFormat dateFormat = new SimpleDateFormat ("yyyy.MM.dd"); 
 		String rp=request.getParameter("recruitPeriod1");
-		Date recPeriod = dateFormat.parse(rp);
+		java.sql.Date recPeriod = java.sql.Date.valueOf(rp);
 		String rp2=request.getParameter("recruitPeriod2");
-		Date recPeriod2 = dateFormat.parse(rp2);
+		java.sql.Date recPeriod2 = java.sql.Date.valueOf(rp2);
 		String ap=request.getParameter("activityPeriod1");
-		Date actPeriod=dateFormat.parse(ap);
+		java.sql.Date actPeriod = java.sql.Date.valueOf(ap);
 		String ap2=request.getParameter("activityPeriod2");
-		Date actPeriod2=dateFormat.parse(ap2);
+		java.sql.Date actPeriod2 = java.sql.Date.valueOf(ap2);
 		String actDay= request.getParameter("activityDay");
 		String contents = request.getParameter("content");
 		int setPerson = Integer.parseInt(request.getParameter("recruitNumber"));
@@ -56,11 +55,7 @@ public class VolWriteEndServlet extends HttpServlet {
 					.vntActDay(actDay)
 					.vntActContents(contents)
 					.vntSetPerson(setPerson)
-					.build();
-	}catch(ParseException e) {
-		e.printStackTrace();
-	}
-					
+					.build();			
 		
 	}
 
