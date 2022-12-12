@@ -1,0 +1,198 @@
+@charset "UTF-8";
+body{
+            font-family: 'Poor Story';
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            
+        }
+
+     
+        * {
+             margin: 0;
+             padding: 0;
+         } 
+        
+  
+   
+         ul, li {
+             list-style: none;
+         }
+         
+         a {
+             text-decoration: none;
+             color: inherit;
+         } 
+         
+         .board_wrap {
+
+             width: 1000px;
+             margin: 100px auto;
+             
+         }
+         
+
+         
+
+         .board_title {
+             margin-bottom: 30px;
+         }
+         
+         .board_title strong {
+             font-size: 3rem;
+         }
+         
+         .board_title p {
+             margin-top: 5px;
+             font-size: 1.4rem;
+         }
+         
+         .bt_wrap {
+             margin-top: 30px;
+             text-align: center;
+             font-size: 0;
+         }
+         
+         .bt_wrap a {
+             display: inline-block;
+             min-width: 80px;
+             margin-left: 10px;
+             padding: 10px;
+             border: 1px solid #000;
+             border-radius: 2px;
+             font-size: 1.4rem;
+         }
+         
+         .bt_wrap a:first-child {
+             margin-left: 0;
+         }
+         
+         .bt_wrap a.on {
+             background: gray;
+             color: #fff;
+         }
+         
+      
+         
+         .board_write {
+             border-top: 2px solid #000;
+             
+         }
+         
+         .board_write .title,
+         .board_write .info {
+             padding: 15px;
+         }
+         
+         .board_write .info {
+             border-top: 1px solid #000;
+             border-bottom: 1px solid #000;
+             font-size: 0;
+         }
+         
+         .board_write .title dl {
+             font-size: 0;
+         }
+         
+         
+         .board_write .info dl {
+             display: inline-block;
+             width: 50%;
+             vertical-align: middle;
+         }
+         
+         .board_write .title dt,
+         .board_write .title dd,
+         .board_write .info dt,
+         .board_write .info dd {
+             display: inline-block;
+             vertical-align: middle;
+             font-size: 1.4rem;
+         }
+         
+         .file{
+            border-bottom : 1px solid #555;
+             font-size: 1.4rem;
+             padding : 15px;
+             
+         }
+
+         .file2{
+            font-size: 1.4rem;
+             padding : 15px;
+         }
+
+         .file input{
+            padding:20px;
+         }
+
+         .file2 input{
+            padding:20px;
+         }
+         .board_write .title dt,
+         .board_write .info dt {
+             width: 100px;
+         }
+         
+         .board_write .title dd {
+             width: calc(100% - 100px);
+         }
+         
+         .board_write .title input[type="text"],
+         .board_write .info input[type="text"],
+         .board_write .info input[type="number"] 
+         .board_write .info input[type="date"]{
+             padding: 5px;
+             box-sizing: border-box;
+         }
+         
+         .board_write .title input[type="text"] {
+             width:80%;
+         }
+         
+         .board_write .cont {
+             border-bottom: 1px solid #000;
+         }
+         
+         .board_write .cont textarea {
+             display: block;
+             width: 100%;
+             height: 700px;
+             padding: 15px;
+             box-sizing: border-box;
+             border: 0;
+             resize: vertical;
+         }
+
+        #att_zone{
+        width: 660px;
+        min-height:150px;
+        padding:10px;
+        border:1px dotted #00f;
+    }
+        #att_zone:empty:before{
+            content : attr(data-placeholder);
+            color : #999;
+            font-size:.9em;
+    }
+    
+    li {
+      list-style: none;
+    }
+
+    #preview {
+      width: 200px;
+      height: 200px;
+    }
+
+    /* .real-upload {
+      display: none;
+    } */
+
+    .image-preview {
+      display: none;
+      width: 200px;
+      height: 200px;
+      background-color:white;
+      gap: 20px;
+    }
