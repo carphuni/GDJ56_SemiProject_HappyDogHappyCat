@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.happy.admission.service.AdmissionService;
+
 /**
- * Servlet implementation class AdmissionWriteServlet
+ * Servlet implementation class AdmissionWriteEndServlet
  */
-@WebServlet(name="admissionWrite",urlPatterns= "/admission/writeAdmission.do")
-public class AdmissionWriteServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+@WebServlet("/admission/writeAdmissionEnd.do")
+public class AdmissionWriteEndServlet extends HttpServlet {
+	private static final long serialVesionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmissionWriteServlet() {
+    public AdmissionWriteEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +28,22 @@ public class AdmissionWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/admission/admissionWrite.jsp")
+		request.setCharacterEncoding("utf-8");
+		
+		
+		
+		int result=new AdmissionService().enrollAdmission();
+		String msg="",loc="";
+		if(result>0) {
+			msg="입소신청 완료!";
+			loc="/admission/.do";
+		}else {
+			msg="항목들을 완성해주세요!";
+			loc="";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/views/common/msg.jsp")
 		.forward(request, response);
 	}
 

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List,com.happy.admission.vo.AdmissionForm,
+com.happy.animal.model.vo.Animal" %>
 <%@include file="/views/common/header.jsp"%>
 <body>
 <section id="content">
@@ -15,7 +17,7 @@
         <img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;" class="dogimg">
     </div>
    
-    <form name="admissionWrite" action="<%=request.getContextPath() %>/admission/writeAdmission.do" 
+    <form action="<%=request.getContextPath() %>/admission/writeAdmissionEnd.do" 
         method="post" >
     <div class="board_wrap">
         <div class="board_title">
@@ -23,6 +25,17 @@
         </div>
         <div class="board_write_wrap">
             <div class="board_write">
+            	 <div class="info">
+                    <dl>
+                        <dt id="aniType">동물이름</dt>
+                        <dd><input type="text" placeholder="동물이름 입력" id="inputType"></dd>
+                    </dl>
+                     <dl>
+                        <dt style="font-size:18px;">동물종류</dt>
+                        <dd><input type="text"  style="width:210px; height:30px"
+                        placeholder="고양이,강아지 중 입력"></dd>
+                    </dl>
+                </div>
                 <div class="info">
                     <dl>
                         <dt id="aniType">품종</dt>
@@ -37,8 +50,8 @@
                 <div class="info">
                     <dl>
                         <dt style="font-size:18px;">성별</dt>
-                        <dd>남<input type="checkbox" value="남"></dd>
-                        <dd>여<input type="checkbox" value="여"></dd>
+                        <dd>남<input type="radio" name="gender" value="남"></dd>
+                        <dd>여<input type="radio" name="gender" value="여"></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">나이</dt>
@@ -57,8 +70,8 @@
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">중성화 여부</dt>
-                        <dd>O<input type="checkbox" value="O"></dd>
-                        <dd>X<input type="checkbox" value="X"></dd>
+                        <dd>O<input type="radio" name="neu" value="O"></dd>
+                        <dd>X<input type="radio" name="neu" value="X"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -87,7 +100,13 @@
                         <dd><input type="text" placeholder="예)010-1234-5678" style="width:180px; height:30px"></dd>
                     </dl>
                 </div>
-                <h4 style="font-size:18px;">입소사유 및 특이사항</h4>
+                <div class="info">
+                    <dl>
+                        <dt style="font-size:18px;">특이사항</dt>
+                        <dd><input type="text" placeholder="특이사항 작성" style="width:250px; height:30px"></dd>
+                    </dl>
+                </div>
+                <h4 style="font-size:18px;">보호소로 오게된 이유(입소사유)</h4>
                 <div class="cont">
                     <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
                 </div>
