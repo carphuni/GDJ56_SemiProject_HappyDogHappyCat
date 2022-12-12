@@ -7,8 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do?content=$('#summernote').summernote('code');" 
-    			method="post" enctype="multipart/form-data">
+<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do" 
+    			method="post">
     <div class="board_wrap">
         <div class="board_title">
             <strong style="font-size: 25px;">자원봉사</strong>
@@ -63,7 +63,7 @@
                     </dl>
                 </div>
                 <div class="cont">
-                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
+                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력" ></textarea>
                 </div>
 
                 <div class="file" style="font-size:17px">
@@ -74,7 +74,7 @@
                 
                 <div class="file2" style="font-size:17px">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' accept="image/*" required multiple/>
+                    <input type="file" id='btnAtt' accept="image/*" multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
