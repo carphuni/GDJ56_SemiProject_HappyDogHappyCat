@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <section id="login">
-      <form action="" id="login-container">
+      <form action="<%=request.getContextPath() %>/member/loginEnd.do" id="login-container">
         <h1>ID 로그인</h1>
         <div class="form-floating">
           <input
@@ -10,6 +10,7 @@
             class="form-control"
             id="floatingInput"
             placeholder="Name"
+            name="memberId"
           />
           <label for="floatingInput">아이디</label>
         </div>
@@ -19,6 +20,7 @@
             class="form-control"
             id="floatingPassword"
             placeholder="Password"
+            name="memberPw"
           />
           <label for="floatingPassword">비밀번호</label>
         </div>
