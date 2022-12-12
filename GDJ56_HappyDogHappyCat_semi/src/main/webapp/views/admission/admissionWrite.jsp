@@ -23,10 +23,15 @@
         </div>
         <div class="board_write_wrap">
             <div class="board_write">
-                <div class="title">
+                <div class="info">
                     <dl>
                         <dt id="aniType">품종</dt>
                         <dd><input type="text" placeholder="품종 입력" id="inputType"></dd>
+                    </dl>
+                     <dl>
+                        <dt style="font-size:18px;">크기</dt>
+                        <dd><input type="text"  style="width:210px; height:30px"
+                        placeholder="소형/중형/대형 중 입력"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -62,16 +67,25 @@
                         <dd><input type="text" placeholder="모를시 생략" style="width:130px; height:30px"></dd>
                     </dl>
                     <dl>
-                        <dt style="font-size:18px;">신청자 연락처</dt>
-                        <dd><input type="text" placeholder="예)010-1234-5678" style="width:180px; height:30px"></dd>
+                        <dt style="font-size:18px;">성격</dt>
+                        <dd><input type="text" placeholder="활발/자신감/부끄럼/독립적/적응력" style="width:330px; height:30px"></dd>
                     </dl>
                 </div>
                 <div class="info">
+                	<dl>
+                        <dt style="font-size:18px;">털색</dt>
+                        <dd><input type="text" style="width:250px; height:25px" placeholder="검정/흰색/회색/갈색/기타"></dd>
+                    </dl>
                     <dl>
                         <dt style="font-size:18px;">입소희망일</dt>
                         <dd><input type="date" value="date" style="width:130px; height:30px"></dd>
                     </dl>
-                   
+                </div>
+                 <div class="info">
+                    <dl>
+                        <dt style="font-size:18px;">신청자 연락처</dt>
+                        <dd><input type="text" placeholder="예)010-1234-5678" style="width:180px; height:30px"></dd>
+                    </dl>
                 </div>
                 <h4 style="font-size:18px;">입소사유 및 특이사항</h4>
                 <div class="cont">
@@ -90,8 +104,8 @@
             </div>
 
             <div class="bt_wrap">
-                <a href="view.html" class="on">등록</a>
-                <a href="list.html">취소</a>
+                <a href="<%=request.getContextPath() %>/admission/writeAdmission.do" class="on">등록</a>
+                <a href="<%=request.getContextPath() %>/admission/admissionList.do">취소</a>
             </div>
         </div>
     </div>
@@ -99,7 +113,7 @@
 </section>
 	<style>
 		#inputType{
-			width:870px;
+			width:200px;
   			height:30px;
 		}
 		#aniType{
