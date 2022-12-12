@@ -100,7 +100,7 @@
     
 
     <div id="register">
-       <br><br><br><a href="#" class="myButton">글쓰기</a>
+       <br><br><br><a href="<%=request.getContextPath()%>/volwrite.do" class="myButton">글쓰기</a>
      </div>
             
 </div>

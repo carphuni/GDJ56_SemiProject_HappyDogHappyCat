@@ -1,4 +1,4 @@
-package com.member.controller;
+package com.happy.vol.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class VolViewServlet
+ * Servlet implementation class VolWriteServlet
  */
-@WebServlet("/member/volview.do")
-public class VolViewServlet extends HttpServlet {
+@WebServlet("/volwrite.do")
+public class VolWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VolViewServlet() {
+    public VolWriteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +26,7 @@ public class VolViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/member/volView.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("/views/volunteer/volWrite.jsp").forward(request, response);
 	}
 
 	/**
