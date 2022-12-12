@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/vol/volwriteend.do" 
+<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do?content=$('#summernote').summernote('code');" 
     			method="post" enctype="multipart/form-data">
     <div class="board_wrap">
         <div class="board_title">
@@ -19,17 +19,17 @@
                 <div class="title" >
                     <dl>
                         <dt style="font-size:17px">제목</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="text" placeholder="제목 입력" name=volTitle required /></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="text" placeholder="제목 입력" name="volTitle" required /></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt style="font-size:17px">시설이름</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name=agencyName value="" placeholder="단체 및 시설이름 입력"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name="agencyName" value="" placeholder="단체 및 시설이름 입력"></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:17px">주소</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name=agencyAddress value="" placeholder="주소입력"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name="agencyAddress" value="" placeholder="주소입력"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -39,7 +39,7 @@
                     </dl>
                     <dl>
                         <dt style="font-size:17px">시설 연락처</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name=agencyPhone placeholder="시설 연락처"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name="agencyPhone" placeholder="시설 연락처"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -59,7 +59,7 @@
                     </dl>
                     <dl>
                         <dt style="font-size:17px">활동가능요일</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="text" name=activityDay placeholder="활동가능요일" required></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="text" name="activityDay" placeholder="활동가능요일" required></dd>
                     </dl>
                 </div>
                 <div class="cont">
@@ -83,7 +83,7 @@
 			
 	       
             <div class="bt_wrap" >
-                <input type="submit" style="font-size:17px" class="on" value="등록">
+                <input type="submit" style="font-size:17px" id="saveBtn" class="on" value="등록">
                 <input type="button" style="font-size:17px" value="취소" onclick="location.replace('<%=request.getContextPath()%>/volview.do')">
             </div>
         </div>
