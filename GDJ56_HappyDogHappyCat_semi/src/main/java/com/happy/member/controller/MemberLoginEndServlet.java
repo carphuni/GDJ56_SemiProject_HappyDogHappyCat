@@ -1,11 +1,15 @@
 package com.happy.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.happy.member.model.service.MemberService;
+import com.happy.member.model.vo.Member;
 
 /**
  * Servlet implementation class MemberLoginEndServlet
@@ -26,8 +30,12 @@ public class MemberLoginEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String memberId=request.getParameter("memberId");
+		String memberPw=request.getParameter("memberPw");
+		
+		Member loginMember=new MemberService().memberLoginEnd(memberId, memberPw);
+		
+		request.getRequestDispatcher(memberPw)e
 	}
 
 	/**
