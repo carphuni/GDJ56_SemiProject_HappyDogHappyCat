@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volWrite.css"/>
+<script src="<%=request.getContextPath()%>/js/volwrite.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <section id="container1">
     <div class="board_wrap">
         <div class="board_title">
@@ -82,4 +86,8 @@
         </div>
     </div>
 </section>
+
+
+
+
 <%@ include file="/views/common/footer.jsp" %>
