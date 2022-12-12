@@ -7,8 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do?content=$('#summernote').summernote('code');" 
-    			method="post" enctype="multipart/form-data">
+<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do" 
+    			method="post">
     <div class="board_wrap">
         <div class="board_title">
             <strong style="font-size: 25px;">자원봉사</strong>
@@ -63,7 +63,7 @@
                     </dl>
                 </div>
                 <div class="cont">
-                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
+                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력" ></textarea>
                 </div>
 
                 <div class="file" style="font-size:17px">

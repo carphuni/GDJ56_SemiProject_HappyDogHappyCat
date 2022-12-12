@@ -35,6 +35,7 @@ public class VolWriteEndServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String title= request.getParameter("volTitle");
+		System.out.println(title);
 		String managerName = request.getParameter("managerName");
 		String rp=request.getParameter("recruitPeriod1");
 		java.sql.Date recPeriod = java.sql.Date.valueOf(rp);
@@ -45,9 +46,9 @@ public class VolWriteEndServlet extends HttpServlet {
 		String ap2=request.getParameter("activityPeriod2");
 		java.sql.Date actPeriod2 = java.sql.Date.valueOf(ap2);
 		String actDay= request.getParameter("activityDay");
-		String contents = request.getParameter("content");
+		String contents = request.getParameter("summernote");
 		int setPerson = Integer.parseInt(request.getParameter("recruitNumber"));
-		
+		System.out.println(contents);
 		Volunteer v = Volunteer.builder().vntRecName(title)
 					.vntManagerName(managerName)
 					.vntRecPeriod(recPeriod)
@@ -63,7 +64,7 @@ public class VolWriteEndServlet extends HttpServlet {
 		String msg="", loc="";
 		if(result>0) {
 			msg="게시물 등록이 완료되었습니다";
-			loc="/volunteerList.do";
+			loc="/volview.do";
 		}else {
 			msg="게시글 등록이 실패했습니다. 다시 시도해주세요";
 			loc="/volwrite.do";

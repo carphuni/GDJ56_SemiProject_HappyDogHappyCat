@@ -154,6 +154,8 @@
       //값 가져오기
       var summernoteContent = $('#summernote').summernote('code');        //썸머노트(설명)
       console.log("summernoteContent : " + summernoteContent);
+ 
   
   }
+  
 

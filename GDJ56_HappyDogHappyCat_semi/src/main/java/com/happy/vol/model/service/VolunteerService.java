@@ -8,11 +8,18 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.happy.vol.model.dao.VolunteerDao;
+import com.happy.vol.model.vo.Agency;
 import com.happy.vol.model.vo.Volunteer;
 public class VolunteerService {
 	
 	private VolunteerDao vd = new VolunteerDao();
 	
+	public Agency selectAgency(int agencyNo) {
+		Connection conn=getConnection();
+		Agency a = vd.selectAgency(conn, agencyNo);
+		close(conn);
+		return a;
+	}
 	
 	public List<Volunteer> selectVolunteerList(int cPage, int numPerpage){
 		Connection conn=getConnection();

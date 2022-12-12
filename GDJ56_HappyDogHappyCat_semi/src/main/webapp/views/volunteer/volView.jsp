@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.happy.vol.model.vo.Volunteer" %>
+<%@ page import="java.util.List,com.happy.vol.model.vo.Volunteer,com.happy.vol.model.vo.Agency" %>
 <%
 	List<Volunteer> list = (List<Volunteer>)request.getAttribute("volunteer");
+	List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
 %>
 <%@ include file="/views/common/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volView.css"/>
@@ -24,13 +25,14 @@
 
 <section>
 <div id="s1">
+<% for(int i=0;i<list.size();i++){ %>
     <div class="s2">
     <table width="1000" border="0" cellpadding="0" cellspacing="0">
-        <tbody><% for(int i=0;i<list.size();i++){ %>
+        <tbody>
 	        <tr>
 	        <td width="100"><%=list.get(i).getVntBoardNo() %></td>
-	        <td width="200 align="center"><img src="<%=request.getContextPath()%>/images/vol/chun.png" alt="" width="200" height="200" border="0"></td>
-	        <td width="1700"></td>
+	        <td width="200" align="center"><img src="<%=request.getContextPath()%>/images/vol/chun.png" alt="" width="200" height="200" border="0"></td>
+	        <td width="1700">
         
           <table width="556" border="0" cellpadding="0" cellspacing="0">
           <tbody><tr><td style="cursor:pointer;" height="25"><b><span class="fontredbold"><%=list.get(i).getVntRecName() %></a></span></font></b></td></tr>
@@ -38,7 +40,7 @@
         </tr>
        
           <tr>
-            <td><%=list.get(i).getVntActContents().substring(0,70) %></td>
+            <td><%=list.get(i).getVntActContents()%></td>
 
           </tr>
             <table border="0">
@@ -46,11 +48,11 @@
                     <tr>
                         <hr>
                       <td width="100">단&nbsp;체&nbsp;명 &nbsp;:</td>
-                      <td width="120"><%=list.get(i).getVntAgencyNo() %></td>
+                      <td width="120"><%=list2.get(i).getAgencyName() %></td>
                       <td width="100">지&nbsp;&nbsp;&nbsp;&nbsp;역 :</td>
-                      <td width="120">울산시</td>
+                      <td width="120"><%=list2.get(i).getAgencyAddress() %></td>
                       <td width="100">연락처 : </td>
-                      <td width="280">010-1234-5678</td>
+                      <td width="280"><%=list2.get(i).getAgencyPhone() %></td>
                 </tr>
                 <tr>
                       <td>모집기간 :</td>
@@ -68,8 +70,9 @@
           </tr>
         </table>
         <hr style="border:dotted gray 1px">
+         <%} %>
     </div>
-    <%} %>
+   
 
     <div id="board-search">
       <div class="container">
@@ -85,9 +88,10 @@
           </div>
       </div>
   </div>
+  <%=request.getAttribute("pageBar") %>
     <div class="page_wrap">
       <div class="page_nation">
-      	<%=request.getAttribute("pageBar") %>
+      	
 <!--          <a class="arrow prev" href="#"></a>
          <a href="#" class="active">1</a>
          <a href="#">2</a>

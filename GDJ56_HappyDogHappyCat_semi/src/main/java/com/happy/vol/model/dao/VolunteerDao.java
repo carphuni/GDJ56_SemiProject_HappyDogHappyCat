@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.happy.vol.model.vo.Agency;
 import com.happy.vol.model.vo.Volunteer;
 public class VolunteerDao {
 	
@@ -24,6 +25,29 @@ public class VolunteerDao {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Agency selectAgency(Connection conn, int agencyNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Agency a= null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectAgency"));
+			pstmt.setInt(1, agencyNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				a=Agency.builder().agencyNo(rs.getInt("AGENCY_NO"))
+				.memberNo(rs.getInt("MEMBER_NO"))
+				.agencyName(rs.getString("AGENCY_NAME"))
+				.agencyAddress(rs.getString("AGENCY_ADDRESS"))
+				.agencyPhone(rs.getString("AGENCY_PHONE")).build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return a;
 	}
 	
 	public List<Volunteer> selectVolunteerList(Connection conn, int cPage, int numPerpage){
