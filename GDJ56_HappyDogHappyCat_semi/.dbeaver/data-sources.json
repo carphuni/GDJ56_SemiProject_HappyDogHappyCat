@@ -6,7 +6,6 @@
 			"driver": "oracle_thin",
 			"name": "system",
 			"save-password": true,
-			"read-only": false,
 			"configuration": {
 				"host": "localhost",
 				"port": "1521",
@@ -36,7 +35,6 @@
 			"driver": "oracle_thin",
 			"name": "gudisemi",
 			"save-password": true,
-			"read-only": false,
 			"configuration": {
 				"host": "localhost",
 				"port": "1521",
@@ -66,7 +64,6 @@
 			"driver": "oracle_thin",
 			"name": "gd1class.iptime.org",
 			"save-password": true,
-			"read-only": false,
 			"configuration": {
 				"host": "gd1class.iptime.org",
 				"port": "8877",
@@ -86,7 +83,8 @@
 					"@dbeaver-meta-use-alternative-table-query@": "false",
 					"oracle.meta-search-in-synonyms": "false",
 					"@dbeaver-connection-type@": "BASIC",
-					"@dbeaver-sid-service@": "SID"
+					"@dbeaver-sid-service@": "SID",
+					"oracle.show-date-as-date": "false"
 				},
 				"auth-model": "oracle_native",
 				"handlers": {}

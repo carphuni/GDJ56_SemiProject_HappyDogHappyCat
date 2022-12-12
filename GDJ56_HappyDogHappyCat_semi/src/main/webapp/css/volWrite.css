@@ -53,7 +53,7 @@ body{
              font-size: 0;
          }
          
-         .bt_wrap a {
+         .bt_wrap input {
              display: inline-block;
              min-width: 80px;
              margin-left: 10px;
@@ -63,11 +63,11 @@ body{
              font-size: 1.4rem;
          }
          
-         .bt_wrap a:first-child {
+         .bt_wrap input:first-child {
              margin-left: 0;
          }
          
-         .bt_wrap a.on {
+         .bt_wrap input.on {
              background: gray;
              color: #fff;
          }
