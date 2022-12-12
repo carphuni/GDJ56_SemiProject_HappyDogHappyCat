@@ -11,7 +11,7 @@ public class Animal {
 	private String aniType;
 	private String aniKind;
 	private char aniGender;
-	private String aniAge;
+	private int aniAge;
 	private char aniNeuYn;
 	private char aniAdoptYn;
 	private String aniSize;

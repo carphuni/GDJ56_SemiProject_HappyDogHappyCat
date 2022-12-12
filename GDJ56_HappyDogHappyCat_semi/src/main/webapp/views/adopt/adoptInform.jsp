@@ -72,7 +72,7 @@
 <body>
 	    <section id="content">
         <div id="imgs" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
-            <img src="<%=request.getContextPath() %>/images/Q.jfif" alt="" style="margin-right: auto;">
+            <img src="<%=request.getContextPath() %>/images/adopt/Q.jfif" alt="" style="margin-right: auto;">
             <div id="text" >
                 <br><br>    
                 <h2>입양안내</h2>
@@ -80,7 +80,7 @@
                  <p>보호중인 파양동물들과 유기된 동물들을<br>   
                     상시로 공고하고 있습니다.</p>
             </div>
-            <img src="<%=request.getContextPath() %>/images/S.jfif" alt="" style="margin-left: auto;">
+            <img src="<%=request.getContextPath() %>/images/adopt/S.jfif" alt="" style="margin-left: auto;">
         </div>
         <br><br>
         <div id="title">
@@ -88,7 +88,7 @@
         </div>
         <br><br>
         <div id="contents" width="450px">
-            <img src="<%=request.getContextPath() %>/images/content1.PNG" alt="">
+            <img src="<%=request.getContextPath() %>/images/adopt/content1.PNG" alt="">
         </div>
         <br>
         <div id="pp">
@@ -107,7 +107,7 @@
         </div>
         <br><br><br>
         <div>
-            <img src="<%=request.getContextPath() %>/images/KakaoTalk_Snapshot_20221102_184038.png" alt="">
+            <img src="<%=request.getContextPath() %>/images/adopt/KakaoTalk_Snapshot_20221102_184038.png" alt="">
             <br><br><br>
             <h2>해피캣해피독의 안전 입양 절차</h2>
         </div>
