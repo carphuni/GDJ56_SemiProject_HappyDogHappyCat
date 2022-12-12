@@ -105,7 +105,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
             </a>
           </div>
           <div class="dh-menu-image">
-            <a href=""
+            <a href="<%=request.getContextPath() %>/adopt/adoptmain.do"
               ><img
                 src="<%=request.getContextPath() %>/images/main/menu03-1.jpg"
                 class="img-thumbnail"
@@ -117,7 +117,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
             </a>
           </div>
           <div class="dh-menu-image">
-            <a href=""
+            <a href=
               ><img
                 src="<%=request.getContextPath() %>/images/main/menu04-1.jpg"
                 class="img-thumbnail"

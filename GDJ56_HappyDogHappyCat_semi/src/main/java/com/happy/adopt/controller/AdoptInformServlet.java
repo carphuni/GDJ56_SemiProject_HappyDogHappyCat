@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AdoptMainListServlet
+ * Servlet implementation class AdoptInformServlet
  */
-@WebServlet("/adopt/adoptmain.do")
-public class AdoptMainListServlet extends HttpServlet {
+@WebServlet("/adopt/adoptinform.do")
+public class AdoptInformServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdoptMainListServlet() {
+    public AdoptInformServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,9 +27,7 @@ public class AdoptMainListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		
-		request.getRequestDispatcher("/views/adopt/adoptMain.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/adopt/adoptInform.jsp").forward(request, response);
 	}
 
 	/**

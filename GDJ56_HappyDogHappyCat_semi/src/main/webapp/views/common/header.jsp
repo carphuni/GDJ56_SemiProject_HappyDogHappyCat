@@ -106,14 +106,14 @@ pageEncoding="UTF-8"%>
           <a
             class="nav-link"
             data-bs-toggle=""
-            href="#"
+            href="<%=request.getContextPath() %>/adopt/adoptmain.do"
             role="button"
             aria-expanded="false"
             >무료입양신청</a
           >
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">입양신청 목록</a></li>
-            <li><a class="dropdown-item" href="#">입양신청 절차</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath() %>/adopt/adoptmain.do">입양신청 목록</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath() %>/adopt/adoptinform.do">입양신청 절차</a></li>
             <li><a class="dropdown-item" href="#">입양후기</a></li>
           </ul>
         </li>
