@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal" %>
+    <% List<Animal> aniList = (List<Animal>)request.getAttribute("aniList"); %>
 <!DOCTYPE html>
 <style>
     #post{
@@ -87,7 +89,19 @@
             </div>
         </div>
         <br><br>
-        <div id="post">
+        <% for(int i=0;i<aniList.size();i++){ %>
+        	<div id="post">
+            <div id="dog-des" style="margin-bottom:0;">
+                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
+                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
+                <div style="margin-top: auto;">
+                    <p style="float: left;">♡</p>
+                    <p style="float: right;">조회수 3</p>
+                </div>
+            </div>
+        <%} %>
+        
+		<div id="post">
             <div id="dog-des" style="margin-bottom:0;">
                 <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
                 <p>[강아지] 웰시코기 궁딩이 무료입양</p>
@@ -121,8 +135,8 @@
                 </div>
             </div>
         </div>
-        <br><br>
-        <div id="post">
+        <br><br> 
+<%--         <div id="post">
             <div id="dog-des">
                 <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
                 <p>[강아지] 웰시코기 궁딩이 무료입양</p>
@@ -156,8 +170,8 @@
                 </div>
             </div>
         </div>
-        <br><br>
-        <div id="post">
+        <br><br> --%>
+<%--         <div id="post">
             <div id="dog-des">
                 <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
                 <p>[강아지] 웰시코기 궁딩이 무료입양</p>
@@ -190,7 +204,7 @@
                     <p style="float: right;">조회수 3</p>
                 </div>
             </div>
-        </div>
+        </div> --%>
     </section>
 </body>
 </html>
