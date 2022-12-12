@@ -7,6 +7,8 @@ pageEncoding="UTF-8"%>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>메인 페이지</title>
+    <!-- 제이쿼리 -->
+    <script src="<%=request.getContextPath() %>/js/jquery-3.6.1.min.js"></script>
     <!-- 추가 적용 css -->
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/main.css" />
     <link
@@ -22,8 +24,6 @@ pageEncoding="UTF-8"%>
       rel="stylesheet"
       href="<%=request.getContextPath() %>/css/bootstrap.css"
     />
-    <!-- 제이쿼리 -->
-    <script src="<%=request.getContextPath() %>/js/jquery-3.6.1.min.js"></script>
     <!-- Font Awesome icons (free version)-->
     <link
       rel="stylesheet"
@@ -37,7 +37,8 @@ pageEncoding="UTF-8"%>
       href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap"
       rel="stylesheet"
     />
-
+ <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
   </head>
 
   <body>
