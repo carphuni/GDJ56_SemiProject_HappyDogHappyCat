@@ -89,19 +89,27 @@
             </div>
         </div>
         <br><br>
-        <% for(int i=0;i<aniList.size();i++){ %>
-        	<div id="post">
+
+        	<div id="post" style="flex-wrap:wrap; width:80%;">
+        	<% for(int i=0;i<aniList.size();i++){ %>
             <div id="dog-des" style="margin-bottom:0;">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
+                <a href="<%=request.getContextPath()%>/adopt/adoptdes.do?aniNo=<%= aniList.get(i).getAniNo() %>";>
+                <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
+                </a> 
+                <p>[<%=aniList.get(i).getAniType() %>] <%=aniList.get(i).getAniKind() %> <%=aniList.get(i).getAniName() %> 무료입양</p>
                 <div style="margin-top: auto;">
                     <p style="float: left;">♡</p>
                     <p style="float: right;">조회수 3</p>
                 </div>
             </div>
-        <%} %>
-        
-		<div id="post">
+       		 <%} %> 
+        	</div>
+			<div style="text-align:center;">
+			<br><br>
+        	<%=request.getAttribute("pageBar") %>
+        	</div>
+        	<br><br>
+		<%-- <div id="post">
             <div id="dog-des" style="margin-bottom:0;">
                 <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
                 <p>[강아지] 웰시코기 궁딩이 무료입양</p>
@@ -135,7 +143,7 @@
                 </div>
             </div>
         </div>
-        <br><br> 
+        <br><br>  --%>
 <%--         <div id="post">
             <div id="dog-des">
                 <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
