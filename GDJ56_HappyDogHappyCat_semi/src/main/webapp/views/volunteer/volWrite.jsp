@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/volview.do" 
+<form action="<%=request.getContextPath() %>/vol/volwriteend.do" 
     			method="post" enctype="multipart/form-data">
     <div class="board_wrap">
         <div class="board_title">
