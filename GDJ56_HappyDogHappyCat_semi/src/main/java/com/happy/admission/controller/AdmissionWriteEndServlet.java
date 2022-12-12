@@ -1,6 +1,8 @@
 package com.happy.admission.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.happy.admission.service.AdmissionService;
+import com.happy.admission.vo.AdmissionForm;
+import com.happy.animal.model.vo.Animal;
 
 /**
  * Servlet implementation class AdmissionWriteEndServlet
@@ -28,8 +32,33 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//클라이언트가 보낸 데이터를 가져와
+		//admissionFirm에 저장하는 기능 
 		request.setCharacterEncoding("utf-8");
+		String animalName=request.getParameter("aniName");
+		String animalType=request.getParameter("aniType");
+		String animalKind=request.getParameter("aniKind");
+		String animalSize=request.getParameter("aniSize");
+		char animalGender=request.getParameter("gender").charAt(0);
+		int animalAge=Integer.parseInt(request.getParameter("aniAge"));
+		String[] vcnStat=request.getParameterValues("vcnStat");
+		String animalNeuYN=request.getParameter("neu");
+		String animalSick=request.getParameter("sick");
+		String character=request.getParameter("character");
+		String furColor=request.getParameter("furColor");
+		String hopeDate=request.getParameter("hopeDate");
+		String phone=request.getParameter("phone");
+		String aniSpecial=request.getParameter("aniSpecial");
 		
+		Animal ani=Animal.builder()
+				.aniName(animalName)
+				.aniType(animalType)
+				.aniKind(animalKind)
+				.aniSize(animalSize)
+				.aniGender(animalGender)
+				.aniAge(animalAge)
+				
+				.build();
 		
 		
 		int result=new AdmissionService().enrollAdmission();
