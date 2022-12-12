@@ -2,6 +2,8 @@ package com.happy.member.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,22 +43,39 @@ public class MemberEnrollEndServlet extends HttpServlet {
 		String memberEmail=request.getParameter("memberEmail");
 		String memberPhone=request.getParameter("memberPhone");
 		String memberAddress=request.getParameter("memberAddress");
+		String date=memberYear+"-"+memberMonth+"-"+memberDay;
+		Date memberBirth=Date.valueOf(date);
+		System.out.println(memberBirth);
 		
 		//Member형에 저장
 		Member member=Member.builder()
 						.memberId(memberId)
 						.memberPw(memberPw)
 						.memberName(memberName)
-						.memberBirthDate(Date.valueOf(memberYear+"-"+memberMonth+"-"+memberDay))
+						.memberBirthDate(memberBirth)
 						.memberEmail(memberEmail)
 						.memberPhone(memberPhone)
 						.memberAddress(memberAddress)
 						.build();
 		
+		
 		//DB에 저장 후 결과 값 리턴
 		int result=new MemberService().memberEnrollEnd(member);
 		
-		
+		String msg;
+		String loc;
+		if(result==0) {
+			//회원가입 실패시
+			msg="회원가입 실패";
+			loc="/member/enroll.do";
+		}else {
+			//회원가입 성공시
+			msg="회원가입 성공";
+			loc="/";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}
 

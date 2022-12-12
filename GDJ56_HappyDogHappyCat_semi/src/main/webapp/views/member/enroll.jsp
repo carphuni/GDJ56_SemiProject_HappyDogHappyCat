@@ -12,8 +12,8 @@
             placeholder="Id"
             name="memberId"
           />
-          <label for="floatingInput">아이디</label>
-          <button class="btn btn-dh">중복 확인</button>
+          <label for="floatingInput">아이디 ( 6자 이상 )</label>
+          <button class="btn btn-dh" id="duplicateCk">중복 확인</button>
         </div>
         <div class="form-floating">
           <input
@@ -23,7 +23,7 @@
             placeholder="Password"
             name="memberPw"
           />
-          <label for="floatingInput">비밀번호</label>
+          <label for="floatingInput">비밀번호 ( 8자 이상 )</label>
         </div>
         <div class="form-floating">
           <input
@@ -54,7 +54,7 @@
               placeholder="0000"
               name="memberYear"
             />
-            <label for="floatingPassword">년(4자)</label>
+            <label for="floatingPassword">년 ( 4자 )</label>
           </div>
           <div class="form-floating">
             <input
@@ -85,7 +85,7 @@
             placeholder="Email.Email.com"
             name="memberEmail"
           />
-          <label for="floatingPassword">이메일( happy@happy.com )</label>
+          <label for="floatingPassword">이메일 ( happy@happy.com )</label>
         </div>
         <div class="form-floating">
           <input
@@ -95,7 +95,7 @@
             placeholder="000-0000-0000"
             name="memberPhone"
           />
-          <label for="floatingPassword">휴대전화( '-' 제외 )</label>
+          <label for="floatingPassword">휴대전화 ( '-' 제외 )</label>
         </div>
         <div class="form-floating">
           <input

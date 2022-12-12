@@ -1,5 +1,6 @@
 package com.happy.member.model.vo;
 
+
 import java.sql.Date;
 
 import lombok.Builder;
