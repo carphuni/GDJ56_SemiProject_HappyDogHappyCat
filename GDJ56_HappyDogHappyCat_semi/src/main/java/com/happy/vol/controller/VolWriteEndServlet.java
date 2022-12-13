@@ -1,6 +1,9 @@
 package com.happy.vol.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,8 +55,21 @@ public class VolWriteEndServlet extends HttpServlet {
 						.vntPhotoOriName(oriName)
 						.vntPhotoRename(fileName)
 						.build();
-				
 			
+			Enumeration e=mr.getFileNames();	
+			List<String> fileList=new ArrayList();
+			List<String> fileList2=new ArrayList();
+			
+			while(e.hasMoreElements()) {
+				String name=(String)e.nextElement();
+				String fileName2 = mr.getFilesystemName(name);
+				String oriName2 = mr.getOriginalFileName(name);
+				fileList.add(mr.getFilesystemName(name));
+				fileList2.add(mr.getOriginalFileName(name));
+			}	
+			
+			
+		
 		
 		String title= mr.getParameter("volTitle");
 		String managerName = mr.getParameter("managerName");
@@ -68,7 +84,6 @@ public class VolWriteEndServlet extends HttpServlet {
 		String actDay= mr.getParameter("activityDay");
 		String contents = mr.getParameter("summernote");
 		int setPerson = Integer.parseInt(mr.getParameter("recruitNumber"));
-		System.out.println(contents);
 		Volunteer v = Volunteer.builder().vntRecName(title)
 					.vntManagerName(managerName)
 					.vntRecPeriod(recPeriod)
@@ -82,6 +97,7 @@ public class VolWriteEndServlet extends HttpServlet {
 	
 		
 		int result= new VolunteerService().insertVolunteer(v,vp);
+		
 		String msg="", loc="";
 		if(result>0) {
 			msg="게시물 등록이 완료되었습니다";
@@ -90,10 +106,20 @@ public class VolWriteEndServlet extends HttpServlet {
 			msg="게시글 등록이 실패했습니다. 다시 시도해주세요";
 			loc="/volwrite.do";
 		}
-		
+		List<VolPhoto> test = new ArrayList();
+		for(int i=0;i<fileList.size();i++) {
+			VolPhoto mpv = VolPhoto.builder()
+							.vntPhotoOriName(fileList2.get(i))
+							.vntPhotoRename(fileList.get(i))
+							.build();
+				test.add(mpv);
+			}
+		System.out.println(test);
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		
+	
 	}
 }
 	/**

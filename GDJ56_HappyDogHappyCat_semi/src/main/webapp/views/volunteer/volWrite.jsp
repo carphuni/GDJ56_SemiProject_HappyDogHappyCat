@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form id="frmAttachedFiles" action="<%=request.getContextPath() %>/vol/volWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" 
+<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" 
     			method="post" enctype="multipart/form-data">
     <div class="board_wrap">
         <div class="board_title">
@@ -42,6 +42,7 @@
                     <dl>
                         <dt style="font-size:17px">담당자 이름</dt>
                         <dd style="font-size:17px;margin-top:14px;"><input type="text" name="managerName" placeholder="담당자 이름" required></dd>
+             
                     </dl>
                     <dl>
                         <dt style="font-size:17px">시설 연락처</dt>
@@ -90,7 +91,7 @@
 			
 	       
             <div class="bt_wrap" >
-                <input type="submit" style="font-size:17px" id="saveBtn" class="on" value="등록" onclick="upload()">
+                <input type="submit" style="font-size:17px" id="saveBtn" class="on" value="등록">
                 <input type="button" style="font-size:17px" value="취소" onclick="location.replace('<%=request.getContextPath()%>/volview.do')">
             </div>
         </div>
@@ -98,29 +99,33 @@
 </section>
 
 <script>
-<%-- 	function upload(){
-		const imageInput = $("#upload2")[0];
-		console.log(imageInput.files);
-		
-		const formData = new FormData();
-		formData.append("image",imageInput.files[0]);
-		
-		$.ajax({
-			type : "POST",
-			url : "<%=request.getContextPath()%>/vol/volWriteEnd.do",
-			processData : false,
-			contentType : false,
-			data : formData,
-			success : function(rtn){
-				const message = rtn.data.values[0];
-				console.log(message)
-				}
+
+	
+		$("#saveBtn").click(e=>{
+			let form=new FormData();
+			const files=$("#upload2")[0].files;
+			
+			$.each(files,(i,v)=>{
+				form.append("upfile"+i,v);
+			});			
+			
+			$.ajax({
+				url :"<%=request.getContextPath()%>/vol/volWriteEnd.do",
+				data : form,
+				type : "post",
+				contentType:false,
+				processData:false,
+				success : e=>{
+					alert("파일업로드 성공");
+					$("#upload2").val("");
+					},error:(r,m,e)=>{
+						alert("업로드 실패 다시시도하세요!");
+					}
+				});
 			});
-	};
+
 		
-		
-		 --%>
-		
+		 
 	
 	
 </script>

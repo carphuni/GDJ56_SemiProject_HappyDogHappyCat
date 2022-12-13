@@ -64,7 +64,24 @@ public class VolunteerService {
 		}
 		return result2;
 	}
-			
+	
+	public int insertVolPhoto(int volNo,VolPhoto vp) {
+		Connection conn=getConnection();
+		int result = vd.insertVolPhoto(conn, volNo, vp);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int selectVolNo(){
+		Connection conn=getConnection();
+		int volNo = vd.selectVolNo(conn);
+		close(conn);
+		return volNo;
+	}
+	
+}			
 			
 			
 		
@@ -72,4 +89,3 @@ public class VolunteerService {
 	
 	
 
-}

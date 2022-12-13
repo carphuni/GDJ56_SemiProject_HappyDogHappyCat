@@ -28,16 +28,19 @@
 <section>
 <div id="s1">
 <% for(int i=0;i<list.size();i++){ %>
+	<form action="<%=request.getContextPath()%>/volView2.do" method="post">
     <div class="s2">
     <table width="1000" border="0" cellpadding="0" cellspacing="0">
         <tbody>
 	        <tr>
-	        <td width="100"><%=list.get(i).getVntBoardNo() %></td>
+	        <td width="100"><%=list.get(i).getVntBoardNo() %></td><input type="hidden" name="boardNo" value="<%=list.get(i).getVntBoardNo() %>">
 	        <td width="200" align="center"><img src="<%=request.getContextPath()%>/upload/volunteer/<%=list3.get(i).getVntPhotoRename() %>" alt="" width="200" height="200" border="0"></td>
 	        <td width="1700">
         
           <table width="556" border="0" cellpadding="0" cellspacing="0">
-          <tbody><tr><td style="cursor:pointer;" height="25" onclick="location.assign('<%=request.getContextPath()%>/volView2.do')"><b><span class="fontredbold"><%=list.get(i).getVntRecName() %></a></span></font></b></td></tr>
+          <tbody><tr><td <%-- style="cursor:pointer;" height="25" onclick="location.assign('<%=request.getContextPath()%>/volView2.do')" --%>><input style="background-color:transparent;border: none;
+          font-weight: bold;" type="submit" value="<%=list.get(i).getVntRecName() %>"><b><span class="fontredbold"></a></span></font></b></td></tr>
+       	  <input type="hidden" name="volViewTitle" value="<%=list.get(i).getVntRecName() %>">
         </td>
         </tr>
        
@@ -51,23 +54,35 @@
                         <hr>
                       <td width="100">단&nbsp;체&nbsp;명 &nbsp;:</td>
                       <td width="120"><%=list2.get(i).getAgencyName() %></td>
+                      <input type="hidden" name="volAgencyName" value="<%=list2.get(i).getAgencyName() %>">
                       <td width="100">지&nbsp;&nbsp;&nbsp;&nbsp;역 :</td>
                       <td width="120"><%=list2.get(i).getAgencyAddress() %></td>
+                      <input type="hidden" name="volAgencyAddress" value="<%=list2.get(i).getAgencyAddress() %>">
                       <td width="100">연락처 : </td>
                       <td width="280"><%=list2.get(i).getAgencyPhone() %></td>
+                      <input type="hidden" name="volAgencyPhone" value="<%=list2.get(i).getAgencyPhone() %>">
                 </tr>
                 <tr>
                       <td>모집기간 :</td>
                       <td colspan="3"><%=list.get(i).getVntRecPeriod()%> ~ <%=list.get(i).getVntRecPeriodEnd() %></td>
+                      <input type="hidden" name="rec" value="<%=list.get(i).getVntRecPeriod()%>">
+                      <input type="hidden" name="recend" value="<%=list.get(i).getVntRecPeriodEnd()%>">
+                      <input type="hidden" name="setperson" value="<%=list.get(i).getVntSetPerson()%>">
                       <td>봉사기간 :</td>
                       <td colspan="3"><%=list.get(i).getVntActPeriod() %> ~ <%=list.get(i).getVntActPeriodEnd()%></td>
+                      <input type="hidden" name="act" value="<%=list.get(i).getVntActPeriod()%>">
+                      <input type="hidden" name="actend" value="<%=list.get(i).getVntActPeriodEnd()%>">
+                      <input type="hidden" name="day" value="<%=list.get(i).getVntActDay()%>">
+                      <input type="hidden" name="contents" value="<%=list.get(i).getVntActContents()%>">
                 </tr>
                 <tr>
-                      <td><span class="fontgray">등&nbsp;록&nbsp;일 &nbsp;: </span></td>
-                      <td><span class="fontgray"><%=list.get(i).getVntActWriteDate() %></span></td>
-                      <td><td>
-                      <td><span class="fontgray">조&nbsp;회&nbsp;수 :</span></td>
-                      <td colspan="3"><%=list.get(i).getVntActViews() %></td>
+                      <td width="100">등&nbsp;록&nbsp;일 &nbsp;</td>
+                      <td width="120"><span class="fontgray"><%=list.get(i).getVntActWriteDate() %></span></td>
+                      <td width="100"><span class="fontgray">담&nbsp;당&nbsp;자 &nbsp;: </span></td>
+                      <td width="120"><%=list.get(i).getVntManagerName() %></td>
+                       <input type="hidden" name="manager" value="<%=list.get(i).getVntManagerName() %>">
+                      <td width="100">조&nbsp;회&nbsp;수 :</td>
+                      <td width="120"><%=list.get(i).getVntActViews() %></td>
                 </tr>
                 </tbody></table>
           </tr>
@@ -119,4 +134,5 @@
      <%}break;} %>   
 </div>
 </section>
+</form>
 <%@ include file="/views/common/footer.jsp" %>

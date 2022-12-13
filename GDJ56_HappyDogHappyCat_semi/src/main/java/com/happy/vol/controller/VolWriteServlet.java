@@ -32,7 +32,6 @@ public class VolWriteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		Agency a = new VolunteerService().selectAgency2(memberNo);
-		System.out.println(memberNo);
 		request.setAttribute("agency", a);
 		request.getRequestDispatcher("/views/volunteer/volWrite.jsp").forward(request, response);
 	}
