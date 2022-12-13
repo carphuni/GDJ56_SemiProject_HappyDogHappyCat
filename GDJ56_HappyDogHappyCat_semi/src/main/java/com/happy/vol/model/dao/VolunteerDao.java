@@ -50,6 +50,30 @@ public class VolunteerDao {
 		}return a;
 	}
 	
+	public Agency selectAgency2(Connection conn, int memberNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Agency a= null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectAgency2"));
+			pstmt.setInt(1, memberNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				a=Agency.builder().agencyNo(rs.getInt("AGENCY_NO"))
+				.memberNo(rs.getInt("MEMBER_NO"))
+				.agencyName(rs.getString("AGENCY_NAME"))
+				.agencyAddress(rs.getString("AGENCY_ADDRESS"))
+				.agencyPhone(rs.getString("AGENCY_PHONE")).build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return a;
+	}
+	
+	
 	public List<Volunteer> selectVolunteerList(Connection conn, int cPage, int numPerpage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;

@@ -94,18 +94,17 @@
         	<% for(int i=0;i<aniList.size();i++){ %>
             <div id="dog-des" style="margin-bottom:0;">
                 <a href="<%=request.getContextPath()%>/adopt/adoptdes.do?aniNo=<%= aniList.get(i).getAniNo() %>";>
-                <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
+                <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="" style="width:250px; height:180px;">
                 </a> 
-                <p>[<%=aniList.get(i).getAniType() %>] <%=aniList.get(i).getAniKind() %> <%=aniList.get(i).getAniName() %> 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
+                <p  style="margin-bottom: 0;">[<%=aniList.get(i).getAniType() %>] <%=aniList.get(i).getAniKind() %> <%=aniList.get(i).getAniName() %> 무료입양</p>
+                <div style="margin-bottom: 100px; width:240px;" >
+                    <p style="float: left;">&nbsp&nbsp♡</p>
+                    <p style="float: right;">조회수 33</p>
                 </div>
             </div>
        		 <%} %> 
         	</div>
 			<div style="text-align:center;">
-			<br><br>
         	<%=request.getAttribute("pageBar") %>
         	</div>
         	<br><br>

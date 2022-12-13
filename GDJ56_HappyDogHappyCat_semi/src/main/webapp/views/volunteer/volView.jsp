@@ -3,7 +3,8 @@
 <%@ page import="java.util.List,com.happy.vol.model.vo.Volunteer,com.happy.vol.model.vo.Agency" %>
 <%
 	List<Volunteer> list = (List<Volunteer>)request.getAttribute("volunteer");
-	List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
+	 List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
+	
 %>
 <%@ include file="/views/common/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volView.css"/>
@@ -56,13 +57,14 @@
                 </tr>
                 <tr>
                       <td>모집기간 :</td>
-                      <td><%=list.get(i).getVntRecPeriod()%> ~ <%=list.get(i).getVntRecPeriodEnd() %></td>
+                      <td colspan="3"><%=list.get(i).getVntRecPeriod()%> ~ <%=list.get(i).getVntRecPeriodEnd() %></td>
                       <td>봉사기간 :</td>
                       <td colspan="3"><%=list.get(i).getVntActPeriod() %> ~ <%=list.get(i).getVntActPeriodEnd()%></td>
                 </tr>
                 <tr>
                       <td><span class="fontgray">등&nbsp;록&nbsp;일 &nbsp;: </span></td>
                       <td><span class="fontgray"><%=list.get(i).getVntActWriteDate() %></span></td>
+                      <td><td>
                       <td><span class="fontgray">조&nbsp;회&nbsp;수 :</span></td>
                       <td colspan="3"><%=list.get(i).getVntActViews() %></td>
                 </tr>
@@ -107,11 +109,13 @@
       </div>
    </div>
     
-
-    <div id="register">
-       <br><br><br><a href="<%=request.getContextPath()%>/volwrite.do" class="myButton">글쓰기</a>
+      <% for(int i=0;i<list2.size();i++){ 
+    	int memberNo =list2.get(i).getMemberNo();
+		if((loginMember!=null&&loginMember.getMemberId().equals("admin"))||loginMember!=null&&loginMember.getMemberNo()==memberNo){%>
+    <div id="register" style="margin-right:-300px;">
+       <br><br><br><a href="<%=request.getContextPath()%>/volwrite.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" class="myButton">글쓰기</a>
      </div>
-            
+     <%}break;} %>       
 </div>
 </section>
 <%@ include file="/views/common/footer.jsp" %>

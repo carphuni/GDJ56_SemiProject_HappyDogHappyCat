@@ -45,6 +45,8 @@ public class VolViewServlet extends HttpServlet {
 		
 		List<Volunteer> list = new VolunteerService().selectVolunteerList(cPage, numPerpage);
 		List<Agency> list2=new ArrayList();
+
+	
 		for(int i=0;i<list.size();i++) {
 			int agencyNo = list.get(i).getVntAgencyNo();
 			Agency a = new VolunteerService().selectAgency(agencyNo);

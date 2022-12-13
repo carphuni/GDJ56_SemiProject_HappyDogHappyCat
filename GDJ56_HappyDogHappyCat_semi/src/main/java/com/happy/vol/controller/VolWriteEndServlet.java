@@ -1,16 +1,14 @@
 package com.happy.vol.controller;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.Volunteer;
@@ -34,8 +32,14 @@ public class VolWriteEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		if(!ServletFileUpload.isMultipartContent(request)) {
+			response.sendRedirect(request.getContextPath());
+		}else {
+			String path=request.getServletContext().getRealPath("/upload/notice");
+		
+		
+		
 		String title= request.getParameter("volTitle");
-		System.out.println(title);
 		String managerName = request.getParameter("managerName");
 		String rp=request.getParameter("recruitPeriod1");
 		java.sql.Date recPeriod = java.sql.Date.valueOf(rp);
@@ -59,6 +63,7 @@ public class VolWriteEndServlet extends HttpServlet {
 					.vntActContents(contents)
 					.vntSetPerson(setPerson)
 					.build();			
+	
 		
 		int result= new VolunteerService().insertVolunteer(v);
 		String msg="", loc="";
