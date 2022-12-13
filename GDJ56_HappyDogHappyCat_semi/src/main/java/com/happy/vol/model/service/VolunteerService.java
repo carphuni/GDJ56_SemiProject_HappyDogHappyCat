@@ -21,6 +21,14 @@ public class VolunteerService {
 		return a;
 	}
 	
+	
+	public Agency selectAgency2(int memberNo) {
+		Connection conn=getConnection();
+		Agency a = vd.selectAgency(conn, memberNo);
+		close(conn);
+		return a;
+	}
+	
 	public List<Volunteer> selectVolunteerList(int cPage, int numPerpage){
 		Connection conn=getConnection();
 		List<Volunteer> list = vd.selectVolunteerList(conn, cPage, numPerpage);

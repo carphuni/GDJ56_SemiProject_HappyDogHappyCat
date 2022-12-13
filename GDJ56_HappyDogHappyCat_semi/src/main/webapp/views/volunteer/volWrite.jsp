@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "com.happy.vol.model.vo.Agency" %>
 <%@ include file="/views/common/header.jsp" %>
+<%
+	
+%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volWrite.css"/>
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -25,7 +29,8 @@
                 <div class="info">
                     <dl>
                         <dt style="font-size:17px">시설이름</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name="agencyName" value="" placeholder="단체 및 시설이름 입력"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"> %>
+                        <input type="hidden" name="agencyName" value="" placeholder="단체 및 시설이름 입력"></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:17px">주소</dt>

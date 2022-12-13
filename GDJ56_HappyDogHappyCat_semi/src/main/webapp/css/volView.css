@@ -44,8 +44,8 @@
         border:1px solid #a7a8ac;
         float :right;
         position:relative;
-        bottom:130px;
-        margin-right : 310px;
+        bottom:100px;
+        margin-right : 180px;
         /* margin-bottom: 500px; */
         cursor:pointer;
         color:#ffffff;
@@ -61,10 +61,8 @@
   .myButton:active {
     position:relative;
   }
-  .page_wrap {
-	text-align:center;
-	font-size:0;
-  padding:30px;
+  #page {
+	padding:30px;
  }
 .page_nation {
 	display:inline-block;

@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,com.happy.vol.model.vo.Volunteer,com.happy.vol.model.vo.Agency" %>
 <%
-	List<Volunteer> list = (List<Volunteer>)request.getAttribute("volunteer");
-	List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
+	
+List<Volunteer> list = (List<Volunteer>)request.getAttribute("volunteer");
+List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
 %>
 <%@ include file="/views/common/header.jsp" %>
+
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volView.css"/>
 
  <section id="content">
@@ -56,13 +58,14 @@
                 </tr>
                 <tr>
                       <td>모집기간 :</td>
-                      <td><%=list.get(i).getVntRecPeriod()%> ~ <%=list.get(i).getVntRecPeriodEnd() %></td>
+                      <td colspan="3"><%=list.get(i).getVntRecPeriod()%> ~ <%=list.get(i).getVntRecPeriodEnd() %></td>
                       <td>봉사기간 :</td>
                       <td colspan="3"><%=list.get(i).getVntActPeriod() %> ~ <%=list.get(i).getVntActPeriodEnd()%></td>
                 </tr>
                 <tr>
                       <td><span class="fontgray">등&nbsp;록&nbsp;일 &nbsp;: </span></td>
                       <td><span class="fontgray"><%=list.get(i).getVntActWriteDate() %></span></td>
+                      <td colspan="2"></td>
                       <td><span class="fontgray">조&nbsp;회&nbsp;수 :</span></td>
                       <td colspan="3"><%=list.get(i).getVntActViews() %></td>
                 </tr>
@@ -88,30 +91,17 @@
           </div>
       </div>
   </div>
+  <div id="page" style="padding:30px">
   <%=request.getAttribute("pageBar") %>
-    <div class="page_wrap">
-      <div class="page_nation">
-      	
-<!--          <a class="arrow prev" href="#"></a>
-         <a href="#" class="active">1</a>
-         <a href="#">2</a>
-         <a href="#">3</a>
-         <a href="#">4</a>
-         <a href="#">5</a>
-         <a href="#">6</a>
-         <a href="#">7</a>
-         <a href="#">8</a>
-         <a href="#">9</a>
-         <a href="#">10</a>
-         <a class="arrow next" href="#"></a> -->
-      </div>
+    
+
    </div>
     
 
-    <div id="register">
+    <div id="register" style="margin-right:-250px;">
        <br><br><br><a href="<%=request.getContextPath()%>/volwrite.do" class="myButton">글쓰기</a>
      </div>
             
-</div>
 </section>
+ 
 <%@ include file="/views/common/footer.jsp" %>
