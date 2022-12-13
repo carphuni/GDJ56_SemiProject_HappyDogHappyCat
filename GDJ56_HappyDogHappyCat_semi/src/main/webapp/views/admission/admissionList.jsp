@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List,
+com.happy.animal.model.vo.Animal
+,com.happy.admission.vo.AdmissionForm" %>
+<%
+	List<AdmissionForm> list=(List<AdmissionForm>)request.getAttribute("admissions");
+%>
 <%@include file="/views/common/header.jsp"%>
 <section id="content">
         <div id="imgs" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
@@ -41,91 +47,25 @@
                               <th scope="col" class="th-look">조회수</th>
                           </tr>
                           </thead>
+                          <%if(list.isEmpty()){ %>
                           <tbody>
                             <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">신청합니다:) </a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>2</td>
+                                <td colspan="5">조회된 입소 신청내역이 없습니다.</td>
                             </tr>
+                            <%}else{
+                            	for(AdmissionForm a: list){%>
                             <tr>
-                                <td>5</td>
+                                <td><%=a.getAdmissionNo() %></td>
                                 <th>
                                   <a href="">신청합니다:) </a>
                                 </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>2</td>
-                                
+                                <td>작성자</td>
+                                <td><%=a.getWriteDate()%></td>
+                                <td>조회수</td>
                             </tr>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">신청합니다:) </a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">신청합니다:) </a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>2</td>
-                            </tr>
-                            
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">신청합니다:) </a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>2</td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <th>
-                                  <a href="">신청합니다:) </a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>2</td>
-                            </tr>
-
-                          <tr>
-                              <td>3</td>
-                              <th>
-                                <a href="">신청합니다:) </a>
-                              </th>
-                              <td>작성자아이디?이름?</td>
-                              <td>2022.11.29</td>
-                              <td>2</td>
-                          </tr>
-          
-                          <tr>
-                              <td>2</td>
-                              <th><a href="">신청합니다:) </a></th>
-                              <td>작성자</td>
-                              <td>2022.11.29</td>
-                              <td>2</td>
-                          </tr>
-          
-                          <tr>
-                              <td>1</td>
-                              <th><a href="">신청합니다:) </a></th>
-                              <td>작성자</td>
-                              <td>2022.11.29</td>
-                              <td>2</td>
-                          </tr>
+                            <%}%>
                           </tbody>
+                          <%} %>
                       </table>
                       <br>
                       <button type="button" id="write" class="btn btn-lgbtn-link" 

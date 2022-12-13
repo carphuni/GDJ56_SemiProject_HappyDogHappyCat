@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import static com.happy.common.JDBCTemplate.*;
+
+import com.happy.adopt.model.vo.AdtBorad;
 import com.happy.animal.model.vo.Animal;
 import com.happy.common.JDBCTemplate;
 
@@ -82,6 +84,30 @@ public class AdoptDao {
 			close(rs);
 		}
 		return ani;
+	}
+	
+	public int adoptWrite(Connection conn,AdtBorad ab) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptWrite"));
+			pstmt.setInt(1, ab.getMemberNo());
+			pstmt.setString(2, ab.getAdtContents());
+			pstmt.setString(3, ab.getAdtRoommate());
+			pstmt.setString(4, ab.getAdtExper());
+			pstmt.setString(5, ab.getAdtMoney());
+			pstmt.setString(6, ab.getAdtLive());
+			pstmt.setString(7, ab.getAdtAllergy());
+			pstmt.setString(8, ab.getAdtVisitDate());
+			pstmt.setInt(9, ab.getAniNo());
+			
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

@@ -2,18 +2,14 @@
     pageEncoding="UTF-8"%>
     <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal" %>
     <% Animal ani = (Animal)request.getAttribute("ani"); %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="<%=request.getContextPath() %>/js/jquery-3.6.1.min.js"></script> 
+<%@ include file="/views/common/header.jsp"%>
+
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
   Kakao.init('b5705da8bbf6d5f007956cd8575caa16'); // 사용하려는 앱의 JavaScript 키 입력
 </script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<title>상세페이지</title>
-</head>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+
 <style>
 	#content div{
             text-align: center;
@@ -98,15 +94,17 @@
             width: 80px;
             height: 38px;
             float: right;
+            cursor: pointer;
         }
 </style>
-<body>
+
     <section id="content">
 	    <div id="imgsbar" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
 	            <img src="<%=request.getContextPath() %>/images/adopt/Q.jfif" alt="" style="margin-right: auto;">
 	            <div id="text" >
 	                <br><br>
-	                <h1>입양상세페이지</h1>
+	                <h2>입양상세페이지</h2>
+	                <br>
 	                 <p>해피캣 해피독에서는 안락사없는 동물 보호소이므로<br>
 	                    안전하게 분양받으실 수 있습니다.<br>
 	                    많은 관심부탁드립니다</p>
@@ -192,13 +190,15 @@
         </div>
         <br>
         <div id="btnlistdiv">
-                <button id="btnlist" type="button" class="btn btn-secondary btn-sm disabled"><p>글목록</p></button>
+        	<a href="<%=request.getContextPath()%>/adopt/adoptmain.do";>
+                <button id="btnlist" type="button" class="btn btn-secondary btn-sm"><p>글목록</p></button>
+       		</a>
         </div>
 	    <br>
 	    <div class="sideBanner">
 	        <div id="sideBanner-inner">
 	            <br>
-	            <h2 id="pick" onclick="clickpick(event);">🤍</h2> <!--  -->
+	            <h2 id="pick" >🤍</h2> <!-- onclick="clickpick(event);" -->
 	            <h2 id="share">
 	            <a id="kakaotalk-sharing-btn" href="javascript:shareMessage()"> 
 	            <img id="kakao-share" src="<%=request.getContextPath() %>/images/adopt/free-icon-share-3989188.png" alt="" width="33" height="33" >
@@ -206,8 +206,7 @@
 	            </h2>
 	        </div>
       </div>
-</body>
-
+<%@ include file="/views/common/footer.jsp"%>
 <script>
 	//카카오톡 공유하기
 	function shareMessage() {
@@ -227,21 +226,48 @@
           title: '자세히보기',  
           link: {
             /* webUrl: 'http://localhost:9090/happy/views/adopt/adoptDes.jsp', */
-        	  webUrl: 'http://localhost:9090/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=28',
+        	  webUrl: 'http://localhost:9090/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
           },
         },
       ],
     })
   }
+	
 
-	const clickpick=(e)=>{
-	    console.log($(e.target).html());
-	    if($(e.target).html()=='🤍'){
-	        $("#pick").html("❤️");
-	    }else{
-	        $("#pick").html("🤍");
+	
+	 $("#pick").click(e=>{
+		if(<%=loginMember==null%>){
+	    	alert('로그인이 필요한 서비스입니다.');
 	    }
-	}
+		
+		if(<%=loginMember!=null%>){
+	    	if($(e.target).html()=='🤍'){
+		        $("#pick").html("❤️"); 
+		    }
+	    	else{
+		        $("#pick").html("🤍");
+		    }
+		}
+	});
+	
+	<%-- const clickpick=(e)=>{
+	    console.log($(e.target).html());
+	    if(<%=loginMember==null%>){
+	    	alert('로그인이 필요한 서비스입니다.');
+	    }
+	    if(<%=loginMember!=null%>){
+	    	if($(e.target).html()=='🤍'){
+		        /* $("#pick").html("❤️"); */
+		        $.get("<%=request.getContextPath()%>/adopt/adoptpick.do?memberNo=<%=loginMember.getMemberNo()%>",
+		        		data=>{
+		        			$("#pick").html("❤️");  
+			               });
+		    }else{
+		        $("#pick").html("🤍");
+		    }
+	    }
+	    
+	} --%>
 	
 	// 기본 위치(top)값
 	var floatPosition = parseInt($(".sideBanner").css('bottom'));
@@ -269,9 +295,8 @@
     	if(!ckck){
     		alert('체크리스트를 확인하고 오세요');
     	}else{
-    		location.assign("/adopt/adoptdespopup.do");
+    		location.assign("<%=request.getContextPath() %>/adopt/adoptwrite.do?aniNo=<%=ani.getAniNo()%>");
     	}
     }
     
 </script>
-</html>

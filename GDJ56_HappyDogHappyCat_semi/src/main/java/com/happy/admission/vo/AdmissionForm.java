@@ -15,10 +15,8 @@ public class AdmissionForm {
 	private int admissionNo;
 	private int memberNo;
 	private int animalNo;
-	private String admissionTitle;
 	private Date writeDate;
 	private Date hopeDate;
-	private String admissionReason;
 	private char admissionYN;
 	private Date admissionDate;
 	private char admissionDeleteYN;

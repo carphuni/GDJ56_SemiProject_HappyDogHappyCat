@@ -1,12 +1,13 @@
 package com.happy.adopt.model.service;
 
-import static com.happy.common.JDBCTemplate.close;
+import static com.happy.common.JDBCTemplate.*;
 import static com.happy.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.List;
 
 import com.happy.adopt.model.dao.AdoptDao;
+import com.happy.adopt.model.vo.AdtBorad;
 import com.happy.animal.model.vo.Animal;
 
 public class AdoptService {
@@ -33,6 +34,16 @@ public class AdoptService {
 		close(conn);
 		return ani;
 	}
+	
+	public int adoptWrite(AdtBorad ab) {
+		Connection conn=getConnection();
+		int result=dao.adoptWrite(conn,ab);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
 	
 	
 }

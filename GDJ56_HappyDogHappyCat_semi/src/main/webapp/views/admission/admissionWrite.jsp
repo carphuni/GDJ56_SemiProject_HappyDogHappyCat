@@ -16,9 +16,10 @@ com.happy.animal.model.vo.Animal" %>
             </div>
         <img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;" class="dogimg">
     </div>
-   
+
     <form action="<%=request.getContextPath() %>/admission/writeAdmissionEnd.do" 
         method="post" >
+    <input type="text" name="memberNo" value="<%=loginMember.getMemberNo()%>" hidden>
     <div class="board_wrap">
         <div class="board_title">
             <strong>입소신청</strong>
@@ -32,8 +33,7 @@ com.happy.animal.model.vo.Animal" %>
                     </dl>
                      <dl>
                         <dt style="font-size:18px;">동물종류</dt>
-                        <dd><input type="radio" name="aniType"
-                        placeholder="고양이,강아지 중 입력"></dd>
+                         <dd><input type="text" placeholder="강아지/고양이 중 입력" id="inputType" name="aniType"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -61,27 +61,31 @@ com.happy.animal.model.vo.Animal" %>
                 <div class="info">
                     <dl>
                         <dt style="font-size:18px;">접종 여부</dt>
-                        <dd><input type="checkbox" name="vcnStat" value="광견병" >광견병</dd>
-                        <dd><input type="checkbox" name="vcnStat" value="코로나장염">코로나장염</dd>
-                        <dd><input type="checkbox" name="vcnStat" value="켄넬코프">켄넬코프</dd><br>
-                        <dd><input type="checkbox" name="vcnStat" value="인플루엔자">인플루엔자</dd>
-                        <dd><input type="checkbox" name="vcnStat" value="항체가검사">항체가검사</dd>
-                        <dd><input type="checkbox" name="vcnStat" value="종합백신">종합백신</dd>
+                        <dd><input type="checkbox" name="vcnStat1" id="vcn1" value="Y" >광견병</dd>
+                        <dd><input type="checkbox" name="vcnStat2" id="vcn2" value="Y" >코로나장염</dd>
+                        <dd><input type="checkbox" name="vcnStat3" id="vcn3" value="Y">켄넬코프</dd><br>
+                        <dd><input type="checkbox" name="vcnStat4" id="vcn4" value="Y">인플루엔자</dd>
+                        <dd><input type="checkbox" name="vcnStat5" id="vcn5" value="Y">항체가검사</dd>
+                        <dd><input type="checkbox" name="vcnStat6" id="vcn6" value="Y">종합백신</dd>
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">중성화 여부</dt>
-                        <dd>O<input type="radio" name="neu" value="O"></dd>
-                        <dd>X<input type="radio" name="neu" value="X"></dd>
+                        <dd>O<input type="radio" name="neu" value="Y"></dd>
+                        <dd>X<input type="radio" name="neu" value="N"></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
-                        <dt style="font-size:18px;">질병여부</dt>
-                        <dd><input type="text" name="sick" placeholder="모를시 생략" style="width:130px; height:30px"></dd>
+                        <dt style="font-size:18px;">성격</dt>
+                        <dd><input type="checkbox" name="character" id="character1" value="활발함" >활발함</dd>
+                        <dd><input type="checkbox" name="character" id="character2" value="자신감" >자신감</dd>
+                        <dd><input type="checkbox" name="character" id="character3" value="부끄럼" >부끄럼</dd>
+                        <dd><input type="checkbox" name="character" id="character4" value="독립적" >독립적</dd>
+                        <dd><input type="checkbox" name="character" id="character5" value="적응력" >적응력</dd>
                     </dl>
                     <dl>
-                        <dt style="font-size:18px;">성격</dt>
-                        <dd><input type="text" name="character" placeholder="활발/자신감/부끄럼/독립적/적응력" style="width:330px; height:30px"></dd>
+                        <dt style="font-size:18px;">특이사항</dt>
+                        <dd><input type="text" name="aniSpecial" placeholder="특이사항 작성" style="width:250px; height:30px"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -92,18 +96,6 @@ com.happy.animal.model.vo.Animal" %>
                     <dl>
                         <dt style="font-size:18px;">입소희망일</dt>
                         <dd><input type="date" name="hopeDate" value="date" style="width:130px; height:30px"></dd>
-                    </dl>
-                </div>
-                 <div class="info">
-                    <dl>
-                        <dt style="font-size:18px;">신청자 연락처</dt>
-                        <dd><input type="text" name="phone" placeholder="예)010-1234-5678" style="width:180px; height:30px"></dd>
-                    </dl>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt style="font-size:18px;">특이사항</dt>
-                        <dd><input type="text" name="aniSpecial" placeholder="특이사항 작성" style="width:250px; height:30px"></dd>
                     </dl>
                 </div>
                 <h4 style="font-size:18px;">보호소로 오게된 이유(입소사유)</h4>
@@ -123,8 +115,8 @@ com.happy.animal.model.vo.Animal" %>
             </div>
 
             <div class="bt_wrap">
-                <a href="<%=request.getContextPath() %>/admission/writeAdmission.do" class="on">등록</a>
-                <a href="<%=request.getContextPath() %>/admission/admissionList.do">취소</a>
+                <input type="submit" value="등록" id="on" >
+				<input type="reset" value="취소">
             </div>
         </div>
     </div>
@@ -191,7 +183,7 @@ com.happy.animal.model.vo.Animal" %>
            font-size: 0;
        }
        
-       .bt_wrap a {
+       .bt_wrap input {
            display: inline-block;
            min-width: 80px;
            margin-left: 10px;
@@ -205,7 +197,7 @@ com.happy.animal.model.vo.Animal" %>
            margin-left: 0;
        }
        
-       .bt_wrap a.on {
+       .bt_wrap input#on {
            background: gray;
            color: #fff;
        }
