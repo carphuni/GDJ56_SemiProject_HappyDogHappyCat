@@ -43,6 +43,13 @@
     padding-bottom: 0.3rem;
 }
 
+#login-container button#duplicateCk{
+	width: 15%;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    font-size: 0.8rem;
+}
+
 #login-container>#find{
     display: flex;
     text-align: center;
