@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" 
+<form id="frmAttachedFiles" action="<%=request.getContextPath() %>/vol/volWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" 
     			method="post" enctype="multipart/form-data">
     <div class="board_wrap">
         <div class="board_title">
@@ -75,13 +75,13 @@
 
                 <div class="file" style="font-size:17px">
                     <b>* 대표이미지 설정</b>
-                    <input type="file" class="real-upload" accept="image/*" onchange="readURL(this);" required>
+                    <input type="file" name = "upFile" class="real-upload" accept="image/*" onchange="readURL(this);" required>
                     <img id="preview" style="display:none;"></div>
                 </div>
                 
                 <div class="file2" style="font-size:17px">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' accept="image/*" multiple required/>
+                    <input type="file" id='btnAtt' accept="image/*" name="upload2" multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
@@ -90,12 +90,42 @@
 			
 	       
             <div class="bt_wrap" >
-                <input type="submit" style="font-size:17px" id="saveBtn" class="on" value="등록">
+                <input type="submit" style="font-size:17px" id="saveBtn" class="on" value="등록" onclick="upload()">
                 <input type="button" style="font-size:17px" value="취소" onclick="location.replace('<%=request.getContextPath()%>/volview.do')">
             </div>
         </div>
     </form>
 </section>
+
+<script>
+<%-- 	function upload(){
+		const imageInput = $("#upload2")[0];
+		console.log(imageInput.files);
+		
+		const formData = new FormData();
+		formData.append("image",imageInput.files[0]);
+		
+		$.ajax({
+			type : "POST",
+			url : "<%=request.getContextPath()%>/vol/volWriteEnd.do",
+			processData : false,
+			contentType : false,
+			data : formData,
+			success : function(rtn){
+				const message = rtn.data.values[0];
+				console.log(message)
+				}
+			});
+	};
+		
+		
+		 --%>
+		
+	
+	
+</script>
+
+
 
 <script src="<%=request.getContextPath()%>/js/volwrite.js"></script>
 <%@ include file="/views/common/footer.jsp" %>

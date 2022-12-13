@@ -1,14 +1,13 @@
 package com.happy.vol.model.service;
 
-import static com.happy.common.JDBCTemplate.close;
-import static com.happy.common.JDBCTemplate.commit;
-import static com.happy.common.JDBCTemplate.getConnection;
+import static com.happy.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.List;
 
 import com.happy.vol.model.dao.VolunteerDao;
 import com.happy.vol.model.vo.Agency;
+import com.happy.vol.model.vo.VolPhoto;
 import com.happy.vol.model.vo.Volunteer;
 public class VolunteerService {
 	
@@ -21,12 +20,22 @@ public class VolunteerService {
 		return a;
 	}
 	
+	
 	public Agency selectAgency2(int memberNo) {
 		Connection conn=getConnection();
 		Agency a = vd.selectAgency2(conn, memberNo);
 		close(conn);
 		return a;
 	}
+	
+	
+	public VolPhoto selectVolPhoto(int vntBoardNo) {
+		Connection conn = getConnection();
+		VolPhoto vp = vd.selectVolPhoto(conn, vntBoardNo);
+		close(conn);
+		return vp;
+	}
+	
 	
 	public List<Volunteer> selectVolunteerList(int cPage, int numPerpage){
 		Connection conn=getConnection();
@@ -43,14 +52,23 @@ public class VolunteerService {
 	}
 	
 	
-	public int insertVolunteer(Volunteer v) {
+	public int insertVolunteer(Volunteer v, VolPhoto vp) {
 		Connection conn=getConnection();
 		int result=vd.insertVolunteer(conn, v);
-		if(result>0) commit(conn);
-		close(conn);
-		return result;
-		
+		int result2=0;
+		if(result>0) {
+			int volNo=vd.selectVolNo(conn);
+			result2=vd.insertVolPhoto(conn,volNo,vp);
+			if(result2>0)commit(conn);
+			else close(conn);
+		}
+		return result2;
 	}
+			
+			
+			
+		
+		
 	
 	
 

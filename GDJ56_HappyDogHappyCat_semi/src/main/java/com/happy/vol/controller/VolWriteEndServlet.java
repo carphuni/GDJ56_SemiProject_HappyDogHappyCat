@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.happy.vol.model.service.VolunteerService;
+import com.happy.vol.model.vo.VolPhoto;
 import com.happy.vol.model.vo.Volunteer;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 /**
  * Servlet implementation class VolWriteEndServlet
  */
@@ -35,23 +38,36 @@ public class VolWriteEndServlet extends HttpServlet {
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			response.sendRedirect(request.getContextPath());
 		}else {
-			String path=request.getServletContext().getRealPath("/upload/notice");
+			String path=request.getServletContext().getRealPath("/upload/volunteer");
+			int maxSize=1024*1024*10;
+			String encoding="UTF-8";
+			DefaultFileRenamePolicy dfr=new DefaultFileRenamePolicy();
+			MultipartRequest mr=new MultipartRequest(request, 
+					path,maxSize,encoding,dfr);
+			
+			String fileName=mr.getFilesystemName("upFile");
+			String oriName=mr.getOriginalFileName("upFile");
+			
+			VolPhoto vp = VolPhoto.builder()
+						.vntPhotoOriName(oriName)
+						.vntPhotoRename(fileName)
+						.build();
+				
+			
 		
-		
-		
-		String title= request.getParameter("volTitle");
-		String managerName = request.getParameter("managerName");
-		String rp=request.getParameter("recruitPeriod1");
+		String title= mr.getParameter("volTitle");
+		String managerName = mr.getParameter("managerName");
+		String rp=mr.getParameter("recruitPeriod1");
 		java.sql.Date recPeriod = java.sql.Date.valueOf(rp);
-		String rp2=request.getParameter("recruitPeriod2");
+		String rp2=mr.getParameter("recruitPeriod2");
 		java.sql.Date recPeriod2 = java.sql.Date.valueOf(rp2);
-		String ap=request.getParameter("activityPeriod1");
+		String ap=mr.getParameter("activityPeriod1");
 		java.sql.Date actPeriod = java.sql.Date.valueOf(ap);
-		String ap2=request.getParameter("activityPeriod2");
+		String ap2=mr.getParameter("activityPeriod2");
 		java.sql.Date actPeriod2 = java.sql.Date.valueOf(ap2);
-		String actDay= request.getParameter("activityDay");
-		String contents = request.getParameter("summernote");
-		int setPerson = Integer.parseInt(request.getParameter("recruitNumber"));
+		String actDay= mr.getParameter("activityDay");
+		String contents = mr.getParameter("summernote");
+		int setPerson = Integer.parseInt(mr.getParameter("recruitNumber"));
 		System.out.println(contents);
 		Volunteer v = Volunteer.builder().vntRecName(title)
 					.vntManagerName(managerName)
@@ -65,7 +81,7 @@ public class VolWriteEndServlet extends HttpServlet {
 					.build();			
 	
 		
-		int result= new VolunteerService().insertVolunteer(v);
+		int result= new VolunteerService().insertVolunteer(v,vp);
 		String msg="", loc="";
 		if(result>0) {
 			msg="게시물 등록이 완료되었습니다";
@@ -79,7 +95,7 @@ public class VolWriteEndServlet extends HttpServlet {
 		request.setAttribute("loc", loc);
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
-
+}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

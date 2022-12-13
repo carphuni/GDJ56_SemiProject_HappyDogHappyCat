@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.happy.vol.model.vo.Volunteer,com.happy.vol.model.vo.Agency" %>
+<%@ page import="java.util.List,com.happy.vol.model.vo.Volunteer,com.happy.vol.model.vo.Agency,com.happy.vol.model.vo.VolPhoto" %>
 <%
 	List<Volunteer> list = (List<Volunteer>)request.getAttribute("volunteer");
 	 List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
+	 List<VolPhoto> list3 = (List<VolPhoto>)request.getAttribute("volPhoto");
 	
 %>
 <%@ include file="/views/common/header.jsp" %>
@@ -32,11 +33,11 @@
         <tbody>
 	        <tr>
 	        <td width="100"><%=list.get(i).getVntBoardNo() %></td>
-	        <td width="200" align="center"><img src="<%=request.getContextPath()%>/images/vol/chun.png" alt="" width="200" height="200" border="0"></td>
+	        <td width="200" align="center"><img src="<%=request.getContextPath()%>/upload/volunteer/<%=list3.get(i).getVntPhotoRename() %>" alt="" width="200" height="200" border="0"></td>
 	        <td width="1700">
         
           <table width="556" border="0" cellpadding="0" cellspacing="0">
-          <tbody><tr><td style="cursor:pointer;" height="25"><b><span class="fontredbold"><%=list.get(i).getVntRecName() %></a></span></font></b></td></tr>
+          <tbody><tr><td style="cursor:pointer;" height="25" onclick="location.assign('<%=request.getContextPath()%>/volView2.do')"><b><span class="fontredbold"><%=list.get(i).getVntRecName() %></a></span></font></b></td></tr>
         </td>
         </tr>
        
@@ -109,13 +110,13 @@
       </div>
    </div>
     
-      <% for(int i=0;i<list2.size();i++){ 
+       <% for(int i=0;i<list2.size();i++){ 
     	int memberNo =list2.get(i).getMemberNo();
 		if((loginMember!=null&&loginMember.getMemberId().equals("admin"))||loginMember!=null&&loginMember.getMemberNo()==memberNo){%>
     <div id="register" style="margin-right:-300px;">
        <br><br><br><a href="<%=request.getContextPath()%>/volwrite.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" class="myButton">글쓰기</a>
      </div>
-     <%}break;} %>       
+     <%}break;} %>   
 </div>
 </section>
 <%@ include file="/views/common/footer.jsp" %>
