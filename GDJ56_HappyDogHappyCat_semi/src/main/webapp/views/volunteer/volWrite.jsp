@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "com.happy.vol.model.vo.Agency" %>
 <%@ include file="/views/common/header.jsp" %>
+<%
+	Agency a = (Agency)request.getAttribute("agency");
+%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volWrite.css"/>
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do" 
-    			method="post">
+<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" 
+    			method="post" enctype="multipart/form-data">
     <div class="board_wrap">
         <div class="board_title">
             <strong style="font-size: 25px;">자원봉사</strong>
@@ -25,11 +29,13 @@
                 <div class="info">
                     <dl>
                         <dt style="font-size:17px">시설이름</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name="agencyName" value="" placeholder="단체 및 시설이름 입력"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><%=a.getAgencyName() %>
+                        <input type="hidden" name="agencyName" value="<%=a.getAgencyName() %>" placeholder="단체 및 시설이름 입력"></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:17px">주소</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name="agencyAddress" value="" placeholder="주소입력"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><%=a.getAgencyAddress() %>
+                        <input type="hidden" name="agencyAddress" value="<%=a.getAgencyAddress() %>" placeholder="주소입력"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -39,7 +45,8 @@
                     </dl>
                     <dl>
                         <dt style="font-size:17px">시설 연락처</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="hidden" name="agencyPhone" placeholder="시설 연락처"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><%=a.getAgencyPhone() %>
+                        <input type="hidden" name="agencyPhone" value="<%=a.getAgencyPhone() %>" placeholder="시설 연락처"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -63,18 +70,18 @@
                     </dl>
                 </div>
                 <div class="cont">
-                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력" ></textarea>
+                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력" required></textarea>
                 </div>
 
                 <div class="file" style="font-size:17px">
                     <b>* 대표이미지 설정</b>
-                    <input type="file" class="real-upload" accept="image/*" onchange="readURL(this);">
+                    <input type="file" class="real-upload" accept="image/*" onchange="readURL(this);" required>
                     <img id="preview" style="display:none;"></div>
                 </div>
                 
                 <div class="file2" style="font-size:17px">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' accept="image/*" multiple/>
+                    <input type="file" id='btnAtt' accept="image/*" multiple required/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
