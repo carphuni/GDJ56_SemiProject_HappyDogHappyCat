@@ -33,10 +33,21 @@
     width: 100%;
 }
 
+#login-container .form-check{
+	float: right;
+}
+
 #login-container>input[value="다음"]{
     width: 15%;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
+}
+
+#login-container button#duplicateCk{
+	width: 15%;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    font-size: 0.8rem;
 }
 
 #login-container>#find{

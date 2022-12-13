@@ -1,14 +1,19 @@
 package com.happy.vol.model.dao;
 
+import static com.happy.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import com.happy.vol.model.vo.Agency;
 import com.happy.vol.model.vo.Volunteer;
-import static com.happy.common.JDBCTemplate.*;
 public class VolunteerDao {
 	
 	private Properties sql= new Properties();
@@ -20,6 +25,67 @@ public class VolunteerDao {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Agency selectAgency(Connection conn, int agencyNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Agency a= null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectAgency"));
+			pstmt.setInt(1, agencyNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				a=Agency.builder().agencyNo(rs.getInt("AGENCY_NO"))
+				.memberNo(rs.getInt("MEMBER_NO"))
+				.agencyName(rs.getString("AGENCY_NAME"))
+				.agencyAddress(rs.getString("AGENCY_ADDRESS"))
+				.agencyPhone(rs.getString("AGENCY_PHONE")).build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return a;
+	}
+	
+	public List<Volunteer> selectVolunteerList(Connection conn, int cPage, int numPerpage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Volunteer> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolunteerList"));
+			pstmt.setInt(1, (cPage-1)*numPerpage+1);
+			pstmt.setInt(2, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(getVolunteer(rs));
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
+	
+	public int selectVolunteerCount(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolunteerCount"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+		
 	}
 	
 	public int insertVolunteer(Connection conn, Volunteer v) {
@@ -45,6 +111,24 @@ public class VolunteerDao {
 		}return result;
 	}
 	
-	
+	private Volunteer getVolunteer(ResultSet rs) throws SQLException{
+		return Volunteer.builder()
+				.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
+				.vntAgencyNo(rs.getInt("VNT_AGENCY_NO"))
+				.vntRecName(rs.getString("VNT_REC_NAME"))
+				.vntManagerName(rs.getString("VNT_MANAGE_NAME"))
+				.vntRecPeriod(rs.getDate("VNT_REC_PERIOD"))
+				.vntRecPeriodEnd(rs.getDate("VNT_REC_PERIOD_END"))
+				.vntActPeriod(rs.getDate("VNT_ACT_PERIOD"))
+				.vntActPeriodEnd(rs.getDate("VNT_ACT_PERIOD_END"))
+				.vntActDay(rs.getString("VNT_ACT_DAY"))
+				.vntActWriteDate(rs.getDate("VNT_ACT_WRITE_DATE"))
+				.vntActContents(rs.getString("VNT_ACT_CONTENTS"))
+				.vntActViews(rs.getInt("VNT_ACT_VIEWS"))
+				.vntSetPerson(rs.getInt("VNT_SET_PERSON"))
+				.vntEnrPerson(rs.getInt("VNT_ENR_PERSON"))
+				.vntActDline(rs.getDate("VNT_ACT_DLINE"))
+				.build();
+	}
 
 }

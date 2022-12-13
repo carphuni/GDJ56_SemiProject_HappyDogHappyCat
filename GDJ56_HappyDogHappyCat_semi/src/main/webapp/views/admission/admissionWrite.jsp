@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List,com.happy.admission.vo.AdmissionForm,
+com.happy.animal.model.vo.Animal" %>
 <%@include file="/views/common/header.jsp"%>
 <body>
 <section id="content">
@@ -15,7 +17,7 @@
         <img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;" class="dogimg">
     </div>
    
-    <form name="admissionWrite" action="<%=request.getContextPath() %>/admission/writeAdmission.do" 
+    <form action="<%=request.getContextPath() %>/admission/writeAdmissionEnd.do" 
         method="post" >
     <div class="board_wrap">
         <div class="board_title">
@@ -23,71 +25,88 @@
         </div>
         <div class="board_write_wrap">
             <div class="board_write">
+            	 <div class="info">
+                    <dl>
+                        <dt id="aniType">동물이름</dt>
+                        <dd><input type="text" placeholder="동물이름 입력" id="inputType" name="aniName"></dd>
+                    </dl>
+                     <dl>
+                        <dt style="font-size:18px;">동물종류</dt>
+                        <dd><input type="radio" name="aniType"
+                        placeholder="고양이,강아지 중 입력"></dd>
+                    </dl>
+                </div>
                 <div class="info">
                     <dl>
                         <dt id="aniType">품종</dt>
-                        <dd><input type="text" placeholder="품종 입력" id="inputType"></dd>
+                        <dd><input type="text" placeholder="품종 입력" id="inputType" name="aniKind"></dd>
                     </dl>
                      <dl>
                         <dt style="font-size:18px;">크기</dt>
-                        <dd><input type="text"  style="width:210px; height:30px"
+                        <dd><input type="text"  style="width:210px; height:30px" name="aniSize"
                         placeholder="소형/중형/대형 중 입력"></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt style="font-size:18px;">성별</dt>
-                        <dd>남<input type="checkbox" value="남"></dd>
-                        <dd>여<input type="checkbox" value="여"></dd>
+                        <dd>남<input type="radio" name="gender" value="M"></dd>
+                        <dd>여<input type="radio" name="gender" value="F"></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">나이</dt>
-                        <dd><input type="text" placeholder="나이입력" style="width:130px; height:30px"></dd>
+                        <dd><input type="text" name="aniAge" placeholder="나이입력" style="width:130px; height:30px"></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt style="font-size:18px;">접종 여부</dt>
-                        <dd><input type="checkbox" value="광견병" >광견병</dd>
-                        <dd><input type="checkbox" value="코로나장염">코로나장염</dd>
-                        <dd><input type="checkbox" value="켄넬코프">켄넬코프</dd><br>
-                        <dd><input type="checkbox" value="인플루엔자">인플루엔자</dd>
-                        <dd><input type="checkbox" value="항체가검사">항체가검사</dd>
-                        <dd><input type="checkbox" value="종합백신">종합백신</dd>
+                        <dd><input type="checkbox" name="vcnStat" value="광견병" >광견병</dd>
+                        <dd><input type="checkbox" name="vcnStat" value="코로나장염">코로나장염</dd>
+                        <dd><input type="checkbox" name="vcnStat" value="켄넬코프">켄넬코프</dd><br>
+                        <dd><input type="checkbox" name="vcnStat" value="인플루엔자">인플루엔자</dd>
+                        <dd><input type="checkbox" name="vcnStat" value="항체가검사">항체가검사</dd>
+                        <dd><input type="checkbox" name="vcnStat" value="종합백신">종합백신</dd>
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">중성화 여부</dt>
-                        <dd>O<input type="checkbox" value="O"></dd>
-                        <dd>X<input type="checkbox" value="X"></dd>
+                        <dd>O<input type="radio" name="neu" value="O"></dd>
+                        <dd>X<input type="radio" name="neu" value="X"></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt style="font-size:18px;">질병여부</dt>
-                        <dd><input type="text" placeholder="모를시 생략" style="width:130px; height:30px"></dd>
+                        <dd><input type="text" name="sick" placeholder="모를시 생략" style="width:130px; height:30px"></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">성격</dt>
-                        <dd><input type="text" placeholder="활발/자신감/부끄럼/독립적/적응력" style="width:330px; height:30px"></dd>
+                        <dd><input type="text" name="character" placeholder="활발/자신감/부끄럼/독립적/적응력" style="width:330px; height:30px"></dd>
                     </dl>
                 </div>
                 <div class="info">
                 	<dl>
                         <dt style="font-size:18px;">털색</dt>
-                        <dd><input type="text" style="width:250px; height:25px" placeholder="검정/흰색/회색/갈색/기타"></dd>
+                        <dd><input type="text" name="furColor" style="width:250px; height:25px" placeholder="검정/흰색/회색/갈색/기타"></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">입소희망일</dt>
-                        <dd><input type="date" value="date" style="width:130px; height:30px"></dd>
+                        <dd><input type="date" name="hopeDate" value="date" style="width:130px; height:30px"></dd>
                     </dl>
                 </div>
                  <div class="info">
                     <dl>
                         <dt style="font-size:18px;">신청자 연락처</dt>
-                        <dd><input type="text" placeholder="예)010-1234-5678" style="width:180px; height:30px"></dd>
+                        <dd><input type="text" name="phone" placeholder="예)010-1234-5678" style="width:180px; height:30px"></dd>
                     </dl>
                 </div>
-                <h4 style="font-size:18px;">입소사유 및 특이사항</h4>
+                <div class="info">
+                    <dl>
+                        <dt style="font-size:18px;">특이사항</dt>
+                        <dd><input type="text" name="aniSpecial" placeholder="특이사항 작성" style="width:250px; height:30px"></dd>
+                    </dl>
+                </div>
+                <h4 style="font-size:18px;">보호소로 오게된 이유(입소사유)</h4>
                 <div class="cont">
                     <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
                 </div>
