@@ -19,4 +19,10 @@ public class Animal {
 	private String[] aniChar;
 	private String aniSpecial;
 	private String aniReason;
+	private char madDog;
+	private char covid;
+	private char kennel;
+	private char influ;
+	private char antibody;
+	private char totalvac;
 }
