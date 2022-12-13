@@ -257,7 +257,7 @@
         </table>
         <br>
         <button id="write" type="button" class="btn btn-lgbtn-link"
-          onclick="location.href='file:///C:/Users/songihyeon/Sproject/5_QA_%EA%B8%80%EC%93%B0%EA%B8%B0.html'">글쓰기&#128062;</button>
+          onclick="location.assign('<%=request.getContextPath()%>/');">글쓰기&#128062;</button>
       </div>
     </div>
   </section>

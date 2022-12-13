@@ -16,7 +16,7 @@ com.happy.animal.model.vo.Animal" %>
             </div>
         <img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;" class="dogimg">
     </div>
-   
+
     <form action="<%=request.getContextPath() %>/admission/writeAdmissionEnd.do" 
         method="post" >
     <div class="board_wrap">
@@ -32,8 +32,7 @@ com.happy.animal.model.vo.Animal" %>
                     </dl>
                      <dl>
                         <dt style="font-size:18px;">동물종류</dt>
-                        <dd><input type="radio" name="aniType"
-                        placeholder="고양이,강아지 중 입력"></dd>
+                         <dd><input type="text" placeholder="강아지/고양이 중 입력" id="inputType" name="aniType"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -76,12 +75,12 @@ com.happy.animal.model.vo.Animal" %>
                 </div>
                 <div class="info">
                     <dl>
-                        <dt style="font-size:18px;">질병여부</dt>
-                        <dd><input type="text" name="sick" placeholder="모를시 생략" style="width:130px; height:30px"></dd>
-                    </dl>
-                    <dl>
                         <dt style="font-size:18px;">성격</dt>
                         <dd><input type="text" name="character" placeholder="활발/자신감/부끄럼/독립적/적응력" style="width:330px; height:30px"></dd>
+                    </dl>
+                    <dl>
+                        <dt style="font-size:18px;">특이사항</dt>
+                        <dd><input type="text" name="aniSpecial" placeholder="특이사항 작성" style="width:250px; height:30px"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -100,15 +99,10 @@ com.happy.animal.model.vo.Animal" %>
                         <dd><input type="text" name="phone" placeholder="예)010-1234-5678" style="width:180px; height:30px"></dd>
                     </dl>
                 </div>
-                <div class="info">
-                    <dl>
-                        <dt style="font-size:18px;">특이사항</dt>
-                        <dd><input type="text" name="aniSpecial" placeholder="특이사항 작성" style="width:250px; height:30px"></dd>
-                    </dl>
-                </div>
                 <h4 style="font-size:18px;">보호소로 오게된 이유(입소사유)</h4>
                 <div class="cont">
-                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
+                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"
+                    name="aniReason"></textarea>
                 </div>
 
               
@@ -123,8 +117,8 @@ com.happy.animal.model.vo.Animal" %>
             </div>
 
             <div class="bt_wrap">
-                <a href="<%=request.getContextPath() %>/admission/writeAdmission.do" class="on">등록</a>
-                <a href="<%=request.getContextPath() %>/admission/admissionList.do">취소</a>
+                <input type="submit" value="등록" id="on" >
+				<input type="reset" value="취소">
             </div>
         </div>
     </div>
@@ -191,7 +185,7 @@ com.happy.animal.model.vo.Animal" %>
            font-size: 0;
        }
        
-       .bt_wrap a {
+       .bt_wrap input {
            display: inline-block;
            min-width: 80px;
            margin-left: 10px;
@@ -205,7 +199,7 @@ com.happy.animal.model.vo.Animal" %>
            margin-left: 0;
        }
        
-       .bt_wrap a.on {
+       .bt_wrap input#on {
            background: gray;
            color: #fff;
        }

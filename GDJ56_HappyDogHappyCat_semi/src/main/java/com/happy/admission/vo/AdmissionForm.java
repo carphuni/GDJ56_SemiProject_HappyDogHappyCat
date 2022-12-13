@@ -18,7 +18,6 @@ public class AdmissionForm {
 	private String admissionTitle;
 	private Date writeDate;
 	private Date hopeDate;
-	private String admissionReason;
 	private char admissionYN;
 	private Date admissionDate;
 	private char admissionDeleteYN;
