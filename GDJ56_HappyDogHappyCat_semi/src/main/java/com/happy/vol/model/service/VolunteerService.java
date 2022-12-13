@@ -21,10 +21,9 @@ public class VolunteerService {
 		return a;
 	}
 	
-	
 	public Agency selectAgency2(int memberNo) {
 		Connection conn=getConnection();
-		Agency a = vd.selectAgency(conn, memberNo);
+		Agency a = vd.selectAgency2(conn, memberNo);
 		close(conn);
 		return a;
 	}

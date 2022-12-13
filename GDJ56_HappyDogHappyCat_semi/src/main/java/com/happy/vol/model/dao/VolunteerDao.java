@@ -50,13 +50,12 @@ public class VolunteerDao {
 		}return a;
 	}
 	
-	
 	public Agency selectAgency2(Connection conn, int memberNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		Agency a= null;
 		try {
-			pstmt=conn.prepareStatement(sql.getProperty("selectAgency"));
+			pstmt=conn.prepareStatement(sql.getProperty("selectAgency2"));
 			pstmt.setInt(1, memberNo);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
