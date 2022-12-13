@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal" %>
+    <% Animal ani = (Animal)request.getAttribute("ani"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,7 +115,7 @@
 	     </div>
 	     <br><br>
         <div id="title">
-            <h2>[강아지]웰시코기 궁딩이 무료입양</h2><br>
+            <h2>[<%=ani.getAniType() %>]<%=ani.getAniKind() %> <%=ani.getAniName() %> 무료입양</h2><br>
         </div>
         <br><br>
         
@@ -126,37 +128,37 @@
             <table >
                 <tr>
                     <th>견종</th>
-                    <td>웰시코기</td>
+                    <td><%=ani.getAniKind() %></td>
                     <th>나이</th>
-                    <td>8개월</td>
+                    <td><%=ani.getAniAge() %>살</td>
                 </tr>
                 <tr>
                     <th>성별</th>
-                    <td>남</td>
+                    <td><%= ani.getAniGender() == 'M' ? "남":"여"%></td>
                     <th>중성화여부</th>
-                    <td>x</td>
+                    <td><%=ani.getAniNeuYn() == 'Y' ? "O":"X"%></td>
                 </tr>
                 <tr>
                     <th>기본 예방접종 유무</th>
                     <td colspan="3">
-                        <input type="checkbox" value="광견병" checked onclick="return false;">광견병
-                        <input type="checkbox" value="코로나장염" onclick="return false;">코로나장염
-                        <input type="checkbox" value="켄넬코프" onclick="return false;">켄넬코프
-                        <input type="checkbox" value="인플루엔자" checked onclick="return false;">인플루엔자
-                        <input type="checkbox" value="항체가검사" checked onclick="return false;">항체가검사
-                        <input type="checkbox" value="종합백신" checked onclick="return false;">종합백신
+                        <input type="checkbox" value="광견병" <%=ani.getMadDog() == 'Y' ? "checked":""%> onclick="return false;">광견병
+                        <input type="checkbox" value="코로나장염" <%=ani.getCovid() == 'Y' ? "checked":""%> onclick="return false;">코로나장염
+                        <input type="checkbox" value="켄넬코프" <%=ani.getKennel() == 'Y' ? "checked":""%> onclick="return false;">켄넬코프
+                        <input type="checkbox" value="인플루엔자" <%=ani.getInflu() == 'Y' ? "checked":""%>  onclick="return false;">인플루엔자
+                        <input type="checkbox" value="항체가검사" <%=ani.getAntibody() == 'Y' ? "checked":""%> onclick="return false;">항체가검사
+                        <input type="checkbox" value="종합백신" <%=ani.getTotalvac() == 'Y' ? "checked":""%> onclick="return false;">종합백신
                     </td>
                 </tr>
                 <tr>
                     <th>특이사항</th>
                     <td colspan="3">
-                        슬개골이 안좋아서 점프를 조심해야합니다
+                        <%=ani.getAniSpecial() %>
                     </td>
                 </tr>
                 <tr>
                     <th>보호소로 오게 된 이유</th>
                     <td colspan="3">
-                        모든가족들이 나가면 너무 많이 짖어 민원이 들어와서 더 이상 키울수 없습니다
+                        <%=ani.getAniReason() %>
                     </td>
                 </tr>
             </table>
@@ -224,7 +226,8 @@
         {
           title: '자세히보기',  
           link: {
-            webUrl: 'http://localhost:9090/happy/views/adopt/adoptDes.jsp',
+            /* webUrl: 'http://localhost:9090/happy/views/adopt/adoptDes.jsp', */
+        	  webUrl: 'http://localhost:9090/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=28',
           },
         },
       ],

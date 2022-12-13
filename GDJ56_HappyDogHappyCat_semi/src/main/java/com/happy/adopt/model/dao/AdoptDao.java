@@ -1,6 +1,7 @@
 package com.happy.adopt.model.dao;
 
 import java.io.FileReader;
+import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,6 +66,24 @@ public class AdoptDao {
 		return count;
 	}
 	
+	public Animal adoptDesAni(Connection conn,int aniNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Animal ani=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptDesAni"));
+			pstmt.setInt(1, aniNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) ani=getAnimal(rs);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ani;
+	}
+	
 	
 	public static Animal getAnimal(ResultSet rs) throws SQLException{
         return Animal.builder()
@@ -81,6 +100,12 @@ public class AdoptDao {
               .aniChar(rs.getString("ANI_CHAR").split(","))
               .aniSpecial(rs.getString("ANI_SPECIAL"))
               .aniReason(rs.getString("ANI_REASON"))
+              .madDog(rs.getString("MADDOG").charAt(0))
+              .covid(rs.getString("COVID").charAt(0))
+              .kennel(rs.getString("KENNEL").charAt(0))
+              .influ(rs.getString("INFLU").charAt(0))
+              .antibody(rs.getString("ANTIBODY").charAt(0))
+              .totalvac(rs.getString("TOTALVAC").charAt(0))
               .build();
   }
 } 

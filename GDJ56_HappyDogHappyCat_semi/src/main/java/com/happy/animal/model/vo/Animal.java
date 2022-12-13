@@ -12,13 +12,18 @@ public class Animal {
 	private String aniKind;
 	private char aniGender;
 	private int aniAge;
-	private String[] vcnStat;
 	private char aniNeuYn;
 	private char aniAdoptYn;
 	private String aniSize;
 	private String aniColor;
-	private String aniChar;
+	private String[] aniChar;
 	private String aniSpecial;
 	private String aniReason;
-	
+	private char madDog;
+	private char covid;
+	private char kennel;
+	private char influ;
+	private char antibody;
+	private char totalvac;
+
 }

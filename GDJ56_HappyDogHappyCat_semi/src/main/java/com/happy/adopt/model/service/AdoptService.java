@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.happy.adopt.model.dao.AdoptDao;
 import com.happy.animal.model.vo.Animal;
-import com.happy.animal.model.vo.VcnStat;
 
 public class AdoptService {
 	
@@ -26,6 +25,13 @@ public class AdoptService {
 		int result=dao.adoptMainAniAllCount(conn);
 		close(conn);
 		return result;
+	}
+	
+	public Animal adoptDesAni(int aniNo) {
+		Connection conn=getConnection();
+		Animal ani=dao.adoptDesAni(conn,aniNo);
+		close(conn);
+		return ani;
 	}
 	
 	
