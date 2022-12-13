@@ -6,15 +6,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.happy.admission.vo.AdmissionForm;
 import com.happy.animal.model.vo.Animal;
 
 
 public class AdmissionDao {
 	private Properties sql=new Properties();
 	
+	//경로지정 
 	public AdmissionDao() {
 		String path=AdmissionDao.class
 				.getResource("/sql/admission/admission_sql.properties")
@@ -25,12 +28,13 @@ public class AdmissionDao {
 			e.printStackTrace();
 		}
 	}
-
-	public int enrollAdmission(Connection conn, Animal ani,String hopeDate) {
+	
+	//동물 데이터 저장 
+	public int enrollAnimal(Connection conn, Animal ani) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
-			pstmt=conn.prepareStatement(sql.getProperty("enrollAdmission"));
+			pstmt=conn.prepareStatement(sql.getProperty("enrollAnimal"));
 			pstmt.setString(1, ani.getAniName());
 			pstmt.setString(2, ani.getAniType());
 			pstmt.setString(3, ani.getAniKind());
@@ -44,6 +48,42 @@ public class AdmissionDao {
 			pstmt.setString(11,ani.getAniSpecial());
 			pstmt.setString(12,ani.getAniReason());
 			result=pstmt.executeUpdate();
+			System.out.println(result);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	//동물번호
+	public int selectAniNo(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int aniNo=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectAniNo"));
+			rs=pstmt.executeQuery();
+			aniNo=rs.getInt("no");
+			System.out.println(aniNo);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return aniNo;
+	
+	}
+	
+	//입소데이터 저장 
+	public int enrollAdmission(Connection conn,int aniNo, String hopeDate) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		AdmissionForm ad=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("enrollAdmission"));
+			pstmt.setInt(1, aniNo);
+			pstmt.setString(2, hopeDate);
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -51,4 +91,8 @@ public class AdmissionDao {
 		}return result;
 	}
 
+	
+
 }
+
+

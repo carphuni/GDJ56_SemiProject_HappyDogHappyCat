@@ -15,14 +15,24 @@ public class AdmissionService {
 	
 	private AdmissionDao dao=new AdmissionDao();
 	
-	public int enrollAdmission(Animal ani,String hopeDate) {
+	public int enrollAnimal(Animal ani, String hopeDate) {
 		Connection conn=getConnection();
-		int result=dao.enrollAdmission(conn,ani,hopeDate);
-		if(result>0) commit(conn);
-		else rollback(conn);
+		int result=dao.enrollAnimal(conn,ani);
+		int result2=0;
+		if(result>0) {
+			int aniNo=dao.selectAniNo(conn);
+			
+			result2=dao.enrollAdmission(conn, aniNo, hopeDate);
+					
+			if(result2>0)commit(conn);
+			else rollback(conn);
+		} 
 		close(conn);
-		return result;
+		return result2;
 		
 	}
+
+
+	
 
 }

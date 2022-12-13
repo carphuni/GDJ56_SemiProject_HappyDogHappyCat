@@ -66,22 +66,21 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 		//클라이언트에게 입력받은 입소희망일을 AdmissionForm에 저장 
 		String hopeDate=request.getParameter("hopeDate");
 		
-		//ani를 서비스의 메소드를 빌려 보냄 . 
-		//서비스의 메소드를 빌려 입소희망일 보내기 
-		int result=new AdmissionService().enrollAdmission(ani,hopeDate);
 		
 		
-		
-		
+		int result=new AdmissionService().enrollAnimal(ani,hopeDate);
 		
 		String msg="",loc="";
-		if(result>0) {
-			msg="입소신청 완료:)";
-			loc="/";
-		}else {
+		if(result==0) {
+			//동물저장 실패시
 			msg="입소신청 실패,다시 신청해주세요!";
+			loc="/views/admission/admissionList.jsp";
+		}else {
+			//동물저장 성공시
+			msg="입소신청 완료!:)";
 			loc="/";
 		}
+
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
 		request.getRequestDispatcher("/views/common/msg.jsp")

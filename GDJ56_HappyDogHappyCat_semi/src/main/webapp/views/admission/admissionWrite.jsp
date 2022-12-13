@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.happy.admission.vo.AdmissionForm,
-com.happy.animal.model.vo.Animal" %>
 <%@include file="/views/common/header.jsp"%>
 <body>
 <section id="content">
@@ -69,8 +67,8 @@ com.happy.animal.model.vo.Animal" %>
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">중성화 여부</dt>
-                        <dd>O<input type="radio" name="neu" value="O"></dd>
-                        <dd>X<input type="radio" name="neu" value="X"></dd>
+                        <dd>O<input type="radio" name="neu" value="Y"></dd>
+                        <dd>X<input type="radio" name="neu" value="N"></dd>
                     </dl>
                 </div>
                 <div class="info">
