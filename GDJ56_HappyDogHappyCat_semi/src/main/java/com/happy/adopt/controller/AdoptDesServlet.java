@@ -1,11 +1,16 @@
 package com.happy.adopt.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.happy.adopt.model.service.AdoptService;
+import com.happy.animal.model.vo.Animal;
 
 /**
  * Servlet implementation class AdoptDesServlet
@@ -29,8 +34,13 @@ public class AdoptDesServlet extends HttpServlet {
 		
 		int aniNo=Integer.parseInt(request.getParameter("aniNo"));
 		
-		System.out.println(aniNo);
+		//System.out.println(aniNo);
 		
+		Animal ani = new AdoptService().adoptDesAni(aniNo);
+		
+		//System.out.println(ani);
+		
+		request.setAttribute("ani", ani);
 		request.getRequestDispatcher("/views/adopt/adoptDes.jsp").forward(request, response);
 	}
 

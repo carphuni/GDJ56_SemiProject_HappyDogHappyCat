@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.happy.adopt.model.service.AdoptService;
 import com.happy.animal.model.vo.Animal;
-import com.happy.animal.model.vo.VcnStat;
 
 /**
  * Servlet implementation class AdoptMainListServlet
