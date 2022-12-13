@@ -133,7 +133,7 @@ pageEncoding="UTF-8"%>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<%=request.getContextPath() %>/adopt/adoptmain.do">입양신청 목록</a></li>
             <li><a class="dropdown-item" href="<%=request.getContextPath() %>/adopt/adoptinform.do">입양신청 절차</a></li>
-            <li><a class="dropdown-item" href="#">입양후기</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath() %>/adopt/adoptreview.do">입양후기</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
