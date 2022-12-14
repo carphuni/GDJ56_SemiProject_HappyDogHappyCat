@@ -19,6 +19,7 @@ import com.happy.animal.model.vo.Animal;
 
 
 
+
 public class AdmissionDao {
 	private Properties sql=new Properties();
 	
@@ -146,6 +147,7 @@ public class AdmissionDao {
 				.admissionNo(rs.getInt("adm_board_no"))
 				.memberNo(rs.getInt("member_no"))
 				.writeDate(rs.getDate("adm_write_date"))
+				.memberId(rs.getString("member_id"))
 				.build();
 
 	}
@@ -171,6 +173,23 @@ public class AdmissionDao {
 				.totalvac(rs.getString("totalvac").charAt(0))
 				.build();
 		
+	}
+
+	public Animal admissionView(Connection conn, int admissionNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Animal a=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectAnimal"));
+			pstmt.setInt(1, admissionNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) a=getAnimal(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return a;
 	}
 	
 	

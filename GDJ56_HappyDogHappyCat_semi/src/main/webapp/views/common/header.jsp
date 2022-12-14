@@ -117,9 +117,9 @@ pageEncoding="UTF-8"%>
             >무료입소신청</a
           >
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/admission/admissionList.jsp">입소신청 목록</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/admission/admissionProcedure.jsp">입소신청 절차</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/admission/admissionWrite.jsp">입소 신청하기</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/admission/admissionList.do">입소신청 목록</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/admission/Procedure.do">입소신청 절차</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/admission/writeAdmission.do">입소 신청하기</a></li>
           </ul>
         </li>
 
@@ -173,8 +173,8 @@ pageEncoding="UTF-8"%>
             >Q&A</a
           >
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/qa/qaList.jsp">자주묻는질문</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/qa/qaWrite.jsp">문의하기</a></li>
+            <li><a class="dropdown-item" href="">자주묻는질문</a></li>
+            <li><a class="dropdown-item" href="">문의하기</a></li>
           </ul>
         </li>
       </ul>

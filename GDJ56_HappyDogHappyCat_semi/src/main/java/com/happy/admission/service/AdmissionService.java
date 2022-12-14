@@ -14,6 +14,7 @@ import com.happy.admission.vo.AdmissionForm;
 import com.happy.animal.model.vo.Animal;
 
 
+
 public class AdmissionService {
 	
 	private AdmissionDao dao=new AdmissionDao();
@@ -50,6 +51,13 @@ public class AdmissionService {
 		int result=dao.selectAdmissionCount(conn);
 		close(conn);
 		return result;
+	}
+	//입소동물 상세보기 
+	public Animal admissionView(int admissionNo) {
+		Connection conn=getConnection();
+		Animal ani=dao.admissionView(conn,admissionNo);
+		close(conn);
+		return ani;
 	}
 
 
