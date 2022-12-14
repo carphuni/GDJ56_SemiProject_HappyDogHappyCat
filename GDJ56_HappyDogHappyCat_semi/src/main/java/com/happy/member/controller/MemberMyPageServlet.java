@@ -37,7 +37,11 @@ public class MemberMyPageServlet extends HttpServlet {
 		Member loginMember=(Member)session.getAttribute("loginMember");
 		//비밀번호 일치 시 마이페이지 출력
 		if(loginMember!=null&&loginMember.getMemberPw().equals(memberPw)) {
-			
+			request.getRequestDispatcher("/views/member/myPage.jsp").forward(request, response);
+		}else {
+			request.setAttribute("msg", "비밀번호가 일치하지 않습니다");
+			request.setAttribute("loc", "/member/enterMyPage.do");
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		}
 		
 		
