@@ -6,6 +6,7 @@ com.happy.animal.model.vo.Animal
 <%
 	List<AdmissionForm> list=(List<AdmissionForm>)request.getAttribute("admissions");
 %>
+
 <%@include file="/views/common/header.jsp"%>
 <section id="content">
         <div id="imgs" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
@@ -47,8 +48,8 @@ com.happy.animal.model.vo.Animal
                               <th scope="col" class="th-look">조회수</th>
                           </tr>
                           </thead>
-                          <%if(list.isEmpty()){ %>
                           <tbody>
+                          <%if(list.isEmpty()){ %>
                             <tr>
                                 <td colspan="5">조회된 입소 신청내역이 없습니다.</td>
                             </tr>
@@ -57,15 +58,15 @@ com.happy.animal.model.vo.Animal
                             <tr>
                                 <td><%=a.getAdmissionNo() %></td>
                                 <th>
-                                  <a href="">신청합니다:) </a>
+                                  <a href="<%=request.getContextPath()%>/admission/admissionView.do?admissionNo=<%=a.getAdmissionNo() %>">신청합니다:) </a>
                                 </th>
-                                <td>작성자</td>
+                                <td><%=a.getMemberId() %></td>
                                 <td><%=a.getWriteDate()%></td>
                                 <td>조회수</td>
                             </tr>
                             <%}%>
-                          </tbody>
                           <%} %>
+                          </tbody>
                       </table>
                       <br>
                       <button type="button" id="write" class="btn btn-lgbtn-link" 
@@ -73,6 +74,9 @@ com.happy.animal.model.vo.Animal
                   </div>
               </div>
           </section>
+          <div id="pageBar">
+        	<%=request.getAttribute("pageBar") %>
+        </div>
     </section>
     <style>
         table {

@@ -20,7 +20,7 @@ public class AdmissionForm {
 	private char admissionYN;
 	private Date admissionDate;
 	private char admissionDeleteYN;
-	
+	private String memberId;
 	
 	
 	

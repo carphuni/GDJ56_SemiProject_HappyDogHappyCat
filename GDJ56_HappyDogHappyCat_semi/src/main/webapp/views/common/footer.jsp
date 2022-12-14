@@ -37,13 +37,13 @@
               <ul class="list-group list-group-flush">
                 <li id="head" class="list-group-item">무료입소신청</li>
                 <li class="list-group-item">
-                  <a href="<%=request.getContextPath()%>/views/admission/admissionList.jsp" class="">입소신청 목록</a>
+                  <a href="<%=request.getContextPath()%>/admission/admissionList.do" class="">입소신청 목록</a>
                 </li>
                 <li class="list-group-item">
-                  <a href="<%=request.getContextPath()%>/views/admission/admissionProcedure.jsp" class="">입소신청 절차</a>
+                  <a href="<%=request.getContextPath()%>/admission/Procedure.do" class="">입소신청 절차</a>
                 </li>
                 <li class="list-group-item">
-                  <a href="<%=request.getContextPath()%>/views/admission/admissionWrite.jsp" class="">입소 신청하기</a>
+                  <a href="<%=request.getContextPath()%>/admission/writeAdmission.do" class="">입소 신청하기</a>
                 </li>
               </ul>
             </div>
@@ -84,10 +84,10 @@
               <ul class="list-group list-group-flush">
                 <li id="head" class="list-group-item">Q&A</li>
                 <li class="list-group-item">
-                  <a href="<%=request.getContextPath()%>/views/qa/qaList.jsp" class="">자주묻는질문</a>
+                  <a href="" class="">자주묻는질문</a>
                 </li>
                 <li class="list-group-item">
-                  <a href="<%=request.getContextPath()%>/views/qa/qaWrite.jsp">문의하기</a>
+                  <a href="">문의하기</a>
                 </li>
               </ul>
             </div>

@@ -76,6 +76,7 @@ public class AdmissionListServlet extends HttpServlet {
 		}
 		
 		request.setAttribute("admissions", list);
+		System.out.println(list);
 		request.setAttribute("pageBar", pageBar);
 
 		request.getRequestDispatcher("/views/admission/admissionList.jsp")
