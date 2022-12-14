@@ -36,6 +36,12 @@ public class VolunteerService {
 		return vp;
 	}
 	
+	public Volunteer selectVolunteer(int boardNo) {
+		Connection conn = getConnection();
+		Volunteer v = vd.selectVolunteer(conn, boardNo);
+		close(conn);
+		return v;
+	}
 	
 	public List<VolPhoto> selectVolPhoto2(int vntBoardNo) {
 		Connection conn = getConnection();

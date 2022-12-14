@@ -47,19 +47,20 @@ public class VolViewServlet extends HttpServlet {
 		List<Volunteer> list = new VolunteerService().selectVolunteerList(cPage, numPerpage);
 		List<Agency> list2=new ArrayList();
 		List<VolPhoto> list3 = new ArrayList();
-
-	
+		
+		VolPhoto vp = null;
 		for(int i=0;i<list.size();i++) {
 			int agencyNo = list.get(i).getVntAgencyNo();
 			int boardNo=list.get(i).getVntBoardNo();
 			Agency a = new VolunteerService().selectAgency(agencyNo);
-			VolPhoto vp = new VolunteerService().selectVolPhoto(boardNo);
+			vp = new VolunteerService().selectVolPhoto(boardNo);
 			list2.add(a);
 			list3.add(vp);
-		
+			System.out.println(list3);
+			System.out.println(vp);
 		}
 		
-		
+	
 		String pageBar="";
 		int totalData = new VolunteerService().selectVolunteerCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);

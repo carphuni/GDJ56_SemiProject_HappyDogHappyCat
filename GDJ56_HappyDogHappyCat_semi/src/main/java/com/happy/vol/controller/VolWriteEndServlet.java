@@ -50,31 +50,29 @@ public class VolWriteEndServlet extends HttpServlet {
 			MultipartRequest mr=new MultipartRequest(request, 
 					path,maxSize,encoding,dfr);
 			
-			String fileName=mr.getFilesystemName("sumn0");
-			String oriName=mr.getOriginalFileName("sumn0");
-			
-			System.out.println(fileName);
-			System.out.println(oriName);
-			
-			
-			VolPhoto vp = VolPhoto.builder()
-					.mainPhoto(oriName)
-						.vntPhotoOriName(oriName)
-						.vntPhotoRename(fileName)
-						.build();
+
 			
 			Enumeration e=mr.getFileNames();	
 			List<VolPhoto> fileList=new ArrayList();
 			
 			
-			fileList.add(vp);
+//			fileList.add(vp);
 			while(e.hasMoreElements()) {
 				String name=(String)e.nextElement();
 				String fileName2 = mr.getFilesystemName(name);
 				String oriName2 = mr.getOriginalFileName(name);
-				fileList.add(VolPhoto.builder().vntPhotoOriName(oriName2).vntPhotoRename(fileName2).build());
-			}	
-			System.out.println(fileList);
+				if(name.equals("sumn0")) {
+					fileList.add(VolPhoto.builder()
+							.mainPhoto(oriName2)
+						.vntPhotoOriName(oriName2)
+						.vntPhotoRename(fileName2)
+						.build());
+				}else {
+					fileList.add(VolPhoto.builder().vntPhotoOriName(oriName2).vntPhotoRename(fileName2).build());
+				}
+				System.out.println(fileList);
+			}
+			
 			
 		
 		
@@ -103,7 +101,7 @@ public class VolWriteEndServlet extends HttpServlet {
 					.vntSetPerson(setPerson)
 					.build();			
 	
-		System.out.println(v);
+//		System.out.println(v);
 		int result= new VolunteerService().insertVolunteer(v,fileList);
 		
 		
@@ -121,7 +119,7 @@ public class VolWriteEndServlet extends HttpServlet {
 		response.setContentType("application/json;charset=utf-8");
 		new Gson().toJson(responseMsg,response.getWriter());
 	}
-}
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

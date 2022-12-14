@@ -104,7 +104,7 @@ public class VolunteerDao {
 		VolPhoto v = null;
 		List<VolPhoto> vp= new ArrayList();
 		try {
-			pstmt=conn.prepareStatement(sql.getProperty("selectVolPhoto"));
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolPhoto2"));
 			pstmt.setInt(1, vntBoardNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
@@ -146,7 +146,26 @@ public class VolunteerDao {
 		}return list;
 	}
 	
-	public int selectVolunteerCount(Connection conn) {
+	public Volunteer selectVolunteer(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Volunteer v = null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolunteer"));
+			pstmt.setInt(1, boardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				v = getVolunteer(rs);
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return v;
+	}
+		
+		public int selectVolunteerCount(Connection conn) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		int result=0;

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.happy.vol.model.vo.Volunteer" %>
+<%@ page import="com.happy.vol.model.vo.Volunteer,com.happy.vol.model.vo.VolPhoto,com.happy.vol.model.vo.Agency,java.util.List" %>
 <%@ include file="/views/common/header.jsp" %>
 <%
+	List<VolPhoto> vp = (List<VolPhoto>)request.getAttribute("photo");
 	Volunteer v = (Volunteer)request.getAttribute("info");
-	String agency = (String)request.getAttribute("agency");
-	String address = (String)request.getAttribute("address");
-	String phone = (String)request.getAttribute("phone");
+	Agency agency = (Agency)request.getAttribute("agency");
+
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volView2.css"/>
 
@@ -36,7 +36,7 @@
                 </div>
             </td>
             <td style="width: 31.7989%; text-align: center;">
-                 <div style="text-align: center;"><%=agency %></div></td>
+                 <div style="text-align: center;"><%=agency.getAgencyName() %></div></td>
             <td style="width: 16.82%; background-color: lightgray; text-align: center;">
                 <div style="text-align: center;">
                     <span style="font-size: 14px;">
@@ -45,7 +45,7 @@
                 </div>
             </td>
             <td style="width: 33.1143%; text-align: center;">
-                <div style="text-align: center;"><%=address %></div>
+                <div style="text-align: center;"><%=agency.getAgencyAddress() %></div>
             </td>
         </tr>
         <tr>
@@ -67,7 +67,7 @@
                 </div>
             </td>
             <td style="width: 33.1143%; text-align: center;">
-                <div style="text-align: center;"><%=phone %></div>
+                <div style="text-align: center;"><%=agency.getAgencyPhone() %></div>
             </td>
         </tr>
         <tr>
@@ -121,10 +121,12 @@
    </div>
    
    <div class="slides">
-       <div class="active"><img src="<%=request.getContextPath()%>/images/vol/루피.png" width="500" height="600"></div>
+       <%for(int i=0;i<vp.size();i++){ %>
+       <div <%=i==0?"class='active'":"" %>><img src="<%=request.getContextPath()%>/upload/volunteer/<%=vp.get(i).getVntPhotoRename() %>" width="500" height="600"></div>
+       <%} %>
+      <%--  <div><img src="<%=request.getContextPath()%>/images/vol/루피.png" width="500" height="600"></div>
        <div><img src="<%=request.getContextPath()%>/images/vol/루피.png" width="500" height="600"></div>
-       <div><img src="<%=request.getContextPath()%>/images/vol/루피.png" width="500" height="600"></div>
-       <div><img src="<%=request.getContextPath()%>/images/vol/루피.png" width="500" height="600"></div>
+       <div><img src="<%=request.getContextPath()%>/images/vol/루피.png" width="500" height="600"></div> --%>
    </div>
    
    <div class="page-nav">

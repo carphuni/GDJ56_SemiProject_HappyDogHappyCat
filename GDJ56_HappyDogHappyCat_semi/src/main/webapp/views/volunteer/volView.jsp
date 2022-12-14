@@ -20,7 +20,7 @@
                  자세한 안내는 게시물을<br>
                  참고해주세요.</p>
          </div>
-         <img src="<%=request.getContextPath()%>/images/vol/dog1.png" style="margin-left: auto;">
+         <img src="<%=request.getContextPath()%>/images/vol/dog2.png" style="margin-left: auto;">
      </div>
  </section>
 
@@ -28,9 +28,9 @@
 <section>
 <div id="s1">
 <% for(int i=0;i<list.size();i++){ %>
-	<form action="<%=request.getContextPath()%>/volView2.do" method="post">
+	<form style="cursor:pointer; action="<%=request.getContextPath()%>/volView2.do" method="post">
     <div class="s2">
-    <table width="1000" border="0" cellpadding="0" cellspacing="0">
+    <table width="1000" border="0" cellpadding="0" cellspacing="0" onclick="location.assign('<%=request.getContextPath()%>/volView2.do?boardNo=<%=list.get(i).getVntBoardNo()%>&&agencyNo=<%=list2.get(i).getAgencyNo()%>')">
         <tbody>
 	        <tr>
 	        <td width="100"><%=list.get(i).getVntBoardNo() %></td><input type="hidden" name="boardNo" value="<%=list.get(i).getVntBoardNo() %>">
@@ -38,8 +38,7 @@
 	        <td width="1700">
         
           <table width="556" border="0" cellpadding="0" cellspacing="0">
-          <tbody><tr><td <%-- style="cursor:pointer;" height="25" onclick="location.assign('<%=request.getContextPath()%>/volView2.do')" --%>><input style="background-color:transparent;border: none;
-          font-weight: bold;" type="submit" value="<%=list.get(i).getVntRecName() %>"><b><span class="fontredbold"></a></span></font></b></td></tr>
+           <tbody><tr><td style="cursor:pointer;" height="25"><b><span class="fontredbold"><%=list.get(i).getVntRecName() %><b><span class="fontredbold"></a></span></font></b></td></tr>
        	  <input type="hidden" name="volViewTitle" value="<%=list.get(i).getVntRecName() %>">
         </td>
         </tr>
@@ -125,13 +124,13 @@
       </div>
    </div>
      
-       <% for(int i=0;i<list2.size();i++){ 
+       <%-- <% for(int i=0;i<list2.size();i++){ 
     	int memberNo =list2.get(i).getMemberNo();
-		if((loginMember!=null&&loginMember.getMemberId().equals("admin"))||loginMember!=null&&loginMember.getMemberNo()==memberNo){%> 
+		if((loginMember!=null&&loginMember.getMemberId().equals("admin"))||loginMember!=null&&loginMember.getMemberNo()==memberNo){%>  --%>
     <div id="register" style="margin-right:-200px;">
        <br><br><br><a href="<%=request.getContextPath()%>/volwrite.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" class="myButton">글쓰기</a>
      </div>
-      <%}break;} %>   
+      <%-- <%}break;} %>  --%>  
 </div>
 </section>
 </form>
