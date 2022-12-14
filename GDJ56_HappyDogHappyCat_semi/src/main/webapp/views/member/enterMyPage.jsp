@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <section id="enterMyPage">
-     <form id="login-container" action="<%=request.getContextPath()%>/member/myPage.do">
+     <form id="login-container" action="<%=request.getContextPath()%>/member/myPage.do" method="post">
        <h1>마이페이지</h1>
        <div class="form-floating">
          <input

@@ -74,15 +74,17 @@ pageEncoding="UTF-8"%>
       </div>
       <!-- Login-->
       <div id="login">
+      	<%if(loginMember==null){ %>
+	        <a href="<%=request.getContextPath()%>/member/enroll.do">회원가입</a>
+	        <div id="line"></div>
+        <%} %>
       	<%if(loginMember!=null){ %>
+      	  <a><%=loginMember.getMemberId() %>님</a>
+      	  <div id="line"></div>
       	  <a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a>
       	<%}else{ %>
       	  <a href="<%=request.getContextPath()%>/member/login.do">로그인</a>
       	<%} %>
-      	<%if(loginMember==null){ %>
-	        <div id="line"></div>
-	        <a href="<%=request.getContextPath()%>/member/enroll.do">회원가입</a>
-        <%} %>
         <div id="line"></div>
         <a href="<%=request.getContextPath()%>/member/enterMyPage.do">마이페이지</a>
       </div>
