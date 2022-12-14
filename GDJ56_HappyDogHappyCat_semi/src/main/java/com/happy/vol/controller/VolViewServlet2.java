@@ -1,8 +1,6 @@
 package com.happy.vol.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.VolPhoto;
 import com.happy.vol.model.vo.Volunteer;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
  * Servlet implementation class VolViewServlet2
@@ -37,7 +33,7 @@ public class VolViewServlet2 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		String title = request.getParameter("volViewTitle");
 		String agencyName = request.getParameter("volAgencyName");
 		String address= request.getParameter("volAgencyAddress");
@@ -55,6 +51,9 @@ public class VolViewServlet2 extends HttpServlet {
 		java.sql.Date actPeriodEnd = java.sql.Date.valueOf(actEnd);
 		String day = request.getParameter("day");
 		String contents = request.getParameter("contents");
+		
+		List<VolPhoto> vp = new VolunteerService().selectVolPhoto2(boardNo);
+		
 		
 		Volunteer v = Volunteer.builder().vntRecName(title)
 				.vntManagerName(manager)

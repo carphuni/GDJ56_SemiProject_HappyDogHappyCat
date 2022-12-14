@@ -124,14 +124,14 @@
          <a class="arrow next" href="#"></a> -->
       </div>
    </div>
-    
+     
        <% for(int i=0;i<list2.size();i++){ 
     	int memberNo =list2.get(i).getMemberNo();
-		if((loginMember!=null&&loginMember.getMemberId().equals("admin"))||loginMember!=null&&loginMember.getMemberNo()==memberNo){%>
-    <div id="register" style="margin-right:-300px;">
+		if((loginMember!=null&&loginMember.getMemberId().equals("admin"))||loginMember!=null&&loginMember.getMemberNo()==memberNo){%> 
+    <div id="register" style="margin-right:-200px;">
        <br><br><br><a href="<%=request.getContextPath()%>/volwrite.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" class="myButton">글쓰기</a>
      </div>
-     <%}break;} %>   
+      <%}break;} %>   
 </div>
 </section>
 </form>

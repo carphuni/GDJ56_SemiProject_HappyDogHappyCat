@@ -56,7 +56,10 @@ public class VolViewServlet extends HttpServlet {
 			VolPhoto vp = new VolunteerService().selectVolPhoto(boardNo);
 			list2.add(a);
 			list3.add(vp);
+		
 		}
+		
+		
 		String pageBar="";
 		int totalData = new VolunteerService().selectVolunteerCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);

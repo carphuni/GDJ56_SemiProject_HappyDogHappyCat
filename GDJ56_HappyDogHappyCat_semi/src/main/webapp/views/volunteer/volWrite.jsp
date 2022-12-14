@@ -91,7 +91,7 @@
 			
 	       
             <div class="bt_wrap" >
-                <input type="submit" style="font-size:17px" id="saveBtn" class="on" value="등록">
+                <input type="button" style="font-size:17px" id="saveBtn" class="on" value="등록">
                 <input type="button" style="font-size:17px" value="취소" onclick="location.replace('<%=request.getContextPath()%>/volview.do')">
             </div>
         </div>
@@ -103,27 +103,48 @@
 	
 		$("#saveBtn").click(e=>{
 			let form=new FormData();
-			const files=$("#upload2")[0].files;
+			const sumnail=$("input[name=upFile]")[0].files;
+			const files=$("input[name=upload2]")[0].files;
+			let inputs=$("form input").not("input[class*=note]");
+			console.log(inputs);
+			 var summernoteContent = $('#summernote').summernote('code');
+			
+			
+			inputs.each((i,v)=>{
+				console.log($(v).attr("name"),$(v).val());
+				form.append("param"+i,$(v).val());
+			});
 			
 			$.each(files,(i,v)=>{
 				form.append("upfile"+i,v);
-			});			
+			});		
 			
-			$.ajax({
+			$.each(sumnail,(i,v)=>{
+				form.append("sumn"+i,v);
+			});		
+					
+			 form.append("content",summernoteContent);
+			 	$.ajax({
 				url :"<%=request.getContextPath()%>/vol/volWriteEnd.do",
 				data : form,
 				type : "post",
 				contentType:false,
 				processData:false,
 				success : e=>{
-					alert("파일업로드 성공");
-					$("#upload2").val("");
-					},error:(r,m,e)=>{
-						alert("업로드 실패 다시시도하세요!");
-					}
+					console.log(e.msg);	
+					console.log(e.loc);
+					var loc2 = e.loc;
+					alert(e.msg);
+					location.replace('<%=request.getContextPath()%>'+loc2);
+// 					alert("파일업로드 성공");
+// 					$("#upload2").val("");
+// 					},error:(r,m,e)=>{
+// 						alert("업로드 실패 다시시도하세요!");
+// 					}
+			 	}
 				});
-			});
-
+			}); 
+			
 		
 		 
 	

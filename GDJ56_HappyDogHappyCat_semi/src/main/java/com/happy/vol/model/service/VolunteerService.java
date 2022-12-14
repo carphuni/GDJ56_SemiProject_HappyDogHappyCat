@@ -37,12 +37,23 @@ public class VolunteerService {
 	}
 	
 	
+	public List<VolPhoto> selectVolPhoto2(int vntBoardNo) {
+		Connection conn = getConnection();
+		List<VolPhoto> vp = vd.selectVolPhoto2(conn, vntBoardNo);
+		close(conn);
+		return vp;
+	}
+	
+	
 	public List<Volunteer> selectVolunteerList(int cPage, int numPerpage){
 		Connection conn=getConnection();
 		List<Volunteer> list = vd.selectVolunteerList(conn, cPage, numPerpage);
 		close(conn);
 		return list;
 	}
+	
+	
+	
 	
 	public int selectVolunteerCount() {
 		Connection conn=getConnection();
@@ -52,15 +63,18 @@ public class VolunteerService {
 	}
 	
 	
-	public int insertVolunteer(Volunteer v, VolPhoto vp) {
+	public int insertVolunteer(Volunteer v,List<VolPhoto> fileList) {
 		Connection conn=getConnection();
 		int result=vd.insertVolunteer(conn, v);
 		int result2=0;
 		if(result>0) {
 			int volNo=vd.selectVolNo(conn);
-			result2=vd.insertVolPhoto(conn,volNo,vp);
-			if(result2>0)commit(conn);
-			else close(conn);
+			for(VolPhoto vp : fileList) {
+				result2+=vd.insertVolPhoto(conn,volNo,vp);
+			}
+			if(result2==fileList.size())commit(conn);
+			else rollback(conn);
+			close(conn);
 		}
 		return result2;
 	}

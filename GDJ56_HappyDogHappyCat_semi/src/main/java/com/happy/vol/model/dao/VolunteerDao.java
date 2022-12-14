@@ -98,6 +98,34 @@ public class VolunteerDao {
 	}
 	
 	
+	public List<VolPhoto> selectVolPhoto2(Connection conn, int vntBoardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		VolPhoto v = null;
+		List<VolPhoto> vp= new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolPhoto"));
+			pstmt.setInt(1, vntBoardNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				v=VolPhoto.builder().fileNo(rs.getInt("FILE_NO"))
+					.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
+					.mainPhoto(rs.getString("VNT_BOARD_NO"))
+					.vntPhotoOriName(rs.getString("VNT_PHOTO_ORINAME"))
+					.vntPhotoRename(rs.getString("VNT_PHOTO_RENAME")).build();
+					vp.add(v);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return vp;
+	}
+	
+	
+	
+	
 	public List<Volunteer> selectVolunteerList(Connection conn, int cPage, int numPerpage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -166,8 +194,9 @@ public class VolunteerDao {
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("insertVolPhoto"));
 			pstmt.setInt(1, volNo);
-			pstmt.setString(2, vp.getVntPhotoOriName());
-			pstmt.setString(3, vp.getVntPhotoRename());
+			pstmt.setString(2, vp.getMainPhoto());
+			pstmt.setString(3, vp.getVntPhotoOriName());
+			pstmt.setString(4, vp.getVntPhotoRename());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

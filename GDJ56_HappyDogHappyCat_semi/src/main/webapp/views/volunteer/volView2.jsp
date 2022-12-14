@@ -142,7 +142,7 @@
   <a style="font-size:17px;"href="">목록</a>
 </div>
          
-</div>
+
 
 <script src="<%=request.getContextPath()%>/js/volView2.js"></script>
 <%@ include file="/views/common/footer.jsp" %>
