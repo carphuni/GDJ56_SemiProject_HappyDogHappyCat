@@ -37,13 +37,13 @@
               <ul class="list-group list-group-flush">
                 <li id="head" class="list-group-item">무료입소신청</li>
                 <li class="list-group-item">
-                  <a href="" class="">입소신청 목록</a>
+                  <a href="<%=request.getContextPath()%>/admission/admissionList.do" class="">입소신청 목록</a>
                 </li>
                 <li class="list-group-item">
-                  <a href="" class="">입소신청 절차</a>
+                  <a href="<%=request.getContextPath()%>/admission/Procedure.do" class="">입소신청 절차</a>
                 </li>
                 <li class="list-group-item">
-                  <a href="" class="">입소 신청하기</a>
+                  <a href="<%=request.getContextPath()%>/admission/writeAdmission.do" class="">입소 신청하기</a>
                 </li>
               </ul>
             </div>

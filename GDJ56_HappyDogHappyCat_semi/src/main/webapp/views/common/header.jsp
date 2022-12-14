@@ -74,15 +74,17 @@ pageEncoding="UTF-8"%>
       </div>
       <!-- Login-->
       <div id="login">
+      	<%if(loginMember==null){ %>
+	        <a href="<%=request.getContextPath()%>/member/enroll.do">회원가입</a>
+	        <div id="line"></div>
+        <%} %>
       	<%if(loginMember!=null){ %>
+      	  <a><%=loginMember.getMemberId() %>님</a>
+      	  <div id="line"></div>
       	  <a href="<%=request.getContextPath()%>/member/logout.do">로그아웃</a>
       	<%}else{ %>
       	  <a href="<%=request.getContextPath()%>/member/login.do">로그인</a>
       	<%} %>
-      	<%if(loginMember==null){ %>
-	        <div id="line"></div>
-	        <a href="<%=request.getContextPath()%>/member/enroll.do">회원가입</a>
-        <%} %>
         <div id="line"></div>
         <a href="<%=request.getContextPath()%>/member/enterMyPage.do">마이페이지</a>
       </div>
@@ -115,9 +117,9 @@ pageEncoding="UTF-8"%>
             >무료입소신청</a
           >
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/admission/admissionList.jsp">입소신청 목록</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/admission/admissionProcedure.jsp">입소신청 절차</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/admission/admissionWrite.jsp">입소 신청하기</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/admission/admissionList.do">입소신청 목록</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/admission/Procedure.do">입소신청 절차</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/admission/writeAdmission.do">입소 신청하기</a></li>
           </ul>
         </li>
 
@@ -133,7 +135,7 @@ pageEncoding="UTF-8"%>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<%=request.getContextPath() %>/adopt/adoptmain.do">입양신청 목록</a></li>
             <li><a class="dropdown-item" href="<%=request.getContextPath() %>/adopt/adoptinform.do">입양신청 절차</a></li>
-            <li><a class="dropdown-item" href="#">입양후기</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath() %>/adopt/adoptreview.do">입양후기</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -171,8 +173,8 @@ pageEncoding="UTF-8"%>
             >Q&A</a
           >
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/qa/qaList.jsp">자주묻는질문</a></li>
-            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/views/qa/qaWrite.jsp">문의하기</a></li>
+            <li><a class="dropdown-item" href="">자주묻는질문</a></li>
+            <li><a class="dropdown-item" href="">문의하기</a></li>
           </ul>
         </li>
       </ul>

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal" %>
-    <% Animal ani = (Animal)request.getAttribute("ani"); %>
+<%@ page import="com.happy.animal.model.vo.Animal" %>
+<%
+	Animal ani=(Animal)request.getAttribute("ani");
+%>
 <%@ include file="/views/common/header.jsp"%>
-
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
   Kakao.init('b5705da8bbf6d5f007956cd8575caa16'); // 사용하려는 앱의 JavaScript 키 입력
@@ -100,20 +101,20 @@
 
     <section id="content">
 	    <div id="imgsbar" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
-	            <img src="<%=request.getContextPath() %>/images/adopt/Q.jfif" alt="" style="margin-right: auto;">
+	            <img src="<%=request.getContextPath() %>/images/admission/dog1.png" alt="" style="margin-right: auto;">
 	            <div id="text" >
-	                <br><br>
-	                <h2>입양상세페이지</h2>
 	                <br>
-	                 <p>해피캣 해피독에서는 안락사없는 동물 보호소이므로<br>
-	                    안전하게 분양받으실 수 있습니다.<br>
-	                    많은 관심부탁드립니다</p>
+	                 <h1 style="font-size: 30px; text-align: center;">입소신청</h1>
+                 		<p style="font-size: 20px; text-align: center;">더이상 거짓된 보호소들에 속지 마세요.<br> 
+                    <br>해피독해피캣은 꼼꼼한 입소절차를 통해<br>
+                    <br>아이들을 안전하게 보호하겠습니다.<br>
+                    </p>
 	            </div>
-	            <img src="<%=request.getContextPath() %>/images/adopt/S.jfif" alt="" style="margin-left: auto;">
+	            <img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;">
 	     </div>
 	     <br><br>
         <div id="title">
-            <h2>[<%=ani.getAniType() %>]<%=ani.getAniKind() %> <%=ani.getAniName() %> 무료입양</h2><br>
+            <h2>입소신청[<%=ani.getAniType() %>]<%=ani.getAniKind() %> <%=ani.getAniName() %> </h2><br>
         </div>
         <br><br>
         
@@ -162,35 +163,9 @@
             </table>
         </div>
         <br><br><br><br>
-        <div id="detail">
-            <div id="detailTitle"><br>
-                <h2>HAPPY DOG HAPPY CAT</h2>
-                <h3>무료입양</h3>
-            </div>
-            <video src="./video/KakaoTalk_20221207_152317915.mp4" controls width="400" height="400" poster="./img/images.jfif"></video>
-            <br><br><br>
-            <p>해피캣 해피독에서는 안락사없는 동물 보호소이므로<br>
-                안전하게 분양받으실 수 있습니다.<br>
-                많은 관심부탁드립니다.</p>
-            <br><br>
-            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
-            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
-        </div>
-        <div id="checklist">
-            <div id="detailTitle"><br>
-                <h2>HAPPY DOG HAPPY CAT</h2>
-                <h3>입양시 체크리스트</h3><br>
-                <button type="button" class="btn btn-outline-primary" onclick="checkList();">체크리스트 확인하기</button> &nbsp;
-                <input type="checkbox" id="ckck" value="checklist" onclick="return false;">필수
-            </div>
-        </div>
-        <br><br>
-        <div id="adp_btn">
-            <button type="button" class="btn btn-primary" onclick="apt_form();"><p>입양하기</p></button>
-        </div>
-        <br>
+        
         <div id="btnlistdiv">
-        	<a href="<%=request.getContextPath()%>/adopt/adoptmain.do";>
+        	<a href="<%=request.getContextPath()%>/admission/admissionList.do";>
                 <button id="btnlist" type="button" class="btn btn-secondary btn-sm"><p>글목록</p></button>
        		</a>
         </div>
@@ -206,7 +181,7 @@
 	            </h2>
 	        </div>
       </div>
-<%@ include file="/views/common/footer.jsp"%>
+
 <script>
 	//카카오톡 공유하기
 	function shareMessage() {
@@ -300,3 +275,5 @@
     }
     
 </script>
+
+<%@ include file="/views/common/footer.jsp"%>

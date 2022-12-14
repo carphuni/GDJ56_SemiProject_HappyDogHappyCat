@@ -1,25 +1,27 @@
 package com.happy.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
+
+import com.happy.member.model.vo.Member;
 
 /**
- * Servlet implementation class MemberEnterMyPageServlet
+ * Servlet implementation class MemberMyPageServlet
  */
-@WebServlet("/member/enterMyPage.do")
-public class MemberEnterMyPageServlet extends HttpServlet {
+@WebServlet("/member/myPage.do")
+public class MemberMyPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberEnterMyPageServlet() {
+    public MemberMyPageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,15 +30,21 @@ public class MemberEnterMyPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//비밀번호 데이터 불러오기
+		String memberPw=request.getParameter("memberPw");
+		//로그인 정보 불러오기
 		HttpSession session=request.getSession();
-		String loginMember=(String)session.getAttribute("loginMember");
-		if(loginMember!=null) {
-			request.getRequestDispatcher("/views/member/enterMyPage.jsp").forward(request, response);
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		//비밀번호 일치 시 마이페이지 출력
+		if(loginMember!=null&&loginMember.getMemberPw().equals(memberPw)) {
+			request.getRequestDispatcher("/views/member/myPage.jsp").forward(request, response);
 		}else {
-			request.setAttribute("msg", "로그인이 필요합니다");
-			request.setAttribute("loc", "/member/login.do");
+			request.setAttribute("msg", "비밀번호가 일치하지 않습니다");
+			request.setAttribute("loc", "/member/enterMyPage.do");
 			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		}
+		
+		
 	}
 
 	/**

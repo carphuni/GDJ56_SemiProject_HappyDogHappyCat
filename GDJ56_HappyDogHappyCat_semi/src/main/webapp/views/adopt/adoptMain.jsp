@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal" %>
     <% List<Animal> aniList = (List<Animal>)request.getAttribute("aniList"); %>
-<!DOCTYPE html>
+
 <style>
     #post{
         margin-right: 150px;
@@ -56,22 +56,17 @@
         margin: 0 auto;
         }
 </style>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ include file="/views/common/header.jsp"%>
 	    <section id="content">
         <div id="imgs" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
             <img src="<%=request.getContextPath() %>/images/adopt/Q.jfif" alt="" style="margin-right: auto;">
             <div id="text" >
                 <br>
+                <p></p>
                 <h1>입양하기</h1>
-                 <p>보호중인 파양동물들과 유기된 동물들을<br>
+                 <p><br>보호중인 파양동물들과 유기된 동물들을<br>
                     상시로 공고하고 있습니다.<br>
-                    자세한 안내는 입양안내를<br>
-                    참고해주세요.</p>
+                    자세한 안내는 입양안내를 참고해주세요.</p>
             </div>
             <img src="<%=request.getContextPath() %>/images/adopt/S.jfif" alt="" style="margin-left: auto;">
         </div>
@@ -80,7 +75,7 @@
                 <div class="search-window">
                     <form action="">
                         <div class="search-wrap">
-                            <label for="search" class="blind">내용검색</label>
+                            <label for="search" style="width:100px;">내용검색</label>
                             <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">&nbsp;
                             <button type="submit" class="btn btn-dark">검색</button> &nbsp;
                         </div>
@@ -96,7 +91,7 @@
                 <a href="<%=request.getContextPath()%>/adopt/adoptdes.do?aniNo=<%= aniList.get(i).getAniNo() %>";>
                 <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="" style="width:250px; height:180px;">
                 </a> 
-                <p  style="margin-bottom: 0;">[<%=aniList.get(i).getAniType() %>] <%=aniList.get(i).getAniKind() %> <%=aniList.get(i).getAniName() %> 무료입양</p>
+                <p  style="margin-bottom: 0; width:240px;">[<%=aniList.get(i).getAniType() %>] <%=aniList.get(i).getAniKind() %> <%=aniList.get(i).getAniName() %> 무료입양</p>
                 <div style="margin-bottom: 100px; width:240px;" >
                     <p style="float: left;">&nbsp&nbsp♡</p>
                     <p style="float: right;">조회수 33</p>
@@ -108,110 +103,6 @@
         	<%=request.getAttribute("pageBar") %>
         	</div>
         	<br><br>
-		<%-- <div id="post">
-            <div id="dog-des" style="margin-bottom:0;">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-        </div>
-        <br><br>  --%>
-<%--         <div id="post">
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-        </div>
-        <br><br> --%>
-<%--         <div id="post">
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-            <div id="dog-des">
-                <img id="adp_img" src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="">
-                <p>[강아지] 웰시코기 궁딩이 무료입양</p>
-                <div style="margin-top: auto;">
-                    <p style="float: left;">♡</p>
-                    <p style="float: right;">조회수 3</p>
-                </div>
-            </div>
-        </div> --%>
+		
     </section>
-</body>
-</html>
+<%@ include file="/views/common/footer.jsp"%>
