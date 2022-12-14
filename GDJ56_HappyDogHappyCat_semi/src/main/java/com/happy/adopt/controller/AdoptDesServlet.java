@@ -34,7 +34,7 @@ public class AdoptDesServlet extends HttpServlet {
 		
 		int aniNo=Integer.parseInt(request.getParameter("aniNo"));
 		
-		System.out.println(aniNo);
+		//System.out.println(aniNo);
 		
 		Animal ani = new AdoptService().adoptDesAni(aniNo);
 		

@@ -76,6 +76,8 @@ public class AdoptMainListServlet extends HttpServlet {
 	      }else {
 	         pageBar+="<a href='"+request.getContextPath()+"/adopt/adoptmain.do?cPage="+pageNo+"'>[다음]</a>";
 	      }
+	      
+	      //List<AnimalPick>=
 		
 		request.setAttribute("aniList", aniList);
 		request.setAttribute("pageBar", pageBar);

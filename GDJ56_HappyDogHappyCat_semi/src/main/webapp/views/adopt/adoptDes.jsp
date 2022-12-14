@@ -198,7 +198,7 @@
 	    <div class="sideBanner">
 	        <div id="sideBanner-inner">
 	            <br>
-	            <h2 id="pick" >🤍</h2> <!-- onclick="clickpick(event);" -->
+	            <h2 id="pick" >🤍</h2> 
 	            <h2 id="share">
 	            <a id="kakaotalk-sharing-btn" href="javascript:shareMessage()"> 
 	            <img id="kakao-share" src="<%=request.getContextPath() %>/images/adopt/free-icon-share-3989188.png" alt="" width="33" height="33" >
@@ -236,17 +236,38 @@
 
 	
 	 $("#pick").click(e=>{
-		if(<%=loginMember==null%>){
+		<%-- if(<%=loginMember==null%>){
 	    	alert('로그인이 필요한 서비스입니다.');
-	    }
-		
+	    } --%>
 		if(<%=loginMember!=null%>){
+			console.log($(e.target).html())
 	    	if($(e.target).html()=='🤍'){
-		        $("#pick").html("❤️"); 
-		    }
-	    	else{
-		        $("#pick").html("🤍");
-		    }
+		        /* $("#pick").html("❤️");  */ 
+		        $.ajax({
+					url:"<%=request.getContextPath()%>/adopt/adoptpick.do?aniNo=<%=ani.getAniNo()%>",
+					type:"get",
+					data:{color:"white",memberNo:"<%=loginMember.getMemberNo()%>"},
+					success:data=>{
+						//console.log(data);
+						
+						$("#pick").html(data);
+						alert("찜 성공");
+					}
+		    	});
+	    	}else{
+		        //$("#pick").html("🤍");
+	    		 $.ajax({
+						url:"<%=request.getContextPath()%>/adopt/adoptpick.do?aniNo=<%=ani.getAniNo()%>",
+						type:"get",
+						data:{color:"red",memberNo:"<%=loginMember.getMemberNo()%>"},
+						success:data=>{
+							//console.log(data);
+							
+							$("#pick").html(data);
+							alert("찜 해제");
+						}
+			    	});
+		    } 
 		}
 	});
 	

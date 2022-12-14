@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-<body>
+<%@  page import="java.util.List, java.util.Arrays,com.happy.adopt.model.vo.AdtReviewBorad" %>
+    <% List<AdtReviewBorad> rList = (List<AdtReviewBorad>)request.getAttribute("rList"); %>
+
     <section id="content">
         <div id="imgs" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
             <img src="<%=request.getContextPath() %>/images/adopt/Q.jfif" alt="" style="margin-right: auto;">
@@ -43,110 +45,35 @@
                           </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                                <td>5</td>
+                          <%if(rList.isEmpty()){%>
+                        	  <tr>
+	                              <td colspan="5">조회된 후기가 없습니다.</td>
+                          <%}else{ %>
+                          	<% for(int i=0;i<rList.size();i++){ %>
+                          		<tr>
+                                <td><%=rList.get(i).getAdtBoardNo() %></td>
                                 <th>
-                                  <a href="">입양후기5</a>
+                                  <a href="<%=request.getContextPath()%>/adopt/adoptreviewdes.do?AdtBoardNo=<%=rList.get(i).getAdtBoardNo() %>"><%=rList.get(i).getAdtTitle()==null?"후기입니다.":rList.get(i).getAdtTitle() %></a>
                                 </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>1</td>
+                                <td><%=rList.get(i).getMemberId() %></td>
+                                <td><%=(rList.get(i).getAdtWriteDate()).substring(0,10) %></td>
+                                <td><%=rList.get(i).getAdtViews() %></td>
                             </tr>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>1</td>
-                            </tr>
+                          	<%}%>
+                          <%}%>
                             
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>1</td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <th>
-                                  <a href="">입양후기4</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>1</td>
-                            </tr>
-
-                          <tr>
-                              <td>3</td>
-                              <th>
-                                <a href="">입양후기3</a>
-                              </th>
-                              <td>작성자아이디?이름?</td>
-                              <td>2022.11.29</td>
-                              <td>1</td>
-                          </tr>
-          
-                          <tr>
-                              <td>2</td>
-                              <th><a href="">입양후기2</a></th>
-                              <td>작성자</td>
-                              <td>2022.11.29</td>
-                              <td>1</td>
-                          </tr>
-          
-                          <tr>
-                              <td>1</td>
-                              <th><a href="">입양후기1</a></th>
-                              <td>작성자</td>
-                              <td>2022.11.29</td>
-                              <td>1</td>
-                          </tr>
                           </tbody>
                       </table>
                       <br>
                       <a href="<%=request.getContextPath()%>/adopt/adoptreviewwrite.do";>
                   		<button id="apt_write" class="btn btn-dark">입양글쓰기</button>
                   		</a>
-                  <div class="page_wrap">
+                  		<%=request.getAttribute("pageBar") %>
+                  <%-- <div class="page_wrap">
                     <div class="page_nation">
-                       <a class="arrow prev" href="#"></a>
-                       <a href="#" class="active">1</a>
-                       <a href="#">2</a>
-                       <a href="#">3</a>
-                       <a href="#">4</a>
-                       <a href="#">5</a>
-                       <a href="#">6</a>
-                       <a href="#">7</a>
-                       <a href="#">8</a>
-                       <a href="#">9</a>
-                       <a href="#">10</a>
-                       <a class="arrow next" href="#"></a>
+                       <%=request.getAttribute("pageBar") %>
                     </div>
-                  </div>  
+                  </div>   --%>
               </div>
              </div>
           </section>   

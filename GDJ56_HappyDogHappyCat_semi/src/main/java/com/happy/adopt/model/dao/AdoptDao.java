@@ -1,7 +1,8 @@
 package com.happy.adopt.model.dao;
 
+import static com.happy.common.JDBCTemplate.close;
+
 import java.io.FileReader;
-import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import static com.happy.common.JDBCTemplate.*;
 
 import com.happy.adopt.model.vo.AdtBorad;
+import com.happy.adopt.model.vo.AdtReviewBorad;
 import com.happy.animal.model.vo.Animal;
 import com.happy.common.JDBCTemplate;
 
@@ -110,6 +111,137 @@ public class AdoptDao {
 		return result;
 	}
 	
+	public int adoptReviewWrite(Connection conn,AdtReviewBorad arb) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewWrite"));
+			pstmt.setInt(1, arb.getMemberNo());
+			pstmt.setString(2, arb.getAdtTitle());
+			pstmt.setString(3, arb.getAdtContents());	
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<AdtReviewBorad> adoptReviewAll(Connection conn,int cPage, int numPerpage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdtReviewBorad> rList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewAll"));
+			pstmt.setInt(1, (cPage-1)*numPerpage+1);
+			pstmt.setInt(2, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				rList.add(getAdtReviewBorad(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return rList;
+	}
+	
+	public int adoptReviewAllCount(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewAllCount"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+	
+	public AdtReviewBorad adoptReviewDes(Connection conn,int adpBoardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		AdtReviewBorad arb=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewDes"));
+			pstmt.setInt(1, adpBoardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				arb=AdtReviewBorad.builder()
+	              .adtBoardNo(rs.getInt("ADT_BOARD_NO"))
+	              .memberNo(rs.getInt("MEMBER_NO"))
+	              .adtTitle(rs.getString("ADT_TITLE"))
+	              .adtContents(rs.getString("ADT_CONTENTS"))
+	              .adtViews(rs.getInt("ADT_VIEWS"))
+	              .adtWriteDate(rs.getString("ADT_WRITE_DATE"))
+	              .build();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return arb;
+	}
+	
+	public int adoptAddPick(Connection conn,int memberNo,int aniNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptAddPick"));
+			pstmt.setInt(1, aniNo);
+			pstmt.setInt(2, memberNo);	
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adoptDeletePick(Connection conn,int memberNo,int aniNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptDeletePick"));
+			pstmt.setInt(1, aniNo);
+			pstmt.setInt(2, memberNo);		
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	public static AdtReviewBorad getAdtReviewBorad(ResultSet rs) throws SQLException{
+        return AdtReviewBorad.builder()
+              .adtBoardNo(rs.getInt("ADT_BOARD_NO"))
+              .memberNo(rs.getInt("MEMBER_NO"))
+              .adtTitle(rs.getString("ADT_TITLE"))
+              .adtContents(rs.getString("ADT_CONTENTS"))
+              .adtViews(rs.getInt("ADT_VIEWS"))
+              .memberId(rs.getString("MEMBER_ID"))
+              .adtWriteDate(rs.getString("ADT_WRITE_DATE"))
+              .build();
+  }
 	
 	public static Animal getAnimal(ResultSet rs) throws SQLException{
         return Animal.builder()
