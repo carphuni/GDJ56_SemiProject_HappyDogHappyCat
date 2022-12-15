@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form onsubmit="return checkForm();" action="<%=request.getContextPath() %>/vol/volWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" 
+<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" 
     			method="post" enctype="multipart/form-data">
     <div class="board_wrap">
         <div class="board_title">
@@ -102,6 +102,9 @@
 
 	
 		$("#saveBtn").click(e=>{
+			/* if(fn_invalidate()){
+				
+			} */
 			let form=new FormData();
 			const sumnail=$("input[name=upFile]")[0].files;
 			const files=$("input[name=upload2]")[0].files;
@@ -125,7 +128,7 @@
 			});		
 					
 			
-			input[name=upload2]		
+				
 			 form.append("content",summernoteContent);
 		
 			if(sumnail.length==1){
@@ -155,13 +158,7 @@
 			alert("대표이미지를 설정해야 합니다.");
 		}
 	});
-		const checkForm=()=>{
-			const sum = $("input[name=upFile]");
-			console.log(sum);
-			console.log("hi");
-			
-			
-		}
+		
 		
 		 
 	

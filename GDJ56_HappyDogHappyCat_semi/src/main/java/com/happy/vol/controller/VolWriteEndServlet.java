@@ -118,6 +118,7 @@ public class VolWriteEndServlet extends HttpServlet {
 		
 		response.setContentType("application/json;charset=utf-8");
 		new Gson().toJson(responseMsg,response.getWriter());
+		
 	}
 	}
 	/**
