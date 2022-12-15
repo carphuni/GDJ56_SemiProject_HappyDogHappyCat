@@ -84,8 +84,8 @@
             </div>  
               <div id="numPerpage-container" style="float:right; width:300" >
 	        	동물 분류 
-	        	<form id="numPerFrm" action="">
-	        		<select name="numPerpage" id="numPerpage">
+	        	<form id="aniTypeF" action="">
+	        		<select name="aniType_" id="aniType">
 	        			<option value="전체">전체</option>
 	        			<option value="강아지">강아지</option>
 	        			<option value="고양이" >고양이</option>
@@ -130,3 +130,21 @@
 		
     </section>
 <%@ include file="/views/common/footer.jsp"%>
+
+
+<!-- /* <form id="aniTypeF" action="">
+<select name="aniType_" id="aniType">
+	<option value="전체">전체</option>
+	<option value="강아지">강아지</option>
+	<option value="고양이" >고양이</option>
+</select>
+</form> */ -->
+
+<script>
+	$("#aniType").change(e=>{
+		let aniType=$(e.target).val();
+		console.log($(e.target).val())
+		location.assign("<%=request.getContextPath()%>/adopt/adoptmain.do?aniType="+aniType);
+	});
+	
+</script>

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-<%@  page import="java.util.List, java.util.Arrays,com.happy.adopt.model.vo.AdtReviewBorad" %>
-    <% AdtReviewBorad arb = (AdtReviewBorad)request.getAttribute("arb"); %>
+<%@  page import="java.util.List, java.util.Arrays,com.happy.adopt.model.vo.AdtReviewBorad,com.happy.adopt.model.vo.AdtReviewComment" %>
+    <% AdtReviewBorad arb = (AdtReviewBorad)request.getAttribute("arb"); 
+    List<AdtReviewComment> comments = (List<AdtReviewComment>)request.getAttribute("comments");%>
 
 <body>
     <section id="content">
@@ -45,31 +46,31 @@
         </section>
         
         <div id="reply" style=" text-align: left; width: 600px; margin: auto; word-break:break-all;word-wrap:break-word;">
-        <h3>댓글</h3>
-        <form action="<%=request.getContextPath()%>/adopt/adoptwrite";>
-            <textarea name="" id="" cols="90" rows="3" placeholder="댓글을 입력해주세요."></textarea>
-            <button type="button" class="btn btn-outline-secondary" style="float: right;">등록</button>
-        </form>
-        <br><br>
-        <div style="border-top: solid rgba(0, 0, 0, 0.614);">
+        <div id="comment_box1" style="cursor: pointer;">
+        	<h3>댓글창보기(<%=comments.size() %>)</h3>
         </div>
-        <div style="border-bottom: solid rgba(0, 0, 0, 0.482);;">
-            <p>아이디 등록일자</p>
-            <p>댓글내용</p>
+        <div id="comment_lists">
+	        <%-- <form action="<%=request.getContextPath()%>/adopt/adoptwrite";> --%>
+	            <textarea name="textarea1" id="textarea2" cols="90" rows="3" placeholder="댓글을 입력해주세요."></textarea>
+	            <button id="reply-btn" type="button" class="btn btn-outline-secondary" style="float: right;">등록</button>
+	        <!-- </form> -->
+	        <br><br>
+	        <div style="border-top: solid rgba(0, 0, 0, 0.614);">
+	        </div>
+	        <%if(comments==null){ %>
+	        	<div style="border-bottom: solid rgba(0, 0, 0, 0.482);">
+	            	<p>댓글이 없습니다.</p>
+	        	</div>
+	        <%}else{ %>
+	        	<%for(int i=0;i<comments.size();i++){ %>
+	        		<div style="border-bottom: solid rgba(0, 0, 0, 0.482);">
+	            		<p><b><%=comments.get(i).getMemberId() %></b> <small><%= comments.get(i).getCommentWriteDate().substring(0,10) %></small></p>
+	            		<p><%=comments.get(i).getCommentContents() %></p>
+	        		</div>
+	        	<%} %>
+	        <%} %>
+	    
         </div>
-        <div style="border-bottom: solid rgba(0, 0, 0, 0.482);;">
-            <p>아이디 등록일자</p>
-            <p>댓글내용</p>
-        </div>
-        <div style="border-bottom: solid rgba(0, 0, 0, 0.482);;">
-            <p>아이디 등록일자</p>
-            <p>댓글내용</p>
-        </div>
-        <div style="border-bottom: solid rgba(0, 0, 0, 0.482);;">
-            <p>아이디 등록일자</p>
-            <p>댓글내용</p>
-        </div>
-        
     </div>
     <br>
         <div id="adp_btn">
@@ -81,9 +82,41 @@
         <br><br>
     
     <%@ include file="/views/common/footer.jsp"%>
+    <script>
+    $("#comment_box1 h3").click(e=> {  
+        $("#comment_lists").slideToggle(); 
+    });
     
+    $("#textarea2").focus(e=>{
+		if(<%=loginMember==null%>){
+			$("#textarea2").blur();
+			alert('로그인 후 이용할 수 있습니다.');
+		}
+ 		else{
+			$("#reply-btn").click(e=>{
+				const reply=$("#textarea2").val();
+				console.log(reply);
+				$.ajax({
+					url:"<%=request.getContextPath()%>/adopt/adoptreviewcomment.do",
+					type:"get",
+					data:{reply:reply,memberId:"<%=loginMember!=null?loginMember.getMemberId():0%>" ,reviewBoardNo:"<%=arb.getAdtBoardNo()%>"},
+					success:data=>{
+						console.log(data);
+					
+						alert("댓글 등록 성공!")
+						location.assign("<%=request.getContextPath()%>/adopt/adoptreviewdes.do?AdtBoardNo=<%=arb.getAdtBoardNo()%>");
+					}
+		    	});
+			});
+			}
+		
+	}); 
+</script>
     
     <style>
+    div#comment_lists{
+        display:none;
+    }
     textarea{
     	box-sizing: border-box; 
     	border: solid 2px gray;
