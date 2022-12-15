@@ -130,10 +130,9 @@
    </div>
    
    <div class="page-nav">
-       <div class="active"></div>
-       <div></div>
-       <div></div>
-       <div></div>
+   <%for(int i=0;i<vp.size();i++){ %>
+       <div <%=i==0?"class='active'":"" %>></div>
+    <%} %>
    </div>
 </div>
 <div class="cont">
