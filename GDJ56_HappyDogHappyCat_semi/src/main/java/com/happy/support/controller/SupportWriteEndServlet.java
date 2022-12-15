@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.google.gson.Gson;
+import com.happy.support.model.service.SupportService;
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.Support;
-import com.happy.vol.model.vo.VolPhoto;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -75,7 +77,23 @@ public class SupportWriteEndServlet extends HttpServlet {
 						.supContents(contents).supTargetAmount(money)
 						.build();
 		
-			int result = new SupporeService().insertSupport
+			int result = new SupportService().insertSupport(s, fileList);
+			String msg="", loc="";
+			if(result>0) {
+				msg="게시물 등록이 완료되었습니다";
+				loc="/suplist.do";
+			}else {
+				msg="게시글 등록이 실패했습니다. 다시 시도해주세요";
+				loc="/supwrite.do";
+			}
+
+			Map<String,String> responseMsg=Map.of("msg",msg,"loc",loc);
+			
+			response.setContentType("application/json;charset=utf-8");
+			new Gson().toJson(responseMsg,response.getWriter());
+			
+		}
+			
 	}
 
 	/**

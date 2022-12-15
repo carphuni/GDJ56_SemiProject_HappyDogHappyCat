@@ -18,14 +18,14 @@ public class SupportService {
 	
 	private SupportDao sd = new SupportDao();
 	
-	public int insertVolunteer(Support s,List<SupPhoto> fileList) {
+	public int insertSupport(Support s,List<SupPhoto> fileList) {
 		Connection conn=getConnection();
 		int result=sd.insertSupport(conn, s);
 		int result2=0;
 		if(result>0) {
-			int volNo=sd.selectVolNo(conn);
+			int supNo=sd.selectSupNo(conn);
 			for(SupPhoto sp : fileList) {
-				result2+=sd.insertVolPhoto(conn,volNo,sp);
+				result2+=sd.insertVolPhoto(conn,supNo,sp);
 			}
 			if(result2==fileList.size())commit(conn);
 			else rollback(conn);

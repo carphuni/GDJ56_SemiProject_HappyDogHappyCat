@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/supwrite.css"/>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/vol/supWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>"
+<form action="<%=request.getContextPath() %>/supWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>"
 	method="post" enctype="multipart/form-data">
     <div class="board_wrap">
         <div class="board_title">
@@ -34,13 +34,13 @@
 
                 <div class="file" style="font-size:17px">
                     <b>* 대표이미지 설정</b>
-                    <input type="file" class="real-upload" accept="image/*" onchange="readURL(this);">
+                    <input type="file" name = "upFile" class="real-upload" accept="image/*" onchange="readURL(this);">
                     <img id="preview" style="display:none;"></div>
                 </div>
                 
                 <div class="file2" style="font-size:17px">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' accept="image/*"  multiple/>
+                    <input type="file" id='btnAtt' accept="image/*" name="upload2" multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
@@ -89,7 +89,7 @@ $("#saveBtn").click(e=>{
 			if(sumnail.length==1){
 				 if(files.length!=0){
 			 	$.ajax({
-				url :"<%=request.getContextPath()%>/vol/volWriteEnd.do",
+				url :"<%=request.getContextPath()%>/supWriteEnd.do",
 				data : form,
 				type : "post",
 				contentType:false,

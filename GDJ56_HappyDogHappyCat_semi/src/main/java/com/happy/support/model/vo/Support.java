@@ -11,7 +11,7 @@ public class Support {
 	private String supTitle;
 	private int supTargetAmount;
 	private String supContents;
-	private char apvYn;
+	private char supApvYn;
 	int supAgencyNo;
 	
 	
