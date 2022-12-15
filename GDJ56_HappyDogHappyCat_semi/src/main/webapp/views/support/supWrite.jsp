@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "com.happy.vol.model.vo.Agency" %>
+<%
+	Agency a = (Agency)request.getAttribute("agency");
+%>
 <%@ include file="/views/common/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/supwrite.css"/>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/supWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>"
+<form action="<%=request.getContextPath() %>/supWriteEnd.do"
 	method="post" enctype="multipart/form-data">
+	<%if(loginMember!=null){ %>
+	<input type="hidden" name="memberNo" value="<%=loginMember.getMemberNo()%>">
+    <%} %>
     <div class="board_wrap">
         <div class="board_title">
             <strong style="font-size: 25px;">후원하기</strong>
@@ -21,7 +28,7 @@
                 <div class="info">
                     <dl>
                         <dt style="font-size:17px">시설이름</dt>
-                        <dd style="font-size:17px;margin-top:14px;"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><%=a.getAgencyName() %></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:17px">목표금액</dt>
@@ -64,10 +71,10 @@ $("#saveBtn").click(e=>{
 			const sumnail=$("input[name=upFile]")[0].files;
 			const files=$("input[name=upload2]")[0].files;
 			
-			let inputs=$("form input").not("input[class*=note]");
+			let inputs=$("form input").not("input[class*=note]").not("input[name=memberNo]");
 	/* 		console.log(inputs); */
 			 var summernoteContent = $('#summernote').summernote('code');
-			
+			 var memberNo = $("input[name=memberNo]").val();
 			
 			inputs.each((i,v)=>{
 				/* console.log($(v).attr("name"),$(v).val()); */
@@ -83,7 +90,7 @@ $("#saveBtn").click(e=>{
 			});		
 					
 			
-				
+			 form.append("memberNo",memberNo);
 			 form.append("content",summernoteContent);
 		
 			if(sumnail.length==1){

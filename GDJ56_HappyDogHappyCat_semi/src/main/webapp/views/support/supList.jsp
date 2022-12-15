@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.List, com.happy.support.model.vo.Support,com.happy.support.model.vo.SupPhoto,com.happy.vol.model.vo.Agency" %>
+<%
+	List<Support> list = (List<Support>)request.getAttribute("support");
+	List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
+	List<SupPhoto> list3 = (List<SupPhoto>)request.getAttribute("supPhoto");
+	List<Agency> a = (List<Agency>)request.getAttribute("ag");
+%>         
 <%@ include file="/views/common/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/suplist.css"/>
 
@@ -19,27 +26,38 @@
 
  <br><br>
         <div id="post" style="flex-wrap:wrap; width:80%;">
-       <%--  <% for(int i=0;i<aniList.size();i++){ %> --%>
-            <div id="dog-des" style="margin-bottom:0;">
-                <img id="adp_img" src="<%=request.getContextPath()%>/images/vol/루피.png" alt="" style="width:250px; height:250px;">
+       
+       <% for(int i=0;i<list.size();i++){ %> 
+      
+            <div id="dog-des" style="margin-bottom:0;cursor:pointer;" onclick="location.assign('<%=request.getContextPath()%>/supview.do?boardNo=<%=list.get(i).getSupBoardNo()%>&&agencyNo=<%=list2.get(i).getAgencyNo()%>')">
+                <img id="adp_img" src="<%=request.getContextPath()%>/upload/support/<%=list3.get(i).getSupPhotoRename() %>" alt="" style="width:250px; height:250px;">
                 <div style="word-break:break-all;word-wrap:break-word; width:250px;"><br>
-                <p >133마리의 아이들에게 보금자리를 마련해주세요.
-                    33마리의 아이들에게 보금자리를
+                <p ><%=list.get(i).getSupTitle() %>
                 </p>
-                 <b>마석 유기견묘 보호소</b></p>
+                 <b><%=list2.get(i).getAgencyName() %></b></p>
                 </div>
                 <div style="margin-top: auto;">
                      <progress value="20" max="100"></progress><br>
-					<div style="margin-left: 53%;">2,000,000원</div>
+					<div style="margin-left: 53%;"><%=list.get(i).getSupTargetAmount() %></div>
+					<br><br>
                    
                 </div>
-               <%--   <%} %> --%>
             </div>
-          </div>
             
+            <%} %> 
+          </div>
+          <br><br>
+          <div style="text-align:center;padding:50px;">
+      <%=request.getAttribute("pageBar") %>
+      </div>
+      <% for(int i=0;i<a.size();i++){ 
+			if(loginMember!=null&&loginMember.getMemberNo()==a.get(i).getMemberNo()){%>  
+      <div style="margin-top:100px;"><a href="<%=request.getContextPath()%>/supwrite.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" class="myButton">글쓰기</a></div>
+       <%}} %>
       <div class="page_wrap">
         <div class="page_nation">
-           <a class="arrow prev" href="#"></a>
+           
+          <!--  <a class="arrow prev" href="#"></a>
            <a href="#" class="active">1</a>
            <a href="#">2</a>
            <a href="#">3</a>
@@ -50,11 +68,11 @@
            <a href="#">8</a>
            <a href="#">9</a>
            <a href="#">10</a>
-           <a class="arrow next" href="#"></a>
+           <a class="arrow next" href="#"></a> -->
         </div>
      </div>
    
-     <a href="<%=request.getContextPath()%>/supwrite.do" class="myButton">글쓰기</a>
+     
 </section>
 
 

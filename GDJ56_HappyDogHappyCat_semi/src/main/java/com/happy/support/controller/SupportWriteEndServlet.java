@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.happy.support.model.service.SupportService;
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.Support;
+import com.happy.vol.model.service.VolunteerService;
+import com.happy.vol.model.vo.Agency;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -69,12 +71,14 @@ public class SupportWriteEndServlet extends HttpServlet {
 					fileList.add(SupPhoto.builder().supPhotoOriName(oriName2).supPhotoRename(fileName2).build());
 				}
 			}
-			
+			int memberNo = Integer.parseInt(mr.getParameter("memberNo"));
+			Agency a = new VolunteerService().selectAgency2(memberNo);
 			String title = mr.getParameter("param0");
-			int money = Integer.parseInt(mr.getParameter("param1"));
+			String money = mr.getParameter("param1");
 			String contents = mr.getParameter("content");
 			Support s = Support.builder().supTitle(title)
 						.supContents(contents).supTargetAmount(money)
+						.supAgencyNo(a.getAgencyNo())
 						.build();
 		
 			int result = new SupportService().insertSupport(s, fileList);

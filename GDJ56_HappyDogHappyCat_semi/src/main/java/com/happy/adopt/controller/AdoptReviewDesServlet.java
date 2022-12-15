@@ -1,8 +1,10 @@
 package com.happy.adopt.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,16 +13,16 @@ import com.happy.adopt.model.service.AdoptService;
 import com.happy.adopt.model.vo.AdtReviewBorad;
 
 /**
- * Servlet implementation class AdoptReviewWriteEnd
+ * Servlet implementation class AdoptReviewDesServlet
  */
-@WebServlet("/adopt/adoptReviewwriteEnd.do")
-public class AdoptReviewWriteEndServlet extends HttpServlet {
+@WebServlet("/adopt/adoptreviewdes.do")
+public class AdoptReviewDesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdoptReviewWriteEndServlet() {
+    public AdoptReviewDesServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,36 +32,39 @@ public class AdoptReviewWriteEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int memberNo=Integer.parseInt(request.getParameter("memberNo"));
-		String title=request.getParameter("title");
-		String content=request.getParameter("summernote");
+		int adpBoardNo=Integer.parseInt(request.getParameter("AdtBoardNo")) ;
 		
-		//System.out.println(content);
+		//System.out.println(adpBoardNo);
 		
-		AdtReviewBorad arb=AdtReviewBorad.builder()
-				.memberNo(memberNo)
-				.adtTitle(title)
-				.adtContents(content)
-				.build();
+		//System.out.println(arb);
 		
-		int result=new AdoptService().adoptReviewWrite(arb);
-		
-		
-		String msg="",loc="";
-		if(result>0) {
-			msg="입양후기 글등록 성공";
-		}else {
-			msg="입양후기 글등록 실패";			
+		Cookie[] cookies=request.getCookies();
+		String reviewRead="";
+		boolean readflag=false;
+		if(cookies!=null) {
+			for(Cookie c : cookies) {
+				String name=c.getName();
+				String value=c.getValue(); 
+				if(name.equals("reviewRead")) {
+					reviewRead=value;
+					if(value.contains("|"+adpBoardNo+"|")) {
+						readflag=true;
+					}
+					break;
+				}
+			}
 		}
-		loc="/adopt/adoptreview.do";
 		
-		request.setAttribute("msg", msg);
-		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		if(!readflag) {
+			Cookie c=new Cookie("reviewRead",(reviewRead+"|"+adpBoardNo+"|"));
+			c.setMaxAge(60*60*24);
+			response.addCookie(c);
+		}
 		
+		AdtReviewBorad arb=new AdoptService().adoptReviewDes(adpBoardNo,readflag);
 		
-		
-		
+		request.setAttribute("arb", arb);
+		request.getRequestDispatcher("/views/adopt/adoptReviewDes.jsp").forward(request, response);
 	}
 
 	/**

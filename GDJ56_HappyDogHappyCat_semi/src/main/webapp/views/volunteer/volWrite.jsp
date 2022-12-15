@@ -11,8 +11,11 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <section id="container1">
-<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" 
+<form action="<%=request.getContextPath() %>/vol/volWriteEnd.do"
     			method="post" enctype="multipart/form-data">
+    			<%if(loginMember!=null){ %>
+    			<input type="hidden" name="memberNo" value="<%=loginMember.getMemberNo()%>">
+    			<%} %>
     <div class="board_wrap">
         <div class="board_title">
             <strong style="font-size: 25px;">자원봉사</strong>
@@ -109,10 +112,10 @@
 			const sumnail=$("input[name=upFile]")[0].files;
 			const files=$("input[name=upload2]")[0].files;
 			
-			let inputs=$("form input").not("input[class*=note]");
+			let inputs=$("form input").not("input[class*=note]").not("input[name=memberNo]");
 	/* 		console.log(inputs); */
 			 var summernoteContent = $('#summernote').summernote('code');
-			
+			 var memberNo = $("input[name=memberNo]").val();
 			
 			inputs.each((i,v)=>{
 				/* console.log($(v).attr("name"),$(v).val()); */
@@ -130,7 +133,7 @@
 			
 				
 			 form.append("content",summernoteContent);
-		
+			 form.append("memberNo",memberNo);
 			if(sumnail.length==1){
 				 if(files.length!=0){
 			 	$.ajax({

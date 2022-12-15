@@ -8,9 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.happy.adopt.model.service.AdoptService;
+import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
+import com.happy.member.model.vo.Member;
 
 /**
  * Servlet implementation class AdoptMainListServlet
@@ -76,10 +79,26 @@ public class AdoptMainListServlet extends HttpServlet {
 	      }else {
 	         pageBar+="<a href='"+request.getContextPath()+"/adopt/adoptmain.do?cPage="+pageNo+"'>[다음]</a>";
 	      }
+	      
+	      HttpSession session = request.getSession();
+	      Member m=(Member)session.getAttribute("loginMember");
+	      //System.out.println(m);
+	      
+			
+			 if(m!=null) { 
+				 //System.out.println(m.getMemberId()); 
+				 List<AnimalPick> pList =new AdoptService().adoptPickAll(m.getMemberNo());
+				 request.setAttribute("pick", pList);
+				 //System.out.println(pList);
+				 }
+			 
+			 request.setAttribute("aniList",aniList); 
+			 request.setAttribute("pageBar", pageBar);
+			request.getRequestDispatcher("/views/adopt/adoptMain.jsp").forward(request,response);
+	      
+	     
 		
-		request.setAttribute("aniList", aniList);
-		request.setAttribute("pageBar", pageBar);
-		request.getRequestDispatcher("/views/adopt/adoptMain.jsp").forward(request, response);
+		
 	}
 
 	/**

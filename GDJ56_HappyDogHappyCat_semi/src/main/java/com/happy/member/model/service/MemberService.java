@@ -22,9 +22,18 @@ public class MemberService {
 		//회원가입
 		Connection conn=getConnection();
 		int result=dao.memberEnrollEnd(conn, member);
+		if(result>0)commit(conn);
+		else rollback(conn);
 		close(conn);
 		return result;
 	}
 	
+	public Member duplicateId(String inputId) {
+		//아이디 중복확인
+		Connection conn=getConnection();
+		Member member=dao.duplicateId(conn, inputId);
+		close(conn);
+		return member;
+	}
 
 }

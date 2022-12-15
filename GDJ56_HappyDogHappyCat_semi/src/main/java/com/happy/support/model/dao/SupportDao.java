@@ -14,7 +14,6 @@ import java.util.Properties;
 
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.Support;
-import com.happy.vol.model.vo.Volunteer;
 
 
 public class SupportDao {
@@ -36,8 +35,9 @@ public class SupportDao {
 			try {
 				pstmt=conn.prepareStatement(sql.getProperty("insertSupport"));
 				pstmt.setString(1, s.getSupTitle());
-				pstmt.setInt(2,s.getSupTargetAmount());
+				pstmt.setString(2,s.getSupTargetAmount());
 				pstmt.setString(3,s.getSupContents());
+				pstmt.setInt(4, s.getSupAgencyNo());
 				result=pstmt.executeUpdate();
 			}catch(SQLException e) {
 				e.printStackTrace();
@@ -103,6 +103,7 @@ public class SupportDao {
 		}
 
 		
+		
 		public int selectSupportCount(Connection conn) {
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
@@ -121,14 +122,81 @@ public class SupportDao {
 			
 		}
 		
+		public Support selectSupport(Connection conn, int boardNo) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			Support s = null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectSupport"));
+				pstmt.setInt(1, boardNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					s = getSupport(rs);
+				}	
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return s;
+		}
+		
+		
+		public SupPhoto selectSupPhoto(Connection conn, int supBoardNo) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			SupPhoto sp= null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectSupPhoto"));
+				pstmt.setInt(1, supBoardNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					sp=SupPhoto.builder().supFileNo(rs.getInt("SUP_FILE_NO"))
+						.supBoardNo(rs.getInt("SUP_BOARD_NO"))
+						.supMainPhoto(rs.getString("SUP_MAIN_PHOTO"))
+						.supPhotoOriName(rs.getString("SUP_PHOTO_ORINAME"))
+						.supPhotoRename(rs.getString("SUP_PHOTO_RENAME")).build();
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return sp;
+		}
+		
+		public List<SupPhoto> selectSupPhoto2(Connection conn, int supBoardNo) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			SupPhoto s= null;
+			List<SupPhoto> sp = new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectSupPhoto2"));
+				pstmt.setInt(1, supBoardNo);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					s=SupPhoto.builder().supFileNo(rs.getInt("SUP_FILE_NO"))
+						.supBoardNo(rs.getInt("SUP_BOARD_NO"))
+						.supMainPhoto(rs.getString("SUP_MAIN_PHOTO"))
+						.supPhotoOriName(rs.getString("SUP_PHOTO_ORINAME"))
+						.supPhotoRename(rs.getString("SUP_PHOTO_RENAME")).build();
+					sp.add(s);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return sp;
+		}
 		
 		private Support getSupport(ResultSet rs) throws SQLException{
 			return Support.builder()
 					.supBoardNo(rs.getInt("SUP_BOARD_NO"))
 					.supTitle(rs.getString("SUP_TITLE"))
-					.supTargetAmount(rs.getInt("SUP_TARGET_AMOUNT"))
+					.supTargetAmount(rs.getString("SUP_TARGET_AMOUNT"))
 					.supContents(rs.getString("SUP_CONTENTS"))
-					.supApvYn(rs.getString("VNT_REC_PERIOD").charAt(0))
+					.supApvYn(rs.getString("SUP_APV_YN").charAt(0))
 					.supAgencyNo(rs.getInt("SUP_AGENCY_NO"))
 					.build();
 		}

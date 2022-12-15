@@ -7,21 +7,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.happy.member.model.service.MemberService;
 import com.happy.member.model.vo.Member;
 
 /**
- * Servlet implementation class MemberEnterMyPageServlet
+ * Servlet implementation class duplicateId
  */
-@WebServlet(name="enterMyPage",urlPatterns= "/member/enterMyPage.do")
-public class MemberEnterMyPageServlet extends HttpServlet {
+@WebServlet("/member/duplicateId.do")
+public class duplicateId extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberEnterMyPageServlet() {
+    public duplicateId() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +30,13 @@ public class MemberEnterMyPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/member/enterMyPage.jsp").forward(request, response);
+		//아이디 입력값 받아오기
+		String inputId=request.getParameter("inputId");
+		//아이디 중복 비교
+		Member member=new MemberService().duplicateId(inputId);
+		
+		response.getWriter().print(member);
+		
 	}
 
 	/**

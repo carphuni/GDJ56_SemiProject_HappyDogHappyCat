@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <section id="enroll">
-      <form id="login-container" action="<%=request.getContextPath()%>/member/enrollEnd.do">
+      <form id="login-container" <%-- action="<%=request.getContextPath()%>/member/enrollEnd.do"onsubmit="return enrollInvalidate();" --%> >
         <h1>회원 가입</h1>
         <div class="form-floating" style="display: flex;">
           <input
@@ -13,8 +13,9 @@
             name="memberId"
           />
           <label for="floatingInput">아이디 ( 6자 이상 )</label>
-          <button class="btn btn-dh" id="duplicateCk">중복 확인</button>
+          <input type="button" class="btn btn-dh" value="중복확인" id="duplicateCk" onclick="duplicateId();">
         </div>
+        <div id="idResult"></div>
         <div class="form-floating">
           <input
             type="password"
@@ -46,6 +47,7 @@
           />
           <label for="floatingPassword">이름</label>
         </div>
+        <div id="nameResult"></div>
         <div id="birth">
           <div class="form-floating">
             <input
@@ -78,6 +80,7 @@
             <label for="floatingPassword">일</label>
           </div>
         </div>
+        <div id="birthResult"></div>
         <div class="form-floating">
           <input
             type="email"
@@ -88,6 +91,7 @@
           />
           <label for="floatingPassword">이메일 ( happy@happy.com )</label>
         </div>
+        <div id="emailResult"></div>
         <div class="form-floating">
           <input
             type="text"
@@ -98,6 +102,7 @@
           />
           <label for="floatingPassword">휴대전화 ( '-' 제외 )</label>
         </div>
+        <div id="phoneResult"></div>
         <div class="form-floating">
           <input
             type="text"
@@ -108,7 +113,8 @@
           />
           <label for="floatingPassword">주소</label>
         </div>
-        <input type="submit" class="btn btn-dh" value="가입하기" />
+        <div id="addressResult"></div>
+        <input type="button" class="btn btn-dh" value="가입하기" onclick="memberEnroll();"/>
       </form>
     </section>
 <%@ include file="/views/common/footer.jsp" %>

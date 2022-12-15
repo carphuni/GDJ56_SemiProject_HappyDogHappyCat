@@ -16,6 +16,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.google.gson.Gson;
 import com.happy.vol.model.service.VolunteerService;
+import com.happy.vol.model.vo.Agency;
 import com.happy.vol.model.vo.VolPhoto;
 import com.happy.vol.model.vo.Volunteer;
 import com.oreilly.servlet.MultipartRequest;
@@ -75,7 +76,8 @@ public class VolWriteEndServlet extends HttpServlet {
 			
 			
 		
-		
+		int memberNo = Integer.parseInt(mr.getParameter("memberNo"));
+		Agency a = new VolunteerService().selectAgency2(memberNo);
 		String title= mr.getParameter("param0");
 		System.out.println(title);
 		String managerName = mr.getParameter("param3");
@@ -91,6 +93,7 @@ public class VolWriteEndServlet extends HttpServlet {
 		String contents = mr.getParameter("content");
 		int setPerson = Integer.parseInt(mr.getParameter("param7"));
 		Volunteer v = Volunteer.builder().vntRecName(title)
+					.vntAgencyNo(a.getAgencyNo())
 					.vntManagerName(managerName)
 					.vntRecPeriod(recPeriod)
 					.vntActPeriod(actPeriod)

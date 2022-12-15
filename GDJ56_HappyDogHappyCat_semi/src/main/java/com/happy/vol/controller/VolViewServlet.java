@@ -43,7 +43,7 @@ public class VolViewServlet extends HttpServlet {
 		}
 		
 		numPerpage=5;
-		
+		List<Agency> agency = new VolunteerService().selectAgency3();
 		List<Volunteer> list = new VolunteerService().selectVolunteerList(cPage, numPerpage);
 		List<Agency> list2=new ArrayList();
 		List<VolPhoto> list3 = new ArrayList();
@@ -56,8 +56,8 @@ public class VolViewServlet extends HttpServlet {
 			vp = new VolunteerService().selectVolPhoto(boardNo);
 			list2.add(a);
 			list3.add(vp);
-			System.out.println(list3);
-			System.out.println(vp);
+//			System.out.println(list3);
+//			System.out.println(vp);
 		}
 		
 	
@@ -89,7 +89,7 @@ public class VolViewServlet extends HttpServlet {
 		}else {
 			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>[다음]</a>";
 		}
-		
+		request.setAttribute("ag", agency);
 		request.setAttribute("volunteer", list);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("agency", list2);

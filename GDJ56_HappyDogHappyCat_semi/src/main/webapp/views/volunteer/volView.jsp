@@ -5,6 +5,7 @@
 	List<Volunteer> list = (List<Volunteer>)request.getAttribute("volunteer");
 	 List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
 	 List<VolPhoto> list3 = (List<VolPhoto>)request.getAttribute("volPhoto");
+	 List<Agency> a = (List<Agency>)request.getAttribute("ag");
 	
 %>
 <%@ include file="/views/common/header.jsp" %>
@@ -124,13 +125,14 @@
       </div>
    </div>
      
-       <% for(int i=0;i<list2.size();i++){ 
-    	int memberNo =list2.get(i).getMemberNo();
-		if((loginMember!=null&&loginMember.getMemberId().equals("admin"))||loginMember!=null&&loginMember.getMemberNo()==memberNo){%>  
+      
+    
+	<%for(int i=0;i<a.size();i++){
+	if(loginMember!=null&&loginMember.getMemberNo()==a.get(i).getMemberNo()){%>  
     <div id="register" style="margin-right:-200px;">
        <br><br><br><a href="<%=request.getContextPath()%>/volwrite.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" class="myButton">글쓰기</a>
      </div>
-      <%}break;} %>
+      <%}} %>
 </div>
 </section>
 </form>
