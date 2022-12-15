@@ -86,5 +86,24 @@ public class MemberDao {
 		}
 		return result;
 	}
+	
+	public Member duplicateId(Connection conn, String inputId) {
+		//아이디 중복 체크
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Member member=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("duplicateId"));
+			pstmt.setString(1, inputId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) member=getMember(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return member;
+	}
 
 }
