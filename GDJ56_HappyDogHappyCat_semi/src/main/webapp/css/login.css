@@ -15,6 +15,7 @@
 
 #login-container>div{
     margin-bottom: 0.5rem;
+    text-align:start;
 }
 
 #login-container>div#birth{
@@ -43,7 +44,7 @@
     padding-bottom: 0.3rem;
 }
 
-#login-container button#duplicateCk{
+#login-container input#duplicateCk{
 	width: 15%;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
