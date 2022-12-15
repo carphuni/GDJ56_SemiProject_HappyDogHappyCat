@@ -34,9 +34,8 @@ public class duplicateId extends HttpServlet {
 		String inputId=request.getParameter("inputId");
 		//아이디 중복 비교
 		Member member=new MemberService().duplicateId(inputId);
-		if(inputId=="") response.getWriter().append("아이디를 입력해주세요");
-		else if(member==null) response.getWriter().append("사용가능한 아이디 입니다");
-		else response.getWriter().append("이미 사용중인 아이디 입니다");
+		
+		response.getWriter().print(member);
 		
 	}
 
