@@ -1,27 +1,23 @@
-package com.happy.vol.controller;
+package com.happy.qa.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.vol.model.service.VolunteerService;
-import com.happy.vol.model.vo.Agency;
-
 /**
- * Servlet implementation class VolWriteServlet
+ * Servlet implementation class QaWriteServlet
  */
-@WebServlet("/volwrite.do")
-public class VolWriteServlet extends HttpServlet {
+@WebServlet("/qa/qaWrite.do")
+public class QaWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VolWriteServlet() {
+    public QaWriteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,10 +26,8 @@ public class VolWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		Agency a = new VolunteerService().selectAgency2(memberNo);
-		request.setAttribute("agency", a);
-		request.getRequestDispatcher("/views/volunteer/volWrite.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

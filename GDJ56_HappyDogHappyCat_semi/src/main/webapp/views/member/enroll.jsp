@@ -8,7 +8,7 @@
           <input
             type="text"
             class="form-control"
-            id="floatingInput"
+            id="floatingId"
             placeholder="Id"
             name="memberId"
           />
@@ -19,7 +19,7 @@
           <input
             type="password"
             class="form-control"
-            id="floatingInput"
+            id="floatingPw"
             placeholder="Password"
             name="memberPw"
           />
@@ -29,17 +29,18 @@
           <input
             type="password"
             class="form-control"
-            id="floatingPassword"
+            id="floatingPwCk"
             placeholder="PasswordCheck"
             name="memberPwCk"
           />
           <label for="floatingPassword">비밀번호 재확인</label>
         </div>
+        <div id="pwResult"></div>
         <div class="form-floating">
           <input
             type="text"
             class="form-control"
-            id="floatingPassword"
+            id="floatingName"
             placeholder="Name"
             name="memberName"
           />
@@ -50,7 +51,7 @@
             <input
               type="text"
               class="form-control"
-              id="floatingPassword"
+              id="floatingYear"
               placeholder="0000"
               name="memberYear"
             />
@@ -60,7 +61,7 @@
             <input
               type="text"
               class="form-control"
-              id="floatingPassword"
+              id="floatingMonth"
               placeholder="00"
               name="memberMonth"
             />
@@ -70,7 +71,7 @@
             <input
               type="text"
               class="form-control"
-              id="floatingPassword"
+              id="floatingDay"
               placeholder="00"
               name="memberDay"
             />
@@ -81,7 +82,7 @@
           <input
             type="email"
             class="form-control"
-            id="floatingPassword"
+            id="floatingEmail"
             placeholder="Email.Email.com"
             name="memberEmail"
           />
@@ -91,7 +92,7 @@
           <input
             type="text"
             class="form-control"
-            id="floatingPassword"
+            id="floatingPhone"
             placeholder="000-0000-0000"
             name="memberPhone"
           />
@@ -101,8 +102,8 @@
           <input
             type="text"
             class="form-control"
-            id="floatingPassword"
-            placeholder="Email@Email.com"
+            id="floatingAddress"
+            placeholder="주소"
             name="memberAddress"
           />
           <label for="floatingPassword">주소</label>

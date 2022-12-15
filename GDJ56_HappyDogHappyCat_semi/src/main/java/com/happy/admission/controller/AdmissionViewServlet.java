@@ -1,27 +1,28 @@
-package com.happy.vol.controller;
+package com.happy.admission.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.vol.model.service.VolunteerService;
-import com.happy.vol.model.vo.Agency;
+import com.happy.admission.service.AdmissionService;
+import com.happy.animal.model.vo.Animal;
 
 /**
- * Servlet implementation class VolWriteServlet
+ * Servlet implementation class AdmissionViewServlet
  */
-@WebServlet("/volwrite.do")
-public class VolWriteServlet extends HttpServlet {
+@WebServlet("/admission/admissionView.do")
+public class AdmissionViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VolWriteServlet() {
+    public AdmissionViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,10 +31,14 @@ public class VolWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		Agency a = new VolunteerService().selectAgency2(memberNo);
-		request.setAttribute("agency", a);
-		request.getRequestDispatcher("/views/volunteer/volWrite.jsp").forward(request, response);
+		int admissionNo=Integer.parseInt(request.getParameter("admissionNo"));
+		
+		Animal ani=new AdmissionService().admissionView(admissionNo);
+		
+		request.setAttribute("ani",ani);
+		
+		RequestDispatcher rd=request.getRequestDispatcher("/views/admission/admissionView.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

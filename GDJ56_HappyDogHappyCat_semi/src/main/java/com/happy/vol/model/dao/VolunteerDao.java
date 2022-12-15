@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.happy.vol.model.vo.Agency;
+import com.happy.vol.model.vo.VolPhoto;
 import com.happy.vol.model.vo.Volunteer;
 public class VolunteerDao {
 	
@@ -73,6 +74,57 @@ public class VolunteerDao {
 		}return a;
 	}
 	
+	public VolPhoto selectVolPhoto(Connection conn, int vntBoardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		VolPhoto vp= null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolPhoto"));
+			pstmt.setInt(1, vntBoardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				vp=VolPhoto.builder().fileNo(rs.getInt("FILE_NO"))
+					.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
+					.mainPhoto(rs.getString("VNT_BOARD_NO"))
+					.vntPhotoOriName(rs.getString("VNT_PHOTO_ORINAME"))
+					.vntPhotoRename(rs.getString("VNT_PHOTO_RENAME")).build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return vp;
+	}
+	
+	
+	public List<VolPhoto> selectVolPhoto2(Connection conn, int vntBoardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		VolPhoto v = null;
+		List<VolPhoto> vp= new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolPhoto2"));
+			pstmt.setInt(1, vntBoardNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				v=VolPhoto.builder().fileNo(rs.getInt("FILE_NO"))
+					.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
+					.mainPhoto(rs.getString("VNT_BOARD_NO"))
+					.vntPhotoOriName(rs.getString("VNT_PHOTO_ORINAME"))
+					.vntPhotoRename(rs.getString("VNT_PHOTO_RENAME")).build();
+					vp.add(v);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return vp;
+	}
+	
+	
+	
 	
 	public List<Volunteer> selectVolunteerList(Connection conn, int cPage, int numPerpage){
 		PreparedStatement pstmt=null;
@@ -94,7 +146,26 @@ public class VolunteerDao {
 		}return list;
 	}
 	
-	public int selectVolunteerCount(Connection conn) {
+	public Volunteer selectVolunteer(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Volunteer v = null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolunteer"));
+			pstmt.setInt(1, boardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				v = getVolunteer(rs);
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return v;
+	}
+		
+		public int selectVolunteerCount(Connection conn) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		int result=0;
@@ -135,6 +206,26 @@ public class VolunteerDao {
 		}return result;
 	}
 	
+	
+	public int insertVolPhoto(Connection conn, int volNo, VolPhoto vp) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertVolPhoto"));
+			pstmt.setInt(1, volNo);
+			pstmt.setString(2, vp.getMainPhoto());
+			pstmt.setString(3, vp.getVntPhotoOriName());
+			pstmt.setString(4, vp.getVntPhotoRename());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}	
+		
+		
 	private Volunteer getVolunteer(ResultSet rs) throws SQLException{
 		return Volunteer.builder()
 				.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
@@ -153,6 +244,22 @@ public class VolunteerDao {
 				.vntEnrPerson(rs.getInt("VNT_ENR_PERSON"))
 				.vntActDline(rs.getDate("VNT_ACT_DLINE"))
 				.build();
+	}
+	
+	public int selectVolNo(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int volNo=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolNo"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) volNo=rs.getInt("volno");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return volNo;
 	}
 
 }
