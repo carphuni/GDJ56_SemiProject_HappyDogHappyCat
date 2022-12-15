@@ -42,7 +42,36 @@
             <div id="detailTitle"><br>
             </div>
         </div>
+        </section>
+        
+        <div id="reply" style=" text-align: left; width: 600px; margin: auto; word-break:break-all;word-wrap:break-word;">
+        <h3>댓글</h3>
+        <form action="<%=request.getContextPath()%>/adopt/adoptwrite";>
+            <textarea name="" id="" cols="90" rows="3" placeholder="댓글을 입력해주세요."></textarea>
+            <button type="button" class="btn btn-outline-secondary" style="float: right;">등록</button>
+        </form>
         <br><br>
+        <div style="border-top: solid rgba(0, 0, 0, 0.614);">
+        </div>
+        <div style="border-bottom: solid rgba(0, 0, 0, 0.482);;">
+            <p>아이디 등록일자</p>
+            <p>댓글내용</p>
+        </div>
+        <div style="border-bottom: solid rgba(0, 0, 0, 0.482);;">
+            <p>아이디 등록일자</p>
+            <p>댓글내용</p>
+        </div>
+        <div style="border-bottom: solid rgba(0, 0, 0, 0.482);;">
+            <p>아이디 등록일자</p>
+            <p>댓글내용</p>
+        </div>
+        <div style="border-bottom: solid rgba(0, 0, 0, 0.482);;">
+            <p>아이디 등록일자</p>
+            <p>댓글내용</p>
+        </div>
+        
+    </div>
+    <br>
         <div id="adp_btn">
         	<a href="<%=request.getContextPath()%>/adopt/adoptreview.do">
             <button type="button" class="btn btn-primary"><p>목록가기</p></button>
@@ -50,11 +79,18 @@
             <br>
         </div>
         <br><br>
-    </section>
+    
     <%@ include file="/views/common/footer.jsp"%>
     
     
     <style>
+    textarea{
+    	box-sizing: border-box; 
+    	border: solid 2px gray;
+    	border-radius: 5px; 
+    	resize: none;
+    	outline-color: #FE6B8B;
+    }
     div#title{
         text-align: center;
         border-bottom: 2px solid rgb(194, 192, 192);

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal" %>
-    <% Animal ani = (Animal)request.getAttribute("ani"); %>
+    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal,com.happy.adopt.model.vo.AnimalPick" %>
+    <% Animal ani = (Animal)request.getAttribute("ani"); List<AnimalPick> pick = (List<AnimalPick>)request.getAttribute("pick"); %>
 <%@ include file="/views/common/header.jsp"%>
 
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -198,7 +198,22 @@
 	    <div class="sideBanner">
 	        <div id="sideBanner-inner">
 	            <br>
-	            <h2 id="pick" >🤍</h2> 
+	            <% int count=0; %>
+	            <%if(pick==null){ %>
+	            	<!-- <h2 id="pick" >🤍</h2>  -->
+	            	<% count=0;%>
+	            <%}else{ %>
+	            	<%for(int i=0;i<pick.size();i++){ %>
+		            	<%if(((int)pick.get(i).getAniNo())==((int)ani.getAniNo())){%>
+		            		<% count++;%>	
+		            	<%} } }%>  
+		         <%if(count==0){%>
+		        	 <h2 id="pick" >🤍</h2>
+		         <%}else{ %>
+		         	<h2 id="pick" >❤️</h2>
+		         <%} %>
+	            
+	            
 	            <h2 id="share">
 	            <a id="kakaotalk-sharing-btn" href="javascript:shareMessage()"> 
 	            <img id="kakao-share" src="<%=request.getContextPath() %>/images/adopt/free-icon-share-3989188.png" alt="" width="33" height="33" >
@@ -236,22 +251,22 @@
 
 	
 	 $("#pick").click(e=>{
-		<%-- if(<%=loginMember==null%>){
+		if(<%=loginMember==null%>){
 	    	alert('로그인이 필요한 서비스입니다.');
-	    } --%>
-		if(<%=loginMember!=null%>){
-			console.log($(e.target).html())
+	    }else{
+	
+			/* console.log($(e.target).html()) */
 	    	if($(e.target).html()=='🤍'){
 		        /* $("#pick").html("❤️");  */ 
 		        $.ajax({
 					url:"<%=request.getContextPath()%>/adopt/adoptpick.do?aniNo=<%=ani.getAniNo()%>",
 					type:"get",
-					data:{color:"white",memberNo:"<%=loginMember.getMemberNo()%>"},
+					data:{color:"white",memberNo:"<%=loginMember!=null?loginMember.getMemberNo():0%>"},
 					success:data=>{
 						//console.log(data);
 						
 						$("#pick").html(data);
-						alert("찜 성공");
+						alert("찜 성공!!");
 					}
 		    	});
 	    	}else{
@@ -259,36 +274,18 @@
 	    		 $.ajax({
 						url:"<%=request.getContextPath()%>/adopt/adoptpick.do?aniNo=<%=ani.getAniNo()%>",
 						type:"get",
-						data:{color:"red",memberNo:"<%=loginMember.getMemberNo()%>"},
+						data:{color:"red",memberNo:"<%=loginMember!=null?loginMember.getMemberNo():0%>"},
 						success:data=>{
 							//console.log(data);
 							
 							$("#pick").html(data);
-							alert("찜 해제");
+							alert("찜 해제..");
 						}
 			    	});
-		    } 
+		    }
 		}
 	});
-	
-	<%-- const clickpick=(e)=>{
-	    console.log($(e.target).html());
-	    if(<%=loginMember==null%>){
-	    	alert('로그인이 필요한 서비스입니다.');
-	    }
-	    if(<%=loginMember!=null%>){
-	    	if($(e.target).html()=='🤍'){
-		        /* $("#pick").html("❤️"); */
-		        $.get("<%=request.getContextPath()%>/adopt/adoptpick.do?memberNo=<%=loginMember.getMemberNo()%>",
-		        		data=>{
-		        			$("#pick").html("❤️");  
-			               });
-		    }else{
-		        $("#pick").html("🤍");
-		    }
-	    }
-	    
-	} --%>
+
 	
 	// 기본 위치(top)값
 	var floatPosition = parseInt($(".sideBanner").css('bottom'));

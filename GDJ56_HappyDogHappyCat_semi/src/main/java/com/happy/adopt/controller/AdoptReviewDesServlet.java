@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +36,32 @@ public class AdoptReviewDesServlet extends HttpServlet {
 		
 		//System.out.println(adpBoardNo);
 		
-		AdtReviewBorad arb=new AdoptService().adoptReviewDes(adpBoardNo);
 		//System.out.println(arb);
+		
+		Cookie[] cookies=request.getCookies();
+		String reviewRead="";
+		boolean readflag=false;
+		if(cookies!=null) {
+			for(Cookie c : cookies) {
+				String name=c.getName();
+				String value=c.getValue(); 
+				if(name.equals("reviewRead")) {
+					reviewRead=value;
+					if(value.contains("|"+adpBoardNo+"|")) {
+						readflag=true;
+					}
+					break;
+				}
+			}
+		}
+		
+		if(!readflag) {
+			Cookie c=new Cookie("reviewRead",(reviewRead+"|"+adpBoardNo+"|"));
+			c.setMaxAge(60*60*24);
+			response.addCookie(c);
+		}
+		
+		AdtReviewBorad arb=new AdoptService().adoptReviewDes(adpBoardNo,readflag);
 		
 		request.setAttribute("arb", arb);
 		request.getRequestDispatcher("/views/adopt/adoptReviewDes.jsp").forward(request, response);

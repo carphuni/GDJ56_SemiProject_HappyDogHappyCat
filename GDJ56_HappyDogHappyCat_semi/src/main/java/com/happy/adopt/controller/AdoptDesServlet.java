@@ -5,12 +5,16 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.happy.adopt.model.service.AdoptService;
+import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
+import com.happy.member.model.vo.Member;
 
 /**
  * Servlet implementation class AdoptDesServlet
@@ -36,9 +40,44 @@ public class AdoptDesServlet extends HttpServlet {
 		
 		//System.out.println(aniNo);
 		
-		Animal ani = new AdoptService().adoptDesAni(aniNo);
+		//System.out.println(ani);	
 		
-		//System.out.println(ani);
+		 HttpSession session =request.getSession(); 
+		 Member m=(Member)session.getAttribute("loginMember");	 
+		 if(m!=null) {
+			 List<AnimalPick> pick = new AdoptService().adoptPickAll(m.getMemberNo());
+			 //System.out.println(pick);
+			 request.setAttribute("pick", pick);
+		 }else {
+			 List<AnimalPick> pick = null;
+			 //System.out.println(pick);
+			 request.setAttribute("pick", pick);
+		 }
+		 
+		 Cookie[] cookies=request.getCookies();
+			String reviewRead="";
+			boolean readflag=false;
+			if(cookies!=null) {
+				for(Cookie c : cookies) {
+					String name=c.getName();
+					String value=c.getValue(); 
+					if(name.equals("reviewRead")) {
+						reviewRead=value;
+						if(value.contains("|"+aniNo+"|")) {
+							readflag=true;
+						}
+						break;
+					}
+				}
+			}
+			
+			if(!readflag) {
+				Cookie c=new Cookie("reviewRead",(reviewRead+"|"+aniNo+"|"));
+				c.setMaxAge(60*60*24);
+				response.addCookie(c);
+			}
+			
+			Animal ani = new AdoptService().adoptDesAni(aniNo,readflag);
 		
 		request.setAttribute("ani", ani);
 		request.getRequestDispatcher("/views/adopt/adoptDes.jsp").forward(request, response);

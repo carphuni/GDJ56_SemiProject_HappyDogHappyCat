@@ -7,9 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Session;
+import javax.servlet.http.HttpSession;
 
 import com.happy.adopt.model.service.AdoptService;
+import com.happy.member.model.vo.Member;
 
 /**
  * Servlet implementation class AdoptPickServlet
@@ -36,7 +37,9 @@ public class AdoptPickServlet extends HttpServlet {
 		int memberNo=Integer.parseInt(request.getParameter("memberNo"));
 		//System.out.println(color);
 		//System.out.println(aniNo);
-		System.out.println(memberNo);
+		
+		
+		//System.out.println(memberNo);
 		
 		
 		String heart="";
