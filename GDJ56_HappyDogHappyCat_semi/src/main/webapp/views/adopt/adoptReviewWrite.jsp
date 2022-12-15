@@ -30,13 +30,14 @@
                 <div class="title">
                     <dl>
                         <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력"></dd>
+                        <dd><input type="text" placeholder="제목 입력" name="title"></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt>작성자</dt>
                         <dd><input type="text" value="<%=loginMember.getMemberId() %>" readonly></dd>
+                        <input type="text" value= "<%=loginMember.getMemberNo() %>" name="memberNo"  hidden>
                     </dl>
                     <dl>
                     </dl>

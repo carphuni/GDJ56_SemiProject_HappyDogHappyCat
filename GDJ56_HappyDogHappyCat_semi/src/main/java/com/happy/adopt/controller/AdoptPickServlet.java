@@ -1,11 +1,16 @@
 package com.happy.adopt.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.happy.adopt.model.service.AdoptService;
+import com.happy.member.model.vo.Member;
 
 /**
  * Servlet implementation class AdoptPickServlet
@@ -27,11 +32,39 @@ public class AdoptPickServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int memberNo=Integer.parseInt(request.getParameter("memberNo")) ;
+		String color=request.getParameter("color");
+		int aniNo=Integer.parseInt(request.getParameter("aniNo"));
+		int memberNo=Integer.parseInt(request.getParameter("memberNo"));
+		//System.out.println(color);
+		//System.out.println(aniNo);
 		
-		System.out.println(memberNo);
-		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().append("<div><h2>"+"님이 만든 첫 ajax응답</h2></div>");
+		
+		//System.out.println(memberNo);
+		
+		
+		String heart="";
+		//response.setContentType("text/html;charset=utf-8");
+		 if(color.equals("white")) { 
+			 int result=new AdoptService().adoptAddPick(memberNo,aniNo);
+			 if(result>0) {
+					heart="❤️";
+			 }else {
+					heart="🤍";
+				}
+			 
+			 
+		 }else {
+			 int result=new AdoptService().adoptDeletePick(memberNo,aniNo);
+			 if(result>0) {
+					heart="🤍";
+			 }else {
+					heart="❤️";
+				}	 
+		 }
+		 
+		 response.getWriter().append(heart);
+		
+		
 	}
 
 	/**

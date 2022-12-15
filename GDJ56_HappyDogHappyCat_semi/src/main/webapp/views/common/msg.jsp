@@ -3,6 +3,7 @@
  <%
 	String msg=(String)request.getAttribute("msg");
 	String loc=(String)request.getAttribute("loc");
+	
 %>
 <!DOCTYPE html>
 <html>

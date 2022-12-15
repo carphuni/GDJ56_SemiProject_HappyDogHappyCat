@@ -25,5 +25,7 @@ public class Animal {
 	private char influ;
 	private char antibody;
 	private char totalvac;
+	private int adtViews;
+
 
 }

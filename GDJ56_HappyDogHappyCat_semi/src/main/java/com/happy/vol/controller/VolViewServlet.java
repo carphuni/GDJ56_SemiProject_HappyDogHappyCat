@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.Agency;
+import com.happy.vol.model.vo.VolPhoto;
 import com.happy.vol.model.vo.Volunteer;
 
 /**
@@ -45,13 +46,21 @@ public class VolViewServlet extends HttpServlet {
 		
 		List<Volunteer> list = new VolunteerService().selectVolunteerList(cPage, numPerpage);
 		List<Agency> list2=new ArrayList();
-
-	
+		List<VolPhoto> list3 = new ArrayList();
+		
+		VolPhoto vp = null;
 		for(int i=0;i<list.size();i++) {
 			int agencyNo = list.get(i).getVntAgencyNo();
+			int boardNo=list.get(i).getVntBoardNo();
 			Agency a = new VolunteerService().selectAgency(agencyNo);
+			vp = new VolunteerService().selectVolPhoto(boardNo);
 			list2.add(a);
+			list3.add(vp);
+			System.out.println(list3);
+			System.out.println(vp);
 		}
+		
+	
 		String pageBar="";
 		int totalData = new VolunteerService().selectVolunteerCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
@@ -84,6 +93,7 @@ public class VolViewServlet extends HttpServlet {
 		request.setAttribute("volunteer", list);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("agency", list2);
+		request.setAttribute("volPhoto", list3);
 		request.getRequestDispatcher("/views/volunteer/volView.jsp").forward(request, response);
 		
 	}

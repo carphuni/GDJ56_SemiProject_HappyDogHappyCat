@@ -42,6 +42,7 @@
                     <dl>
                         <dt style="font-size:17px">담당자 이름</dt>
                         <dd style="font-size:17px;margin-top:14px;"><input type="text" name="managerName" placeholder="담당자 이름" required></dd>
+             
                     </dl>
                     <dl>
                         <dt style="font-size:17px">시설 연락처</dt>
@@ -75,13 +76,13 @@
 
                 <div class="file" style="font-size:17px">
                     <b>* 대표이미지 설정</b>
-                    <input type="file" class="real-upload" accept="image/*" onchange="readURL(this);" required>
+                    <input type="file" name = "upFile" class="real-upload" accept="image/*" onchange="readURL(this);" required>
                     <img id="preview" style="display:none;"></div>
                 </div>
                 
                 <div class="file2" style="font-size:17px">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' accept="image/*" multiple required/>
+                    <input type="file" id='btnAtt' accept="image/*" name="upload2" multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
@@ -90,12 +91,67 @@
 			
 	       
             <div class="bt_wrap" >
-                <input type="submit" style="font-size:17px" id="saveBtn" class="on" value="등록">
+                <input type="button" style="font-size:17px" id="saveBtn" class="on" value="등록">
                 <input type="button" style="font-size:17px" value="취소" onclick="location.replace('<%=request.getContextPath()%>/volview.do')">
             </div>
         </div>
     </form>
 </section>
+
+<script>
+
+	
+		$("#saveBtn").click(e=>{
+			let form=new FormData();
+			const sumnail=$("input[name=upFile]")[0].files;
+			const files=$("input[name=upload2]")[0].files;
+			let inputs=$("form input").not("input[class*=note]");
+			console.log(inputs);
+			 var summernoteContent = $('#summernote').summernote('code');
+			
+			
+			inputs.each((i,v)=>{
+				console.log($(v).attr("name"),$(v).val());
+				form.append("param"+i,$(v).val());
+			});
+			
+			$.each(files,(i,v)=>{
+				form.append("upfile"+i,v);
+			});		
+			
+			$.each(sumnail,(i,v)=>{
+				form.append("sumn"+i,v);
+			});		
+					
+			 form.append("content",summernoteContent);
+			 	$.ajax({
+				url :"<%=request.getContextPath()%>/vol/volWriteEnd.do",
+				data : form,
+				type : "post",
+				contentType:false,
+				processData:false,
+				success : e=>{
+					console.log(e.msg);	
+					console.log(e.loc);
+					var loc2 = e.loc;
+					alert(e.msg);
+					location.replace('<%=request.getContextPath()%>'+loc2);
+// 					alert("파일업로드 성공");
+// 					$("#upload2").val("");
+// 					},error:(r,m,e)=>{
+// 						alert("업로드 실패 다시시도하세요!");
+// 					}
+			 	}
+				});
+			}); 
+			
+		
+		 
+	
+	
+</script>
+
+
 
 <script src="<%=request.getContextPath()%>/js/volwrite.js"></script>
 <%@ include file="/views/common/footer.jsp" %>
