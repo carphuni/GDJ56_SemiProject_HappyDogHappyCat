@@ -36,6 +36,8 @@ public class AdoptMainListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
+		String type=request.getParameter("aniType");
+		System.out.println(type);
 		
 		int cPage;
 		try {

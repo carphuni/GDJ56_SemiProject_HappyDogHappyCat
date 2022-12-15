@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.happy.adopt.model.vo.AdtBorad;
 import com.happy.adopt.model.vo.AdtReviewBorad;
+import com.happy.adopt.model.vo.AdtReviewComment;
 import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
 import com.happy.common.JDBCTemplate;
@@ -285,6 +286,54 @@ public class AdoptDao {
 		return result;
 	}
 	
+	public int adoptComment(Connection conn,String reply,String memberId,int reviewBoardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptComment"));
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, reply);
+			pstmt.setInt(3, reviewBoardNo);
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<AdtReviewComment> adoptReviewCommentAll(Connection conn,int adpBoardNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdtReviewComment> cList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewCommentAll"));
+			pstmt.setInt(1, adpBoardNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				cList.add(getAdtReviewComment(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return cList;
+	}
+	
+	public static AdtReviewComment getAdtReviewComment(ResultSet rs) throws SQLException{
+        return AdtReviewComment.builder()
+              .commentNo(rs.getInt("COMMENT_NO"))
+              .memberId(rs.getString("MEMBER_ID"))
+              .commentWriteDate(rs.getString("COMMENT_WRITE_DATE"))
+              .commentContents(rs.getString("COMMENT_CONTENTS"))
+              .commentDeleteYn(rs.getString("COMMENT_DELETE_YN").charAt(0))
+              .commentModifyDate(rs.getString("COMMENT_MODIFY_DATE"))
+              .adtReviewBoardNo(rs.getInt("ADT_REVIEWBOARD_NO"))
+              .build();
+  }
 	
 	public static AdtReviewBorad getAdtReviewBorad(ResultSet rs) throws SQLException{
         return AdtReviewBorad.builder()
