@@ -56,7 +56,6 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 		String furColor=request.getParameter("furColor");
 		String aniSpecial=request.getParameter("aniSpecial");
 		String aniReason=request.getParameter("summernote");
-		System.out.println(aniReason);
 		Animal ani=Animal.builder()
 				.aniName(animalName)
 				.aniType(animalType)
@@ -77,7 +76,7 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 				.aniReason(aniReason)
 				.build();
 		
-		
+		System.out.println(ani);
 		//클라이언트에게 입력받은 입소희망일을 AdmissionForm에 저장 
 		int memberNo=Integer.parseInt(request.getParameter("memberNo"));
 		//System.out.println("ㅎ2"+memberNo);

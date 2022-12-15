@@ -171,6 +171,7 @@ public class AdmissionDao {
 				.influ(rs.getString("influ").charAt(0))
 				.antibody(rs.getString("antibody").charAt(0))
 				.totalvac(rs.getString("totalvac").charAt(0))
+				.adtViews(rs.getInt("ani_views"))
 				.build();
 		
 	}

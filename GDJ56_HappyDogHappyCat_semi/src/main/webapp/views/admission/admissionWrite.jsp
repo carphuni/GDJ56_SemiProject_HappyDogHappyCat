@@ -33,7 +33,8 @@ com.happy.animal.model.vo.Animal" %>
                     </dl>
                      <dl>
                         <dt style="font-size:18px;">동물종류</dt>
-                         <dd><input type="text" placeholder="강아지/고양이 중 입력" id="inputType" name="aniType"></dd>
+                         <dd>강아지<input type="radio" id="inputType" name="aniType" value="강아지"></dd>
+                         <dd>고양이<input type="radio" id="inputType" name="aniType" value="고양이"></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -123,10 +124,7 @@ com.happy.animal.model.vo.Animal" %>
 	</form>
 </section>
 	<style>
-		#inputType{
-			width:200px;
-  			height:30px;
-		}
+		
 		#aniType{
 			font-size:18px;
 		}

@@ -186,7 +186,7 @@ com.happy.qa.vo.QaForm" %>
             <tr>
             	<td><%=q.getQaBoardNo() %></td>
               <th>
-                <a href=""><%=q.getQaTitle() %></a>
+                <a href="<%=request.getContextPath()%>/qa/qaView.do?qaBoardNo=<%=q.getQaBoardNo()%>"><%=q.getQaTitle() %></a>
               </th>
               <td><%=q.getMemberNo() %></td>
               <td><%=q.getQaWriteDate() %></td>

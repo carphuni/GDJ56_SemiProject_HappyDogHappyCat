@@ -14,6 +14,8 @@ import java.util.Properties;
 
 import com.happy.admission.dao.AdmissionDao;
 import com.happy.admission.vo.AdmissionForm;
+import com.happy.animal.model.vo.Animal;
+import com.happy.qa.vo.QaComment;
 import com.happy.qa.vo.QaForm;
 
 public class QaDao {
@@ -101,6 +103,39 @@ public class QaDao {
 			e.printStackTrace();
 		}finally {
 			close(rs);
+			close(pstmt);
+		}return result;
+	}
+
+	public QaForm QaView(Connection conn, int qaNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		QaForm q=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("qaView"));
+			pstmt.setInt(1, qaNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) q=getQa(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return q;
+	}
+
+	public int enrollComment(Connection conn, QaComment qc) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("enrollComment"));
+			pstmt.setInt(1, qc.getQaBoardNo());
+			pstmt.setString(2, qc.getQaCommentWriteContent());
+			result=pstmt.executeUpdate();
+			System.out.println(result);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
 			close(pstmt);
 		}return result;
 	}

@@ -1,6 +1,8 @@
 package com.happy.qa.service;
 
+import com.happy.animal.model.vo.Animal;
 import com.happy.qa.dao.QaDao;
+import com.happy.qa.vo.QaComment;
 import com.happy.qa.vo.QaForm;
 
 import static com.happy.common.JDBCTemplate.close;
@@ -10,6 +12,7 @@ import static com.happy.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
+import com.happy.qa.vo.QaForm;
 
 public class QaService {
 	
@@ -37,6 +40,24 @@ public class QaService {
 		Connection conn=getConnection();
 		int result=dao.selectQaCount(conn);
 		close(conn);
+		return result;
+	}
+
+	public QaForm QaView(int qaNo) {
+		Connection conn=getConnection();
+		QaForm q=dao.QaView(conn,qaNo);
+		close(conn);
+		return q ;
+	}
+
+	public int enrollComment(QaComment qc) {
+		Connection conn=getConnection();
+		int result=dao.enrollComment(conn,qc);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}close(conn);
 		return result;
 	}
 
