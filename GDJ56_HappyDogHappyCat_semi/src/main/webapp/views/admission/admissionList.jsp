@@ -21,6 +21,7 @@ com.happy.animal.model.vo.Animal
             </div>
             <img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;">
         </div>
+  
         <section class="post">
               <div id="board-search">
                   <div class="container">
@@ -73,7 +74,7 @@ com.happy.animal.model.vo.Animal
                      onclick="location.assign('<%=request.getContextPath()%>/admission/writeAdmission.do');">글쓰기&#128062;</button>
                   </div>
               </div>
-          </section>
+       
           <div id="pageBar">
         	<%=request.getAttribute("pageBar") %>
         </div>
@@ -264,5 +265,6 @@ com.happy.animal.model.vo.Animal
      #text{
         font-family: "Poor story";
      }
+     
     </style>
 <%@include file="/views/common/footer.jsp"%>

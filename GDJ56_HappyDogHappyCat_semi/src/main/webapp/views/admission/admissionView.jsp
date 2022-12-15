@@ -170,18 +170,7 @@
        		</a>
         </div>
 	    <br>
-	    <div class="sideBanner">
-	        <div id="sideBanner-inner">
-	            <br>
-	            <h2 id="pick" >🤍</h2> <!-- onclick="clickpick(event);" -->
-	            <h2 id="share">
-	            <a id="kakaotalk-sharing-btn" href="javascript:shareMessage()"> 
-	            <img id="kakao-share" src="<%=request.getContextPath() %>/images/adopt/free-icon-share-3989188.png" alt="" width="33" height="33" >
-	            </a>
-	            </h2>
-	        </div>
-      </div>
-
+	    
 <script>
 	//카카오톡 공유하기
 	function shareMessage() {

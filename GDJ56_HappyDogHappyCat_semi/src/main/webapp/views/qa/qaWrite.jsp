@@ -20,38 +20,50 @@
       <div class="board_title">
           <Strong>Q&A</Strong>
       </div>
+      <form action="<%=request.getContextPath() %>/qa/qaWriteEnd.do" 
+      method="post">
+      <input type="text" name="memberNo" value="<%=loginMember.getMemberNo()%>" hidden>
       <div class="board_write_wrap">
           <div class="board_write" >
               <div class="title">
                   <dl>
                       <dt><h5>제목</h5></dt>
-                      <dd><input type="text" placeholder="제목 입력" id="inputTitle"></dd>
+                      <dd><input type="text" placeholder="제목 입력" id="inputTitle" name="qaTitle"></dd>
                   </dl>
               </div>
-    
-           
               <div class="cont">
                   <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
               </div>
-    
-          
-              
+    		 <div class="info">
+                	<dl>
+                        <dt style="font-size:16px;">🔒공개여부</dt> 
+                       <dd>공개<input type="radio" id="open" name="openYn" value="Y"></dd>
+                       <dd>비공개<input type="radio" id="close" name="openYn" value="N"></dd>
+                    </dl>
+             </div>
+             <div class="info" id="pwContainer" style="display:none;">   
+                    <dl>
+                        <dt style="font-size:18px;">비밀번호</dt>
+                        <dd><input type="password" name="passWord" value="password" ></dd>
+                    </dl>
+                    
+             </div>	
               <div class="file2">
-                  <h5>* 사진첨부</h5>
+                  <h5>📸사진첨부</h5>
                   <input type="file" id='btnAtt' accept="image/*"  multiple/>
               </div>
               <div id='att_zone' 
               data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
-            
-               </div>
+             </div>
     
      
               <div class="bt_wrap">
-                  <a href="view.html" class="on" id="enroll">등록</a>
-                  <a href="list.html" id="nono">취소</a>
+                  <input type="submit" value="등록" id="on">
+                  <input type="reset" value="취소">
               </div>
           </div>
       </div>
+      </form>
     </div>
     
   <style>
@@ -103,7 +115,7 @@
            font-size: 0;
        }
        
-       .bt_wrap a {
+       .bt_wrap input {
            display: inline-block;
            min-width: 80px;
            margin-left: 10px;
@@ -117,7 +129,7 @@
            margin-left: 0;
        }
        
-       .bt_wrap a.on {
+       .bt_wrap input#on {
            background: gray;
            color: #fff;
        }
@@ -246,6 +258,30 @@
 </style>
 
 <script>
+	$(function (){
+		 
+		$("input[type='radio'][name='openYn']").on('click', function(event){
+		  //var chkValue = $('input[type=radio][id="open"]:checked').val();
+		  var chkValue=event.target.value;
+		  if(chkValue=="Y"){
+		             $('#pwContainer').hide();
+		  }else{
+		             $('#pwContainer').show();
+		  }
+		 
+		});
+		 
+		});
+ 
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     $(document).ready(function() {
     $('#summernote').summernote({

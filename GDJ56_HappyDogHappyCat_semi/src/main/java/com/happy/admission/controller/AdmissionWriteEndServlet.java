@@ -90,11 +90,11 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 		if(result==0) {
 			//동물저장 실패시
 			msg="입소신청 실패,다시 신청해주세요!";
-			loc="/";
+			loc="/admission/writeAdmission.do";
 		}else {
 			//동물저장 성공시
 			msg="입소신청 완료!:)";
-			loc="/";
+			loc="/admission/admissionList.do";
 		}
 
 		request.setAttribute("msg", msg);

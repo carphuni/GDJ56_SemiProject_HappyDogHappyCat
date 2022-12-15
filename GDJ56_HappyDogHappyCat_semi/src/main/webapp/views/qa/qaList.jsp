@@ -1,58 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List,
+com.happy.qa.vo.QaForm" %>
+<%
+ List<QaForm> list=(List<QaForm>)request.getAttribute("qas");
+%>
 <%@include file="/views/common/header.jsp"%>
-<body>
 <section id="content">
-    <div style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
-      <img src="<%=request.getContextPath() %>/images/admission/dog1.png" alt="" style="margin-right: auto;">
-      <div id="text">
-        <h1 style="font-size: 30px; text-align: center;">Q&A</h1>
-        <p>궁금하신 점은 언제든지 문의주세요.<br>
-          <br>해피독해피캣은 전문상담가들을 통해<br>
-          <br>정확하고 신속한 답변을 드리겠습니다.
-        </p>
-      </div>
-      <img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;">
-    </div>
-    <br>
-  </section>
+    	<div style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
+      		<img src="<%=request.getContextPath() %>/images/admission/dog1.png" alt="" style="margin-right: auto;">
+      		<div id="text">
+        		<h1 style="font-size: 30px; text-align: center;">Q&A</h1>
+        		<p>궁금하신 점은 언제든지 문의주세요.<br>
+          		<br>해피독해피캣은 전문상담가들을 통해<br>
+          		<br>정확하고 신속한 답변을 드리겠습니다.
+        		</p>
+      		</div>
+      		<img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;">
+    	</div>
+    	<br>
+    
+    
   <!--자주묻는 질문-->
-  <div id="oftenQa1">
-    <div class="quest" id="q1" data-toggle="modal" data-target="#testModal1">
-      <p class="qq1">Q1.자주묻는 질문<br>입소 후 아이의 소식은<br>어떻게 알 수 있나요?</p>
-    </div>
-    <div class="quest" id="q2" data-toggle="modal" data-target="#testModal2">
-      <p class="qq1">Q2.자주묻는 질문<br>입양가정은 어떤 기준으로 채택되나요?</p>
-    </div>
-    <div class="quest" id="q3" data-toggle="modal" data-target="#testModal3">
-      <p class="qq1">Q3.자주묻는 질문<br>제보된 아이가 제 아이입니다.<br>어떻게 데려올 수 있나요?</p>
-    </div>
-  </div>
-  <div id="oftenQa2">
-    <div class="quest1" id="q4" data-toggle="modal" data-target="#testModal4">
-      <p class="qq1">Q4.자주묻는 질문<br>모든 과정에서 정말 무료가 맞나요?</p>
-    </div>
-    <div class="quest1" id="q5" data-toggle="modal" data-target="#testModal5">
-      <p class="qq1">Q5.자주묻는 질문<br>입양한 아이를 키우는데 문제가<br> 생겼을 경우,어떤 도움을 받을 수 있나요?</p>
-    </div>
-    <div class="quest1" id="q6" data-toggle="modal" data-target="#testModal6"> 
-      <p class="qq1">Q6.자주묻는 질문<br>회원탈퇴를 하고싶습니다.</p>
-    </div>
-  </div>
-  <br>
+  	<div id="oftenQa1">
+    	<div class="quest" id="q1" data-toggle="modal" data-target="#testModal1">
+      		<p class="qq1">Q1.자주묻는 질문<br>입소 후 아이의 소식은<br>어떻게 알 수 있나요?</p>
+    	</div>
+    	<div class="quest" id="q2" data-toggle="modal" data-target="#testModal2">
+      		<p class="qq1" >Q2.자주묻는 질문<br>입양가정은 어떤 기준으로 채택되나요?</p>
+    	</div>
+    	<div class="quest" id="q3" data-toggle="modal" data-target="#testModal3">
+      		<p class="qq1" >Q3.자주묻는 질문<br>제보된 아이가 제 아이입니다.<br>어떻게 데려올 수 있나요?</p>
+    	</div>
+  	</div>
+  	
+  	<div id="oftenQa2">
+    	<div class="quest1" id="q4" data-toggle="modal" data-target="#testModal4">
+      		<p class="qq1" >Q4.자주묻는 질문<br>모든 과정에서 정말 무료가 맞나요?</p>
+    	</div>
+    	<div class="quest1" id="q5" data-toggle="modal" data-target="#testModal5">
+      		<p class="qq1" >Q5.자주묻는 질문<br>입양한 아이를 키우는데 문제가<br> 생겼을 경우,어떤 도움을 받을 수 있나요?</p>
+    	</div>
+    	<div class="quest1" id="q6" data-toggle="modal" data-target="#testModal6"> 
+      		<p class="qq1" >Q6.자주묻는 질문<br>회원탈퇴를 하고싶습니다.</p>
+    	</div>
+  	</div>
+  	<br>
+  	
   <!--모달창 -->
-  <div class="modal fade" id="testModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  	<div class="modal fade" id="testModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3 class="modal-title" id="exampleModalLabel">Q1.입소 후 아이의 소식은 어떻게 알 수 있나요?</h3>
 				</div>
 				<div class="modal-body"><h5>입소 확정일 기준 3개월 단위로 입소한 아이의 소식을 이메일로 보내드립니다. 만약 입소한 아이가 입양되었다면, 입양후기 카테고리를 통해 아이의 근황을 확인 하실 수 있습니다.</h5></div>
-		  </div>
-	  </div>
-  </div>
+		  	</div>
+	  	</div>
+     </div>
 
-  <div class="modal fade" id="testModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  	<div class="modal fade" id="testModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -140,7 +147,7 @@
 
     
   </script>
- </body>
+
   <section class="post">
     <div id="board-search">
       <div class="container">
@@ -170,98 +177,34 @@
             </tr>
           </thead>
           <tbody>
+          <%if(list.isEmpty()){ %>
             <tr>
-              <td>5</td>
+              <td colspan="5">조회된 Q&A 내역이 없습니다.</td>
+            </tr>
+            <%}else{
+            	for(QaForm q: list){%>
+            <tr>
+            	<td><%=q.getQaBoardNo() %></td>
               <th>
-                <a href="">문의드려요:) </a>
+                <a href=""><%=q.getQaTitle() %></a>
               </th>
-              <td>작성자아이디?이름?</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <th>
-                <a href="">문의드려요:) </a>
-              </th>
-              <td>작성자아이디?이름?</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-
-            </tr>
-            <tr>
-              <td>5</td>
-              <th>
-                <a href="">문의드려요:) </a>
-              </th>
-              <td>작성자아이디?이름?</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <th>
-                <a href="">문의드려요:) </a>
-              </th>
-              <td>작성자아이디?이름?</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-            </tr>
-
-            <tr>
-              <td>5</td>
-              <th>
-                <a href="">문의드려요:) </a>
-              </th>
-              <td>작성자아이디?이름?</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-            </tr>
-
-            <tr>
-              <td>4</td>
-              <th>
-                <a href="">문의드려요:) </a>
-              </th>
-              <td>작성자아이디?이름?</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-            </tr>
-
-            <tr>
-              <td>3</td>
-              <th>
-                <a href="">문의드려요:) </a>
-              </th>
-              <td>작성자아이디?이름?</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-            </tr>
-
-            <tr>
-              <td>2</td>
-              <th><a href="">문의드려요:) </a></th>
-              <td>작성자</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-            </tr>
-
-            <tr>
-              <td>1</td>
-              <th><a href="">문의드려요:) </a></th>
-              <td>작성자</td>
-              <td>2022.11.29</td>
-              <td>2</td>
-            </tr>
+              <td><%=q.getMemberNo() %></td>
+              <td><%=q.getQaWriteDate() %></td>
+              <td>조회수</td>
+           </tr>
+           <%}} %>
           </tbody>
         </table>
         <br>
         <button id="write" type="button" class="btn btn-lgbtn-link"
-          onclick="location.assign('<%=request.getContextPath()%>/');">글쓰기&#128062;</button>
+          onclick="location.assign('<%=request.getContextPath()%>/qa/qaWrite.do');">글쓰기&#128062;</button>
       </div>
     </div>
+   <div id="pageBar">
+        	<%=request.getAttribute("pageBar") %>
+   </div>
   </section>
-
+  </section>
   <style>
     .qq1{
       font-size: 15px;
@@ -546,7 +489,14 @@
       opacity: 0.5;
     
     }
+       #write{
+          float: right;
+            font-family: "Poor story";
+            font-size: 20px;
+     }
+     #text{
+        font-family: "Poor story";
+     }
+
   </style>
-  </div>
-</body>
 <%@include file="/views/common/footer.jsp"%>
