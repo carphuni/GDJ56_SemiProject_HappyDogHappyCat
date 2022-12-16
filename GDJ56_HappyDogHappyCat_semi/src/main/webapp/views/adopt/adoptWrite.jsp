@@ -316,10 +316,7 @@
         if(day < 10)
          day = '0' + day.toString();
         var minDate = year + '-' + month + '-' + day;
-        
-        var dtToday2 = new Date();
-        var maxDate= dtToday2.setFullYear(dtToday2.getFullYear()+1);
-        console.log(maxDate);
+        var maxDate = (year+1) + '-' + month + '-' + day;
         
         $('#hopedate').attr('min', minDate).attr('max',maxDate);
     });

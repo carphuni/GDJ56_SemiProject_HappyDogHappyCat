@@ -375,6 +375,47 @@ public class AdoptDao {
 		}
 		return photoList;
 	}
+	
+	public List<AdtReviewBorad> adoptReviewSearch(Connection conn,int cPage, int numPerpage,String keyword){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdtReviewBorad> rList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewSearch"));
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				rList.add(getAdtReviewBorad(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return rList;
+	}
+	
+	public int adoptReviewSearchCount(Connection conn,String keyword) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewSearchCount"));
+			pstmt.setString(1, "%"+keyword+"%");
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
 		
 	public static AdoptPhoto getAdoptPhoto(ResultSet rs) throws SQLException{
         return AdoptPhoto.builder()

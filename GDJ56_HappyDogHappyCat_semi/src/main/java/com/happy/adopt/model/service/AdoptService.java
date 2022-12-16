@@ -151,4 +151,18 @@ public class AdoptService {
 		close(conn);	
 		return photoList;
 	}
+	
+	public List<AdtReviewBorad> adoptReviewSearch(int cPage, int numPerpage,String keyword){
+		Connection conn=getConnection();
+		List<AdtReviewBorad> rList =dao.adoptReviewSearch(conn,cPage,numPerpage,keyword);
+		close(conn);	
+		return rList;
+	}
+	
+	public int adoptReviewSearchCount(String keyword){
+		Connection conn=getConnection();
+		int result=dao.adoptReviewSearchCount(conn,keyword);
+		close(conn);
+		return result;
+	}
 }
