@@ -21,10 +21,10 @@
               <div id="board-search">
                   <div class="container">
                       <div class="search-window">
-                          <form action="">
+                          <form action="<%=request.getContextPath()%>/adopt/adoptreviewsearch">
                               <div class="search-wrap">
-                                  <label for="search" class="blind">내용 검색</label>
-                                  <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">&nbsp;
+                                  <label for="search" style="width:70px;">내용 </label>
+                                  <input id="search_" type="search" name="search" placeholder="검색어를 입력해주세요." value="">&nbsp;
                                   <button type="submit" class="btn btn-dark">검색</button> &nbsp;
                                   <!-- <button class="btn btn-dark">입양글쓰기</button> -->
                               </div>
@@ -66,7 +66,7 @@
                       </table>
                       <br>
                       <a href="<%=request.getContextPath()%>/adopt/adoptreviewwrite.do";>
-                  		<button id="apt_write" class="btn btn-dark">입양글쓰기</button>
+                  		<button id="apt_write" class="btn btn-dark">입양후기쓰기</button>
                   		</a>
                   		<%=request.getAttribute("pageBar") %>
                   <%-- <div class="page_wrap">

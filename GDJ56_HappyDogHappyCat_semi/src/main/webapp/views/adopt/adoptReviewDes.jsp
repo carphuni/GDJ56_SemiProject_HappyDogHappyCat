@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-<%@  page import="java.util.List, java.util.Arrays,com.happy.adopt.model.vo.AdtReviewBorad,com.happy.adopt.model.vo.AdtReviewComment" %>
+<%@  page import="java.util.List, java.util.Arrays,com.happy.adopt.model.vo.AdtReviewBorad,com.happy.adopt.model.vo.AdtReviewComment,
+				com.happy.adopt.model.vo.AdoptPhoto" %>
     <% AdtReviewBorad arb = (AdtReviewBorad)request.getAttribute("arb"); 
-    List<AdtReviewComment> comments = (List<AdtReviewComment>)request.getAttribute("comments");%>
+    List<AdtReviewComment> comments = (List<AdtReviewComment>)request.getAttribute("comments");
+    List<AdoptPhoto> adtPhoto =(List<AdoptPhoto>)request.getAttribute("adtPhoto");%>
 
 <body>
     <section id="content">
@@ -35,9 +37,15 @@
                 <h2>HAPPY DOG HAPPY CAT</h2>
                 <br>
             </div>
-
-            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
-            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
+			<%if(adtPhoto.isEmpty()){ %>
+			<p>이미지가 없습니다</p><br><br>
+			<%}else{ %>
+				<%for(int i=0;i<adtPhoto.size();i++){ %>
+					<img src="<%=request.getContextPath() %>/upload/adopt/<%=adtPhoto.get(i).getAdtPhotoRename() %>" alt=""><br><br><br><br>
+				<%} %>
+			<%} %>
+            <%-- <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
+            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br> --%>
         </div>
         <div id="checklist">
             <div id="detailTitle"><br>
@@ -57,7 +65,7 @@
 	        <br><br>
 	        <div style="border-top: solid rgba(0, 0, 0, 0.614);">
 	        </div>
-	        <%if(comments==null){ %>
+	        <%if(comments.isEmpty()){ %>
 	        	<div style="border-bottom: solid rgba(0, 0, 0, 0.482);">
 	            	<p>댓글이 없습니다.</p>
 	        	</div>

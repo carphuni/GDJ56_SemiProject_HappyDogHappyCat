@@ -103,6 +103,17 @@ public class VolunteerService {
 		return volNo;
 	}
 	
+	//기관 가입
+	public int enrollAgencyEnd(Agency agency, int memberNo) {
+		Connection conn=getConnection();
+		int result = vd.enrollAgencyEnd(conn, agency, memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+
 	public List<Agency> selectAgency3(){
 		Connection conn=getConnection();
 		List<Agency> list = vd.selectAgency3(conn);

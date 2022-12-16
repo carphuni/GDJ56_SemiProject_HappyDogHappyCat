@@ -9,11 +9,13 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.happy.adopt.model.dao.AdoptDao;
+import com.happy.adopt.model.vo.AdoptPhoto;
 import com.happy.adopt.model.vo.AdtBorad;
 import com.happy.adopt.model.vo.AdtReviewBorad;
 import com.happy.adopt.model.vo.AdtReviewComment;
 import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
+import com.happy.vol.model.vo.VolPhoto;
 
 public class AdoptService {
 	
@@ -57,13 +59,20 @@ public class AdoptService {
 		return result;
 	}
 	
-	public int adoptReviewWrite(AdtReviewBorad arb) {
+	public int adoptReviewWrite(AdtReviewBorad arb, List<AdoptPhoto> fileList) {
 		Connection conn=getConnection();
 		int result=dao.adoptReviewWrite(conn,arb);
-		if(result>0) commit(conn);
-		else rollback(conn);
-		close(conn);
-		return result;
+		int result2=0;
+		if(result>0) {
+			int reviewBoardNo=dao.selectReviewNo(conn);
+			for(AdoptPhoto ap : fileList) {
+				result2+=dao.insertAptPhoto(conn,reviewBoardNo,ap);
+			}
+			if(result2==fileList.size())commit(conn);
+			else rollback(conn);
+			close(conn);
+		}
+		return result2;
 	}
 	
 	public List<AdtReviewBorad> adoptReviewAll(int cPage, int numPerpage){
@@ -136,4 +145,24 @@ public class AdoptService {
 		return cList;
 	}
 	
+	public List<AdoptPhoto> adtPhotoAll(int adpBoardNo){
+		Connection conn=getConnection();
+		List<AdoptPhoto> photoList =dao.adtPhotoAll(conn,adpBoardNo);
+		close(conn);	
+		return photoList;
+	}
+	
+	public List<AdtReviewBorad> adoptReviewSearch(int cPage, int numPerpage,String keyword){
+		Connection conn=getConnection();
+		List<AdtReviewBorad> rList =dao.adoptReviewSearch(conn,cPage,numPerpage,keyword);
+		close(conn);	
+		return rList;
+	}
+	
+	public int adoptReviewSearchCount(String keyword){
+		Connection conn=getConnection();
+		int result=dao.adoptReviewSearchCount(conn,keyword);
+		close(conn);
+		return result;
+	}
 }

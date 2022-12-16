@@ -67,3 +67,9 @@
     height: 15px;
     background-color: #ECF8A8;
 }
+
+#login-container input[value="취소하기"]{
+    padding-top: 0.8rem; 
+    padding-bottom: 0.8rem; 
+    margin-top: 0;
+}

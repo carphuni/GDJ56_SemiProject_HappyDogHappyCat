@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.happy.adopt.model.service.AdoptService;
+import com.happy.adopt.model.vo.AdoptPhoto;
 import com.happy.adopt.model.vo.AdtReviewBorad;
 import com.happy.adopt.model.vo.AdtReviewComment;
 
@@ -67,8 +68,11 @@ public class AdoptReviewDesServlet extends HttpServlet {
 		
 		List<AdtReviewComment> comments=new AdoptService().adoptReviewCommentAll(adpBoardNo);
 		
+		List<AdoptPhoto> adtPhoto= new AdoptService().adtPhotoAll(adpBoardNo);
+		
 		//System.out.println(comments.size());
 		
+		request.setAttribute("adtPhoto", adtPhoto);
 		request.setAttribute("comments", comments);
 		request.setAttribute("arb", arb);
 		request.getRequestDispatcher("/views/adopt/adoptReviewDes.jsp").forward(request, response);

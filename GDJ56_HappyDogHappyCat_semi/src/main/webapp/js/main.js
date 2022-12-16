@@ -20,6 +20,13 @@ const phoneCk=(asValue)=> {
 	return regExp.test(asValue);
 }
 
+const agencyPhoneCk=(asValue)=>{
+	//전화번호(00[0]-000-0000) 정규식 체크
+	var regExp = /^0[0-9]{1,2}-[0-9]{3}-[0-9]{4}$/;
+ 
+	return regExp.test(asValue);
+}
+
 const idCk=(asValue)=> {
 	//아이디 정규식 체크 
 	//영문자로 시작하는 영문자 또는 숫자 6~20자 
@@ -48,6 +55,8 @@ const dayCk=(asValue)=> {
 	
 	return regExp.test(asValue);
 }
+
+
 
 
 const duplicateId=()=>{
@@ -102,11 +111,9 @@ const memberEnroll=()=>{
 			location.replace("/GDJ56_HappyDogHappyCat_semi"+data.loc)
 		}
 	})
-	
-	
-	
-	
+		
 }
+
 
 $(()=>{
 	//비밀번호 확인 입력 후
@@ -126,4 +133,23 @@ $(()=>{
 		$("#idResult").text("");
 	})
 });
+
+const enrollAgencyEnd=()=>{
+	var form=$("form#login-container").serialize();
+	
+	var inputAgencyPhone=$("floatingAgencyPhone").val();
+	if(!agencyPhoneCk(inputAgencyPhone)){alert("시설 연락처가 옳지않습니다"); return false;}
+	
+	$.ajax({
+		url:"/GDJ56_HappyDogHappyCat_semi/agency/enrollAgencyEnd.do",
+		data:form,
+		dataType:"json",
+		success:data=>{
+			alert(data.msg);
+			location.replace("/GDJ56_HappyDogHappyCat_semi"+data.loc);
+		}
+	})
+}
+
+
 
