@@ -81,6 +81,8 @@ public class VolunteerService {
 			if(result2==fileList.size())commit(conn);
 			else rollback(conn);
 			close(conn);
+		}else {
+			rollback(conn);
 		}
 		return result2;
 	}
@@ -101,6 +103,13 @@ public class VolunteerService {
 		return volNo;
 	}
 	
+	public List<Agency> selectAgency3(){
+		Connection conn=getConnection();
+		List<Agency> list = vd.selectAgency3(conn);
+		close(conn);
+		return list;
+		
+	}
 }			
 			
 			

@@ -24,20 +24,19 @@
         <div class="board_title">
             <strong>입양후기</strong>
         </div>
-        <form > <%-- action="<%=request.getContextPath() %>/adopt/adoptReviewwriteEnd.do" method="post" --%>
+        <form action="<%=request.getContextPath() %>/adopt/adoptReviewwriteEnd.do" method="post">
         <div class="board_write_wrap">
             <div class="board_write">
                 <div class="title">
                     <dl>
                         <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력" name="title" id="title1"></dd>
+                        <dd><input type="text" placeholder="제목 입력"></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt>작성자</dt>
                         <dd><input type="text" value="<%=loginMember.getMemberId() %>" readonly></dd>
-                        <input type="text" value= "<%=loginMember.getMemberNo() %>" name="memberNo" id="mNo" hidden>
                     </dl>
                     <dl>
                     </dl>
@@ -46,23 +45,23 @@
                     <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
                 </div>
 
-                <!-- <div class="file">
+                <div class="file">
                     <b>* 대표이미지 설정</b>
-                    <input type="file" id="mainPhoto" class="real-upload" accept="image/*" onchange="readURL(this);">
-                    <img id="preview" style="display:none;"></div> -->
+                    <input type="file" class="real-upload" accept="image/*" onchange="readURL(this);">
+                    <img id="preview" style="display:none;"></div>
                 </div>
                 
                 <div class="file2">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' name="photos" accept="image/*"  multiple/>
+                    <input type="file" id='btnAtt' accept="image/*"  multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
               
             </div>
             <div class="bt_wrap">
-                <input type="button" id="save_btn" class="on" value="등록">
-            	<input type="button" value="취소">
+                <input type="submit" class="on" value="등록">
+            	<input type="reset" value="취소">
             </div>
 </form>
        
@@ -70,7 +69,7 @@
         </div>
     </div>
 </section>
-<style>
+    <style>
 		#content div{
             text-align: center;
         }
@@ -261,6 +260,10 @@
       height: 200px;
     }
 
+    #reviewwrite .real-upload {
+      display: none;
+    }
+
     #reviewwrite .image-preview {
       display: none;
       width: 200px;
@@ -272,8 +275,6 @@
 
 
 <script>
-
-	
 
     $(document).ready(function() {
     $('#summernote').summernote({
@@ -401,39 +402,7 @@
         document.getElementById('preview').src = "";
     }
     }
-	
-    $("#save_btn").click(e=>{
-		let form=new FormData();
-		const files=$("input[name=photos]")[0].files;
-		const title=$("#title1").val();
-		const content = $('#summernote').summernote('code');
-		let memberNo=$("#mNo").val(); 
-		console.log(memberNo);
-		$.each(files,(i,v)=>{
-			form.append("upfile"+i,v);
-		});	
-		
-		form.append("title",title);
-		form.append("memberNo",memberNo);
-		form.append("content",content);
-		if(files.length!=0){
-			$.ajax({
-				url :"<%=request.getContextPath()%>/adopt/adoptReviewwriteEnd.do",
-				data : form,
-				type : "post",
-				contentType:false,
-				processData:false,
-				success : e=>{
-					alert(e.msg);
-					
-					location.replace('<%=request.getContextPath()%>'+e.loc);
-						},error:(r,m,e)=>{
-							alert("업로드 실패 다시시도하세요!");
-						}
-			 	
-				});
-		}
-	});
+
 
 </script>
 <%@ include file="/views/common/footer.jsp"%>

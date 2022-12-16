@@ -71,7 +71,7 @@
                 <div class="info">
                 	<dl>
                         <dt style="width:200px;">희망입양날짜</dt>
-                        <dd><input type="date" name="aptHopedate" ></dd>
+                        <dd><input type="date" name="aptHopedate" id="hopedate"></dd>
                     </dl>
 				</div>
                 <div class="cont">
@@ -304,6 +304,25 @@
         height:500
     });
     });
+	
+    $(function(){
+        var dtToday = new Date();
 
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+         day = '0' + day.toString();
+        var minDate = year + '-' + month + '-' + day;
+        
+        var dtToday2 = new Date();
+        var maxDate= dtToday2.setFullYear(dtToday2.getFullYear()+1);
+        console.log(maxDate);
+        
+        $('#hopedate').attr('min', minDate).attr('max',maxDate);
+    });
+    
     </script>
 <%@ include file="/views/common/footer.jsp"%>

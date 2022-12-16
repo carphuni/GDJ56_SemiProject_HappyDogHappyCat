@@ -59,14 +59,14 @@ public class AdoptService {
 		return result;
 	}
 	
-	public int adoptReviewWrite(AdtReviewBorad arb,List<AdoptPhoto> fileList) {
+	public int adoptReviewWrite(AdtReviewBorad arb, List<AdoptPhoto> fileList) {
 		Connection conn=getConnection();
 		int result=dao.adoptReviewWrite(conn,arb);
 		int result2=0;
 		if(result>0) {
-			int No=dao.selectVolNo(conn);
-			for(VolPhoto vp : fileList) {
-				result2+=dao.insertVolPhoto(conn,volNo,vp);
+			int reviewBoardNo=dao.selectReviewNo(conn);
+			for(AdoptPhoto ap : fileList) {
+				result2+=dao.insertAptPhoto(conn,reviewBoardNo,ap);
 			}
 			if(result2==fileList.size())commit(conn);
 			else rollback(conn);
@@ -145,4 +145,10 @@ public class AdoptService {
 		return cList;
 	}
 	
+	public List<AdoptPhoto> adtPhotoAll(int adpBoardNo){
+		Connection conn=getConnection();
+		List<AdoptPhoto> photoList =dao.adtPhotoAll(conn,adpBoardNo);
+		close(conn);	
+		return photoList;
+	}
 }

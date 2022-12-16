@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal,com.happy.adopt.model.vo.AnimalPick" %>
-    <% List<Animal> aniList = (List<Animal>)request.getAttribute("aniList"); List<AnimalPick> pick = (List<AnimalPick>)request.getAttribute("pick");%>
+    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal" %>
+    <% List<Animal> aniList = (List<Animal>)request.getAttribute("aniList"); %>
 
 <style>
     #post{
@@ -81,19 +81,8 @@
                         </div>
                     </form>
                 </div>
-            </div>  
-              <div id="numPerpage-container" style="float:right; width:300" >
-	        	동물 분류 
-	        	<form id="aniTypeF" action="">
-	        		<select name="aniType_" id="aniType">
-	        			<option value="전체">전체</option>
-	        			<option value="강아지">강아지</option>
-	        			<option value="고양이" >고양이</option>
-	        		</select>
-	        	</form>
-        	</div> 
+            </div>
         </div>
-       
         <br><br>
 
         	<div id="post" style="flex-wrap:wrap; width:80%;">
@@ -104,47 +93,16 @@
                 </a> 
                 <p  style="margin-bottom: 0; width:240px;">[<%=aniList.get(i).getAniType() %>] <%=aniList.get(i).getAniKind() %> <%=aniList.get(i).getAniName() %> 무료입양</p>
                 <div style="margin-bottom: 100px; width:240px;" >
-                	<% int count=0; %>
-	            <%if(pick==null){ %>
-	            	<!-- <h2 id="pick" >🤍</h2>  -->
-	            <%}else{ %>
-	            	<%for(int j=0;j<pick.size();j++){ %>
-		            	<%if(((int)aniList.get(i).getAniNo())==((int)pick.get(j).getAniNo())){%>
-		            		<% count++;%>	
-		            	<%} } }%>  
-		         <%if(count==0){%>
-		        	 <h2 id="pick" style="font-size:18px;float: left;">🤍</h2>
-		         <%}else{ %>
-		         	<h2 id="pick" style="font-size:18px;float: left;">❤️</h2>
-		         <%} %>
-                    
-                    <p style="float: right;">조회수 <%= aniList.get(i).getAdtViews() %></p>
+                    <p style="float: left;">&nbsp&nbsp♡</p>
+                    <p style="float: right;">조회수 33</p>
                 </div>
             </div>
        		 <%} %> 
         	</div>
-        	
 			<div style="text-align:center;">
         	<%=request.getAttribute("pageBar") %>
         	</div>
         	<br><br>
+		
     </section>
 <%@ include file="/views/common/footer.jsp"%>
-
-
-<!-- /* <form id="aniTypeF" action="">
-<select name="aniType_" id="aniType">
-	<option value="전체">전체</option>
-	<option value="강아지">강아지</option>
-	<option value="고양이" >고양이</option>
-</select>
-</form> */ -->
-
-<script>
-	$("#aniType").change(e=>{
-		let aniType=$(e.target).val();
-		console.log($(e.target).val())
-		location.assign("<%=request.getContextPath()%>/adopt/adoptmain.do?aniType="+aniType);
-	});
-	
-</script>

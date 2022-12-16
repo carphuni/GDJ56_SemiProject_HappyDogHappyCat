@@ -1,7 +1,6 @@
 package com.happy.adopt.model.dao;
 
 import static com.happy.common.JDBCTemplate.close;
-import static com.happy.common.JDBCTemplate.getConnection;
 
 import java.io.FileReader;
 import java.sql.Connection;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.happy.adopt.model.vo.AdoptPhoto;
 import com.happy.adopt.model.vo.AdtBorad;
 import com.happy.adopt.model.vo.AdtReviewBorad;
 import com.happy.adopt.model.vo.AdtReviewComment;
@@ -322,6 +322,68 @@ public class AdoptDao {
 		}
 		return cList;
 	}
+	
+	public int selectReviewNo(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int reviewNo=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectReviewNo"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) reviewNo=rs.getInt(1);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return reviewNo;
+	}
+	
+	public int insertAptPhoto(Connection conn, int reviewBoardNo, AdoptPhoto ap) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertAptPhoto"));
+			pstmt.setInt(1, reviewBoardNo);
+			pstmt.setString(2, ap.getAdtPhotoOriName());
+			pstmt.setString(3, ap.getAdtPhotoRename());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}	
+	
+	public List<AdoptPhoto> adtPhotoAll(Connection conn,int adpBoardNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdoptPhoto> photoList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adtPhotoAll"));
+			pstmt.setInt(1, adpBoardNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				photoList.add(getAdoptPhoto(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return photoList;
+	}
+		
+	public static AdoptPhoto getAdoptPhoto(ResultSet rs) throws SQLException{
+        return AdoptPhoto.builder()
+              .fileNo(rs.getInt("ADT_PHOTO_NO"))
+              .adtBoardNo(rs.getInt("ADT_BOARD_NO"))
+              .adtPhotoOriName(rs.getString("ADT_REVIEW_PHOTO_ORINAME"))
+              .adtPhotoRename(rs.getString("ADT_REVIEW_PHOTO_RENAME"))
+              .build();
+  }
 	
 	public static AdtReviewComment getAdtReviewComment(ResultSet rs) throws SQLException{
         return AdtReviewComment.builder()

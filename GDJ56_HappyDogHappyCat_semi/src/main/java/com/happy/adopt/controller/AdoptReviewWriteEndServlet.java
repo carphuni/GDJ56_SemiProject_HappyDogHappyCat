@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.google.gson.Gson;
 import com.happy.adopt.model.service.AdoptService;
 import com.happy.adopt.model.vo.AdoptPhoto;
 import com.happy.adopt.model.vo.AdtReviewBorad;
@@ -77,21 +79,17 @@ public class AdoptReviewWriteEndServlet extends HttpServlet {
 				String fileName2 = mr.getFilesystemName(name);
 				String oriName2 = mr.getOriginalFileName(name);
 				//System.out.println(name);
-				if(name.equals("upfile0")) {
 					fileList.add(AdoptPhoto.builder()
 						.adtPhotoOriName(oriName2)
 						.adtPhotoRename(fileName2)
 						.build());
-				}else {
-					fileList.add(AdoptPhoto.builder().adtPhotoOriName(oriName2).adtPhotoRename(fileName2).build());
-				}
 			}
 			
-		}
 		
-		int memberNo=Integer.parseInt(request.getParameter("memberNo")); 
-		String title=request.getParameter("title"); 
-		String content=request.getParameter("content");
+		
+		int memberNo=Integer.parseInt(mr.getParameter("memberNo")); 
+		String title=mr.getParameter("title"); 
+		String content=mr.getParameter("content");
 		
 		AdtReviewBorad arb=AdtReviewBorad.builder() 
 				.memberNo(memberNo)
@@ -103,19 +101,22 @@ public class AdoptReviewWriteEndServlet extends HttpServlet {
 		
 		String msg="", loc="";
 		if(result>0) {
-			msg="게시물 등록이 완료되었습니다";
-			loc="/";
+			msg="입양후기 글등록 성공";
+			loc="/adopt/adoptreview.do";
 		}else {
-			msg="게시글 등록이 실패했습니다. 다시 시도해주세요";
-			loc="/";
+			msg="입양후기 글등록 실패";
+			loc="/adopt/adoptreviewwrite.do";
 		}
 		
+		Map<String,String> responseMsg=Map.of("msg",msg,"loc",loc);
+		
+		response.setContentType("application/json;charset=utf-8");
+		new Gson().toJson(responseMsg,response.getWriter());
+		
+		//request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 		
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
-		
-		
-		
+		}	
 		
 	}
 

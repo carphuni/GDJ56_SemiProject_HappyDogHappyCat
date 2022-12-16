@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
+<% int aniNo=Integer.parseInt(request.getParameter("aniNo")); %>
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
@@ -10,11 +11,10 @@
             <img src="<%=request.getContextPath() %>/images/adopt/Q.jfif" alt="" style="margin-right: auto;">
             <div id="text" >
                 <br><br>
-                <h1>입양후기</h1>
-                 <p>보호중인 파양동물들과 유기된 동물들을<br> 
+                <h1>입양하기</h1>
+                 <p><br>보호중인 파양동물들과 유기된 동물들을<br>
                     상시로 공고하고 있습니다.<br>
-                    입양후 보호자와 행복하게 지내는<br>
-                    아이들을 볼 수 있습니다.</p>
+                    자세한 안내는 입양안내를 참고해주세요.</p>
             </div>
             <img src="<%=request.getContextPath() %>/images/adopt/S.jfif" alt="" style="margin-left: auto;">
         </div>
@@ -22,55 +22,88 @@
 <section id="reviewwrite">
     <div class="board_wrap">
         <div class="board_title">
-            <strong>입양후기</strong>
+            <strong>입양하기</strong>
         </div>
-        <form > <%-- action="<%=request.getContextPath() %>/adopt/adoptReviewwriteEnd.do" method="post" --%>
+        <form action="<%=request.getContextPath() %>/adopt/adoptwriteEnd.do" method="post">
         <div class="board_write_wrap">
             <div class="board_write">
                 <div class="title">
                     <dl>
                         <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력" name="title" id="title1"></dd>
+                        <dd><input type="text" value= "입양 신청합니다." readonly></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt>작성자</dt>
                         <dd><input type="text" value="<%=loginMember.getMemberId() %>" readonly></dd>
-                        <input type="text" value= "<%=loginMember.getMemberNo() %>" name="memberNo" id="mNo" hidden>
+                        <input type="text" value= "<%=loginMember.getMemberNo() %>" name="memberNo" hidden>
+                        <input type="text" value=<%=aniNo %> name="aniNo" hidden>
                     </dl>
                     <dl>
+                        <dt>동거인여부</dt>
+                        <dd><input type="text" name="roommate" placeholder="있음(인원수)/없음"></dd>
+                    </dl>
+                </div> 
+                <div class="info">
+                	<dl>
+                        <dt style="width:200px;">알러지여부</dt>
+                        <dd><input type="text" name="allergy" size="50" placeholder="알러지여부"></dd>
+                    </dl>
+                    <dl>
+                        <dt style="width:120px;">경제활동여부</dt>
+                        <dd><input type="text" name="money" placeholder="경제활동여부"></dd>
+                    </dl>
+                    
+                </div>  
+				
+                <div class="info">
+                	<dl>
+                        <dt style="width:200px;">동물양육경험</dt>
+                        <dd><input type="text" name="exp" size="50" placeholder="동물양육경험유무"></dd>
+                    </dl>
+                    
+                    <dl>
+                        <dt>주거형태</dt>
+                        <dd><input type="text" name="live" placeholder="주택,아파트 등등"></dd>
                     </dl>
                 </div>   
+                <div class="info">
+                	<dl>
+                        <dt style="width:200px;">희망입양날짜</dt>
+                        <dd><input type="date" name="aptHopedate" ></dd>
+                    </dl>
+				</div>
                 <div class="cont">
                     <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
                 </div>
 
-                <!-- <div class="file">
+                <div class="file">
                     <b>* 대표이미지 설정</b>
-                    <input type="file" id="mainPhoto" class="real-upload" accept="image/*" onchange="readURL(this);">
-                    <img id="preview" style="display:none;"></div> -->
+                    <input type="file" class="real-upload" accept="image/*" onchange="readURL(this);">
+                    <img id="preview" style="display:none;"></div>
                 </div>
                 
                 <div class="file2">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' name="photos" accept="image/*"  multiple/>
+                    <input type="file" id='btnAtt' accept="image/*"  multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
               
             </div>
             <div class="bt_wrap">
-                <input type="button" id="save_btn" class="on" value="등록">
-            	<input type="button" value="취소">
+            	<input type="submit" class="on" value="등록">
+            	<input type="reset" value="취소">
+                <!-- <a href="view.html" class="on">등록</a>
+                <a href="list.html">취소</a>  -->
             </div>
-</form>
-       
-            
-        </div>
+            </div>
+</form>        
+        
     </div>
 </section>
-<style>
+    <style>
 		#content div{
             text-align: center;
         }
@@ -261,6 +294,10 @@
       height: 200px;
     }
 
+    #reviewwrite .real-upload {
+      display: none;
+    }
+
     #reviewwrite .image-preview {
       display: none;
       width: 200px;
@@ -272,9 +309,6 @@
 
 
 <script>
-
-	
-
     $(document).ready(function() {
     $('#summernote').summernote({
         tablesize :2,
@@ -401,39 +435,7 @@
         document.getElementById('preview').src = "";
     }
     }
-	
-    $("#save_btn").click(e=>{
-		let form=new FormData();
-		const files=$("input[name=photos]")[0].files;
-		const title=$("#title1").val();
-		const content = $('#summernote').summernote('code');
-		let memberNo=$("#mNo").val(); 
-		console.log(memberNo);
-		$.each(files,(i,v)=>{
-			form.append("upfile"+i,v);
-		});	
-		
-		form.append("title",title);
-		form.append("memberNo",memberNo);
-		form.append("content",content);
-		if(files.length!=0){
-			$.ajax({
-				url :"<%=request.getContextPath()%>/adopt/adoptReviewwriteEnd.do",
-				data : form,
-				type : "post",
-				contentType:false,
-				processData:false,
-				success : e=>{
-					alert(e.msg);
-					
-					location.replace('<%=request.getContextPath()%>'+e.loc);
-						},error:(r,m,e)=>{
-							alert("업로드 실패 다시시도하세요!");
-						}
-			 	
-				});
-		}
-	});
+
 
 </script>
 <%@ include file="/views/common/footer.jsp"%>
