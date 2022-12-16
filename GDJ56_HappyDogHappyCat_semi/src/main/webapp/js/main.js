@@ -151,5 +151,17 @@ const enrollAgencyEnd=()=>{
 	})
 }
 
+const updateMemberNameEnd=()=>{
+	$.ajax({
+		url:"/GDJ56_HappyDogHappyCat_semi/member/updateMemberNameEnd.do",
+		data:$("form#login-floating").serialize(),
+		success:data=>{
+			
+		}
+	})
+}
+
+const winClose=()
+
 
 

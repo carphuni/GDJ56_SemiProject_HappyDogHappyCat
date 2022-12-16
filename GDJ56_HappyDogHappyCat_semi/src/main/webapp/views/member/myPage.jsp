@@ -29,7 +29,7 @@
         <div id="basic-line"></div>
         <div>
         	<i class="fa-solid fa-signature"></i><span>이름</span>
-			<button class="btn btn-dh">수정</button>
+			<button class="btn btn-dh" onclick="open('<%=request.getContextPath()%>/views/member/updateMemberName.jsp','_blank','width=800, height=500')">수정</button>
         </div>
         <div id="basic-line"></div>
         <div>
