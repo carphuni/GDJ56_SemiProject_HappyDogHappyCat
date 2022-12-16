@@ -8,11 +8,11 @@ import static com.happy.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import com.happy.member.model.vo.Member;
 import com.happy.support.model.dao.SupportDao;
+import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.Support;
-import com.happy.vol.model.vo.VolPhoto;
-import com.happy.vol.model.vo.Volunteer;
 
 
 public class SupportService {
@@ -65,6 +65,32 @@ public class SupportService {
 		close(conn);
 		return sp;
 	}
+	
+	public int insertComment(SupComment sc) {
+		Connection conn=getConnection();
+		int result=sd.insertComment(conn,sc);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	
+	public List<SupComment> selectSupportComment(){
+		Connection conn=getConnection();
+		List<SupComment> list = sd.selectComment(conn);
+		close(conn);
+		return list;
+	}
+	
+	public Member selectMember(int memberNo) {
+		Connection conn = getConnection();
+		Member m  = sd.selectMember(conn, memberNo);
+		close(conn);
+		return m;
+		
+	}
+	
 	
 	public List<SupPhoto> selectSupPhoto2(int supBoardNo) {
 		Connection conn = getConnection();

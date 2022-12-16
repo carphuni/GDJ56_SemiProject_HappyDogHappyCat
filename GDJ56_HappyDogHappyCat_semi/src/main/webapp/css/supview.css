@@ -305,39 +305,3 @@
 }
 
 
-
-  .sel_money{
-    text-align: center;
-    margin-top:10%;
-  }
-
-  .sel_money>p{
-    margin-top:20%;
-
-  }
-
-  .popup>a {
-        position:relative;
-        bottom:-20%;
-        margin-left: 5px;
-        display:inline-block;
-        min-width: 80px;
-        /* margin-left: -40%; */
-        padding: 10px;
-        border: 1px solid #000;
-        border-radius: 2px;
-        font-size: 1.4rem;
-        color:black;
-        
-         }
-
-  .sel_money>input {
-    width: 300px;
-    height: 32px;
-    font-size: 15px;
-    border: 0;
-    border-radius: 15px;
-    outline: none;
-    padding-left: 10px;
-    background-color: rgb(233, 233, 233);
-  }

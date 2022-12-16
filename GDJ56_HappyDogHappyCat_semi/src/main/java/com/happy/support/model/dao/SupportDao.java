@@ -1,7 +1,7 @@
 package com.happy.support.model.dao;
 
 import static com.happy.common.JDBCTemplate.close;
-
+import static com.happy.member.model.dao.MemberDao.getMember;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.happy.member.model.vo.Member;
+import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.Support;
 
@@ -189,6 +191,76 @@ public class SupportDao {
 				close(pstmt);
 			}return sp;
 		}
+		
+		
+		public int insertComment(Connection conn, SupComment sc) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("insertComment"));
+				pstmt.setInt(1,sc.getSupBoardNo());
+				pstmt.setString(2, sc.getSupCommentContents());
+				pstmt.setInt(3, sc.getSupUserNo());
+				pstmt.setInt(4,sc.getSupPayAmount());
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+
+		}
+		
+		
+		public List<SupComment> selectComment(Connection conn) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			SupComment s= null;
+			
+			List<SupComment> sc = new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectComment"));
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					s=SupComment.builder().supCommentNo(rs.getInt("SUP_COMMENT_NO"))
+						.supBoardNo(rs.getInt("SUP_BOARD_NO"))
+						.supCommentWriteDate(rs.getDate("SUP_COMMENT_WRITE_DATE"))
+						.supCommentContents(rs.getString("SUP_COMMENT_CONTENTS"))
+						.supCommentDeleteYn(rs.getString("SUP_COMMENT_DELETE_YN").charAt(0))
+						.supUserNo(rs.getInt("SUP_USER_NO"))
+						.supPayAmount(rs.getInt("SUP_PAY_AMOUNT")).
+						build();
+					sc.add(s);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return sc;
+		}
+		
+		
+		public Member selectMember(Connection conn, int memberNo) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			Member m = null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectMember"));
+				pstmt.setInt(1, memberNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					m = getMember(rs);
+				}	
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return m;
+		
+		}
+		
 		
 		private Support getSupport(ResultSet rs) throws SQLException{
 			return Support.builder()
