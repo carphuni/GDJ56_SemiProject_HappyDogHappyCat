@@ -48,15 +48,14 @@
                     </dl>
                     
              </div>	
-              <div class="file2">
-                  <h5>📸사진첨부</h5>
+             <div class="file2">
+                  <h5>📸사진 첨부</h5>
                   <input type="file" id='btnAtt' accept="image/*"  multiple/>
               </div>
               <div id='att_zone' 
               data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
              </div>
-    
-     
+             
               <div class="bt_wrap">
                   <input type="submit" value="등록" id="on">
                   <input type="reset" value="취소">

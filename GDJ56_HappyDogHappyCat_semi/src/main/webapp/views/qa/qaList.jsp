@@ -52,9 +52,10 @@ com.happy.qa.vo.QaForm" %>
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3 class="modal-title" id="exampleModalLabel">Q1.입소 후 아이의 소식은 어떻게 알 수 있나요?</h3>
+					<h4 class="modal-title" id="exampleModalLabel">Q1.입소 후 아이의 소식은 어떻게 알 수 있나요?</h4>
 				</div>
-				<div class="modal-body"><h5>입소 확정일 기준 3개월 단위로 입소한 아이의 소식을 이메일로 보내드립니다. 만약 입소한 아이가 입양되었다면, 입양후기 카테고리를 통해 아이의 근황을 확인 하실 수 있습니다.</h5></div>
+				<div class="modal-body"><h5>입양이 아직 이루어 지지 않은 아이의 경우, 1:1 문의를 주시면 아이의 소식을 전해드립니다. <br>
+				입양 된 아이는 입양후기 카테고리를 통해 아이의 근황을 확인 하실 수 있습니다.</h5></div>
 		  	</div>
 	  	</div>
      </div>
@@ -63,9 +64,10 @@ com.happy.qa.vo.QaForm" %>
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3 class="modal-title" id="exampleModalLabel">Q2.입양가정은 어떤 기준으로 채택되나요??</h3>
+					<h4 class="modal-title" id="exampleModalLabel">Q2.입양가정은 어떤 기준으로 채택되나요??</h4>
 				</div>
-				<div class="modal-body"><h5>답변</h5></div>
+				<div class="modal-body"><h5>반려동물을 키워본 경험이 있는 분들을 우선으로 채택하고 있습니다. 그 외에는 주거환경(주택,아파트 등), 
+				동거인(1인 또는 다수보다는 2-3인 가족) 우선으로 채택합니다.</h5></div>
 		  </div>
 	  </div>
   </div>
@@ -74,9 +76,9 @@ com.happy.qa.vo.QaForm" %>
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3 class="modal-title" id="exampleModalLabel">Q3.제보된 아이가 제 아이입니다.어떻게 데려올 수 있나요?</h3>
+					<h4 class="modal-title" id="exampleModalLabel">Q3.제보된 아이가 제 아이입니다.어떻게 데려올 수 있나요?</h4>
 				</div>
-				<div class="modal-body"><h5>답변</h5></div>
+				<div class="modal-body"><h5>해당 제보게시글 댓글창을 통해 제보자와 연락하시면 됩니다. </h5></div>
 		  </div>
 	  </div>
   </div>
@@ -87,7 +89,7 @@ com.happy.qa.vo.QaForm" %>
 				<div class="modal-header">
 					<h3 class="modal-title" id="exampleModalLabel">Q4.모든 과정에서 정말 무료가 맞나요?</h3>
 				</div>
-				<div class="modal-body"><h5>답변</h5></div>
+				<div class="modal-body"><h5>네. 모든 과정에서 무료입니다.</h5></div>
 		  </div>
 	  </div>
   </div>
@@ -98,7 +100,7 @@ com.happy.qa.vo.QaForm" %>
 				<div class="modal-header">
 					<h3 class="modal-title" id="exampleModalLabel">Q5.입양한 아이를 키우는데 문제가 생겼을 경우,어떤 도움을 받을 수 있나요?</h3>
 				</div>
-				<div class="modal-body"><h5>답변</h5></div>
+				<div class="modal-body"><h5>q&a 게시판으로 문의 주시면 최대 3일 이내로 답변을 드립니다.</h5></div>
 		  </div>
 	  </div>
   </div>
@@ -188,9 +190,9 @@ com.happy.qa.vo.QaForm" %>
               <th>
                 <a href="<%=request.getContextPath()%>/qa/qaView.do?qaBoardNo=<%=q.getQaBoardNo()%>"><%=q.getQaTitle() %></a>
               </th>
-              <td><%=q.getMemberNo() %></td>
+              <td><%=q.getMemberId()%></td>
               <td><%=q.getQaWriteDate() %></td>
-              <td>조회수</td>
+              <td><%=q.getQaReadCount() %></td>
            </tr>
            <%}} %>
           </tbody>
@@ -215,16 +217,16 @@ com.happy.qa.vo.QaForm" %>
     #oftenQa1 {
       width: 1000px;
       height: 150px;
-      margin-left: 24%;
+      margin:auto;
       display: flex;
       border-radius: 10%;
-      justify-content: center;
+      
     }
 
     #oftenQa2 {
       width: 1000px;
       height: 150px;
-      margin-left: 24%;
+      margin:auto;
       display: flex;
       /*text-align: center;*/
     }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.happy.qa.vo.QaForm
+<%@ page import="java.util.List,
+com.happy.qa.vo.QaForm
 ,com.happy.qa.vo.QaComment"%>
 <%
 	QaForm q=(QaForm)request.getAttribute("qas");
@@ -27,35 +28,38 @@
                     <td><%=q.getQaContents() %></td>
             </table>
     </div>
-    <div id="comment-container">
-   		<div class="comment-editor">
+    <div id="comment-container" >
+   		<div class="comment-editor" >
    			<form action="<%=request.getContextPath() %>/qa/commentWrite.do?qaBoardNo=<%=q.getQaBoardNo() %>" 
-   			method="post" style="justify-content: center; display: flex; margin-top: 10px; align-items: flex-end; ;" >
+   			method="post" style="justify-content: center; display: flex; margin-top: 10px; align-items: flex-end; margin-left: 70px;" >
    				<textarea name="content" cols="55" rows="3" placeholder="답변"></textarea>
    				<input type="hidden" name="boardref" value="">
    				<input type="hidden" name="level" value="1"/>
    				<input type="hidden" name="commentref" value="0"/>
-   				<input type="hidden" name="commentWriter" value="">   				
-   				<button	type="submit" id="btn-insert" style="margin-left: 10px;">등록</button>
+   				<input type="hidden" name="commentWriter" value="">
+   					
+   					<button	type="submit" id="btn-insert" style="margin-left: 10px;">등록</button>
+   					
    			</form>
    		</div>	
-	</div>
-   	<table id="writed-comment-container">
-   		<tr class="level1">
-   			<td>
-   				<sub class="comment-writer">관리자</sub>
-   				<sub class="comment-date">댓글작성일자</sub>
-   				<br>
-   				작성댓글내용
-   			</td>		
-   			<td>
-   				<button class="btn-delete">삭제</button>		
-   			</td>
-   		</tr>		
-   	
-   	</table>	
-   		
-   		
+   		<br>
+   		<div style="border-top: solid rgba(0, 0, 0, 0.482);width:400px; margin:auto;">
+   		</div>
+        	   <%if(qc.isEmpty()){ %>
+		<div style="border-bottom: solid rgba(0, 0, 0, 0.482); width:400px; margin:auto; text-align:center;">
+            <p>조회된 답변이 없습니다.</p>
+        </div>
+           <%}else{ 
+               for(QaComment q1: qc){      %>
+        <div style="border-bottom: solid rgba(0, 0, 0, 0.482); width:400px; margin:auto;">
+                     <p><%=q1.getQaCommentWriteDate() %> </p>
+                    <p><%=q1.getQaCommentWriteContent() %></p>
+        </div>
+             <%} %>
+           <%} %>
+        
+        </div>
+   	</div>
    		
    		
    

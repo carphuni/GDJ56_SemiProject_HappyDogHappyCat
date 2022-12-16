@@ -2,6 +2,7 @@ package com.happy.qa.dao;
 
 import static com.happy.common.JDBCTemplate.close;
 
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -63,7 +64,9 @@ public class QaDao {
 			pstmt.setInt(2, cPage*numPerpage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				list.add(getQa(rs));
+				QaForm f=getQa(rs);
+				f.setMemberId(rs.getString("member_id"));
+				list.add(f);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -84,6 +87,7 @@ public class QaDao {
 				.qaReply(rs.getString("qa_reply"))
 				.qaOpenYn(rs.getString("qa_open_yn").charAt(0))
 				.qaPassword(rs.getInt("qa_pw"))
+				.qaReadCount(rs.getInt("qa_read_count"))
 				.build();
 	
 	}
@@ -133,6 +137,51 @@ public class QaDao {
 			pstmt.setString(2, qc.getQaCommentWriteContent());
 			result=pstmt.executeUpdate();
 			System.out.println(result);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+
+	public List<QaComment> selectCommentList(Connection conn,int BoardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<QaComment> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectCommentList"));
+			pstmt.setInt(1,BoardNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(getQaComment(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
+
+	
+	private QaComment getQaComment(ResultSet rs)throws SQLException {
+		return QaComment.builder()
+		.qaCommentNo(rs.getInt("qa_comment_no"))
+		.qaBoardNo(rs.getInt("qa_board_no"))
+		.qaCommentWriteDate(rs.getDate("qa_comment_write_date"))
+		.qaCommentWriteContent(rs.getString("qa_comment_write_content"))
+		.qaCommentDelYn(rs.getString("qa_comment_del_yn").charAt(0))
+		.qaCommentModDate(rs.getDate("qa_comment_mod_date"))
+		.build();
+	}
+
+	public int updateReadCount(Connection conn, int qaNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateReadCount"));
+			pstmt.setInt(1, qaNo);
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

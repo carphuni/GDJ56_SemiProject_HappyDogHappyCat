@@ -24,4 +24,6 @@ public class QaForm {
 	private String qaReply;
 	private char qaOpenYn;
 	private int qaPassword;
+	private String memberId;
+	private int qaReadCount;
 }

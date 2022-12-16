@@ -107,12 +107,22 @@ com.happy.animal.model.vo.Animal" %>
               
                 
                 <div class="file2">
-                    <b>* 사진첨부</b>
+                    <b>📸 대표사진첨부</b>
+                    <input type="file" id='btnAtt1' accept="image/*"  multiple/>
+                </div>
+                <div id='att_zone' 
+                data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'>
+                </div>
+                
+                 <div class="file2">
+                    <b>📸 사진첨부</b>
                     <input type="file" id='btnAtt' accept="image/*"  multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'>
                 </div>
+           
+           
             </div>
 
             <div class="bt_wrap">

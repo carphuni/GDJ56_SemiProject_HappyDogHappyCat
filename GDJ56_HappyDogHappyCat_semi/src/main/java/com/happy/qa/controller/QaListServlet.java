@@ -77,7 +77,7 @@ public class QaListServlet extends HttpServlet {
 		
 		
 		request.setAttribute("qas", list);
-		System.out.println(list);
+		//System.out.println(list);
 		request.setAttribute("pageBar", pageBar);
 		
 		request.getRequestDispatcher("/views/qa/qaList.jsp")

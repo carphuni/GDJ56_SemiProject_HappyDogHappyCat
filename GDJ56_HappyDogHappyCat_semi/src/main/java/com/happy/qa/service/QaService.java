@@ -43,9 +43,17 @@ public class QaService {
 		return result;
 	}
 
-	public QaForm QaView(int qaNo) {
+	public QaForm QaView(int qaNo,boolean readflag) {
 		Connection conn=getConnection();
 		QaForm q=dao.QaView(conn,qaNo);
+		if(q!=null&&!readflag) {
+			int result=dao.updateReadCount(conn,qaNo);
+			if(result>0) {
+				commit(conn);
+				q.setQaReadCount(q.getQaReadCount()+1);
+			}
+			else rollback(conn);
+		}
 		close(conn);
 		return q ;
 	}
@@ -59,6 +67,13 @@ public class QaService {
 			rollback(conn);
 		}close(conn);
 		return result;
+	}
+
+	public  List<QaComment> selectCommentList(int BoardNo) {
+		Connection conn=getConnection();
+		List<QaComment> list=dao.selectCommentList(conn,BoardNo);
+		close(conn);
+		return list;
 	}
 
 	
