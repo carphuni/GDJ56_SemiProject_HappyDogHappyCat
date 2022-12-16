@@ -57,7 +57,7 @@
 	        <br><br>
 	        <div style="border-top: solid rgba(0, 0, 0, 0.614);">
 	        </div>
-	        <%if(comments==null){ %>
+	        <%if(comments.isEmpty()){ %>
 	        	<div style="border-bottom: solid rgba(0, 0, 0, 0.482);">
 	            	<p>댓글이 없습니다.</p>
 	        	</div>

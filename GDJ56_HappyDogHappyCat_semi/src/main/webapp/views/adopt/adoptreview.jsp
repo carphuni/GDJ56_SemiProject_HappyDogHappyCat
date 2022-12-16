@@ -66,7 +66,7 @@
                       </table>
                       <br>
                       <a href="<%=request.getContextPath()%>/adopt/adoptreviewwrite.do";>
-                  		<button id="apt_write" class="btn btn-dark">입양글쓰기</button>
+                  		<button id="apt_write" class="btn btn-dark">입양후기쓰기</button>
                   		</a>
                   		<%=request.getAttribute("pageBar") %>
                   <%-- <div class="page_wrap">
