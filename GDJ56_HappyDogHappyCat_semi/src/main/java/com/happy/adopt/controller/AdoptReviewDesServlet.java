@@ -1,6 +1,7 @@
 package com.happy.adopt.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.happy.adopt.model.service.AdoptService;
 import com.happy.adopt.model.vo.AdtReviewBorad;
+import com.happy.adopt.model.vo.AdtReviewComment;
 
 /**
  * Servlet implementation class AdoptReviewDesServlet
@@ -63,6 +65,11 @@ public class AdoptReviewDesServlet extends HttpServlet {
 		
 		AdtReviewBorad arb=new AdoptService().adoptReviewDes(adpBoardNo,readflag);
 		
+		List<AdtReviewComment> comments=new AdoptService().adoptReviewCommentAll(adpBoardNo);
+		
+		//System.out.println(comments.size());
+		
+		request.setAttribute("comments", comments);
 		request.setAttribute("arb", arb);
 		request.getRequestDispatcher("/views/adopt/adoptReviewDes.jsp").forward(request, response);
 	}

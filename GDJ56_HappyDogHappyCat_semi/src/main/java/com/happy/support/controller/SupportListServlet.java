@@ -1,4 +1,4 @@
-package com.happy.vol.controller;
+package com.happy.support.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,22 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.happy.support.model.service.SupportService;
+import com.happy.support.model.vo.SupPhoto;
+import com.happy.support.model.vo.Support;
 import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.Agency;
-import com.happy.vol.model.vo.VolPhoto;
-import com.happy.vol.model.vo.Volunteer;
+
 
 /**
- * Servlet implementation class VolViewServlet
+ * Servlet implementation class SupportListServlet
  */
-@WebServlet("/volview.do")
-public class VolViewServlet extends HttpServlet {
+@WebServlet("/suplist.do")
+public class SupportListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VolViewServlet() {
+    public SupportListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,6 +36,7 @@ public class VolViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		int cPage;
 		int numPerpage;
 		try {
@@ -42,27 +45,26 @@ public class VolViewServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		numPerpage=5;
+		numPerpage=8;
 		List<Agency> agency = new VolunteerService().selectAgency3();
-		List<Volunteer> list = new VolunteerService().selectVolunteerList(cPage, numPerpage);
+		List<Support> list = new SupportService().selectSupportList(cPage, numPerpage);
 		List<Agency> list2=new ArrayList();
-		List<VolPhoto> list3 = new ArrayList();
+		List<SupPhoto> list3 = new ArrayList();
 		
-		VolPhoto vp = null;
+		SupPhoto sp = null;
 		for(int i=0;i<list.size();i++) {
-			int agencyNo = list.get(i).getVntAgencyNo();
-			int boardNo=list.get(i).getVntBoardNo();
+			int agencyNo = list.get(i).getSupAgencyNo();
+			int boardNo=list.get(i).getSupBoardNo();
 			Agency a = new VolunteerService().selectAgency(agencyNo);
-			vp = new VolunteerService().selectVolPhoto(boardNo);
+			sp = new SupportService().selectSupPhoto(boardNo);
 			list2.add(a);
-			list3.add(vp);
-//			System.out.println(list3);
-//			System.out.println(vp);
+			list3.add(sp);
+			System.out.println(agencyNo);
 		}
 		
 	
 		String pageBar="";
-		int totalData = new VolunteerService().selectVolunteerCount();
+		int totalData = new SupportService().selectSupportCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		
 		int pageBarSize = 10;
@@ -90,12 +92,12 @@ public class VolViewServlet extends HttpServlet {
 			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>[다음]</a>";
 		}
 		request.setAttribute("ag", agency);
-		request.setAttribute("volunteer", list);
+		request.setAttribute("support", list);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("agency", list2);
-		request.setAttribute("volPhoto", list3);
-		request.getRequestDispatcher("/views/volunteer/volView.jsp").forward(request, response);
+		request.setAttribute("supPhoto", list3);
 		
+		request.getRequestDispatcher("/views/support/supList.jsp").forward(request, response);
 	}
 
 	/**

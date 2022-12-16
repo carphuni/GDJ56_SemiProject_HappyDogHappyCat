@@ -188,16 +188,17 @@ public class VolunteerDao {
 		int result=0;
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("insertVolunteer"));
-			pstmt.setString(1, v.getVntRecName());
-			pstmt.setString(2,v.getVntManagerName());
-			pstmt.setDate(3,v.getVntRecPeriod());
-			pstmt.setDate(4,v.getVntActPeriod());
-			pstmt.setString(5, v.getVntActDay());
-			pstmt.setString(6,v.getVntActContents());
-			pstmt.setInt(7, v.getVntSetPerson());
-			pstmt.setDate(8, v.getVntRecPeriodEnd());
-			pstmt.setDate(9,v.getVntRecPeriodEnd());
-			pstmt.setDate(10,v.getVntActPeriodEnd());
+			pstmt.setInt(1, v.getVntAgencyNo());
+			pstmt.setString(2, v.getVntRecName());
+			pstmt.setString(3,v.getVntManagerName());
+			pstmt.setDate(4,v.getVntRecPeriod());
+			pstmt.setDate(5,v.getVntActPeriod());
+			pstmt.setString(6, v.getVntActDay());
+			pstmt.setString(7,v.getVntActContents());
+			pstmt.setInt(8, v.getVntSetPerson());
+			pstmt.setDate(9, v.getVntRecPeriodEnd());
+			pstmt.setDate(10,v.getVntRecPeriodEnd());
+			pstmt.setDate(11,v.getVntActPeriodEnd());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -279,5 +280,29 @@ public class VolunteerDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public List<Agency> selectAgency3(Connection conn){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List list= new ArrayList();
+		Agency a = null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectAgency3"));
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				a=Agency.builder().agencyNo(rs.getInt("AGENCY_NO"))
+				.memberNo(rs.getInt("MEMBER_NO"))
+				.agencyName(rs.getString("AGENCY_NAME"))
+				.agencyAddress(rs.getString("AGENCY_ADDRESS"))
+				.agencyPhone(rs.getString("AGENCY_PHONE")).build();
+				list.add(a);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
 	}
 }

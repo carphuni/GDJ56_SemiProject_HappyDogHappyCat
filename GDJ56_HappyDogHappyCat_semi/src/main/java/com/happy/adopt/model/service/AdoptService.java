@@ -11,6 +11,7 @@ import java.util.List;
 import com.happy.adopt.model.dao.AdoptDao;
 import com.happy.adopt.model.vo.AdtBorad;
 import com.happy.adopt.model.vo.AdtReviewBorad;
+import com.happy.adopt.model.vo.AdtReviewComment;
 import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
 
@@ -118,6 +119,21 @@ public class AdoptService {
 		close(conn);	
 		return pList;
 	}
-
+	
+	public int adoptComment(String reply,String memberId,int reviewBoardNo) {
+		Connection conn=getConnection();
+		int result=dao.adoptComment(conn,reply,memberId,reviewBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public List<AdtReviewComment> adoptReviewCommentAll(int adpBoardNo){
+		Connection conn=getConnection();
+		List<AdtReviewComment> cList =dao.adoptReviewCommentAll(conn,adpBoardNo);
+		close(conn);	
+		return cList;
+	}
 	
 }
