@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.happy.member.model.service.MemberService;
 import com.happy.member.model.vo.Member;
+import com.happy.vol.model.service.VolunteerService;
+import com.happy.vol.model.vo.Agency;
 
 /**
  * Servlet implementation class MemberLoginEndServlet
@@ -39,6 +41,8 @@ public class MemberLoginEndServlet extends HttpServlet {
 		//아이디 비밀번호가 일치하는 로그인 데이터 가져오기
 		Member loginMember=new MemberService().memberLoginEnd(memberId, memberPw);
 		
+		
+		
 		//아이디 저장
 		String saveId=request.getParameter("saveId");
 		if(saveId!=null) {
@@ -55,9 +59,16 @@ public class MemberLoginEndServlet extends HttpServlet {
 		
 		//로그인 아이디 세션 저장
 		if(loginMember!=null) {
+			
 			//로그인 성공시
 			HttpSession session=request.getSession();
 			session.setAttribute("loginMember", loginMember);
+			
+			//기관정보 가져오기
+			int memberNo=loginMember.getMemberNo();
+			Agency loginAgency=new VolunteerService().selectAgency2(memberNo);
+			session.setAttribute("loginAgency", loginAgency);
+			
 			response.sendRedirect(request.getContextPath());
 		}else {
 			//로그인 실패시

@@ -17,7 +17,7 @@ import com.happy.member.model.vo.Member;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(servletNames={"enterMyPage"})
+@WebFilter(servletNames={"enterMyPage","enrollAgency"})
 public class LoginFilter extends HttpFilter implements Filter {
        
     /**

@@ -263,6 +263,25 @@ public class VolunteerDao {
 		}return volNo;
 	}
 
+	//기관 가입
+	public int enrollAgencyEnd(Connection conn, Agency agency, int memberNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("enrollAgencyEnd"));
+			pstmt.setInt(1, memberNo);
+			pstmt.setString(2, agency.getAgencyName());
+			pstmt.setString(3, agency.getAgencyAddress());
+			pstmt.setString(4, agency.getAgencyPhone());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 	public List<Agency> selectAgency3(Connection conn){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;

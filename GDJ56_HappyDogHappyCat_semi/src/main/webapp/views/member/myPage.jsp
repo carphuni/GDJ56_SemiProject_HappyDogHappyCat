@@ -7,12 +7,26 @@
 	StringBuffer buf = new StringBuffer(memberPhone);
 	buf.insert(3, "-");
 	buf.insert(8, "-");
-%>
+	
+	StringBuffer buf2=null;
+	if(loginAgency!=null){
+		String agencyPhone=loginAgency.getAgencyPhone();
+		buf2 = new StringBuffer(agencyPhone);
+		if(buf2.length()<10){
+			buf2.insert(2, "-"); 
+			buf2.insert(6, "-"); 
+		}else{
+			buf2.insert(3, "-"); 
+			buf2.insert(7, "-"); 
+		}
+	}
+%> 
  <!-- myPage -->
  <section>
     <div id="myPage-container">
         <h2>기본 정보</h2>
         <h1><%=loginMember.getMemberName() %></h1>
+        <div id="basic-line"></div>
         <div>
         	<i class="fa-solid fa-signature"></i><span>이름</span>
 			<button class="btn btn-dh">수정</button>
@@ -42,8 +56,38 @@
           <i class="fa-solid fa-house"></i><span><%=loginMember.getMemberAddress() %></span>
           <button class="btn btn-dh">수정</button>
         </div>
+        <div id="basic-line"></div>
         
     </div>
+    
+    <div id="myPage-container">
+        <h2>기관 정보</h2>
+        <div id="basic-line"></div>
+        <%if(loginAgency==null){ %>
+	        <div>
+	        	<i class="fa-solid fa-building"></i><span>기관등록</span>
+				<button class="btn btn-dh" onclick="location.assign('<%=request.getContextPath()%>/agency/enrollAgency.do')">등록하기</button>
+	        </div>
+        <%}else{ %>
+	        <div>
+	        	<i class="fa-solid fa-building"></i><span><%=loginAgency.getAgencyName() %></span>
+				<button class="btn btn-dh">수정</button>
+	        </div>
+	        <div id="basic-line"></div>
+	        <div>
+	          <i class="fa-solid fa-location-dot"></i><span><%=loginAgency.getAgencyAddress() %></span>
+	          <button class="btn btn-dh">수정</button>
+	        </div>
+	        <div id="basic-line"></div>
+	        <div>
+	          <i class="fa-solid fa-phone"></i><span><%=buf2 %></span>
+	          <button class="btn btn-dh">수정</button>
+	        </div>
+        <%} %>
+	        <div id="basic-line"></div>
+        
+    </div>
+    
     <div id="myPage-container">
       <h2>작성 내역</h2>
       <div id="board-search"> 
