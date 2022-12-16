@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ page import="com.happy.member.model.vo.*" %>
+<%@ page import="com.happy.vol.model.vo.*" %>
 <% Member loginMember=(Member)session.getAttribute("loginMember"); %>
+<% Agency loginAgency=(Agency)session.getAttribute("loginAgency"); %>
 <% Cookie[] cookies=request.getCookies();
 	String saveId=null;
 	if(cookies!=null){

@@ -56,7 +56,9 @@ public class MemberDao {
 			pstmt.setString(1, memberId);
 			pstmt.setString(2, memberPw);
 			rs=pstmt.executeQuery();
-			if(rs.next()) loginMember=getMember(rs);
+			if(rs.next()) {
+				loginMember=getMember(rs);
+				};
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
