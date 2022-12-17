@@ -69,16 +69,20 @@ public class SupportService {
 	public int insertComment(SupComment sc) {
 		Connection conn=getConnection();
 		int result=sd.insertComment(conn,sc);
-		if(result>0) commit(conn);
+		if(result>0) {
+			int result2=sd.updatePayAmount(conn, sc);
+			if(result2>0)
+			commit(conn);
+			else rollback(conn);}
 		else rollback(conn);
 		close(conn);
 		return result;
 	}
 	
 	
-	public List<SupComment> selectSupportComment(){
+	public List<SupComment> selectSupportComment(int supBoardNo){
 		Connection conn=getConnection();
-		List<SupComment> list = sd.selectComment(conn);
+		List<SupComment> list = sd.selectComment(conn,supBoardNo);
 		close(conn);
 		return list;
 	}
@@ -90,6 +94,7 @@ public class SupportService {
 		return m;
 		
 	}
+	
 	
 	
 	public List<SupPhoto> selectSupPhoto2(int supBoardNo) {

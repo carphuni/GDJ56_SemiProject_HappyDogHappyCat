@@ -1,6 +1,7 @@
 package com.happy.support.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -43,6 +44,7 @@ public class SupportViewEndServlet extends HttpServlet {
 						.build();
 		
 		new SupportService().insertComment(sc);
+		
 		Member m = new SupportService().selectMember(memberNo);
 		
 		Map info = Map.of("sc",sc,"m",m);

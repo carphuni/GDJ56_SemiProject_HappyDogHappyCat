@@ -85,13 +85,21 @@
 <%=s.getSupContents() %>
 </div>
 <div class="money">
-  <b>950,000원</b>
+<%int amount=0;
+for(int i=0;i<comments.size();i++){
+	amount += comments.get(i).getSupPayAmount();
+}%>
+  <b id="amount"><%=amount %>원</b>
+
   <p><%=s.getSupTargetAmount() %>원 목표</p>
 
 </div>
 <div class="bt_wrap" >
-    <a style="font-size:17px" href="" class="on"><img src="<%=request.getContextPath()%>/images/sup/heart-fill.svg">&nbsp;응원 7</a>
-    <a style="font-size:17px;width:200px;cursor:pointer;" id="show" >기부하기</a>
+    <a style="font-size:17px" href="" class="on"><img src="<%=request.getContextPath()%>/images/sup/heart-fill.svg" id="likeBtn">&nbsp;응원 7</a>
+    	<% if(loginMember==null){%> 
+    		<a style="font-size:17px;width:200px;cursor:pointer;" onclick="log()"; >기부하기</a>
+		<%}else{ %>
+    <a style="font-size:17px;width:200px;cursor:pointer;" id="show" >기부하기</a><%} %>
     <a style="font-size:17px;"href="">목록</a>
 </div>
 <br><br><br>
@@ -99,7 +107,7 @@
  
 	     <div id="reply" style=" text-align: left; width: 600px; margin: auto; word-break:break-all;word-wrap:break-word;">
         <div id="comment_box1" style="cursor: pointer;">
-        	<h3>댓글창보기(<%=comments.size() %>)</h3>
+        	<h3>댓글(<%=comments.size() %>)</h3>
         </div>
         <div id="comment_lists">
 	     <%--    <form action="<%=request.getContextPath()%>/adopt/adoptwrite";> --%>
@@ -109,20 +117,16 @@
 	        <br><br>
 	        <div style="border-top: solid rgba(0, 0, 0, 0.614);">
 	        </div>
-	        <%if(comments==null){ %>
-	        	<div style="border-bottom: solid rgba(0, 0, 0, 0.482);">
-	            	<p>댓글이 없습니다.</p>
-	        	</div>
-	        <%}else{ %>
+	     
 	        	<div id="commentcontainer">
 	        	<%for(int i=0;i<comments.size();i++){ %>
 	        		<div style="border-bottom: solid rgba(0, 0, 0, 0.482);">
-	            		<p><b><%=comments.get(i).getSupUserNo() %></b> <small><%= comments.get(i).getSupCommentWriteDate() %></small></p>
-	            		<p><%=comments.get(i).getSupCommentContents() %></p>
+	            		<p name="memid"><b><%=member.get(i).getMemberId()%></b>&nbsp;&nbsp;<b><%=comments.get(i).getSupPayAmount() %>원</b><small style="margin-left:150px;"><%= comments.get(i).getSupCommentWriteDate() %></small></p>
+	            		<p name="contents"><%=comments.get(i).getSupCommentContents() %></p>
 	        		</div>
 	        	<%} %>
-	        	</>
-	        <%} %>
+	        	
+	        
 	    
         </div>
     </div>
@@ -136,7 +140,7 @@
       <div class="sel_money">
         <b style="font-size:25px;">기부금 결제</b>
         <p>결제 금액</p>
-        <input type="text" id="pay">
+        <input type="text" id="pay" >
         <p>응원 댓글 쓰기</p>
         <input type="text" id="comment">
       </div>
@@ -147,6 +151,11 @@
 </div>
 
 <script>
+
+	const log = () =>{
+		alert("로그인 후 이용하세요.");
+	}
+
 	function show () {
 	  document.querySelector(".background").className = "background show";
 	}
@@ -154,25 +163,26 @@
 	function close () { 
 	  document.querySelector(".background").className = "background";
 	}
-
+	if(<%=loginMember!=null%>){
 	document.querySelector("#show").addEventListener('click', show);
 	document.querySelector("#close").addEventListener('click', close);
-
+	}
 	
+
  	function requestPay(){
 
- 		console.log( $('#comment').val());
- 		console.log("<%=agency.getAgencyNo()%>");
- 		console.log("<%=boardNo%>");
- 		console.log(<%=loginMember.getMemberNo()%>)
- 		
+		if($("#comment").val().trim()==''){
+			alert("댓글을 입력해주세요")
+		}
+		else{
 		IMP.init("imp28146203");
 		IMP.request_pay({
 			pg : "html5_inicis",
+			name : "후원하기",
 			pay_method : "card",
 			amount : $("#pay").val(),
-			buyer_name : "<%=loginMember.getMemberName()%>",
-			buyer_email : "<%=loginMember.getMemberEmail()%>"
+			 buyer_name : "<%=loginMember!=null?loginMember.getMemberName():""%>",
+			buyer_email : "<%=loginMember!=null?loginMember.getMemberEmail():""%>"
 		}, function(rsp){
 				
 				if(rsp.success){
@@ -195,17 +205,33 @@
 								comment : $('#comment').val(),
 								agencyNo : <%=agency.getAgencyNo()%>,
 								boardNo : <%=boardNo%>,
-								memberNo : <%=loginMember.getMemberNo()%>
+								memberNo :  "<%=loginMember!=null?loginMember.getMemberNo():""%>"
 								},
 						success:data=>{
-							/* console.log(data.sc);
-							console.log(data.m); */
-						 	data.amount=null;
-							comment.amount=null;
-							close(); 
 							
+						
+							
+							close(); 
+							 $("#comment").val('');
+							$("#pay").val('');
+							if(<%=comments.size()%>==0){
+								location.reload();
+							}
+							else{
 							const temp=$("#commentcontainer>div").first().clone();
-							location.reload();
+							var date = new Date();
+						    var year = date.getFullYear();
+						    var month = ("0" + (1 + date.getMonth())).slice(-2);
+						    var day = ("0" + date.getDate()).slice(-2);
+
+							temp.find("p[name=memid]").html("<b>"+data.m.memberId+"</b>&nbsp;&nbsp;<b>"+data.sc.supPayAmount +"원</b><small style='margin-left:150px'>"+ year + "-" + month + "-" + day+"</small>");
+							temp.find("p[name=contents]").html(data.sc.supCommentContents);
+							
+						   
+							$("#commentcontainer").prepend(temp);
+							$("#comment_box1").html("<h3>댓글("+<%=comments.size()+1%>+")</h3>");}
+							/* location.reload(); */
+							$("#amount").html((<%=amount%>+data.sc.supPayAmount)+"원");
 							
 						},error : function(request, status, error) {
 						   	 alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
@@ -218,9 +244,9 @@
 				}
 			});
 		
-			
+		}	
 	};
-		 		
+	
 			
 	</script>
 <script src="<%=request.getContextPath()%>/js/volView2.js"></script>

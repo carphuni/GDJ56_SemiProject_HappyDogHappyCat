@@ -37,7 +37,7 @@ public class SupportDao {
 			try {
 				pstmt=conn.prepareStatement(sql.getProperty("insertSupport"));
 				pstmt.setString(1, s.getSupTitle());
-				pstmt.setString(2,s.getSupTargetAmount());
+				pstmt.setInt(2,s.getSupTargetAmount());
 				pstmt.setString(3,s.getSupContents());
 				pstmt.setInt(4, s.getSupAgencyNo());
 				result=pstmt.executeUpdate();
@@ -212,7 +212,7 @@ public class SupportDao {
 		}
 		
 		
-		public List<SupComment> selectComment(Connection conn) {
+		public List<SupComment> selectComment(Connection conn, int supBoardNo) {
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
 			SupComment s= null;
@@ -220,6 +220,7 @@ public class SupportDao {
 			List<SupComment> sc = new ArrayList();
 			try {
 				pstmt=conn.prepareStatement(sql.getProperty("selectComment"));
+				pstmt.setInt(1, supBoardNo);
 				rs=pstmt.executeQuery();
 				while(rs.next()) {
 					s=SupComment.builder().supCommentNo(rs.getInt("SUP_COMMENT_NO"))
@@ -261,12 +262,29 @@ public class SupportDao {
 		
 		}
 		
+		public int updatePayAmount(Connection conn, SupComment sc) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updatePayAmount"));
+				pstmt.setInt(1, sc.getSupPayAmount());
+				pstmt.setInt(2,sc.getSupBoardNo());
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+			
+		}
+		
+		
 		
 		private Support getSupport(ResultSet rs) throws SQLException{
 			return Support.builder()
 					.supBoardNo(rs.getInt("SUP_BOARD_NO"))
 					.supTitle(rs.getString("SUP_TITLE"))
-					.supTargetAmount(rs.getString("SUP_TARGET_AMOUNT"))
+					.supTargetAmount(rs.getInt("SUP_TARGET_AMOUNT"))
 					.supContents(rs.getString("SUP_CONTENTS"))
 					.supApvYn(rs.getString("SUP_APV_YN").charAt(0))
 					.supAgencyNo(rs.getInt("SUP_AGENCY_NO"))

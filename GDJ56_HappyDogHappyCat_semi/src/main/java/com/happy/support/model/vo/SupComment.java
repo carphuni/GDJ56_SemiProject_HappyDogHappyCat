@@ -16,6 +16,7 @@ public class SupComment {
 	private char supCommentDeleteYn;
 	private int supUserNo;
 	private int supPayAmount;
+	private int supPayAmountCount;
 	
 	
 }

@@ -41,7 +41,7 @@ public class SupportViewServlet extends HttpServlet {
 		int AgencyNo = Integer.parseInt(request.getParameter("agencyNo"));
 		Support s = new SupportService().selectSupport(boardNo);
 		Agency a = new VolunteerService().selectAgency(AgencyNo);
-		List<SupComment> sc = new SupportService().selectSupportComment();
+		List<SupComment> sc = new SupportService().selectSupportComment(boardNo);
 		System.out.println(sc);
 		List<SupPhoto> sp = new SupportService().selectSupPhoto2(boardNo);
 		List<Member> member = new ArrayList();

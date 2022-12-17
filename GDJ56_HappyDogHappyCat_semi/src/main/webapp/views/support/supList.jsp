@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "java.util.List, com.happy.support.model.vo.Support,com.happy.support.model.vo.SupPhoto,com.happy.vol.model.vo.Agency" %>
+<%@ page import = "java.util.List, com.happy.support.model.vo.Support,com.happy.support.model.vo.SupComment,com.happy.support.model.vo.SupPhoto,com.happy.vol.model.vo.Agency" %>
 <%
 	List<Support> list = (List<Support>)request.getAttribute("support");
 	List<Agency> list2 = (List<Agency>)request.getAttribute("agency");
 	List<SupPhoto> list3 = (List<SupPhoto>)request.getAttribute("supPhoto");
 	List<Agency> a = (List<Agency>)request.getAttribute("ag");
+	List<List<SupComment>> sc = (List<List<SupComment>>)request.getAttribute("comments");
 %>         
 <%@ include file="/views/common/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/suplist.css"/>
@@ -27,7 +28,9 @@
  <br><br>
         <div id="post" style="flex-wrap:wrap; width:80%;">
        
-       <% for(int i=0;i<list.size();i++){ %> 
+       <% for(int i=0;i<list.size();i++){
+    	  	int amount = 0; 
+    	   %> 
       
             <div id="dog-des" style="margin-bottom:0;cursor:pointer;" onclick="location.assign('<%=request.getContextPath()%>/supview.do?boardNo=<%=list.get(i).getSupBoardNo()%>&&agencyNo=<%=list2.get(i).getAgencyNo()%>')">
                 <img id="adp_img" src="<%=request.getContextPath()%>/upload/support/<%=list3.get(i).getSupPhotoRename() %>" alt="" style="width:250px; height:250px;">
@@ -37,7 +40,9 @@
                  <b><%=list2.get(i).getAgencyName() %></b></p>
                 </div>
                 <div style="margin-top: auto;">
-                     <progress value="20" max="100"></progress><br>
+                	<%for(int j=0;j<sc.get(i).size();j++){ 
+                	amount+=sc.get(i).get(j).getSupPayAmount();}%>
+                     <progress value="<%=amount%>" max="<%=list.get(i).getSupTargetAmount() %>"></progress><br>
 					<div style="margin-left: 53%;"><%=list.get(i).getSupTargetAmount() %></div>
 					<br><br>
                    
