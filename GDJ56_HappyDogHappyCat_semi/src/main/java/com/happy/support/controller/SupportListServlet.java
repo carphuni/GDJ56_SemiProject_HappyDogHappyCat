@@ -63,7 +63,6 @@ public class SupportListServlet extends HttpServlet {
 			list3.add(sp);
 			comments.add(sc);
 		}
-		System.out.println(comments);
 	
 		String pageBar="";
 		int totalData = new SupportService().selectSupportCount();

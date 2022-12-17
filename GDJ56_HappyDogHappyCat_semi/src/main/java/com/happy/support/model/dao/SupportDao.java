@@ -2,6 +2,7 @@ package com.happy.support.model.dao;
 
 import static com.happy.common.JDBCTemplate.close;
 import static com.happy.member.model.dao.MemberDao.getMember;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.util.Properties;
 import com.happy.member.model.vo.Member;
 import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
+import com.happy.support.model.vo.SupPick;
 import com.happy.support.model.vo.Support;
 
 
@@ -278,6 +280,130 @@ public class SupportDao {
 			
 		}
 		
+		public int updateLike(Connection conn, int supBoardNo) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateLike"));
+				pstmt.setInt(1, supBoardNo);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+			
+		}
+		
+		
+		public int cancelLike(Connection conn, int supBoardNo) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("cancelLike"));
+				pstmt.setInt(1, supBoardNo);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+			
+		}
+		
+		public int insertLike(Connection conn, int supBoardNo, int memberNo) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("insertLike"));
+				pstmt.setInt(1, supBoardNo);
+				pstmt.setInt(2, memberNo);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+			
+		}
+		
+		public int selectSupPick(Connection conn,int supBoardNo, int memberNo ) {
+			
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectSupPick"));
+				pstmt.setInt(1, supBoardNo);
+				pstmt.setInt(2, memberNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result = rs.getInt(1);
+				}	
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+					
+		}
+		
+		public int selectSupPickCount(Connection conn,int supBoardNo, int memberNo) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectSupPickCount"));
+				pstmt.setInt(1, supBoardNo);
+				pstmt.setInt(2, memberNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result=rs.getInt(1);}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+			
+		}
+			
+		
+		public int updateLikeCheck(Connection conn,int supBoardNo, int memberNo ) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateLikeCheck"));
+				pstmt.setInt(1, supBoardNo);
+				pstmt.setInt(2, memberNo);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+			
+		}
+		
+		
+		public int updateLikeCheckCancel(Connection conn,int supBoardNo, int memberNo ) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateLikeCheckCancel"));
+				pstmt.setInt(1, supBoardNo);
+				pstmt.setInt(2, memberNo);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+			
+		}
+		
+		
 		
 		
 		private Support getSupport(ResultSet rs) throws SQLException{
@@ -288,6 +414,7 @@ public class SupportDao {
 					.supContents(rs.getString("SUP_CONTENTS"))
 					.supApvYn(rs.getString("SUP_APV_YN").charAt(0))
 					.supAgencyNo(rs.getInt("SUP_AGENCY_NO"))
+					.supLikeCount(rs.getInt("SUP_LIKE_COUNT"))
 					.build();
 		}
 }

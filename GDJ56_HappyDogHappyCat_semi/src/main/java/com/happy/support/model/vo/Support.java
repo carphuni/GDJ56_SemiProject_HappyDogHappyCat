@@ -13,6 +13,7 @@ public class Support {
 	private String supContents;
 	private char supApvYn;
 	int supAgencyNo;
+	int supLikeCount;
 	
 	
 }

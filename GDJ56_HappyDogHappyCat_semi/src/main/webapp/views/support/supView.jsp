@@ -8,6 +8,7 @@
 	int boardNo = (int)request.getAttribute("boardNo");
 	List<SupComment> comments = (List<SupComment>)request.getAttribute("comment");
 	List<Member> member = (List<Member>)request.getAttribute("member");
+
 %>
 <%@ include file="/views/common/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/supview.css"/>
@@ -95,11 +96,19 @@ for(int i=0;i<comments.size();i++){
 
 </div>
 <div class="bt_wrap" >
-    <a style="font-size:17px" href="" class="on"><img src="<%=request.getContextPath()%>/images/sup/heart-fill.svg" id="likeBtn">&nbsp;응원 7</a>
+    
     	<% if(loginMember==null){%> 
+    	<a id="likeBtn" style="font-size:17px;cursor: pointer;" class="on"><img src="<%=request.getContextPath()%>/images/sup/heart.svg">&nbsp;&nbsp;응원&nbsp;<%=s.getSupLikeCount() %></a>	
     		<a style="font-size:17px;width:200px;cursor:pointer;" onclick="log()"; >기부하기</a>
-		<%}else{ %>
-    <a style="font-size:17px;width:200px;cursor:pointer;" id="show" >기부하기</a><%} %>
+		<%}else{ 
+			if((int)request.getAttribute("check")==0){
+		%>			
+	<a id="likeBtn" style="font-size:17px;cursor: pointer;" class="on"><img src="<%=request.getContextPath()%>/images/sup/heart.svg" >&nbsp;&nbsp;응원&nbsp;<%=s.getSupLikeCount() %></a>	
+    		<%}else{ %>
+    		<a id="likeBtn" style="font-size:17px;cursor: pointer;" class="on"><img src="<%=request.getContextPath()%>/images/sup/heart-fill.svg" >&nbsp;&nbsp;응원&nbsp;<%=s.getSupLikeCount() %></a>	
+    		<%} %>
+    <a style="font-size:17px;width:200px;cursor:pointer;" id="show" >기부하기</a>
+    <%} %>
     <a style="font-size:17px;"href="">목록</a>
 </div>
 <br><br><br>
@@ -204,13 +213,11 @@ for(int i=0;i<comments.size();i++){
 								amount : $("#pay").val(),
 								comment : $('#comment').val(),
 								agencyNo : <%=agency.getAgencyNo()%>,
-								boardNo : <%=boardNo%>,
-								memberNo :  "<%=loginMember!=null?loginMember.getMemberNo():""%>"
+								boardNo : <%=boardNo%>
+							 <%=loginMember!=null?",memberNo:"+loginMember.getMemberNo():""%>
 								},
 						success:data=>{
-							
 						
-							
 							close(); 
 							 $("#comment").val('');
 							$("#pay").val('');
@@ -247,7 +254,32 @@ for(int i=0;i<comments.size();i++){
 		}	
 	};
 	
-			
+	
+	$(document).ready(function(){
+	    $("#likeBtn").click(function(){
+			$.ajax({
+				url: "<%= request.getContextPath() %>/like.do",
+				type : "post",
+				data:  {boardNo : <%=boardNo%>
+					<%=loginMember!=null?",memberNo:"+loginMember.getMemberNo():""%>
+					}, //사용자 입력값전달
+				success: function(data){
+						/* alert(data.s.supLikeCount); */
+						
+						if(data.check==1){
+						$("#likeBtn").html("<img src='<%=request.getContextPath()%>/images/sup/heart.svg'>&nbsp;&nbsp;응원&nbsp;"+data.s.supLikeCount);
+						}else{
+							$("#likeBtn").html("<img src='<%=request.getContextPath()%>/images/sup/heart-fill.svg'>&nbsp;&nbsp;응원&nbsp;"+data.s.supLikeCount);
+						}
+		
+				},
+				error: function(xhr, textStatus, errorThrown){
+					console.log("ajax 요청 실패!");
+					console.log(xhr, textStatus, errorThrown);
+				}
+			});
+	    });
+	});		
 	</script>
 <script src="<%=request.getContextPath()%>/js/volView2.js"></script>
 <%@ include file="/views/common/footer.jsp" %>

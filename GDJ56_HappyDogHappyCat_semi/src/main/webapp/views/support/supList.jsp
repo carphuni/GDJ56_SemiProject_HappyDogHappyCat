@@ -31,8 +31,11 @@
        <% for(int i=0;i<list.size();i++){
     	  	int amount = 0; 
     	   %> 
-      
-            <div id="dog-des" style="margin-bottom:0;cursor:pointer;" onclick="location.assign('<%=request.getContextPath()%>/supview.do?boardNo=<%=list.get(i).getSupBoardNo()%>&&agencyNo=<%=list2.get(i).getAgencyNo()%>')">
+      		<%if(loginMember!=null){ %>
+            <div id="dog-des" style="margin-bottom:0;cursor:pointer;" onclick="location.assign('<%=request.getContextPath()%>/supview.do?boardNo=<%=list.get(i).getSupBoardNo()%>&&agencyNo=<%=list2.get(i).getAgencyNo()%>&&memberNo=<%=loginMember.getMemberNo()%>')">
+                <%}else{ %>
+                  <div id="dog-des" style="margin-bottom:0;cursor:pointer;" onclick="location.assign('<%=request.getContextPath()%>/supview.do?boardNo=<%=list.get(i).getSupBoardNo()%>&&agencyNo=<%=list2.get(i).getAgencyNo()%>')">
+					<%} %>               
                 <img id="adp_img" src="<%=request.getContextPath()%>/upload/support/<%=list3.get(i).getSupPhotoRename() %>" alt="" style="width:250px; height:250px;">
                 <div style="word-break:break-all;word-wrap:break-word; width:250px;"><br>
                 <p ><%=list.get(i).getSupTitle() %>

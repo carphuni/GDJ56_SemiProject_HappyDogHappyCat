@@ -12,6 +12,7 @@ import com.happy.member.model.vo.Member;
 import com.happy.support.model.dao.SupportDao;
 import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
+import com.happy.support.model.vo.SupPick;
 import com.happy.support.model.vo.Support;
 
 
@@ -102,5 +103,70 @@ public class SupportService {
 		List<SupPhoto> sp = sd.selectSupPhoto2(conn, supBoardNo);
 		close(conn);
 		return sp;
+	}
+	
+	public int updateLike(int supBoardNo) {
+		Connection conn = getConnection();
+		int result = sd.updateLike(conn, supBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int cancelLike(int supBoardNo) {
+		Connection conn = getConnection();
+		int result = sd.cancelLike(conn, supBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	
+	public int insertLike(int supBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = sd.insertLike(conn, supBoardNo, memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int selectSupPick(int supBoardNo, int memberNo ) {
+		Connection conn = getConnection();
+		int sp = sd.selectSupPick(conn, supBoardNo, memberNo);
+		close(conn);
+		return sp;
+	}
+	
+	public int selectSupPickCount(int supBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = sd.selectSupPickCount(conn, supBoardNo, memberNo);
+		close(conn);
+		return result;
+		
+		
+	}
+	public int updateLikeCheck(int supBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = sd.updateLikeCheck(conn, supBoardNo,memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	
+	public int updateLikeCheckCancel(int supBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = sd.updateLikeCheckCancel(conn, supBoardNo,memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
 	}
 }
