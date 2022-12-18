@@ -118,11 +118,11 @@
         <small>Copyright &copy; Your Website 2022</small>
       </div>
     </div>
-  </body>
-
-</html>
 <!-- 부트스트랩 js-->
 <script src="<%=request.getContextPath() %>/js/bootstrap.bundle.min.js"></script>
 <!-- 추가적용 js -->
 <script src="<%=request.getContextPath() %>/js/main.js"></script>
+  </body>
+
+</html>
 

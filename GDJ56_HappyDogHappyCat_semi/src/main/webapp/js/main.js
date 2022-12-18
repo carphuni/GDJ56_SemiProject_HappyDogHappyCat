@@ -5,8 +5,8 @@ const emailCk=(asValue)=> {
 	return regExp.test(asValue);
 }
 
+//비밀번호 정규식 체크
 const passwordCk=(asValue)=> {
-	//비밀번호 정규식 체크
 	//8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합
 	var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
  
@@ -58,8 +58,8 @@ const dayCk=(asValue)=> {
 
 
 
-
 const duplicateId=()=>{
+	//아이디 중복 체크
 	$.ajax({
 		url:"/GDJ56_HappyDogHappyCat_semi/member/duplicateId.do",
 		data:{"inputId":$("#floatingId").val()},
@@ -74,6 +74,7 @@ const duplicateId=()=>{
 }
 
 const memberEnroll=()=>{
+	//회원가입 기능
 	//form 입력 데이터 json
 	let form=$("#login-container").serialize();
 	//form 입력 데이터 배열
@@ -116,7 +117,7 @@ const memberEnroll=()=>{
 
 
 $(()=>{
-	//비밀번호 확인 입력 후
+	//비밀번호 확인 입력 후 일치 여부 확인
 	$("#floatingPwCk").blur(e=>{
 		const pw=$("#floatingPw").val();
 		const pwck=$(e.target).val();
@@ -135,6 +136,7 @@ $(()=>{
 });
 
 const enrollAgencyEnd=()=>{
+	//기관 등록
 	var form=$("form#login-container").serialize();
 	
 	var inputAgencyPhone=$("floatingAgencyPhone").val();
@@ -152,16 +154,23 @@ const enrollAgencyEnd=()=>{
 }
 
 const updateMemberNameEnd=()=>{
+	//마이페이지 이름 수정
 	$.ajax({
-		url:"/GDJ56_HappyDogHappyCat_semi/member/updateMemberNameEnd.do",
-		data:$("form#login-floating").serialize(),
+		url:"/GDJ56_HappyDogHappyCat_semi/member/memberUpdateNameEnd.do",
+		data:{"floatingInputName":$("#floatingInputName").val()},
+		dataType:"json",
 		success:data=>{
-			
+			alert(data.msg);
+			opener.location.reload();
+			close();
 		}
 	})
 }
 
-const winClose=()
+const winClose=()=>{
+	//해당 윈도우 창 닫기
+	window.open('','_self').close();
+}
 
 
 

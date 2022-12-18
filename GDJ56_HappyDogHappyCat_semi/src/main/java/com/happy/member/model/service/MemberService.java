@@ -35,5 +35,15 @@ public class MemberService {
 		close(conn);
 		return member;
 	}
+	
+	public int memberUpdateName(int memberNo, String reName) {
+		//마이페이지 멤버 이름 수정
+		Connection conn=getConnection();
+		int result=dao.memberUpdateName(conn, memberNo, reName);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 
 }

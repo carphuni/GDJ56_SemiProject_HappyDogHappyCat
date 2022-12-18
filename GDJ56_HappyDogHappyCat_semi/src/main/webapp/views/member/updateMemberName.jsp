@@ -52,8 +52,12 @@ pageEncoding="UTF-8"%>
           <input type="text" class="form-control" id="floatingInputName" placeholder="Name">
           <label for="floatingInputName">변경할 이름</label>
         </div>
-        <input type="button" class="btn btn-dh" value="가입하기" onclick="updateMemberNameEnd();">
-        <input type="button" class="btn btn-light" value="취소하기" onclick="">
+        <input type="button" class="btn btn-dh" value="수정하기" onclick="updateMemberNameEnd();">
+        <input type="button" class="btn btn-light" value="취소하기" onclick="winClose();">
     </form>
+<!-- 부트스트랩 js-->
+<script src="<%=request.getContextPath() %>/js/bootstrap.bundle.min.js"></script>
+<!-- 추가적용 js -->
+<script src="<%=request.getContextPath() %>/js/main.js"></script>
 </body>
 </html>

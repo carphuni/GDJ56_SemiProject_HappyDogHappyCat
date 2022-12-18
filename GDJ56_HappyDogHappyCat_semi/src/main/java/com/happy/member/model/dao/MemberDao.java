@@ -69,6 +69,7 @@ public class MemberDao {
 	}
 	
 	public int memberEnrollEnd(Connection conn, Member member) {
+		//회원가입
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
@@ -108,4 +109,19 @@ public class MemberDao {
 		return member;
 	}
 
+	public int memberUpdateName(Connection conn, int memberNo, String reName) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("memberUpdateName"));
+			pstmt.setString(1, reName);
+			pstmt.setInt(2, memberNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
