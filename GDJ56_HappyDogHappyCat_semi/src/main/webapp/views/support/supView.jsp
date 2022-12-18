@@ -98,7 +98,7 @@ for(int i=0;i<comments.size();i++){
 <div class="bt_wrap" >
     
     	<% if(loginMember==null){%> 
-    	<a id="likeBtn" style="font-size:17px;cursor: pointer;" class="on"><img src="<%=request.getContextPath()%>/images/sup/heart.svg">&nbsp;&nbsp;응원&nbsp;<%=s.getSupLikeCount() %></a>	
+    	<a id="likeBtn" style="font-size:17px;cursor: pointer;" class="on" onclick="log()";><img src="<%=request.getContextPath()%>/images/sup/heart.svg">&nbsp;&nbsp;응원&nbsp;<%=s.getSupLikeCount() %></a>	
     		<a style="font-size:17px;width:200px;cursor:pointer;" onclick="log()"; >기부하기</a>
 		<%}else{ 
 			if((int)request.getAttribute("check")==0){
@@ -109,7 +109,7 @@ for(int i=0;i<comments.size();i++){
     		<%} %>
     <a style="font-size:17px;width:200px;cursor:pointer;" id="show" >기부하기</a>
     <%} %>
-    <a style="font-size:17px;"href="">목록</a>
+    <a style="font-size:17px;"href="<%=request.getContextPath()%>/suplist.do">목록</a>
 </div>
 <br><br><br>
   

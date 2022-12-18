@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,14 +37,39 @@ public class VolViewServlet2 extends HttpServlet {
 		
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	int AgencyNo = Integer.parseInt(request.getParameter("agencyNo"));
-	Volunteer v =new VolunteerService().selectVolunteer(boardNo);
+	
 	Agency a = new VolunteerService().selectAgency(AgencyNo);
 		
 		List<VolPhoto> vp = new VolunteerService().selectVolPhoto2(boardNo);
 		
-
-		System.out.println(vp);
-
+		Cookie[] cookies=request.getCookies();
+		String boardRead="";
+		boolean readflag=false;
+		if(cookies!=null) {
+			for(Cookie c : cookies) {
+				String name=c.getName();//key값
+				String value=c.getValue();//value값
+				if(name.equals("boardRead")) {
+					boardRead=value;
+					if(value.contains("|"+boardNo+"|")) {
+						readflag=true;
+					}
+					break;
+				}
+			}
+		}
+		
+		if(!readflag) {
+			//쿠키에 현재 게시글번호 저장
+			Cookie c=new Cookie("boardRead",(boardRead+"|"+boardNo+"|"));
+			c.setMaxAge(60*60*24);
+			response.addCookie(c);
+		}
+		
+		Volunteer v = new VolunteerService().selectVolunteer(boardNo, readflag);
+		
+		request.setAttribute("volunteer", v);
+		
 		request.setAttribute("photo", vp);
 		request.setAttribute("info", v);
 		request.setAttribute("agency", a);

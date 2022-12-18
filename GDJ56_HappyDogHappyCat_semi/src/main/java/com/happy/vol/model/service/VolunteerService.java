@@ -36,9 +36,17 @@ public class VolunteerService {
 		return vp;
 	}
 	
-	public Volunteer selectVolunteer(int boardNo) {
+	public Volunteer selectVolunteer(int boardNo, boolean readflag) {
 		Connection conn = getConnection();
 		Volunteer v = vd.selectVolunteer(conn, boardNo);
+		if(v!=null&&!readflag) {
+			int result = vd.updateReadCount(conn, boardNo);
+			if(result>0) {
+				commit(conn);
+				v.setVntActViews(v.getVntActViews()+1);	
+			}
+			else rollback(conn);
+		}
 		close(conn);
 		return v;
 	}
@@ -102,6 +110,22 @@ public class VolunteerService {
 		close(conn);
 		return volNo;
 	}
+	
+	public List<Volunteer> volSearch(int cPage,int numPerpage, String keyword){
+		Connection conn = getConnection();
+		List<Volunteer> vList = vd.volSearch(conn, cPage, numPerpage, keyword);
+		close(conn);
+		return vList;
+	}
+	
+	public int volSearchCount(String keyword) {
+		Connection conn=getConnection();
+		int result=vd.volSearchCount(conn, keyword);
+		close(conn);
+		return result;
+		
+	}
+	
 	
 	//기관 가입
 	public int enrollAgencyEnd(Agency agency, int memberNo) {
