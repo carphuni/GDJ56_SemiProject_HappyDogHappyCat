@@ -139,11 +139,22 @@
 <%=v.getVntActContents() %>
 </div>
 <div class="bt_wrap" >
+  <%if(loginMember==null){ %>
+   <a style="font-size:17px;width:200px;cursor: pointer;" onclick="log();" >신청하기</a>
+   <%}else{ %>
   <a style="font-size:17px;width:200px" href="" >신청하기</a>
-  <a style="font-size:17px;"href="">목록</a>
+  <%} %>
+  <a style="font-size:17px;"href="<%=request.getContextPath()%>/volview.do">목록</a>
 </div>
          
 
-
+<script>
+	const log = () =>{
+		alert("로그인 후 이용하세요.");
+	
+	}
+	
+	
+</script>
 <script src="<%=request.getContextPath()%>/js/volView2.js"></script>
 <%@ include file="/views/common/footer.jsp" %>
