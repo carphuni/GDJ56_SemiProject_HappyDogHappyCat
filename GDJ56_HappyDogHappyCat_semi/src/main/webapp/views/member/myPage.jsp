@@ -24,37 +24,32 @@
  <!-- myPage -->
  <section>
     <div id="myPage-container">
-        <h2>기본 정보</h2>
-        <h1><%=loginMember.getMemberName() %></h1>
-        <div id="basic-line"></div>
-        <div>
-        	<i class="fa-solid fa-signature"></i><span>이름</span>
-			<button class="btn btn-dh" onclick="open('<%=request.getContextPath()%>/views/member/updateMemberName.jsp','_blank','width=800, height=500')">수정</button>
+    	<div>
+	        <h2>기본 정보</h2>
+	        <div>
+		        <h1><%=loginMember.getMemberName() %><button class="btn btn-dh" style="margin-top: 12px" onclick="location.assign('<%=request.getContextPath()%>/member/memberUpdateAll.do')">내 정보 수정</button></h1>
+	        </div>
         </div>
         <div id="basic-line"></div>
         <div>
           <i class="fa-solid fa-id-badge"></i><span><%=loginMember.getMemberId() %></span>
-          <button class="btn btn-dh">수정</button>
         </div>
         <div id="basic-line"></div>
         <div>
           <i class="fa-solid fa-lock"></i><span>비밀번호</span>
-          <button class="btn btn-dh">수정</button>
+          <button class="btn btn-dh" onclick="location.assign('<%=request.getContextPath()%>/member/memberUpdateAll.do')">비밀번호 수정</button>
         </div>
         <div id="basic-line"></div>
         <div>
           <i class="fa-solid fa-mobile-screen-button"></i><span><%=buf%></span>
-          <button class="btn btn-dh">수정</button>
         </div>
         <div id="basic-line"></div>
         <div>
           <i class="fa-solid fa-envelope"></i><span><%=loginMember.getMemberEmail() %></span>
-          <button class="btn btn-dh">수정</button>
         </div>
         <div id="basic-line"></div>
         <div>
           <i class="fa-solid fa-house"></i><span><%=loginMember.getMemberAddress() %></span>
-          <button class="btn btn-dh">수정</button>
         </div>
         <div id="basic-line"></div>
         

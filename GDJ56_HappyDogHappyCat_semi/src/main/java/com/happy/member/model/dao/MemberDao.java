@@ -109,13 +109,16 @@ public class MemberDao {
 		return member;
 	}
 
-	public int memberUpdateName(Connection conn, int memberNo, String reName) {
+	public int memberUpdateAll(Connection conn, Member member) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
-			pstmt=conn.prepareStatement(sql.getProperty("memberUpdateName"));
-			pstmt.setString(1, reName);
-			pstmt.setInt(2, memberNo);
+			pstmt=conn.prepareStatement(sql.getProperty("memberUpdateAll"));
+			pstmt.setString(1, member.getMemberName());
+			pstmt.setString(2, member.getMemberEmail());
+			pstmt.setString(3, member.getMemberPhone());
+			pstmt.setString(4, member.getMemberAddress());
+			pstmt.setInt(5, member.getMemberNo());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

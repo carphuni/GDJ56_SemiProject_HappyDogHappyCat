@@ -36,10 +36,10 @@ public class MemberService {
 		return member;
 	}
 	
-	public int memberUpdateName(int memberNo, String reName) {
-		//마이페이지 멤버 이름 수정
+	public int memberUpdateAll(Member member) {
+		//마이페이지 내 정보 수정
 		Connection conn=getConnection();
-		int result=dao.memberUpdateName(conn, memberNo, reName);
+		int result=dao.memberUpdateAll(conn, member);
 		if(result>0)commit(conn);
 		else rollback(conn);
 		close(conn);

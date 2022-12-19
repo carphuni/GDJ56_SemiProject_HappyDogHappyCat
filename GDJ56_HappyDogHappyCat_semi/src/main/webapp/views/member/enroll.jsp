@@ -13,7 +13,7 @@
             name="memberId"
           />
           <label for="floatingInput">아이디 ( 6자 이상 )</label>
-          <input type="button" class="btn btn-dh" value="중복확인" id="duplicateCk" onclick="duplicateId();">
+          <input type="button" class="btn btn-dh" value="중복확인" id="duplicateCk" onclick="duplicateId(event);">
         </div>
         <div id="idResult"></div>
         <div class="form-floating">
@@ -56,6 +56,7 @@
               id="floatingYear"
               placeholder="0000"
               name="memberYear"
+              maxlength=4
             />
             <label for="floatingPassword">년 ( 4자 )</label>
           </div>
@@ -66,6 +67,7 @@
               id="floatingMonth"
               placeholder="00"
               name="memberMonth"
+              maxlength=2
             />
             <label for="floatingPassword">월</label>
           </div>
@@ -76,6 +78,7 @@
               id="floatingDay"
               placeholder="00"
               name="memberDay"
+              maxlength=2
             />
             <label for="floatingPassword">일</label>
           </div>
@@ -99,6 +102,7 @@
             id="floatingPhone"
             placeholder="000-0000-0000"
             name="memberPhone"
+            maxlength=11
           />
           <label for="floatingPassword">휴대전화 ( '-' 제외 )</label>
         </div>
@@ -115,6 +119,7 @@
         </div>
         <div id="addressResult"></div>
         <input type="button" class="btn btn-dh" value="가입하기" onclick="memberEnroll();"/>
+        <input type="button" class="btn btn-light" value="취소하기" onclick="winBack();"/>
       </form>
     </section>
 <%@ include file="/views/common/footer.jsp" %>

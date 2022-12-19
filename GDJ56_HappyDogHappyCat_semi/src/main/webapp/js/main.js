@@ -58,13 +58,13 @@ const dayCk=(asValue)=> {
 
 
 
-const duplicateId=()=>{
+const duplicateId=e=>{
 	//아이디 중복 체크
 	$.ajax({
 		url:"/GDJ56_HappyDogHappyCat_semi/member/duplicateId.do",
-		data:{"inputId":$("#floatingId").val()},
+		data:{"inputId":$(e.target).parent().children("#floatingId").val()},
 		success:data=>{
-			if(idCk($("#floatingId").val())&&data=="null"){
+			if(idCk($(e.target).parent().children("#floatingId").val())&&data=="null"){
 				$("#idResult").text("사용가능한 아이디입니다");
 			}else{
 				$("#idResult").text("사용 불가능한 아이디입니다");
@@ -153,24 +153,15 @@ const enrollAgencyEnd=()=>{
 	})
 }
 
-const updateMemberNameEnd=()=>{
-	//마이페이지 이름 수정
-	$.ajax({
-		url:"/GDJ56_HappyDogHappyCat_semi/member/memberUpdateNameEnd.do",
-		data:{"floatingInputName":$("#floatingInputName").val()},
-		dataType:"json",
-		success:data=>{
-			alert(data.msg);
-			opener.location.reload();
-			close();
-		}
-	})
-}
 
 const winClose=()=>{
 	//해당 윈도우 창 닫기
 	window.open('','_self').close();
 }
 
+const winBack=()=>{
+	//뒤로가기
+	history.back();
+}
 
 
