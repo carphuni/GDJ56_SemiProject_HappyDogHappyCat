@@ -31,7 +31,11 @@
 <% for(int i=0;i<list.size();i++){ %>
 	<form style="cursor:pointer; action="<%=request.getContextPath()%>/volView2.do" method="post">
     <div class="s2">
+    <%if(loginMember!=null){ %>
+     <table width="1000" border="0" cellpadding="0" cellspacing="0" onclick="location.assign('<%=request.getContextPath()%>/volView2.do?boardNo=<%=list.get(i).getVntBoardNo()%>&&agencyNo=<%=list2.get(i).getAgencyNo()%>&&memberNo=<%=loginMember.getMemberNo()%>')">
+     <%}else{ %>
     <table width="1000" border="0" cellpadding="0" cellspacing="0" onclick="location.assign('<%=request.getContextPath()%>/volView2.do?boardNo=<%=list.get(i).getVntBoardNo()%>&&agencyNo=<%=list2.get(i).getAgencyNo()%>')">
+        <%} %> 
         <tbody>
 	        <tr>
 	        <td width="100"><%=list.get(i).getVntBoardNo() %></td><input type="hidden" name="boardNo" value="<%=list.get(i).getVntBoardNo() %>">
@@ -39,14 +43,13 @@
 	        <td width="1700">
         
           <table width="556" border="0" cellpadding="0" cellspacing="0">
-           <tbody><tr><td style="cursor:pointer;" height="25"><b><span class="fontredbold"><%=list.get(i).getVntRecName() %><b><span class="fontredbold"></a></span></font></b></td></tr>
-       	  <input type="hidden" name="volViewTitle" value="<%=list.get(i).getVntRecName() %>">
+           <tbody><tr>
         </td>
         </tr>
-       
+       <td style="cursor:pointer;" height="25"><b><span class="fontredbold"><%=list.get(i).getVntRecName() %><b><span class="fontredbold"></a></span></font></b></td></tr>
+       	  <input type="hidden" name="volViewTitle" value="<%=list.get(i).getVntRecName() %>">
           <tr>
-            <td><%=list.get(i).getVntActContents()%></td>
-
+          
           </tr>
             <table border="0">
                 <tbody>
@@ -73,7 +76,7 @@
                       <input type="hidden" name="act" value="<%=list.get(i).getVntActPeriod()%>">
                       <input type="hidden" name="actend" value="<%=list.get(i).getVntActPeriodEnd()%>">
                       <input type="hidden" name="day" value="<%=list.get(i).getVntActDay()%>">
-                      <input type="hidden" name="contents" value="<%=list.get(i).getVntActContents()%>">
+                      
                 </tr>
                 <tr>
                       <td width="100">등&nbsp;록&nbsp;일 &nbsp;</td>
@@ -90,7 +93,7 @@
         <hr style="border:dotted gray 1px">
          <%} %>
     </div>
-   
+</form>   
 
     <div id="board-search">
       <div class="container">
@@ -106,6 +109,7 @@
           </div>
       </div>
   </div>
+  <div style="text-align:center;">
   <%=request.getAttribute("pageBar") %>
     <div class="page_wrap">
       <div class="page_nation">
@@ -135,5 +139,5 @@
       <%}} %>
 </div>
 </section>
-</form>
+
 <%@ include file="/views/common/footer.jsp" %>

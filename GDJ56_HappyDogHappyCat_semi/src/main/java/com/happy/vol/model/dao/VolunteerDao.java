@@ -236,8 +236,9 @@ public class VolunteerDao {
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("volSearch"));
 			pstmt.setString(1, "%"+keyword+"%");
-			pstmt.setInt(2, (cPage-1)*numPerpage+1);
-			pstmt.setInt(3, cPage*numPerpage);
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setInt(3, (cPage-1)*numPerpage+1);
+			pstmt.setInt(4, cPage*numPerpage);
 			
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
@@ -260,6 +261,7 @@ public class VolunteerDao {
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("volSearchCount"));
 			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
 			rs=pstmt.executeQuery();
 			if(rs.next()) count=rs.getInt(1); 	
 		}catch (Exception e) {
@@ -308,6 +310,144 @@ public class VolunteerDao {
 		}return volNo;
 	}
 
+	
+	public int deleteVolunteer(Connection conn, int vntBoardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteVolunteer"));
+			pstmt.setInt(1, vntBoardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+		
+	}
+	
+	
+	public int updateEnr(Connection conn, int vntBoardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateEnr"));
+			pstmt.setInt(1, vntBoardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}
+	
+	public int cancelEnr(Connection conn, int vntBoardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("cancelEnr"));
+			pstmt.setInt(1, vntBoardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}
+	
+	public int updateEnrCheck(Connection conn,int vntBoardNo, int memberNo ) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateEnrCheck"));
+			pstmt.setInt(1, vntBoardNo);
+			pstmt.setInt(2, memberNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}
+	
+	public int updateEnrCheckCancel(Connection conn,int vntBoardNo, int memberNo ) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateEnrCheckCancel"));
+			pstmt.setInt(1, vntBoardNo);
+			pstmt.setInt(2, memberNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}
+	
+	public int selectEnrCheck(Connection conn,int vntBoardNo, int memberNo ) {
+		
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectEnrCheck"));
+			pstmt.setInt(1, vntBoardNo);
+			pstmt.setInt(2, memberNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+				
+	}
+	
+	public int selectEnrPerson(Connection conn,int vntBoardNo, int memberNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectEnrPerson"));
+			pstmt.setInt(1, vntBoardNo);
+			pstmt.setInt(2, memberNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+		
+	}
+	
+	public int insertEnr(Connection conn, int vntBoardNo, int memberNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertEnr"));
+			pstmt.setInt(1, vntBoardNo);
+			pstmt.setInt(2, memberNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+	}	
+	
 	//기관 가입
 	public int enrollAgencyEnd(Connection conn, Agency agency, int memberNo) {
 		PreparedStatement pstmt=null;
@@ -326,6 +466,7 @@ public class VolunteerDao {
 		}
 		return result;
 	}
+	
 
 	public List<Agency> selectAgency3(Connection conn){
 		PreparedStatement pstmt=null;

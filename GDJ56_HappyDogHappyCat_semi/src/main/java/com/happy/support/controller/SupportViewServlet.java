@@ -58,8 +58,8 @@ public class SupportViewServlet extends HttpServlet {
 		request.setAttribute("member", member);
 		if(request.getParameter("memberNo")!=null) {
 			int memberNo= Integer.parseInt(request.getParameter("memberNo"));
-		int check = new SupportService().selectSupPick(boardNo, memberNo);
-		request.setAttribute("check", check);}
+			int check = new SupportService().selectSupPick(boardNo, memberNo);
+			request.setAttribute("check", check);}
 		request.getRequestDispatcher("/views/support/supView.jsp").forward(request, response);
 	}
 

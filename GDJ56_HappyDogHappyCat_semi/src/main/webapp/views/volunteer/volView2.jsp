@@ -6,15 +6,23 @@
 	List<VolPhoto> vp = (List<VolPhoto>)request.getAttribute("photo");
 	Volunteer v = (Volunteer)request.getAttribute("info");
 	Agency agency = (Agency)request.getAttribute("agency");
+	int boardNo = (int)request.getAttribute("boardNo");
 
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volView2.css"/>
 
 <div id="container">
     <img src="<%=request.getContextPath()%>/images/vol/01-aa-give-title-new01.jpg">
-
+<% if(loginMember!=null&&loginMember.getMemberNo()==agency.getMemberNo()){ %>
+<div style="margin-top:5px;" class="bt_wrap" >
+  <a style="font-size:17px;margin-right:-65%;"href="<%=request.getContextPath()%>/updatevol.do?boardNo=<%=boardNo%>&&memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>">수정</a>
+  <a style="font-size:17px;margin-right:20%"href="<%=request.getContextPath()%>/deletevol.do?boardNo=<%=boardNo%>">삭제</a>
 </div>
+<%} %>
+</div>
+
 <div id="container2">
+
     <table style="width: 70%;" >
         <tbody><tr>
             <td style="width: 18.2668%; background-color:lightgray; text-align: center;">
@@ -84,12 +92,12 @@
             <td style="width: 16.82%; background-color: lightgray; text-align: center;">
                 <div style="text-align: center;">
                     <span style="font-size: 14px;">
-                    <span style="color: rgb(255, 255, 255);">모집인원</span></span>
+                    <span style="color: rgb(255, 255, 255);">현재인원/모집인원</span></span>
                     <span style="font-size: 13px;"><br></span>
                 </div>
             </td>
             <td style="width: 33.1143%; text-align: center;">
-                <div style="text-align: center;"><%=v.getVntSetPerson() %></div>
+                <div id="result" style="text-align: center;"><%=v.getVntEnrPerson() %>/<%=v.getVntSetPerson() %></div>
             </td>
         </tr>
         <tr>
@@ -139,12 +147,21 @@
 <%=v.getVntActContents() %>
 </div>
 <div class="bt_wrap" >
-  <%if(loginMember==null){ %>
+
+  <% if(loginMember==null){ %>
    <a style="font-size:17px;width:200px;cursor: pointer;" onclick="log();" >신청하기</a>
-   <%}else{ %>
-  <a style="font-size:17px;width:200px" href="" >신청하기</a>
-  <%} %>
-  <a style="font-size:17px;"href="<%=request.getContextPath()%>/volview.do">목록</a>
+    <a style="font-size:17px;"href="<%=request.getContextPath()%>/volview.do">목록</a>
+   <%}else if(loginMember.getMemberNo()!=agency.getMemberNo()){
+	   if((int)request.getAttribute("check")==0){
+	   %>
+ 		 <a style="font-size:17px;cursor: pointer;width:200px" id="enrBtn" >신청하기</a>
+  		<%}else{ %>
+  		<a style="font-size:17px;cursor: pointer;width:200px" id="enrBtn" >신청취소</a>
+		<%} %>  
+		 <a style="font-size:17px;"href="<%=request.getContextPath()%>/volview.do">목록</a>
+  <%}else{ %>
+  	 <a style="font-size:17px;margin-top:-50px;background-color:white;color:black;"href="<%=request.getContextPath()%>/volview.do">목록</a><%} %>
+ 
 </div>
          
 
@@ -153,6 +170,51 @@
 		alert("로그인 후 이용하세요.");
 	
 	}
+	
+	$(document).ready(function(){
+	    $("#enrBtn").click(function(){
+			$.ajax({
+				url: "<%= request.getContextPath() %>/enroll.do",
+				type : "post",
+				data:  {boardNo : <%=boardNo%>
+					<%=loginMember!=null?",memberNo:"+loginMember.getMemberNo():""%>
+					}, 
+				success: function(data){
+					
+				if(data.v.vntEnrPerson<data.v.vntSetPerson){ 
+						
+						if(data.check==1){
+							$("#enrBtn").html("신청하기")
+							alert("신청이 취소되었습니다.")
+							$("#result").html(data.v.vntEnrPerson+"/"+data.v.vntSetPerson)
+						}else{$("#result").html(data.v.vntEnrPerson+"/"+data.v.vntSetPerson);
+							$("#enrBtn").html("신청취소")
+							alert("신청이 완료되었습니다.")
+							
+							$("#result").html(data.v.vntEnrPerson+"/"+data.v.vntSetPerson);
+						}
+						
+					 } else{
+						 if(data.flag==1)
+						 alert("인원이 마감되었습니다.");
+						 else{
+								$("#enrBtn").html("신청취소")
+								alert("신청이 완료되었습니다.")
+								$("#result").html(data.v.vntEnrPerson+"/"+data.v.vntSetPerson);
+						 }
+					 }
+					console.log(data.check);
+					console.log(data.v.vntEnrPerson);
+				},
+				
+				error: function(xhr, textStatus, errorThrown){
+					console.log("ajax 요청 실패!");
+					console.log(xhr, textStatus, errorThrown);
+				}
+			});
+	    });
+	});		
+	
 	
 	
 </script>

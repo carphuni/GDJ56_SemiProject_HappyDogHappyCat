@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "com.happy.vol.model.vo.Agency" %>
+<%@ page import = "java.util.List,com.happy.vol.model.vo.Agency,com.happy.vol.model.vo.Volunteer,com.happy.vol.model.vo.VolPhoto" %>
 <%@ include file="/views/common/header.jsp" %>
 <%
 	Agency a = (Agency)request.getAttribute("agency");
+	Volunteer v = (Volunteer)request.getAttribute("v");
+	VolPhoto vp= (VolPhoto)request.getAttribute("vp");
+	List<VolPhoto> vp2= (List<VolPhoto>)request.getAttribute("vp2");
 %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/volWrite.css"/>
 
@@ -26,7 +29,7 @@
                 <div class="title" >
                     <dl>
                         <dt style="font-size:17px">제목</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="text" placeholder="40자 이하로 입력해주세요." name="volTitle" required /></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="text" placeholder="40자 이하로 입력해주세요." name="volTitle" value="<%=v.getVntRecName() %>" /></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -44,7 +47,7 @@
                 <div class="info">
                     <dl>
                         <dt style="font-size:17px">담당자 이름</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="text" name="managerName" placeholder="담당자 이름" required></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="text" name="managerName" placeholder="담당자 이름" value="<%=v.getVntManagerName()%>"></dd>
              
                     </dl>
                     <dl>
@@ -56,39 +59,49 @@
                 <div class="info">
                     <dl>
                         <dt style="font-size:17px">모집기간</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="date" name="recruitPeriod1" required>&nbsp;-&nbsp;<input type="date" name="recruitPeriod2" required></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="date" name="recruitPeriod1" value="<%=v.getVntRecPeriod()%>">&nbsp;-&nbsp;<input type="date" name="recruitPeriod2" value=<%=v.getVntRecPeriodEnd() %>></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:17px">모집인원</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type=number name="recruitNumber" placeholder="모집인원" required></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type=number name="recruitNumber" placeholder="모집인원" value="<%=v.getVntSetPerson() %>"></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt style="font-size:17px">봉사활동기간</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="date" name="activityPeriod1" required>&nbsp;-&nbsp;<input type="date" name="activityPeriod2" required></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="date" name="activityPeriod1" value="<%=v.getVntActPeriod()%>">&nbsp;-&nbsp;<input type="date" name="activityPeriod2" value="<%=v.getVntActPeriodEnd()%>"></dd>
                     </dl>
                     <dl>
                         <dt style="font-size:17px">활동가능요일</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="text" name="activityDay" placeholder="활동가능요일" required></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="text" name="activityDay" placeholder="활동가능요일" ></dd>
                     </dl>
                 </div>
                 <div class="cont">
-                    <textarea rows="10" cols="100" name="summernote" id="summernote"  required></textarea>
+                    <textarea rows="10" cols="100" name="summernote" id="summernote"><%=v.getVntActContents() %></textarea>
                 </div>
-
+				<div><%=v.getVntActContents() %></div>
                 <div class="file" style="font-size:17px">
                     <b>* 대표이미지 설정</b>
-                    <input type="file" name = "upFile" class="real-upload" accept="image/*" onchange="readURL(this);" required>
-                    <img id="preview" style="display:none;"></div>
+                    <input type="file" name = "upFile" class="real-upload" accept="image/*" onchange="readURL(this);" >
+                    <img src="<%=request.getContextPath()%>/upload/volunteer/<%=vp.getVntPhotoRename()%>" id="preview" style="display:flex;" ></div>
                 </div>
                 
                 <div class="file2" style="font-size:17px">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' accept="image/*" name="upload2" multiple/>
+                    <input type="file" id='btnAtt' accept="image/*" name="upload2" onclick="dele()" multiple/>
                 </div>
+                
                 <div id='att_zone' 
-                data-placeholder=''></div>
+                data-placeholder=''>
+                
+                <%for(int i=0;i<vp2.size();i++){ %>
+                <div id="del1" style="display:inline-block;position:relative;width:150px;height:120px;margin:5px;border:1px solid #00f;z-index:1">
+                 <img id = "del2" style="width:100%;height:100%;z-index:none" src="<%=request.getContextPath()%>/upload/volunteer/<%=vp2.get(i).getVntPhotoRename()%>"> 
+                 <input type="button" id="del3" value="x"  onclick="dele()" style="width:30px;height:30px;position:absolute;font-size:24px;right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00">
+                 </div>
+                 <%} %>
+                </div>
+               
               
             </div>
 			
@@ -178,12 +191,18 @@
 		}
 	});
 		
+	   const dele = () =>{
+		  $("#att_zone").empty();
+	   }
+		
+	
 		$(document).ready(function() {
 		    $('#summernote').summernote({
 		        tablesize :2,
 		        height:500
+		        
 		    });
-		    });
+			    });
 
 		    
 		    ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
@@ -334,8 +353,7 @@
 		      console.log("summernoteContent : " + summernoteContent);
 		  
 		  }	
-		 
-	
+
 	
 </script>
 

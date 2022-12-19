@@ -69,11 +69,14 @@ public class VolViewServlet2 extends HttpServlet {
 		Volunteer v = new VolunteerService().selectVolunteer(boardNo, readflag);
 		
 		request.setAttribute("volunteer", v);
-		
+		request.setAttribute("boardNo", boardNo);
 		request.setAttribute("photo", vp);
 		request.setAttribute("info", v);
 		request.setAttribute("agency", a);
-
+		if(request.getParameter("memberNo")!=null) {
+			int memberNo= Integer.parseInt(request.getParameter("memberNo"));
+			int check = new VolunteerService().selectEnrCheck(boardNo, memberNo);
+			request.setAttribute("check", check);}
 		request.getRequestDispatcher("/views/volunteer/volView2.jsp").forward(request, response);
 	}
 
