@@ -37,7 +37,7 @@
         <div id="basic-line"></div>
         <div>
           <i class="fa-solid fa-lock"></i><span>비밀번호</span>
-          <button class="btn btn-dh" onclick="location.assign('<%=request.getContextPath()%>/member/memberUpdateAll.do')">비밀번호 수정</button>
+          <button class="btn btn-dh" onclick="location.assign('<%=request.getContextPath()%>/member/memberUpdatePw.do')">비밀번호 수정</button>
         </div>
         <div id="basic-line"></div>
         <div>
@@ -56,7 +56,7 @@
     </div>
     
     <div id="myPage-container">
-        <h2>기관 정보</h2>
+        <h2>기관 정보<%if(loginAgency!=null){%><button class="btn btn-dh" onclick="location.assign('<%=request.getContextPath()%>/member/memberUpdateAgency.do')">기관 정보 수정</button><%} %></h2>
         <div id="basic-line"></div>
         <%if(loginAgency==null){ %>
 	        <div>
@@ -66,17 +66,14 @@
         <%}else{ %>
 	        <div>
 	        	<i class="fa-solid fa-building"></i><span><%=loginAgency.getAgencyName() %></span>
-				<button class="btn btn-dh">수정</button>
 	        </div>
 	        <div id="basic-line"></div>
 	        <div>
 	          <i class="fa-solid fa-location-dot"></i><span><%=loginAgency.getAgencyAddress() %></span>
-	          <button class="btn btn-dh">수정</button>
 	        </div>
 	        <div id="basic-line"></div>
 	        <div>
 	          <i class="fa-solid fa-phone"></i><span><%=buf2 %></span>
-	          <button class="btn btn-dh">수정</button>
 	        </div>
         <%} %>
 	        <div id="basic-line"></div>

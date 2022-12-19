@@ -127,4 +127,20 @@ public class MemberDao {
 		}
 		return result;
 	}
+	
+	public int  memberUpdatePwEnd(Connection conn, Member loginMember, String memberPw) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("memberUpdatePwEnd"));
+			pstmt.setString(1, memberPw);
+			pstmt.setInt(2, loginMember.getMemberNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

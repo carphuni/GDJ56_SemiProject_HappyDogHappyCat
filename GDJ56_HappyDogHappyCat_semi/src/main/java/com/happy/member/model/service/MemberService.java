@@ -45,5 +45,15 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+	
+	public int memberUpdatePwEnd(Member loginMember, String memberPw) {
+		//마이페이지 비밀번호 수정
+		Connection conn=getConnection();
+		int result=dao.memberUpdatePwEnd(conn, loginMember, memberPw);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 
 }

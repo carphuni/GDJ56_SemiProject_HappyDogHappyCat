@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
 <section id="enroll">
-      <form id="login-container" action="<%=request.getContextPath()%>/member/memberUpdateAllEnd.do" >
+      <form id="login-container" action="<%=request.getContextPath()%>/member/memberUpdateAllEnd.do" onsubmit="return updateMyPage();">
         <h1>회원 정보 수정</h1>
         <div class="form-floating">
           <input

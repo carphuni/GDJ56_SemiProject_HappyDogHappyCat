@@ -115,12 +115,41 @@ const memberEnroll=()=>{
 		
 }
 
+const updateMyPage=()=>{
+	let memberName=$("#floatingName").val();
+	let memberEmail=$("#floatingEmail").val();
+	let memberPhone=$("#floatingPhone").val();
+	let memberAddress=$("#floatingAddress").val();
+	if(memberName.length<2) {$("#nameResult").text("이름은 2자 이상이어여합니다"); return false;}else{$("#nameResult").hide()}
+	if(!emailCk(memberEmail)) {$("#emailResult").text("이메일 입력이 올바르지 않습니다"); return false;}else{$("#emailResult").hide();}
+	if(!phoneCk(memberPhone)) {$("#phoneResult").text("연락처 입력이 올바르지 않습니다( '-' 제외 )"); return false;}else{$("#phoneResult").hide();}
+	if(memberAddress.length<1) {$("#addressResult").text("주소 입력이 올바르지 않습니다"); return false;}else{$("#addressResult").hide();}
+}
+
+const updatePw=()=>{
+	let memberPwNow=$("#floatingPwNow").val();
+	let loginMemberPw=$("input[name='loginMemberPw']").val();
+	if(memberPwNow!=loginMemberPw){$("#pwNowResult").text("현재 비밀번호가 맞지않습니다").css("font-color","red"); return false;}
+	let memberPw=$("#floatingPw").val();
+	if(!passwordCk(memberPw)) {$("#pwResult").text("비밀번호는 8 ~ 16자 영문, 숫자, 특수문자를 포함해야합니다").css("font-color","red"); return false;}
+}
+
 
 $(()=>{
 	//비밀번호 확인 입력 후 일치 여부 확인
 	$("#floatingPwCk").blur(e=>{
 		const pw=$("#floatingPw").val();
 		const pwck=$(e.target).val();
+		if(pw!=""&&pw==pwck){
+			$("#pwResult").css({"color":"green"}).text("비밀번호가 일치합니다.")
+		}else{
+			$("#pwResult").css({"color":"red"}).text("비밀번호가 일치하지 않습니다.")
+		}
+	});	
+	
+	$("#floatingPw").blur(e=>{
+		const pwck=$("#floatingPwCk").val();
+		const pw=$(e.target).val();
 		if(pw!=""&&pw==pwck){
 			$("#pwResult").css({"color":"green"}).text("비밀번호가 일치합니다.")
 		}else{
