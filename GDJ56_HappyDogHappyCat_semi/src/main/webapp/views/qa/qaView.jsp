@@ -2,22 +2,33 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,
 com.happy.qa.vo.QaForm
-,com.happy.qa.vo.QaComment"%>
+,com.happy.qa.vo.QaComment
+,com.happy.qa.vo.QaPhoto"%>
 <%
 	QaForm q=(QaForm)request.getAttribute("qas");
 	List<QaComment> qc=(List<QaComment>)request.getAttribute("comments");
+	List<QaPhoto> qp=(List<QaPhoto>)request.getAttribute("qaPhoto");
 %>
 <%@include file="/views/common/header.jsp"%>
 	<div id="title">
   		<br>
     	<h3>Q&A[<%=q.getQaBoardNo() %>]:<%=q.getQaTitle() %></h3><br>
-  	</div>
-    <br><br>
-  	<div id="imgs">
-  		<img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="" width="350" height="250">
-    </div>
+  	
     <br><br>
     
+  	<%if(qp.isEmpty()){ %>
+  		<div id="imgs">
+  			<p>사진 없음</p>
+  		</div>
+  	<%}else{ 
+  		for(int i=0;i<qp.size();i++){ %>
+  			<div id="imgs">
+  				<img src="<%=request.getContextPath() %>/upload/qa/<%=qp.get(i).getQaPhotoReName() %>" alt="" width="350" height="250">
+    		</div>
+    	<%}
+  	} %>
+    <br><br>
+ 	</div>
   	<div id="description">
             <table >
                 <tr>
@@ -29,6 +40,7 @@ com.happy.qa.vo.QaForm
             </table>
     </div>
     <div id="comment-container" >
+    	<%if(loginMember.getMemberId().equals("admin")) {%> 
    		<div class="comment-editor" >
    			<form action="<%=request.getContextPath() %>/qa/commentWrite.do?qaBoardNo=<%=q.getQaBoardNo() %>" 
    			method="post" style="justify-content: center; display: flex; margin-top: 10px; align-items: flex-end; margin-left: 70px;" >
@@ -42,6 +54,7 @@ com.happy.qa.vo.QaForm
    					
    			</form>
    		</div>	
+   		<%} %>
    		<br>
    		<div style="border-top: solid rgba(0, 0, 0, 0.482);width:400px; margin:auto;">
    		</div>

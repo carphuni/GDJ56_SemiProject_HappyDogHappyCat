@@ -10,5 +10,7 @@ public class AdtReviewBorad {
 	private int memberNo;
 	private String adtTitle;
 	private String adtContents;
-	private String adtViews;
+	private int adtViews;
+	private String memberId;
+	private String adtWriteDate;
 }

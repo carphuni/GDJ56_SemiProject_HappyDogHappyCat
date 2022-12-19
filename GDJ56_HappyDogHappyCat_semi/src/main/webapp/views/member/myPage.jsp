@@ -14,6 +14,11 @@
         <h2>기본 정보</h2>
         <h1><%=loginMember.getMemberName() %></h1>
         <div>
+        	<i class="fa-solid fa-signature"></i><span>이름</span>
+			<button class="btn btn-dh">수정</button>
+        </div>
+        <div id="basic-line"></div>
+        <div>
           <i class="fa-solid fa-id-badge"></i><span><%=loginMember.getMemberId() %></span>
           <button class="btn btn-dh">수정</button>
         </div>

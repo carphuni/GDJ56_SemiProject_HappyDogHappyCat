@@ -147,17 +147,17 @@ com.happy.qa.vo.QaForm" %>
       $('#testModal6').modal("show");
     });
 
-    
+  
   </script>
 
   <section class="post">
     <div id="board-search">
       <div class="container">
         <div class="search-window">
-          <form action="">
+          <form action="<%=request.getContextPath()%>/searchQa.do">
             <div class="search-wrap">
               <label for="search" class="blind">내용 검색</label>
-              <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">&nbsp;
+              <input id="search" type="search" name="searchKeyword" placeholder="제목으로 검색하기" value="">&nbsp;
               <button type="submit" class="btn btn-dark" id="searchbtn">검색</button> &nbsp;
               <!-- <button class="btn btn-dark">입양글쓰기</button> -->
             </div>
@@ -188,7 +188,12 @@ com.happy.qa.vo.QaForm" %>
             <tr>
             	<td><%=q.getQaBoardNo() %></td>
               <th>
-                <a href="<%=request.getContextPath()%>/qa/qaView.do?qaBoardNo=<%=q.getQaBoardNo()%>"><%=q.getQaTitle() %></a>
+                <%if(q.getQaPassword()!=0){%>
+                 <a href="<%=request.getContextPath()%>/qa/qaPw.do?qaBoardNo=<%=q.getQaBoardNo()%>"><%=q.getQaTitle() %></a>
+                🔒
+                <% }else{%>
+                	 <a href="<%=request.getContextPath()%>/qa/qaView.do?qaBoardNo=<%=q.getQaBoardNo()%>"><%=q.getQaTitle() %></a>
+                <%} %>	 
               </th>
               <td><%=q.getMemberId()%></td>
               <td><%=q.getQaWriteDate() %></td>

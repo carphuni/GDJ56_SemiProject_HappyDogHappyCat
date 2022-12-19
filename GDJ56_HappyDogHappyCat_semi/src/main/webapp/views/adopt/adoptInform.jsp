@@ -147,7 +147,9 @@
         </div>
         <br><br>
         <div id="adp_btn">
+        	<a href="<%=request.getContextPath()%>/adopt/adoptmain.do";>
             <button type="button" id="adp_btn" class="btn btn-primary"><p>입양하러가기</p></button>
+            </a>
         </div>
         <br><br><br>
     </section>

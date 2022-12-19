@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Properties;
 
 import com.happy.admission.vo.AdmissionForm;
+import com.happy.admission.vo.AnimalPhoto;
 import com.happy.animal.model.vo.Animal;
+import com.happy.qa.vo.QaPhoto;
 
 
 
@@ -36,7 +38,7 @@ public class AdmissionDao {
 	}
 	
 	//동물 데이터 저장 
-	public int enrollAnimal(Connection conn, Animal ani) {
+	public int enrollAnimal(Connection conn, Animal ani,List<AnimalPhoto>fileList) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
@@ -191,6 +193,51 @@ public class AdmissionDao {
 			close(rs);
 			close(pstmt);
 		}return a;
+	}
+
+	public int insertAniPhoto(Connection conn, int aniNo, AnimalPhoto ap) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertAdPhoto"));
+			pstmt.setInt(1, aniNo);
+			pstmt.setString(2, ap.getAdPhotoOriName());
+			pstmt.setString(3, ap.getAdPhotoReName());
+			pstmt.setString(4, ap.getMainPhoto());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+
+
+	public List<AnimalPhoto> selectAnimalPhoto(Connection conn, int admissionNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		AnimalPhoto a = null;
+		List<AnimalPhoto> ap= new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectAniPhoto"));
+			pstmt.setInt(1,admissionNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+					a=AnimalPhoto.builder()
+					.photoNo(rs.getInt("ani_photo_no"))
+					.adPhotoOriName(rs.getString("ani_photo_oriname"))
+					.adPhotoReName(rs.getString("ani_photo_rename"))
+					.mainPhoto(rs.getString("main_photo"))
+					.build();
+					
+					ap.add(a);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return ap;
 	}
 	
 	

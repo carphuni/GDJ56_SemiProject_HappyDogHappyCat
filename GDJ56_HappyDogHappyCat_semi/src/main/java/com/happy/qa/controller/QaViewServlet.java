@@ -15,6 +15,7 @@ import com.happy.admission.service.AdmissionService;
 import com.happy.animal.model.vo.Animal;
 import com.happy.qa.service.QaService;
 import com.happy.qa.vo.QaForm;
+import com.happy.qa.vo.QaPhoto;
 import com.happy.qa.vo.QaComment;
 
 /**
@@ -66,12 +67,17 @@ public class QaViewServlet extends HttpServlet {
 		
 		
 		
-		
 		QaForm qa=new QaService().QaView(QaNo,readflag);
+		
 		List<QaComment> list =new QaService().selectCommentList(QaNo);
 		
 		request.setAttribute("qas",qa);
 		request.setAttribute("comments", list);
+		
+		List<QaPhoto> qp=new QaService().selectQaPhoto(QaNo);
+		
+		request.setAttribute("qaPhoto", qp);
+		System.out.println(qp);
 		
 		request.getRequestDispatcher("/views/qa/qaView.jsp")
 		.forward(request, response);

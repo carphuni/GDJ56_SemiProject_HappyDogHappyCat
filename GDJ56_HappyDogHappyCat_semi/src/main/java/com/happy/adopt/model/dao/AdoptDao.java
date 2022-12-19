@@ -1,7 +1,9 @@
 package com.happy.adopt.model.dao;
 
+import static com.happy.common.JDBCTemplate.close;
+import static com.happy.common.JDBCTemplate.getConnection;
+
 import java.io.FileReader;
-import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import static com.happy.common.JDBCTemplate.*;
 
 import com.happy.adopt.model.vo.AdtBorad;
+import com.happy.adopt.model.vo.AdtReviewBorad;
+import com.happy.adopt.model.vo.AdtReviewComment;
+import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
 import com.happy.common.JDBCTemplate;
 
@@ -110,6 +114,238 @@ public class AdoptDao {
 		return result;
 	}
 	
+	public int adoptReviewWrite(Connection conn,AdtReviewBorad arb) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewWrite"));
+			pstmt.setInt(1, arb.getMemberNo());
+			pstmt.setString(2, arb.getAdtTitle());
+			pstmt.setString(3, arb.getAdtContents());	
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<AdtReviewBorad> adoptReviewAll(Connection conn,int cPage, int numPerpage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdtReviewBorad> rList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewAll"));
+			pstmt.setInt(1, (cPage-1)*numPerpage+1);
+			pstmt.setInt(2, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				rList.add(getAdtReviewBorad(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return rList;
+	}
+	
+	public int adoptReviewAllCount(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewAllCount"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+	
+	public AdtReviewBorad adoptReviewDes(Connection conn,int adpBoardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		AdtReviewBorad arb=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewDes"));
+			pstmt.setInt(1, adpBoardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				arb=AdtReviewBorad.builder()
+	              .adtBoardNo(rs.getInt("ADT_BOARD_NO"))
+	              .memberNo(rs.getInt("MEMBER_NO"))
+	              .adtTitle(rs.getString("ADT_TITLE"))
+	              .adtContents(rs.getString("ADT_CONTENTS"))
+	              .adtViews(rs.getInt("ADT_VIEWS"))
+	              .adtWriteDate(rs.getString("ADT_WRITE_DATE"))
+	              .build();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return arb;
+	}
+	
+	public int adoptAddPick(Connection conn,int memberNo,int aniNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptAddPick"));
+			pstmt.setInt(1, aniNo);
+			pstmt.setInt(2, memberNo);	
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adoptDeletePick(Connection conn,int memberNo,int aniNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptDeletePick"));
+			pstmt.setInt(1, aniNo);
+			pstmt.setInt(2, memberNo);		
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<AnimalPick> adoptPickAll(Connection conn,int memberNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AnimalPick> pList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptPickAll"));
+			pstmt.setInt(1, memberNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				pList.add(getAnimalPick(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return pList;
+	}
+	
+	
+	public static AnimalPick getAnimalPick(ResultSet rs) throws SQLException{
+        return AnimalPick.builder()
+              .aniNo(rs.getInt("ANI_NO"))
+              .memberNo(rs.getInt("MEMBER_NO"))
+              .build();
+  }
+	
+	public int updateReviewReadCount(Connection conn, int adpBoardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateReviewReadCount"));
+			pstmt.setInt(1, adpBoardNo);
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updateReadCount(Connection conn, int aniNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateReadCount"));
+			pstmt.setInt(1, aniNo);
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int adoptComment(Connection conn,String reply,String memberId,int reviewBoardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptComment"));
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, reply);
+			pstmt.setInt(3, reviewBoardNo);
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<AdtReviewComment> adoptReviewCommentAll(Connection conn,int adpBoardNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdtReviewComment> cList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptReviewCommentAll"));
+			pstmt.setInt(1, adpBoardNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				cList.add(getAdtReviewComment(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return cList;
+	}
+	
+	public static AdtReviewComment getAdtReviewComment(ResultSet rs) throws SQLException{
+        return AdtReviewComment.builder()
+              .commentNo(rs.getInt("COMMENT_NO"))
+              .memberId(rs.getString("MEMBER_ID"))
+              .commentWriteDate(rs.getString("COMMENT_WRITE_DATE"))
+              .commentContents(rs.getString("COMMENT_CONTENTS"))
+              .commentDeleteYn(rs.getString("COMMENT_DELETE_YN").charAt(0))
+              .commentModifyDate(rs.getString("COMMENT_MODIFY_DATE"))
+              .adtReviewBoardNo(rs.getInt("ADT_REVIEWBOARD_NO"))
+              .build();
+  }
+	
+	public static AdtReviewBorad getAdtReviewBorad(ResultSet rs) throws SQLException{
+        return AdtReviewBorad.builder()
+              .adtBoardNo(rs.getInt("ADT_BOARD_NO"))
+              .memberNo(rs.getInt("MEMBER_NO"))
+              .adtTitle(rs.getString("ADT_TITLE"))
+              .adtContents(rs.getString("ADT_CONTENTS"))
+              .adtViews(rs.getInt("ADT_VIEWS"))
+              .memberId(rs.getString("MEMBER_ID"))
+              .adtWriteDate(rs.getString("ADT_WRITE_DATE"))
+              .build();
+  }
 	
 	public static Animal getAnimal(ResultSet rs) throws SQLException{
         return Animal.builder()
@@ -132,6 +368,7 @@ public class AdoptDao {
               .influ(rs.getString("INFLU").charAt(0))
               .antibody(rs.getString("ANTIBODY").charAt(0))
               .totalvac(rs.getString("TOTALVAC").charAt(0))
+              .adtViews(rs.getInt("ANI_VIEWS"))
               .build();
   }
 } 

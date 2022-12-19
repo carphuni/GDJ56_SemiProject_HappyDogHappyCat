@@ -21,14 +21,14 @@
           <Strong>Q&A</Strong>
       </div>
       <form action="<%=request.getContextPath() %>/qa/qaWriteEnd.do" 
-      method="post">
+      method="post"  enctype="multipart/form-data">
       <input type="text" name="memberNo" value="<%=loginMember.getMemberNo()%>" hidden>
       <div class="board_write_wrap">
           <div class="board_write" >
               <div class="title">
                   <dl>
                       <dt><h5>제목</h5></dt>
-                      <dd><input type="text" placeholder="제목 입력" id="inputTitle" name="qaTitle"></dd>
+                      <dd><input type="text" placeholder="제목 입력" id="inputTitle" name="qaTitle" required></dd>
                   </dl>
               </div>
               <div class="cont">
@@ -37,33 +37,113 @@
     		 <div class="info">
                 	<dl>
                         <dt style="font-size:16px;">🔒공개여부</dt> 
-                       <dd>공개<input type="radio" id="open" name="openYn" value="Y"></dd>
-                       <dd>비공개<input type="radio" id="close" name="openYn" value="N"></dd>
+                       <dd>공개<input type="radio"  name="openYn" value="Y"></dd>
+                       <dd>비공개<input type="radio" name="openYn" value="N"></dd>
                     </dl>
              </div>
              <div class="info" id="pwContainer" style="display:none;">   
                     <dl>
                         <dt style="font-size:18px;">비밀번호</dt>
-                        <dd><input type="password" name="passWord" value="password" ></dd>
+                        <dd><input type="password" name="passWord"></dd>
                     </dl>
                     
              </div>	
              <div class="file2">
                   <h5>📸사진 첨부</h5>
-                  <input type="file" id='btnAtt' accept="image/*"  multiple/>
+                  <input type="file" name="upFile" id='btnAtt' accept="image/*"  multiple/>
               </div>
               <div id='att_zone' 
               data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
              </div>
              
               <div class="bt_wrap">
-                  <input type="submit" value="등록" id="on">
-                  <input type="reset" value="취소">
+                  <input type="button" value="등록" class="on" id="enroll">
+                  <input type="button" value="취소" onclick="location.replace('<%=request.getContextPath()%>/qa/qaList.do')">
               </div>
           </div>
       </div>
       </form>
     </div>
+    
+    <script>
+    $("#enroll").click(e=>{
+    	 var regPass = /[0-9]{4,10}$/;
+    	 var passWordChk = $("input[name=passWord]").val();
+    	 
+    	
+    	 if(passWordChk!=0&&!regPass.test(passWordChk)){
+     		alert("숫자 4자 이상 10자 이하로 입력해주세요.");
+     		return false;
+     	 }
+    	 
+    	let form=new FormData();
+    	
+    	//사진
+    	const files=$("input[name=upFile]")[0].files;
+    	
+    	$.each(files,(i,v)=>{
+    		form.append("upFile"+i,v);
+    		console.log("78 " + v);
+    		//console.log("78" + $(v).attr("name"),$(v).val());
+    	});
+    	console.log("79 files : " + files);
+    	//제목, 내용, 공개여부, 비밀번호,회원번호
+		var title= $("input[name=qaTitle]").val();
+    	var content=$('#summernote').summernote('code');
+    	var openYn=$("input[name=openYn]:checked").val();
+    	var password=$("input[name=passWord]").val();
+    	alert("112password" + password);
+    	var memberNo= $("input[name=memberNo]").val();
+    	//console.log(title);
+    	//console.log(content);
+    	//console.log(openYn);
+    	//console.log(password);
+    	//console.log(memberNo);
+    	
+    	form.append("qaTitle",title);
+    	//console.log(title);
+    	form.append("qaContents",content);
+    	//console.log(content);
+    	form.append("qaOpenYn",openYn);
+    	console.log(openYn);
+    	form.append("qaPassword",password);
+    	//console.log(password);
+    	form.append("memberNo",memberNo);
+    	
+    	for (var key of form.keys()) {
+
+    		  console.log("키"+key);
+
+    		}
+
+    		for (var value of form.values()) {
+
+    		  console.log("벨류"+value);
+    		  
+
+    		}
+    	
+    	
+    	$.ajax({
+    		url: "<%=request.getContextPath()%>/qa/qaWriteEnd.do",
+    		data: form,
+    		type: "post",
+    		contentType:false,
+			processData:false,
+			success : e=>{
+				var locat= e.loc;
+				alert(e.msg);
+				location.replace('<%=request.getContextPath()%>'+locat);
+			}
+    		
+    		
+    	});
+    	
+  
+    });
+    
+
+    </script>
     
   <style>
   	#inputTitle{
@@ -128,7 +208,7 @@
            margin-left: 0;
        }
        
-       .bt_wrap input#on {
+       .bt_wrap input#enroll {
            background: gray;
            color: #fff;
        }
@@ -306,12 +386,15 @@
                 + 'right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00';
     
     btnAtt.onchange = function(e){
-    var files = e.target.files;
-    var fileArr = Array.prototype.slice.call(files)
-    if(files.length<=3){
-    for(f of fileArr){
-      imageLoader(f);
-    }}else{alert("사진첨부는 3개까지만 가능합니다.")}
+	    var files = e.target.files;
+	    var fileArr = Array.prototype.slice.call(files)
+	    if(files.length<=3){
+		    for(f of fileArr){
+		      imageLoader(f);
+		    }
+		}else{
+			//alert("사진첨부는 3개까지만 가능합니다.")
+		}
     }  
     
     
@@ -359,7 +442,7 @@
     /*첨부된 파일이 있는 경우 checkbox와 함께 attZone에 추가할 div를 만들어 반환 */
     makeDiv = function(img, file){
       if(document.getElementsByTagName("img").length>3){
-      alert("사진첨부는 3개까지만 가능합니다.");
+      //alert("사진첨부는 3개까지만 가능합니다.");
     } 
     
     var div = document.createElement('div')

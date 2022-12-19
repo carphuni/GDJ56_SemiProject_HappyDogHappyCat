@@ -2,8 +2,7 @@ package com.happy.member.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.happy.member.model.service.MemberService;
 import com.happy.member.model.vo.Member;
 
@@ -73,10 +73,11 @@ public class MemberEnrollEndServlet extends HttpServlet {
 			msg="회원가입 성공";
 			loc="/";
 		}
-		request.setAttribute("msg", msg);
-		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
+		Map<String,String> responseMsg=Map.of("msg",msg,"loc",loc);
+	      
+	    response.setContentType("application/json;charset=utf-8");
+	    new Gson().toJson(responseMsg,response.getWriter());
 	}
 
 	/**

@@ -18,6 +18,9 @@ import com.happy.admission.vo.AdmissionForm;
 import com.happy.animal.model.vo.Animal;
 import com.happy.qa.vo.QaComment;
 import com.happy.qa.vo.QaForm;
+import com.happy.qa.vo.QaPhoto;
+import com.happy.vol.model.vo.VolPhoto;
+
 
 public class QaDao {
 	private Properties sql=new Properties();
@@ -34,7 +37,7 @@ public class QaDao {
 		}
 	}
 
-	public int enrollQa(Connection conn, QaForm qa,int memberNo) {
+	public int enrollQa(Connection conn, QaForm qa,int memberNo,List<QaPhoto> fileList) {
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
@@ -76,7 +79,7 @@ public class QaDao {
 		}return list;
 	}
 
-	private QaForm getQa(ResultSet rs) throws SQLException{
+	private static QaForm getQa(ResultSet rs) throws SQLException{
 		return QaForm.builder()
 				.qaBoardNo(rs.getInt("qa_board_no"))
 				.memberNo(rs.getInt("member_no"))
@@ -188,6 +191,141 @@ public class QaDao {
 			close(pstmt);
 		}return result;
 	}
+
+	public int insertQaPhoto(Connection conn, int qaNo, QaPhoto qp) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertQaPhoto"));
+			pstmt.setInt(1, qaNo);
+			pstmt.setString(2, qp.getQaPhotoOriName());
+			pstmt.setString(3, qp.getQaPhotoReName());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public int selectQaNo(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int qaNo=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectqaNo"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) qaNo=rs.getInt("QA_NO");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return qaNo;
+	}
+
+	public List<QaPhoto> selectQaPhoto(Connection conn, int qaNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		QaPhoto q = null;
+		List<QaPhoto> qp= new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectQaPhoto"));
+			pstmt.setInt(1, qaNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+					q=QaPhoto.builder()
+					.photoNo(rs.getInt("qa_photo_no"))
+					.qaPhotoOriName(rs.getString("qa_phto_oriname"))
+					.qaPhotoReName(rs.getString("qa_photo_rename"))
+					.build();
+					
+					qp.add(q);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return qp;
+	}
+
+	public List<QaForm> selectQaList(String keyword, Connection conn, int cPage, int numPerpage) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<QaForm> result=new ArrayList();
+		String query=sql.getProperty("searchKeyword");
+
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				result.add(QaDao.getQa(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+	}
+
+	public int selectMemberCount(Connection conn, String keyword) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String query=sql.getProperty("searchCountKeyword");
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1,"%"+keyword+"%");
+			rs=pstmt.executeQuery();
+			if(rs.next()) result=rs.getInt(1);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+	}
+
+	public QaForm selectQaForm(Connection conn, int qaBoardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		QaForm q=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectQaForm"));
+			pstmt.setInt(1, qaBoardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) q=getQa(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return q;
+	}
+
+	public QaForm realView(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		QaForm q=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("realView"));
+			pstmt.setInt(1, boardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) q=getQa(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return q;
+	}
+
 	
 
 }
