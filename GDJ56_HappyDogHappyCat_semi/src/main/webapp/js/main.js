@@ -22,7 +22,7 @@ const phoneCk=(asValue)=> {
 
 const agencyPhoneCk=(asValue)=>{
 	//전화번호(00[0]-000-0000) 정규식 체크
-	var regExp = /^0[0-9]{1,2}-[0-9]{3}-[0-9]{4}$/;
+	var regExp = /^0\d{1,2}\d{3,4}\d{4}$/;
  
 	return regExp.test(asValue);
 }
@@ -168,7 +168,7 @@ const enrollAgencyEnd=()=>{
 	//기관 등록
 	var form=$("form#login-container").serialize();
 	
-	var inputAgencyPhone=$("floatingAgencyPhone").val();
+	var inputAgencyPhone=$("#floatingAgencyPhone").val();
 	if(!agencyPhoneCk(inputAgencyPhone)){alert("시설 연락처가 옳지않습니다"); return false;}
 	
 	$.ajax({
@@ -180,6 +180,11 @@ const enrollAgencyEnd=()=>{
 			location.replace("/GDJ56_HappyDogHappyCat_semi"+data.loc);
 		}
 	})
+}
+
+const updateAgency=()=>{
+	var inputAgencyPhone=$("#floatingAgencyPhone").val();
+	if(!agencyPhoneCk(inputAgencyPhone)){alert("시설 연락처가 옳지않습니다"); return false;}
 }
 
 

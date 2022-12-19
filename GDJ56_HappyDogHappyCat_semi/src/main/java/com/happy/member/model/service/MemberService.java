@@ -1,11 +1,15 @@
 package com.happy.member.model.service;
 
-import static com.happy.common.JDBCTemplate.*;
+import static com.happy.common.JDBCTemplate.close;
+import static com.happy.common.JDBCTemplate.commit;
+import static com.happy.common.JDBCTemplate.getConnection;
+import static com.happy.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 
 import com.happy.member.model.dao.MemberDao;
 import com.happy.member.model.vo.Member;
+import com.happy.vol.model.vo.Agency;
 
 public class MemberService {
 	MemberDao dao=new MemberDao();
@@ -50,6 +54,16 @@ public class MemberService {
 		//마이페이지 비밀번호 수정
 		Connection conn=getConnection();
 		int result=dao.memberUpdatePwEnd(conn, loginMember, memberPw);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int memberUpdateAgency(Agency agency, int memberNo) {
+		//마이페이지 기관 수정
+		Connection conn=getConnection();
+		int result=dao.memberUpdateAgency(conn, agency, memberNo);
 		if(result>0)commit(conn);
 		else rollback(conn);
 		close(conn);

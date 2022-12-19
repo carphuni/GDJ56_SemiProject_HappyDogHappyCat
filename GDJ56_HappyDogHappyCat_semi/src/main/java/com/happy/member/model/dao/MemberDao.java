@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.happy.member.model.vo.Member;
+import com.happy.vol.model.vo.Agency;
 
 public class MemberDao {
 	Properties sql=new Properties();
@@ -135,6 +136,24 @@ public class MemberDao {
 			pstmt=conn.prepareStatement(sql.getProperty("memberUpdatePwEnd"));
 			pstmt.setString(1, memberPw);
 			pstmt.setInt(2, loginMember.getMemberNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int memberUpdateAgency(Connection conn, Agency agency, int memberNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("memberUpdateAgency"));
+			pstmt.setString(1, agency.getAgencyName());
+			pstmt.setString(2, agency.getAgencyAddress());
+			pstmt.setString(3, agency.getAgencyPhone());
+			pstmt.setInt(4, memberNo);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
