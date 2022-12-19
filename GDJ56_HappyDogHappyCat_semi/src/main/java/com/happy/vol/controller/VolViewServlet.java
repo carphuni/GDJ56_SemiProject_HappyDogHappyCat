@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,13 +90,16 @@ public class VolViewServlet extends HttpServlet {
 		}else {
 			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>[다음]</a>";
 		}
+		
+		
+	
 		request.setAttribute("ag", agency);
 		request.setAttribute("volunteer", list);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("agency", list2);
 		request.setAttribute("volPhoto", list3);
 		request.getRequestDispatcher("/views/volunteer/volView.jsp").forward(request, response);
-		
+	
 	}
 
 	/**

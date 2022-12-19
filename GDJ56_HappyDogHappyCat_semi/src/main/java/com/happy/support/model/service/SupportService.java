@@ -8,11 +8,12 @@ import static com.happy.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import com.happy.member.model.vo.Member;
 import com.happy.support.model.dao.SupportDao;
+import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
+import com.happy.support.model.vo.SupPick;
 import com.happy.support.model.vo.Support;
-import com.happy.vol.model.vo.VolPhoto;
-import com.happy.vol.model.vo.Volunteer;
 
 
 public class SupportService {
@@ -66,10 +67,106 @@ public class SupportService {
 		return sp;
 	}
 	
+	public int insertComment(SupComment sc) {
+		Connection conn=getConnection();
+		int result=sd.insertComment(conn,sc);
+		if(result>0) {
+			int result2=sd.updatePayAmount(conn, sc);
+			if(result2>0)
+			commit(conn);
+			else rollback(conn);}
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	
+	public List<SupComment> selectSupportComment(int supBoardNo){
+		Connection conn=getConnection();
+		List<SupComment> list = sd.selectComment(conn,supBoardNo);
+		close(conn);
+		return list;
+	}
+	
+	public Member selectMember(int memberNo) {
+		Connection conn = getConnection();
+		Member m  = sd.selectMember(conn, memberNo);
+		close(conn);
+		return m;
+		
+	}
+	
+	
+	
 	public List<SupPhoto> selectSupPhoto2(int supBoardNo) {
 		Connection conn = getConnection();
 		List<SupPhoto> sp = sd.selectSupPhoto2(conn, supBoardNo);
 		close(conn);
 		return sp;
+	}
+	
+	public int updateLike(int supBoardNo) {
+		Connection conn = getConnection();
+		int result = sd.updateLike(conn, supBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int cancelLike(int supBoardNo) {
+		Connection conn = getConnection();
+		int result = sd.cancelLike(conn, supBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	
+	public int insertLike(int supBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = sd.insertLike(conn, supBoardNo, memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int selectSupPick(int supBoardNo, int memberNo ) {
+		Connection conn = getConnection();
+		int sp = sd.selectSupPick(conn, supBoardNo, memberNo);
+		close(conn);
+		return sp;
+	}
+	
+	public int selectSupPickCount(int supBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = sd.selectSupPickCount(conn, supBoardNo, memberNo);
+		close(conn);
+		return result;
+		
+		
+	}
+	public int updateLikeCheck(int supBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = sd.updateLikeCheck(conn, supBoardNo,memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	
+	public int updateLikeCheckCancel(int supBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = sd.updateLikeCheckCancel(conn, supBoardNo,memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
 	}
 }

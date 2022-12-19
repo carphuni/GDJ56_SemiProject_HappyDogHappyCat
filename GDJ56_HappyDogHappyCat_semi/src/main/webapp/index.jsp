@@ -31,21 +31,21 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img
-            src="<%=request.getContextPath() %>/images/main/banner01.jpg"
+            src="<%=request.getContextPath() %>/images/main/banner04.png"
             class="d-block w-100"
             alt="..."
           />
         </div>
         <div class="carousel-item">
           <img
-            src="<%=request.getContextPath() %>/images/main/banner02.jpg"
+            src="<%=request.getContextPath() %>/images/main/banner05.png"
             class="d-block w-100"
             alt="..."
           />
         </div>
         <div class="carousel-item">
           <img
-            src="<%=request.getContextPath() %>/images/main/banner03.jpg"
+            src="<%=request.getContextPath() %>/images/main/banner06.png"
             class="d-block w-100"
             alt="..."
           />

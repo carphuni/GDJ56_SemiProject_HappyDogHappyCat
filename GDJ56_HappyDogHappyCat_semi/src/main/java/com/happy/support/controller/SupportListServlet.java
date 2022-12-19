@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.happy.support.model.service.SupportService;
+import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.Support;
 import com.happy.vol.model.service.VolunteerService;
@@ -50,18 +51,18 @@ public class SupportListServlet extends HttpServlet {
 		List<Support> list = new SupportService().selectSupportList(cPage, numPerpage);
 		List<Agency> list2=new ArrayList();
 		List<SupPhoto> list3 = new ArrayList();
-		
+		List<List<SupComment>> comments = new ArrayList<>();
 		SupPhoto sp = null;
 		for(int i=0;i<list.size();i++) {
 			int agencyNo = list.get(i).getSupAgencyNo();
 			int boardNo=list.get(i).getSupBoardNo();
 			Agency a = new VolunteerService().selectAgency(agencyNo);
+			List<SupComment > sc = new SupportService().selectSupportComment(boardNo);
 			sp = new SupportService().selectSupPhoto(boardNo);
 			list2.add(a);
 			list3.add(sp);
-			System.out.println(agencyNo);
+			comments.add(sc);
 		}
-		
 	
 		String pageBar="";
 		int totalData = new SupportService().selectSupportCount();
@@ -96,6 +97,7 @@ public class SupportListServlet extends HttpServlet {
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("agency", list2);
 		request.setAttribute("supPhoto", list3);
+		request.setAttribute("comments", comments);
 		
 		request.getRequestDispatcher("/views/support/supList.jsp").forward(request, response);
 	}

@@ -5,8 +5,8 @@ const emailCk=(asValue)=> {
 	return regExp.test(asValue);
 }
 
+//비밀번호 정규식 체크
 const passwordCk=(asValue)=> {
-	//비밀번호 정규식 체크
 	//8 ~ 16자 영문, 숫자, 특수문자를 최소 한가지씩 조합
 	var regExp = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
  
@@ -16,6 +16,13 @@ const passwordCk=(asValue)=> {
 const phoneCk=(asValue)=> {
 	//전화번호 정규식 체크
 	var regExp = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+ 
+	return regExp.test(asValue);
+}
+
+const agencyPhoneCk=(asValue)=>{
+	//전화번호(00[0]-000-0000) 정규식 체크
+	var regExp = /^0\d{1,2}\d{3,4}\d{4}$/;
  
 	return regExp.test(asValue);
 }
@@ -50,12 +57,14 @@ const dayCk=(asValue)=> {
 }
 
 
-const duplicateId=()=>{
+
+const duplicateId=e=>{
+	//아이디 중복 체크
 	$.ajax({
 		url:"/GDJ56_HappyDogHappyCat_semi/member/duplicateId.do",
-		data:{"inputId":$("#floatingId").val()},
+		data:{"inputId":$(e.target).parent().children("#floatingId").val()},
 		success:data=>{
-			if(idCk($("#floatingId").val())&&data=="null"){
+			if(idCk($(e.target).parent().children("#floatingId").val())&&data=="null"){
 				$("#idResult").text("사용가능한 아이디입니다");
 			}else{
 				$("#idResult").text("사용 불가능한 아이디입니다");
@@ -65,6 +74,7 @@ const duplicateId=()=>{
 }
 
 const memberEnroll=()=>{
+	//회원가입 기능
 	//form 입력 데이터 json
 	let form=$("#login-container").serialize();
 	//form 입력 데이터 배열
@@ -102,17 +112,44 @@ const memberEnroll=()=>{
 			location.replace("/GDJ56_HappyDogHappyCat_semi"+data.loc)
 		}
 	})
-	
-	
-	
-	
+		
 }
 
+const updateMyPage=()=>{
+	let memberName=$("#floatingName").val();
+	let memberEmail=$("#floatingEmail").val();
+	let memberPhone=$("#floatingPhone").val();
+	let memberAddress=$("#floatingAddress").val();
+	if(memberName.length<2) {$("#nameResult").text("이름은 2자 이상이어여합니다"); return false;}else{$("#nameResult").hide()}
+	if(!emailCk(memberEmail)) {$("#emailResult").text("이메일 입력이 올바르지 않습니다"); return false;}else{$("#emailResult").hide();}
+	if(!phoneCk(memberPhone)) {$("#phoneResult").text("연락처 입력이 올바르지 않습니다( '-' 제외 )"); return false;}else{$("#phoneResult").hide();}
+	if(memberAddress.length<1) {$("#addressResult").text("주소 입력이 올바르지 않습니다"); return false;}else{$("#addressResult").hide();}
+}
+
+const updatePw=()=>{
+	let memberPwNow=$("#floatingPwNow").val();
+	let loginMemberPw=$("input[name='loginMemberPw']").val();
+	if(memberPwNow!=loginMemberPw){$("#pwNowResult").text("현재 비밀번호가 맞지않습니다").css("font-color","red"); return false;}
+	let memberPw=$("#floatingPw").val();
+	if(!passwordCk(memberPw)) {$("#pwResult").text("비밀번호는 8 ~ 16자 영문, 숫자, 특수문자를 포함해야합니다").css("font-color","red"); return false;}
+}
+
+
 $(()=>{
-	//비밀번호 확인 입력 후
+	//비밀번호 확인 입력 후 일치 여부 확인
 	$("#floatingPwCk").blur(e=>{
 		const pw=$("#floatingPw").val();
 		const pwck=$(e.target).val();
+		if(pw!=""&&pw==pwck){
+			$("#pwResult").css({"color":"green"}).text("비밀번호가 일치합니다.")
+		}else{
+			$("#pwResult").css({"color":"red"}).text("비밀번호가 일치하지 않습니다.")
+		}
+	});	
+	
+	$("#floatingPw").blur(e=>{
+		const pwck=$("#floatingPwCk").val();
+		const pw=$(e.target).val();
 		if(pw!=""&&pw==pwck){
 			$("#pwResult").css({"color":"green"}).text("비밀번호가 일치합니다.")
 		}else{
@@ -126,4 +163,39 @@ $(()=>{
 		$("#idResult").text("");
 	})
 });
+
+const enrollAgencyEnd=()=>{
+	//기관 등록
+	var form=$("form#login-container").serialize();
+	
+	var inputAgencyPhone=$("#floatingAgencyPhone").val();
+	if(!agencyPhoneCk(inputAgencyPhone)){alert("시설 연락처가 옳지않습니다"); return false;}
+	
+	$.ajax({
+		url:"/GDJ56_HappyDogHappyCat_semi/agency/enrollAgencyEnd.do",
+		data:form,
+		dataType:"json",
+		success:data=>{
+			alert(data.msg);
+			location.replace("/GDJ56_HappyDogHappyCat_semi"+data.loc);
+		}
+	})
+}
+
+const updateAgency=()=>{
+	var inputAgencyPhone=$("#floatingAgencyPhone").val();
+	if(!agencyPhoneCk(inputAgencyPhone)){alert("시설 연락처가 옳지않습니다"); return false;}
+}
+
+
+const winClose=()=>{
+	//해당 윈도우 창 닫기
+	window.open('','_self').close();
+}
+
+const winBack=()=>{
+	//뒤로가기
+	history.back();
+}
+
 
