@@ -13,7 +13,7 @@
 
 <div id="container">
     <img src="<%=request.getContextPath()%>/images/vol/01-aa-give-title-new01.jpg">
-<% if(loginMember!=null&&loginMember.getMemberNo()==agency.getMemberNo()){ %>
+<% if(loginMember!=null&&loginMember.getMemberNo()==agency.getMemberNo()||loginMember!=null&&loginMember.getMemberId().equals("admin")){ %>
 <div style="margin-top:5px;" class="bt_wrap" >
   <a style="font-size:17px;margin-right:-65%;"href="<%=request.getContextPath()%>/updatevol.do?boardNo=<%=boardNo%>&&memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>">수정</a>
   <a style="font-size:17px;margin-right:20%"href="<%=request.getContextPath()%>/deletevol.do?boardNo=<%=boardNo%>">삭제</a>

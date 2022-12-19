@@ -101,7 +101,7 @@
               <form action="<%=request.getContextPath()%>/volsearch.do">
                   <div class="search-wrap">
                       <label for="search" class="blind"></label>
-                      <input id="search_" type="search" name="search" placeholder="검색어를 입력해주세요." value="">&nbsp;
+                      <input id="search_" type="search" name="search" placeholder="제목+내용을 입력해주세요." value="">&nbsp;
                       <button type="submit" class="btn btn-dark">검색</button> &nbsp;
                       <!-- <button class="btn btn-dark">입양글쓰기</button> -->
                   </div>

@@ -327,6 +327,75 @@ public class VolunteerDao {
 		
 	}
 	
+	public int updateVol(Connection conn, Volunteer v) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateVol"));
+			pstmt.setString(1, v.getVntRecName());
+			pstmt.setString(2, v.getVntManagerName());
+			pstmt.setDate(3, v.getVntRecPeriod());
+			pstmt.setDate(4, v.getVntActPeriod());
+			pstmt.setString(5,v.getVntActDay());
+			pstmt.setString(6, v.getVntActContents());
+			pstmt.setInt(7, v.getVntSetPerson());
+			pstmt.setDate(8, v.getVntRecPeriodEnd());
+			pstmt.setDate(9, v.getVntActPeriodEnd());
+			pstmt.setInt(10, v.getVntBoardNo());
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+		
+	}
+	
+	public int updateVolPhoto(Connection conn, VolPhoto vp, int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateVolPhoto"));
+			pstmt.setString(1,vp.getVntPhotoRename());
+			pstmt.setInt(2, boardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;}
+	
+	
+	public int updateVolPhoto2(Connection conn, VolPhoto vp, int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateVolPhoto"));
+			pstmt.setString(1,vp.getVntPhotoRename());
+			pstmt.setInt(2, boardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;}
+	
+	public int deleteVolPhoto(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteVolPhoto"));
+			pstmt.setInt(1, boardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
 	
 	public int updateEnr(Connection conn, int vntBoardNo) {
 		PreparedStatement pstmt=null;

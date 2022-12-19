@@ -105,6 +105,50 @@ public class VolunteerService {
 		return result2;
 	}
 	
+	
+	public int updateVol(Volunteer v,List<VolPhoto> fileList) {
+		Connection conn=getConnection();
+		int result= vd.updateVol(conn, v);
+		int result2=0;
+		if(result>0) {
+			for(VolPhoto vp : fileList) {
+				result2+=vd.insertVolPhoto(conn,v.getVntBoardNo(),vp);
+			}	
+			if(result2==fileList.size())commit(conn);
+		}else {
+			rollback(conn);
+		}close(conn);
+		return result2;
+	
+	}
+	
+	
+	public int deleteVolPhoto(int boardNo) {
+		Connection conn = getConnection();
+		int result = vd.deleteVolPhoto(conn, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+		
+		
+		
+	}
+	
+	public int updateVolPhoto(VolPhoto v, int boardNo) {
+		Connection conn = getConnection();
+		int result = vd.updateVolPhoto(conn, v, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	public int insertVolPhoto(int volNo,VolPhoto vp) {
 		Connection conn=getConnection();
 		int result = vd.insertVolPhoto(conn, volNo, vp);
@@ -145,6 +189,9 @@ public class VolunteerService {
 		return result;
 		
 	}
+	
+
+	
 	
 	public int updateVntEnr(int vntBoardNo) {
 		Connection conn = getConnection();

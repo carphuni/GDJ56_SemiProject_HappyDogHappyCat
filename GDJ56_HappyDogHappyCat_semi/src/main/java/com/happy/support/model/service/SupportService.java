@@ -14,6 +14,7 @@ import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.SupPick;
 import com.happy.support.model.vo.Support;
+import com.happy.vol.model.vo.Volunteer;
 
 
 public class SupportService {
@@ -169,4 +170,30 @@ public class SupportService {
 		close(conn);
 		return result;
 	}
+	
+	public List<Support> supSearch(int cPage,int numPerpage, String keyword){
+		Connection conn = getConnection();
+		List<Support> sList = sd.supSearch(conn, cPage, numPerpage, keyword);
+		close(conn);
+		return sList;
+	}
+	
+	public int supSearchCount(String keyword) {
+		Connection conn=getConnection();
+		int result=sd.supSearchCount(conn, keyword);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int deleteSupport(int supBoardNo) {
+		Connection conn=getConnection();
+		int result = sd.deleteSupport(conn, supBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
 }

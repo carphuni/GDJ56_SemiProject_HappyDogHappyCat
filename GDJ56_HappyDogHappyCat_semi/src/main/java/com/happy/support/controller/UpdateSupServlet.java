@@ -1,4 +1,4 @@
-package com.happy.vol.controller;
+package com.happy.support.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,22 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.happy.support.model.service.SupportService;
+import com.happy.support.model.vo.SupPhoto;
+import com.happy.support.model.vo.Support;
 import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.Agency;
-import com.happy.vol.model.vo.VolPhoto;
-import com.happy.vol.model.vo.Volunteer;
 
 /**
- * Servlet implementation class UpdateVolServlet
+ * Servlet implementation class UpdateSupServlet
  */
-@WebServlet("/updatevol.do")
-public class UpdateVolServlet extends HttpServlet {
+@WebServlet("/updatesup.do")
+public class UpdateSupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateVolServlet() {
+    public UpdateSupServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +35,16 @@ public class UpdateVolServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-		Volunteer v = new VolunteerService().selectVolunteer(boardNo);
+		Support s = new SupportService().selectSupport(boardNo);
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		Agency a = new VolunteerService().selectAgency2(memberNo);
-		VolPhoto vp = new VolunteerService().selectVolPhoto(boardNo);
-		List<VolPhoto> vp2 = new VolunteerService().selectVolPhoto2(boardNo);
+		SupPhoto sp = new SupportService().selectSupPhoto(boardNo);
+		List<SupPhoto> sp2 = new SupportService().selectSupPhoto2(boardNo);
 		request.setAttribute("agency", a);
-		request.setAttribute("v",v);
-		request.setAttribute("vp", vp);
-		request.setAttribute("vp2", vp2);
-		request.setAttribute("boardNo", boardNo);
-		
-		request.getRequestDispatcher("/views/volunteer/volUpdate.jsp").forward(request, response);
+		request.setAttribute("s",s);
+		request.setAttribute("sp", sp);
+		request.setAttribute("sp2", sp2);
+		request.getRequestDispatcher("/views/support/supUpdate.jsp").forward(request, response);
 	}
 
 	/**

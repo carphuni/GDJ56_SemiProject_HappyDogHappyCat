@@ -3,6 +3,7 @@
 <%@ page import = "java.util.List,com.happy.vol.model.vo.Agency,com.happy.vol.model.vo.Volunteer,com.happy.vol.model.vo.VolPhoto" %>
 <%@ include file="/views/common/header.jsp" %>
 <%
+	int boardNo = (int)request.getAttribute("boardNo");
 	Agency a = (Agency)request.getAttribute("agency");
 	Volunteer v = (Volunteer)request.getAttribute("v");
 	VolPhoto vp= (VolPhoto)request.getAttribute("vp");
@@ -18,6 +19,7 @@
     			method="post" enctype="multipart/form-data">
     			<%if(loginMember!=null){ %>
     			<input type="hidden" name="memberNo" value="<%=loginMember.getMemberNo()%>">
+    			<input type="hidden" name="boardNo" value="<%=boardNo %>">
     			<%} %>
     <div class="board_wrap">
         <div class="board_title">
@@ -73,13 +75,12 @@
                     </dl>
                     <dl>
                         <dt style="font-size:17px">활동가능요일</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="text" name="activityDay" placeholder="활동가능요일" ></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="text" name="activityDay" placeholder="활동가능요일" value="<%=v.getVntActDay()%>"></dd>
                     </dl>
                 </div>
                 <div class="cont">
                     <textarea rows="10" cols="100" name="summernote" id="summernote"><%=v.getVntActContents() %></textarea>
                 </div>
-				<div><%=v.getVntActContents() %></div>
                 <div class="file" style="font-size:17px">
                     <b>* 대표이미지 설정</b>
                     <input type="file" name = "upFile" class="real-upload" accept="image/*" onchange="readURL(this);" >
@@ -108,7 +109,7 @@
 	       
             <div class="bt_wrap" >
                 <input type="button" style="font-size:17px" id="saveBtn" class="on" value="등록" >
-                <input type="button" style="font-size:17px" value="취소" onclick="location.replace('<%=request.getContextPath()%>/volview.do')">
+                <input type="button" style="font-size:17px" value="취소" onclick="location.replace('<%=request.getContextPath()%>/volupdateend.do')">
             </div>
         </div>
     </form>
@@ -142,15 +143,15 @@
 			const files=$("input[name=upload2]")[0].files;
 			
 			let inputs=$("form input").not("input[class*=note]").not("input[name=memberNo]");
-	/* 		console.log(inputs); */
+	 		/* console.log(inputs);  */
 			 var summernoteContent = $('#summernote').summernote('code');
 			 var memberNo = $("input[name=memberNo]").val();
-			
+			 var boardNo = $("input[name=boardNo]").val();
 			inputs.each((i,v)=>{
-				/* console.log($(v).attr("name"),$(v).val()); */
+				console.log($(v).attr("name"),$(v).val());
 				form.append("param"+i,$(v).val());
 			});
-			
+			console.log(boardNo);
 			$.each(files,(i,v)=>{
 				form.append("upfile"+i,v);
 			});		
@@ -162,11 +163,12 @@
 			
 			 form.append("content",summernoteContent);
 			 form.append("memberNo",memberNo);
+			form.append("boardNo",boardNo)
 			 	
 			if(sumnail.length==1){
 				 if(files.length!=0){
 			 	$.ajax({
-				url :"<%=request.getContextPath()%>/vol/volWriteEnd.do",
+				url :"<%=request.getContextPath()%>/volupdateend.do",
 				data : form,
 				type : "post",
 				contentType:false,
