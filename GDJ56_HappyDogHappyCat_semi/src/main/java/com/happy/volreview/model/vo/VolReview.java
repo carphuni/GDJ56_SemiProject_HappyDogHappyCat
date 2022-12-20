@@ -17,5 +17,5 @@ public class VolReview {
 	private String vntContents;
 	private int vntReviewViews;
 	private Date vntReviewWriteDate;
-	
+	private String memberId;
 }

@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List,com.happy.volreview.model.vo.VolReview" %>
+<%
+	List<VolReview> list = (List<VolReview>)request.getAttribute("volReview");
+
+
+%>    
+    
+    
+    
 <%@ include file="/views/common/header.jsp"%>
 
     <section id="content">
@@ -16,6 +25,20 @@
             <img src="<%=request.getContextPath()%>/images/vol/dog2.png" alt="" style="margin-left: auto;">
         </div>
         <section class="post">
+           <div id="board-search">
+                  <div class="container">
+                      <div class="search-window">
+                          <form action="<%=request.getContextPath()%>/adopt/adoptreviewsearch">
+                              <div class="search-wrap">
+                                  <label for="search" style="width:70px;">내용 </label>
+                                  <input id="search_" type="search" name="search" placeholder="검색어를 입력해주세요." value="">&nbsp;
+                                  <button type="submit" class="btn btn-dark">검색</button> &nbsp;
+                                  <!-- <button class="btn btn-dark">입양글쓰기</button> -->
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
       
               <div id="board-list">
                   <div class="container">
@@ -30,123 +53,33 @@
                           </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>3</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>4</td>
-                            </tr>
-                            
-                            <tr>
-                                <td>5</td>
-                                <th>
-                                  <a href="">입양후기5</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>5</td>
-                            </tr>
-
-                            <tr>
-                                <td>4</td>
-                                <th>
-                                  <a href="">입양후기4</a>
-                                </th>
-                                <td>작성자아이디?이름?</td>
-                                <td>2022.11.29</td>
-                                <td>2</td>
-                            </tr>
-
-                          <tr>
-                              <td>3</td>
-                              <th>
-                                <a href="">입양후기3</a>
-                              </th>
-                              <td>작성자아이디?이름?</td>
-                              <td>2022.11.29</td>
-                              <td>3</td>
-                          </tr>
-          
-                          <tr>
-                              <td>2</td>
-                              <th><a href="">입양후기2</a></th>
-                              <td>작성자</td>
-                              <td>2022.11.29</td>
-                              <td>3</td>
-                          </tr>
-          
-                          <tr>
-                              <td>1</td>
-                              <th><a href="">입양후기1</a></th>
-                              <td>작성자</td>
-                              <td>2022.11.29</td>
-                              <td>3</td>
-                          </tr>
+                          <%if(list.isEmpty()){ %>
+                          		<tr>
+                          			<td colspan="5">조회된 후기가 없습니다.</td>
+                          <%}else{ %>
+                          	<% for(int i=0;i<list.size();i++){ %> 
+	                            <tr>           
+	                                <td><%=list.get(i).getVntBoardNo() %></td>
+	                                <th>
+	                                  <a href="<%=request.getContextPath()%>/volreviewview.do"><%=list.get(i).getVntTitle() %></a>
+	                                </th>
+	                                <td><%=list.get(i).getMemberId() %></td>
+	                                <td><%=list.get(i).getVntReviewWriteDate() %></td>
+	                                <td><%=list.get(i).getVntReviewViews() %></td>
+	                            </tr>  
+	                            <%}} %>              
                           </tbody>
                       </table>
                       <br>
-
-                      <div id="board-search">
-                        <div class="container">
-                            <div class="search-window">
-                                <form action="">
-                                    <div class="search-wrap">
-                                        <label for="search" class="blind">내용 검색</label>
-                                        <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">&nbsp;
-                                        <button type="submit" class="btn btn-dark">검색</button> &nbsp;
-                                        <!-- <button class="btn btn-dark">입양글쓰기</button> -->
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="page_wrap">
-                        <div class="page_nation">
-                           <a class="arrow prev" href="#"></a>
-                           <a href="#" class="active">1</a>
-                           <a href="#">2</a>
-                           <a href="#">3</a>
-                           <a href="#">4</a>
-                           <a href="#">5</a>
-                           <a href="#">6</a>
-                           <a href="#">7</a>
-                           <a href="#">8</a>
-                           <a href="#">9</a>
-                           <a href="#">10</a>
-                           <a class="arrow next" href="#"></a>
-                        </div>
-                     </div>
-                     <a href="#" class="myButton">글쓰기</a>
+ 						<a href="<%=request.getContextPath()%>/volreviewwrite.do">
+                  		<button id="apt_write" class="btn btn-dark">글쓰기</button>
+                  		</a>
+                  		<%=request.getAttribute("pageBar") %>
+           
+             
+                     
+                     
+                     </div>    
               </div>
               
           </section>
@@ -287,6 +220,13 @@
 	text-align:center;
 	font-size:0;
  }
+ 
+   #apt_write{
+            float: right;
+        }
+ 
+ 
+ 
 .page_nation {
 	display:inline-block;
 }
@@ -325,33 +265,28 @@
 	border:1px solid #42454c;
 }
 
-.myButton {
-        box-shadow: 0px 0px 0px 2px #bac0d3;
-        background:linear-gradient(to bottom, #6e6e6e 5%, #a7a8ac 100%);
-        background-color:#6e6e6e;
-        border-radius:10px;
-        border:1px solid #a7a8ac;
-        float :right;
-        position:relative;
-        bottom:80px;
-        margin-right : 50px;
-        /* margin-bottom: 500px; */
-        cursor:pointer;
-        color:#ffffff;
-        font-size:15px;
-        padding:5px 20px;
-        text-decoration:none;
-        text-shadow:0px 1px 0px #9d9fa2;
-}
-  .myButton:hover {
-    background:linear-gradient(to bottom, #6e6e6e 5%, #a7a8ac 100%);
-    background-color:#646b74;
-  }
-  .myButton:active {
-    position:relative;
-  }
  
- 
+  .btn-dark {
+        background: #555;
+        color: #fff;
+        }
+
+        .btn-dark:hover, .btn-dark:focus {
+        background: #373737;
+        border-color: #373737;
+        color: #fff;
+        }
+
+        .btn-dark {
+        background: #555;
+        color: #fff;
+        }
+
+        .btn-dark:hover, .btn-dark:focus {
+        background: #373737;
+        border-color: #373737;
+        color: #fff;
+        }
  
  
  </style>   
