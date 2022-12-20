@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@  page import="java.util.List, java.util.Arrays,com.happy.adopt.model.vo.AdtBorad" %>
 <%@ include file="/views/common/header.jsp"%>
-<% int aniNo=Integer.parseInt(request.getParameter("aniNo")); 
-	%>
+ <% AdtBorad ab= (AdtBorad)request.getAttribute("ab"); %>
 <%--  <% console.log(request.getAttribute("hopeDateArr")); %> --%> 
 
 <link type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"rel="stylesheet">
@@ -13,23 +13,10 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     
 
-<section id="content">
-<div id="imgs" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
-            <img src="<%=request.getContextPath() %>/images/adopt/Q.jfif" alt="" style="margin-right: auto;">
-            <div id="text" >
-                <br><br>
-                <h1>입양하기</h1>
-                 <p><br>보호중인 파양동물들과 유기된 동물들을<br>
-                    상시로 공고하고 있습니다.<br>
-                    자세한 안내는 입양안내를 참고해주세요.</p>
-            </div>
-            <img src="<%=request.getContextPath() %>/images/adopt/S.jfif" alt="" style="margin-left: auto;">
-        </div>
-        </section>
 <section id="reviewwrite">
     <div class="board_wrap">
         <div class="board_title">
-            <strong>입양하기</strong>
+            <strong>입양신청내역</strong>
         </div>
         <form action="<%=request.getContextPath() %>/adopt/adoptwriteEnd.do" method="post" onsubmit="return checkForm();">
         <div class="board_write_wrap">
@@ -45,21 +32,21 @@
                         <dt>작성자</dt>
                         <dd><input type="text" value="<%=loginMember.getMemberId() %>" readonly></dd>
                         <input type="text" value= "<%=loginMember.getMemberNo() %>" name="memberNo" hidden>
-                        <input type="text" value=<%=aniNo %> name="aniNo" hidden>
+                       
                     </dl>
                     <dl>
                         <dt>동거인여부</dt>
-                        <dd><input type="text" id="roommate_" name="roommate" placeholder="있음(인원수)/없음" required></dd>
+                        <dd><input type="text" id="roommate_" name="roommate" value="<%=ab.getAdtRoommate() %>" placeholder="있음(인원수)/없음" required></dd>
                     </dl>
                 </div> 
                 <div class="info">
                 	<dl>
                         <dt style="width:200px;">알러지여부</dt>
-                        <dd><input type="text" name="allergy" id="allergy_" size="50" placeholder="알러지여부" required></dd>
+                        <dd><input type="text" name="allergy" id="allergy_" value="<%=ab.getAdtAllergy() %>" size="50" placeholder="알러지여부" required></dd>
                     </dl>
                     <dl>
                         <dt style="width:120px;">경제활동여부</dt>
-                        <dd><input type="text" name="money" id="money_" placeholder="경제활동여부" required></dd>
+                        <dd><input type="text" name="money" id="money_" value="<%=ab.getAdtMoney() %>" placeholder="경제활동여부" required></dd>
                     </dl>
                     
                 </div>  
@@ -67,12 +54,12 @@
                 <div class="info">
                 	<dl>
                         <dt style="width:200px;">동물양육경험</dt>
-                        <dd><input type="text" name="exp" id="exp_" size="50" placeholder="동물양육경험유무" required></dd>
+                        <dd><input type="text" name="exp" id="exp_" value="<%=ab.getAdtExper() %>" size="50" placeholder="동물양육경험유무" required></dd>
                     </dl>
                     
                     <dl>
                         <dt>주거형태</dt>
-                        <dd><input type="text" name="live" id="live_" placeholder="주택,아파트 등등" required></dd>
+                        <dd><input type="text" name="live" id="live_" value="<%=ab.getAdtLive() %>" placeholder="주택,아파트 등등" required></dd>
                     </dl>
                 </div>   
                 <div class="info">
@@ -83,15 +70,15 @@
                     </dl>
 				</div>
                 <div class="cont">
-                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력" required></textarea>
+                    <textarea rows="10" cols="100" name="summernote" value="<%=ab.getAdtContents() %>" id="summernote" placeholder="내용 입력" required></textarea>
                 </div>
 
                 </div>
               
             </div>
             <div class="bt_wrap">
-            	<input type="submit" class="on" value="등록">
-            	<input type="reset" value="취소">
+            	<input type="button" class="on" value="수정">
+            	<input type="button" value="삭제">
                 <!-- <a href="view.html" class="on">등록</a>
                 <a href="list.html">취소</a>  -->
             </div>
@@ -307,6 +294,7 @@
 
 <script>
 
+
 jQuery(function($){
      
     $("#hopedate").datepicker({
@@ -329,7 +317,8 @@ jQuery(function($){
         beforeShowDay: disableAllTheseDays,
        
     });
-    $('#hopedate').datepicker('setDate', 'today');
+    var hopeDate="<%=(ab.getAdtVisitDate()).substring(0,10) %>";
+    $('#hopedate').datepicker('setDate', hopeDate);
     
 });
  
@@ -353,8 +342,9 @@ jQuery(function($){
         tablesize :2,
         height:500
     });
+    $('#summernote').summernote('code','<%=ab.getAdtContents() %>');
     });
-	
+    /* const content = $('#summernote').summernote('code'); */
     /* $(function(){
         var dtToday = new Date();
 

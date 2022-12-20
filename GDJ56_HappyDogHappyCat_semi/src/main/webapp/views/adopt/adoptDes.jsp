@@ -231,7 +231,7 @@
         title: 'HAPPYDOG HAPPYCAT',
         description: '사지말고 입양하세요',
         imageUrl:
-          'https://ifh.cc/g/Ar5Jwk.png',
+          'https://ifh.cc/g/DLcybp.jpg',
         link: {
           webUrl: '웹 링크',
         },
@@ -297,7 +297,7 @@
 	var currentTop = $(window).scrollTop();
 	var newPosition = currentTop + floatPosition + "px";
 	
-	//이동 애니메이션
+	
 	$(".sideBanner").stop().animate({
 	        "top" : newPosition
 	    }, 500);
@@ -305,7 +305,7 @@
 	
     const checkList=()=>{
     	//const title="checkList";
-    	popup=open("<%=request.getContextPath()%>/adopt/adoptdespopup.do",title,"width=650 height=500 top=50, left=500");
+    	popup=open("<%=request.getContextPath()%>/adopt/adoptdespopup.do",title,"width=580 height=500 top=50, left=500");
     }
     
     const apt_form=()=>{

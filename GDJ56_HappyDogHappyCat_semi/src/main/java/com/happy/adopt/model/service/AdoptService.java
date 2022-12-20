@@ -165,4 +165,46 @@ public class AdoptService {
 		close(conn);
 		return result;
 	}
+	
+	public List<Animal> adoptMainSearch(int cPage, int numPerpage,String keyword){
+		Connection conn=getConnection();
+		List<Animal> aniList =dao.adoptMainSearch(conn,cPage,numPerpage,keyword);
+		close(conn);	
+		return aniList;
+	}
+	
+	public int adoptMainSearchCount(String keyword){
+		Connection conn=getConnection();
+		int result=dao.adoptMainSearchCount(conn,keyword);
+		close(conn);
+		return result;
+	}
+	
+	public List<AdtBorad> hopeDateAll(){
+		Connection conn=getConnection();
+		List<AdtBorad> hopeDate =dao.hopeDateAll(conn);
+		close(conn);	
+		return hopeDate;
+	}
+	
+	public List<AdtBorad> adoptBoardList(int cPage, int numPerpage,int memberNo){
+		Connection conn=getConnection();
+		List<AdtBorad> adtBoardList =dao.adoptBoardList(conn,cPage,numPerpage,memberNo);
+		close(conn);	
+		return adtBoardList;
+	}
+	
+	public int adoptBoardListCount(int memberNo){
+		Connection conn=getConnection();
+		int result=dao.adoptBoardListCount(conn,memberNo);
+		close(conn);
+		return result;
+	}
+	
+	public AdtBorad adoptBoardDes(int adtBoardNo){
+		Connection conn=getConnection();
+		AdtBorad ab =dao.adoptBoardDes(conn,adtBoardNo);
+		close(conn);	
+		return ab;
+	}
 }
