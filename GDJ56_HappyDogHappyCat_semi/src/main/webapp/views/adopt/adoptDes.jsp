@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal,com.happy.adopt.model.vo.AnimalPick" %>
-    <% Animal ani = (Animal)request.getAttribute("ani"); List<AnimalPick> pick = (List<AnimalPick>)request.getAttribute("pick"); %>
+    <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal,com.happy.adopt.model.vo.AnimalPick,com.happy.admission.vo.AnimalPhoto" %>
+    <% Animal ani = (Animal)request.getAttribute("ani"); List<AnimalPick> pick = (List<AnimalPick>)request.getAttribute("pick"); 
+    List<AnimalPhoto> aniPhoto=(List<AnimalPhoto>)request.getAttribute("pick");
+    %>
 <%@ include file="/views/common/header.jsp"%>
 
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -116,10 +118,16 @@
             <h2>[<%=ani.getAniType() %>]<%=ani.getAniKind() %> <%=ani.getAniName() %> 무료입양</h2><br>
         </div>
         <br><br>
-        
-        <div id="imgs">
-            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="" width="350" height="250">
-        </div>
+        <%if(aniPhoto!=null){ %>
+	        <%for(int i=0;i<aniPhoto.size();i++){ %>
+	        	<%if(aniPhoto.get(i).getMainPhoto()!=null){ %>
+		        <div id="imgs">
+		            <img src="<%=request.getContextPath() %>/upload/addmission/<%= aniPhoto.get(i).getAdPhotoReName() %>" alt="" width="350" height="250">
+		        </div>
+	        
+        	<%}
+	        }
+	     } %>
         <br><br>
 
         <div id="description">
@@ -173,8 +181,15 @@
                 안전하게 분양받으실 수 있습니다.<br>
                 많은 관심부탁드립니다.</p>
             <br><br>
-            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
-            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
+            <%if(aniPhoto!=null){ %>
+	        <%for(int i=0;i<aniPhoto.size();i++){ %>
+	        	<%if(aniPhoto.get(i).getMainPhoto()!=null){ %>	        
+	        	<img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
+        	<%}
+	        }
+	     } %>
+            <%-- <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
+            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br> --%>
         </div>
         <div id="checklist">
             <div id="detailTitle"><br>

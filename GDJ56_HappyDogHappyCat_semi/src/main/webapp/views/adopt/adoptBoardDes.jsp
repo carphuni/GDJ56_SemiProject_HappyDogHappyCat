@@ -18,7 +18,7 @@
         <div class="board_title">
             <strong>입양신청내역</strong>
         </div>
-        <form action="<%=request.getContextPath() %>/adopt/adoptwriteEnd.do" method="post" onsubmit="return checkForm();">
+        <form action="<%=request.getContextPath() %>/member/mypage/adoptBoardUpdate" method="post" onsubmit="return checkForm();"> 
         <div class="board_write_wrap">
             <div class="board_write">
                 <div class="title">
@@ -31,8 +31,8 @@
                     <dl>
                         <dt>작성자</dt>
                         <dd><input type="text" value="<%=loginMember.getMemberId() %>" readonly></dd>
-                        <input type="text" value= "<%=loginMember.getMemberNo() %>" name="memberNo" hidden>
-                       
+                        <input type="text" value= "<%=loginMember.getMemberNo() %>" id="memberNo_" name="memberNo" hidden>
+                       <input type="text" value= "<%=ab.getAdtBoardNo() %>" id="adtBoardNo_" name="adtBoardNo" hidden>
                     </dl>
                     <dl>
                         <dt>동거인여부</dt>
@@ -77,13 +77,13 @@
               
             </div>
             <div class="bt_wrap">
-            	<input type="button" class="on" value="수정">
-            	<input type="button" value="삭제">
+            	<input type=submit id="modify1" class="on" value="수정">
+            	<input type="button" id="delete1" value="삭제" onclick="location.assign('<%=request.getContextPath() %>/member/mypage/adoptBoardDelete?adBoardNo=<%=ab.getAdtBoardNo()%>');">
                 <!-- <a href="view.html" class="on">등록</a>
                 <a href="list.html">취소</a>  -->
             </div>
             </div>
-</form>        
+	</form>     
         
     </div>
 </section>
@@ -295,6 +295,7 @@
 <script>
 
 
+
 jQuery(function($){
      
     $("#hopedate").datepicker({
@@ -322,19 +323,24 @@ jQuery(function($){
     
 });
  
-	var disabledDays = <%=request.getAttribute("hopeDateArr")%>;
-	 
+	var disabledDays =  <%=request.getAttribute("hopeDateArr")%>;  
+	
 	function disableAllTheseDays(date) {
 		if (date < new Date()){
 			return [false];
 		}
+		
 	    var m = date.getMonth()+1, d = date.getDate(), y = date.getFullYear();
+	    console.log(m,d,y);
 	    if(m<10) m="0"+m;
 	    if(d<10) d="0"+d;
 	    for (i = 0; i < disabledDays.length; i++) {
-	        if($.inArray(y + '-' + m + + '-' + d,disabledDays) != -1) {
+	    	
+	        if($.inArray(y + '-' + m + '-' + d,disabledDays) != -1) {
+	        	
 	            return [false];
 	        }
+	    
 	    }
 	    return [true];
 	} 
@@ -346,23 +352,6 @@ jQuery(function($){
     });
     $('#summernote').summernote('code','<%=ab.getAdtContents() %>');
     });
-    /* const content = $('#summernote').summernote('code'); */
-    /* $(function(){
-        var dtToday = new Date();
-
-        var month = dtToday.getMonth() + 1;
-        var day = dtToday.getDate();
-        var year = dtToday.getFullYear();
-        if(month < 10)
-            month = '0' + month.toString();
-        if(day < 10)
-         day = '0' + day.toString();
-        var minDate = year + '-' + month + '-' + day;
-       
-        var maxDate = (year+1) + '-' + month + '-' + day;
-            
-        $('#hopedate').attr('min', minDate).attr('max',maxDate);
-    }); */
     
     const checkForm=()=>{
         const roommate=$("#roommate_").val().trim();

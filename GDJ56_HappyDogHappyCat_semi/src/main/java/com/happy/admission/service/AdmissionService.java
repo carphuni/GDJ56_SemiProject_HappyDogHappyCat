@@ -32,8 +32,9 @@ public class AdmissionService {
 			result3=dao.enrollAdmission(conn, aniNo, hopeDate, memberNo);
 			if(!fileList.isEmpty()|| fileList !=null) {
 				
-				for(AnimalPhoto ap : fileList) {
-					result2+=dao.insertAniPhoto(conn, aniNo, ap);
+				for(int i=0;i<fileList.size();i++) {
+					if(i==0) fileList.get(i).setMainPhoto("Y");
+					result2+=dao.insertAniPhoto(conn, aniNo, fileList.get(i));
 				}
 				
 			}
@@ -74,6 +75,20 @@ public class AdmissionService {
 		List<AnimalPhoto> ap = dao.selectAnimalPhoto(conn,admissionNo);
 		close(conn);
 		return ap;
+	}
+
+	public List<AdmissionForm> selectMyAdmission(int MemberNo,int cPage, int numPerpage) {
+		Connection conn=getConnection();
+		List<AdmissionForm> list=dao.selectMyAdmission(conn,cPage, numPerpage,MemberNo);
+		close(conn);
+		return list;
+	}
+
+	public AdmissionForm selectAdmission(int admissionNo) {
+		Connection conn=getConnection();
+		AdmissionForm af=dao.selectAdmission(conn,admissionNo);
+		close(conn);
+		return af;
 	}
 
 
