@@ -106,15 +106,23 @@ buf2.insert(3, "-"); buf2.insert(7, "-"); } } %>
       <button type="button" class="btn col-2" onclick="location.assign('')">
         입 소
       </button>
-      <button type="button" class="btn col-2" onclick="location.assign('')">
+      <button type="button" class="btn col-2" onclick="location.assign('<%=request.getContextPath() %>/member/mypage/adoptboardList.do');">
         입 양
+      </button>
+      <button type="button" class="btn col-2" onclick="location.assign()">
+        입양 후기
       </button>
       <button type="button" class="btn col-2" onclick="location.assign('')">
         자원 봉사
       </button>
-      <button type="button" class="btn col-2" onclick="location.assign('')">
+      <button type="button" class="btn col-2" onclick="location.assign()">
+        자원봉사 후기
+      </button>
+      <button type="button" class="btn col-2" onclick="location.assign()">
         문의 내역
       </button>
+       
+      
     </div>
   </div>
 </section>
