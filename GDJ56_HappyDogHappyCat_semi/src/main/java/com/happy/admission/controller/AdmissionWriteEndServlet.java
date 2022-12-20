@@ -61,7 +61,7 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 				String name=(String)e.nextElement();
 				String fileName2 = mr.getFilesystemName(name);
 				String oriName2 = mr.getOriginalFileName(name);
-				if(name.equals("upFile")) {
+				if(name.equals("upFile0")) {
 					fileList.add(AnimalPhoto.builder()
 							.mainPhoto(oriName2)
 							.adPhotoOriName(oriName2)
@@ -73,6 +73,11 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 				}
 				System.out.println(fileList);
 		}
+		
+		
+		
+		
+		
 		
 		//클라이언트가 입력하여 보낸 데이터를 가져와
 		//Animal에 빌더를 사용해 저장
