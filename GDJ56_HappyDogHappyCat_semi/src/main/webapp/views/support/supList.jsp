@@ -26,6 +26,8 @@
 
 
  <br><br>
+ 
+ 	
         <div id="post" style="flex-wrap:wrap; width:80%;">
        
        <% for(int i=0;i<list.size();i++){
@@ -55,15 +57,26 @@
             <%} %> 
           </div>
           <br><br>
-          <div style="text-align:center;padding:50px;">
-      <%=request.getAttribute("pageBar") %>
+          
+        <div style="margin-top:-100px" id="board-search">
+      <div class="container">
+          <div class="search-window">
+              <form action="<%=request.getContextPath()%>/supsearch.do">
+                  <div class="search-wrap">
+                      <label for="search" class="blind"></label>
+                      <input id="search_" type="search" name="search" placeholder="제목+내용을 입력해주세요." value="">&nbsp;
+                      <button type="submit" class="btn btn-dark">검색</button> &nbsp;
+                      <!-- <button class="btn btn-dark">입양글쓰기</button> -->
+                  </div>
+              </form>
+          </div>
       </div>
-      <% for(int i=0;i<a.size();i++){ 
-			if(loginMember!=null&&loginMember.getMemberNo()==a.get(i).getMemberNo()){%>  
-      <div style="margin-top:100px;"><a href="<%=request.getContextPath()%>/supwrite.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" class="myButton">글쓰기</a></div>
-       <%}} %>
+  </div>      
+          <div style="text-align:center;margin-top:100px;">
+      <%=request.getAttribute("pageBar") %>
       <div class="page_wrap">
         <div class="page_nation">
+
            
           <!--  <a class="arrow prev" href="#"></a>
            <a href="#" class="active">1</a>
@@ -79,8 +92,12 @@
            <a class="arrow next" href="#"></a> -->
         </div>
      </div>
-   
-     
+   </div>
+     <% for(int i=0;i<a.size();i++){ 
+			if(loginMember!=null&&loginMember.getMemberNo()==a.get(i).getMemberNo()){%>  
+      <div style="margin-top:-110px;"><a href="<%=request.getContextPath()%>/supwrite.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>" class="myButton">글쓰기</a></div>
+       <%}} %>
+    
 </section>
 
 

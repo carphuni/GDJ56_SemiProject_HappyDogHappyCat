@@ -18,6 +18,7 @@ import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.SupPick;
 import com.happy.support.model.vo.Support;
+import com.happy.vol.model.vo.Volunteer;
 
 
 public class SupportDao {
@@ -68,7 +69,7 @@ public class SupportDao {
 			}return supNo;
 		}
 		
-		public int insertVolPhoto(Connection conn, int supNo, SupPhoto sp) {
+		public int insertSupPhoto(Connection conn, int supNo, SupPhoto sp) {
 			PreparedStatement pstmt=null;
 			int result=0;
 			try {
@@ -404,8 +405,98 @@ public class SupportDao {
 		}
 		
 		
+		public List<Support> supSearch(Connection conn,int cPage, int numPerpage,String keyword){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<Support> sList=new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("supSearch"));
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setString(2, "%"+keyword+"%");
+				pstmt.setInt(3, (cPage-1)*numPerpage+1);
+				pstmt.setInt(4, cPage*numPerpage);
+				
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					sList.add(getSupport(rs));
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}
+			return sList;
+		}
+		
+		public int supSearchCount(Connection conn,String keyword) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int count=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("supSearchCount"));
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setString(2, "%"+keyword+"%");
+				rs=pstmt.executeQuery();
+				if(rs.next()) count=rs.getInt(1); 	
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return count;
+		}
 		
 		
+		public int deleteSupport(Connection conn, int supBoardNo) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("deleteSupport"));
+				pstmt.setInt(1, supBoardNo);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;		
+		}
+		
+		public int updateSup(Connection conn, Support s) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateSup"));
+				pstmt.setString(1, s.getSupTitle());
+				pstmt.setInt(2, s.getSupTargetAmount());
+				pstmt.setString(3, s.getSupContents());
+				pstmt.setInt(4, s.getSupBoardNo());
+				result = pstmt.executeUpdate();		
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		
+		}		
+		
+		
+		public int deleteSupPhoto(Connection conn, int boardNo) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("deleteSupPhoto"));
+				pstmt.setInt(1, boardNo);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
+			
+			
 		private Support getSupport(ResultSet rs) throws SQLException{
 			return Support.builder()
 					.supBoardNo(rs.getInt("SUP_BOARD_NO"))
@@ -417,4 +508,7 @@ public class SupportDao {
 					.supLikeCount(rs.getInt("SUP_LIKE_COUNT"))
 					.build();
 		}
+		
+		
+		
 }

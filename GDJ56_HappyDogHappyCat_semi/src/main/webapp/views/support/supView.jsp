@@ -51,9 +51,45 @@
     padding-left: 10px;
     background-color: rgb(233, 233, 233);
   }
+  
+    .bt_wrap {
+             /* padding:20px; */
+             margin-top: 20px;
+             text-align: center;
+             font-size: 0;
+             margin-left:18%
+         } .bt_wrap a {
+             display: inline-block;
+             min-width: 80px;
+             /* margin-left: -40%; */
+             padding: 10px;
+             border: 1px solid #000;
+             border-radius: 2px;
+             font-size: 1.4rem;
+             color:black;
+         }
+         
+         .bt_wrap a:first-child {
+             margin-left: 0;
+             background-color: rgb(207, 207, 207);
+             color:white;
+             
+         }
+
+         .bt_wrap a:last-child{
+          min-width: 80px;
+          float:right;
+          margin-right:17%;
+         }
 </style>
 <div id="container">
     <img src="<%=request.getContextPath()%>/images/sup/01-aa-give-title-new02.png">
+<% if(loginMember!=null&&loginMember.getMemberNo()==agency.getMemberNo()||loginMember!=null&&loginMember.getMemberId().equals("admin")){ %>
+<div style="margin-top:5px;" class="bt_wrap" >
+  <a style="font-size:17px;margin-right:-65%;"href="<%=request.getContextPath()%>/updatesup.do?boardNo=<%=boardNo%>&&memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>">수정</a>
+  <a style="font-size:17px;margin-right:20%"href="<%=request.getContextPath()%>/deletesup.do?boardNo=<%=boardNo%>">삭제</a>
+</div>
+<%} %>
 </div>
 
 <div id="container2">

@@ -51,6 +51,16 @@ public class VolunteerService {
 		return v;
 	}
 	
+	public Volunteer selectVolunteer(int boardNo) {
+		Connection conn = getConnection();
+		Volunteer v = vd.selectVolunteer(conn, boardNo);
+		close(conn);
+		return v;
+	}
+	
+	
+	
+	
 	public List<VolPhoto> selectVolPhoto2(int vntBoardNo) {
 		Connection conn = getConnection();
 		List<VolPhoto> vp = vd.selectVolPhoto2(conn, vntBoardNo);
@@ -95,6 +105,50 @@ public class VolunteerService {
 		return result2;
 	}
 	
+	
+	public int updateVol(Volunteer v,List<VolPhoto> fileList) {
+		Connection conn=getConnection();
+		int result= vd.updateVol(conn, v);
+		int result2=0;
+		if(result>0) {
+			for(VolPhoto vp : fileList) {
+				result2+=vd.insertVolPhoto(conn,v.getVntBoardNo(),vp);
+			}	
+			if(result2==fileList.size())commit(conn);
+		}else {
+			rollback(conn);
+		}close(conn);
+		return result2;
+	
+	}
+	
+	
+	public int deleteVolPhoto(int boardNo) {
+		Connection conn = getConnection();
+		int result = vd.deleteVolPhoto(conn, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+		
+		
+		
+	}
+	
+	public int updateVolPhoto(VolPhoto v, int boardNo) {
+		Connection conn = getConnection();
+		int result = vd.updateVolPhoto(conn, v, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	public int insertVolPhoto(int volNo,VolPhoto vp) {
 		Connection conn=getConnection();
 		int result = vd.insertVolPhoto(conn, volNo, vp);
@@ -126,6 +180,82 @@ public class VolunteerService {
 		
 	}
 	
+	public int deleteVolunteer(int vntBoardNo) {
+		Connection conn=getConnection();
+		int result = vd.deleteVolunteer(conn, vntBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+
+	
+	
+	public int updateVntEnr(int vntBoardNo) {
+		Connection conn = getConnection();
+		int result = vd.updateEnr(conn, vntBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int cancelVntEnr(int vntBoardNo) {
+		Connection conn = getConnection();
+		int result = vd.cancelEnr(conn, vntBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int insertEnr(int vntBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = vd.insertEnr(conn, vntBoardNo, memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int selectEnrCheck(int vntBoardNo, int memberNo ) {
+		Connection conn = getConnection();
+		int sp = vd.selectEnrCheck(conn, vntBoardNo, memberNo);
+		close(conn);
+		return sp;
+	}
+	
+	public int selectEnrPerson(int vntBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = vd.selectEnrPerson(conn, vntBoardNo, memberNo);
+		close(conn);
+		return result;
+		
+	}
+	
+	
+	public int updateEnrCheck(int vntBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = vd.updateEnrCheck(conn, vntBoardNo, memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int updateEnrCheckCancel(int vntBoardNo, int memberNo) {
+		Connection conn = getConnection();
+		int result = vd.updateEnrCheckCancel(conn, vntBoardNo, memberNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 	
 	//기관 가입
 	public int enrollAgencyEnd(Agency agency, int memberNo) {
