@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.happy.adopt.model.vo.AdtReviewComment;
+import com.happy.vol.model.vo.Volunteer;
 import com.happy.volreview.model.vo.VolComment;
 import com.happy.volreview.model.vo.VolReview;
 import com.happy.volreview.model.vo.VolReviewPhoto;
@@ -98,10 +99,7 @@ public class VolReviewDao {
 			pstmt.setInt(1, boardNo);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				vr = VolReview.builder().vntBoardNo(rs.getInt("VNT_BOARD_NO"))
-						.memberNo(rs.getInt("MEMBER_NO")).vntTitle(rs.getString("VNT_TITLE"))
-						.vntContents(rs.getString("VNT_CONTENTS")).vntReviewViews(rs.getInt("VNT_REVIEW_VIEWS"))
-						.vntReviewWriteDate(rs.getDate("VNT_REVIEW_WRITE_DATE")).build();
+				vr = getVolReview2(rs);
 			}	
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -250,6 +248,98 @@ public class VolReviewDao {
 		return cList;
 	}
 	
+	public List<VolReview> volReviewSearch(Connection conn,int cPage, int numPerpage,String keyword){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<VolReview> vList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("volReviewSearch"));
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setInt(3, (cPage-1)*numPerpage+1);
+			pstmt.setInt(4, cPage*numPerpage);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				vList.add(getVolReview2(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return vList;
+	}
+	
+	
+	public int volReviewSearchCount(Connection conn,String keyword) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("volReviewSearchCount"));
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+	
+	public int deleteVolReview(Connection conn, int vntBoardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteVolReview"));
+			pstmt.setInt(1, vntBoardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+		
+	}
+	
+	public int updateVolReview(Connection conn, VolReview vr) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateVolReview"));
+			pstmt.setString(1, vr.getVntTitle());
+			pstmt.setString(2, vr.getVntContents());
+			pstmt.setInt(3, vr.getVntBoardNo());
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	
+	}
+	
+	public int deleteReviewPhoto(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteReviewPhoto"));
+			pstmt.setInt(1, boardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
 	
 	private VolComment getVolComment(ResultSet rs) throws SQLException{
 		return VolComment.builder().vntCommentNo(rs.getInt("VNT_COMMENT_NO"))
@@ -261,14 +351,20 @@ public class VolReviewDao {
 		
 	}
 	
-	
-	
-	
+
 	private VolReview getVolReview(ResultSet rs) throws SQLException{
 		return VolReview.builder().vntBoardNo(rs.getInt("VNT_BOARD_NO"))
 				.memberNo(rs.getInt("MEMBER_NO")).vntTitle(rs.getString("VNT_TITLE"))
 				.vntContents(rs.getString("VNT_CONTENTS")).vntReviewViews(rs.getInt("VNT_REVIEW_VIEWS"))
 				.vntReviewWriteDate(rs.getDate("VNT_REVIEW_WRITE_DATE")).memberId(rs.getString("MEMBER_ID")).build();
+		
+	}
+	
+	private VolReview getVolReview2(ResultSet rs) throws SQLException{
+		return VolReview.builder().vntBoardNo(rs.getInt("VNT_BOARD_NO"))
+				.memberNo(rs.getInt("MEMBER_NO")).vntTitle(rs.getString("VNT_TITLE"))
+				.vntContents(rs.getString("VNT_CONTENTS")).vntReviewViews(rs.getInt("VNT_REVIEW_VIEWS"))
+				.vntReviewWriteDate(rs.getDate("VNT_REVIEW_WRITE_DATE")).build();
 		
 	}
 }
