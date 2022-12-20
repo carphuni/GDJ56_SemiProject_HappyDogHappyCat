@@ -1,4 +1,4 @@
-package com.happy.vol.controller;
+package com.happy.support.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,22 +10,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.happy.support.model.service.SupportService;
+import com.happy.support.model.vo.SupComment;
+import com.happy.support.model.vo.SupPhoto;
+import com.happy.support.model.vo.Support;
 import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.Agency;
-import com.happy.vol.model.vo.VolPhoto;
-import com.happy.vol.model.vo.Volunteer;
 
 /**
- * Servlet implementation class VolSearchServlet
+ * Servlet implementation class SupSearchServlet
  */
-@WebServlet("/volsearch.do")
-public class VolSearchServlet extends HttpServlet {
+@WebServlet("/supsearch.do")
+public class SupSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VolSearchServlet() {
+    public SupSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +36,7 @@ public class VolSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String keyword=request.getParameter("search");
+String keyword=request.getParameter("search");
 		
 		int cPage;
 		try {
@@ -43,37 +45,37 @@ public class VolSearchServlet extends HttpServlet {
 			cPage=1;
 		} 
 		
-		int numPerpage=5;
-		List<Volunteer> list = new VolunteerService().volSearch(cPage, numPerpage, keyword);
+		int numPerpage=8;
 		List<Agency> agency = new VolunteerService().selectAgency3();
+		List<Support> list = new SupportService().supSearch(cPage, numPerpage,keyword);
 		List<Agency> list2=new ArrayList();
-		List<VolPhoto> list3 = new ArrayList();
-
-		VolPhoto vp = null;
+		List<SupPhoto> list3 = new ArrayList();
+		List<List<SupComment>> comments = new ArrayList<>();
+		SupPhoto sp = null;
 		for(int i=0;i<list.size();i++) {
-			int agencyNo = list.get(i).getVntAgencyNo();
-			int boardNo=list.get(i).getVntBoardNo();
+			int agencyNo = list.get(i).getSupAgencyNo();
+			int boardNo=list.get(i).getSupBoardNo();
 			Agency a = new VolunteerService().selectAgency(agencyNo);
-			vp = new VolunteerService().selectVolPhoto(boardNo);
+			List<SupComment > sc = new SupportService().selectSupportComment(boardNo);
+			sp = new SupportService().selectSupPhoto(boardNo);
 			list2.add(a);
-			list3.add(vp);
+			list3.add(sp);
+			comments.add(sc);
+		}
+		String pageBar="";
+		int totalData = new SupportService().supSearchCount(keyword);
+		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
+		
+		int pageBarSize = 10;
+		
+		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
+		int pageEnd=pageNo+pageBarSize-1;
+		if(pageNo==1) {
+			pageBar+="<span>[이전]</span>";
+		}else {
+			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		
-		
-		
-		int totalData = new VolunteerService().volSearchCount(keyword);
-		
-		String pageBar="";
-		int pageBarSize=5;
-		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
-		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
-	    int pageEnd=pageNo+pageBarSize-1;
-	    if(pageNo==1) {
-	         pageBar+="<span>[이전]</span>";
-	      }else {
-				pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo-1)+"'>[이전]</a>";
-			}
-	      
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
 				pageBar+="<span>"+pageNo+"</span>";
@@ -88,15 +90,14 @@ public class VolSearchServlet extends HttpServlet {
 		}else {
 			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>[다음]</a>";
 		}
-		System.out.println(keyword);
 		request.setAttribute("ag", agency);
-		request.setAttribute("volunteer", list);
+		request.setAttribute("support", list);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("agency", list2);
-		request.setAttribute("volPhoto", list3);
-		request.getRequestDispatcher("/views/volunteer/volView.jsp").forward(request, response);
+		request.setAttribute("supPhoto", list3);
+		request.setAttribute("comments", comments);
 		
-		
+		request.getRequestDispatcher("/views/support/supList.jsp").forward(request, response);
 	}
 
 	/**

@@ -14,6 +14,8 @@ import com.happy.support.model.vo.SupComment;
 import com.happy.support.model.vo.SupPhoto;
 import com.happy.support.model.vo.SupPick;
 import com.happy.support.model.vo.Support;
+import com.happy.vol.model.vo.VolPhoto;
+import com.happy.vol.model.vo.Volunteer;
 
 
 public class SupportService {
@@ -27,7 +29,7 @@ public class SupportService {
 		if(result>0) {
 			int supNo=sd.selectSupNo(conn);
 			for(SupPhoto sp : fileList) {
-				result2+=sd.insertVolPhoto(conn,supNo,sp);
+				result2+=sd.insertSupPhoto(conn,supNo,sp);
 			}
 			if(result2==fileList.size())commit(conn);
 			else rollback(conn);
@@ -169,4 +171,59 @@ public class SupportService {
 		close(conn);
 		return result;
 	}
+	
+	public List<Support> supSearch(int cPage,int numPerpage, String keyword){
+		Connection conn = getConnection();
+		List<Support> sList = sd.supSearch(conn, cPage, numPerpage, keyword);
+		close(conn);
+		return sList;
+	}
+	
+	public int supSearchCount(String keyword) {
+		Connection conn=getConnection();
+		int result=sd.supSearchCount(conn, keyword);
+		close(conn);
+		return result;
+		
+	}
+	
+	
+	public int deleteSupport(int supBoardNo) {
+		Connection conn=getConnection();
+		int result = sd.deleteSupport(conn, supBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int updateSup(Support s, List<SupPhoto> fileList) {
+		Connection conn=getConnection();
+		int result= sd.updateSup(conn, s);
+		int result2=0;
+		if(result>0) {
+			for(SupPhoto sp : fileList) {
+				result2+=sd.insertSupPhoto(conn,s.getSupBoardNo(),sp);
+			}	
+			if(result2==fileList.size())commit(conn);
+		}else {
+			rollback(conn);
+		}close(conn);
+		return result2;
+	
+	}
+	
+	public int deleteSupPhoto(int boardNo) {
+		Connection conn = getConnection();
+		int result = sd.deleteSupPhoto(conn, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+		
+		
+		
+	}
+	
+	
 }

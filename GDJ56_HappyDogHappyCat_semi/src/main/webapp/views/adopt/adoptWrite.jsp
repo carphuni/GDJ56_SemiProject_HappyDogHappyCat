@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-<% int aniNo=Integer.parseInt(request.getParameter("aniNo")); %>
+<% int aniNo=Integer.parseInt(request.getParameter("aniNo")); 
+	%>
+<%--  <% console.log(request.getAttribute("hopeDateArr")); %> --%> 
 
+<link type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"rel="stylesheet">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    
 
 <section id="content">
 <div id="imgs" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
@@ -24,7 +31,7 @@
         <div class="board_title">
             <strong>입양하기</strong>
         </div>
-        <form action="<%=request.getContextPath() %>/adopt/adoptwriteEnd.do" method="post">
+        <form action="<%=request.getContextPath() %>/adopt/adoptwriteEnd.do" method="post" onsubmit="return checkForm();">
         <div class="board_write_wrap">
             <div class="board_write">
                 <div class="title">
@@ -42,17 +49,17 @@
                     </dl>
                     <dl>
                         <dt>동거인여부</dt>
-                        <dd><input type="text" name="roommate" placeholder="있음(인원수)/없음"></dd>
+                        <dd><input type="text" id="roommate_" name="roommate" placeholder="있음(인원수)/없음" required></dd>
                     </dl>
                 </div> 
                 <div class="info">
                 	<dl>
                         <dt style="width:200px;">알러지여부</dt>
-                        <dd><input type="text" name="allergy" size="50" placeholder="알러지여부"></dd>
+                        <dd><input type="text" name="allergy" id="allergy_" size="50" placeholder="알러지여부" required></dd>
                     </dl>
                     <dl>
                         <dt style="width:120px;">경제활동여부</dt>
-                        <dd><input type="text" name="money" placeholder="경제활동여부"></dd>
+                        <dd><input type="text" name="money" id="money_" placeholder="경제활동여부" required></dd>
                     </dl>
                     
                 </div>  
@@ -60,22 +67,23 @@
                 <div class="info">
                 	<dl>
                         <dt style="width:200px;">동물양육경험</dt>
-                        <dd><input type="text" name="exp" size="50" placeholder="동물양육경험유무"></dd>
+                        <dd><input type="text" name="exp" id="exp_" size="50" placeholder="동물양육경험유무" required></dd>
                     </dl>
                     
                     <dl>
                         <dt>주거형태</dt>
-                        <dd><input type="text" name="live" placeholder="주택,아파트 등등"></dd>
+                        <dd><input type="text" name="live" id="live_" placeholder="주택,아파트 등등" required></dd>
                     </dl>
                 </div>   
                 <div class="info">
                 	<dl>
                         <dt style="width:200px;">희망입양날짜</dt>
-                        <dd><input type="date" name="aptHopedate" id="hopedate"></dd>
+                        <dd><input type="text" name="aptHopedate" id="hopedate" required></dd>
+                        <!-- <dd><input type="date" name="aptHopedate" id="hopedate" required></dd> -->
                     </dl>
 				</div>
                 <div class="cont">
-                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력"></textarea>
+                    <textarea rows="10" cols="100" name="summernote" id="summernote" placeholder="내용 입력" required></textarea>
                 </div>
 
                 </div>
@@ -92,7 +100,7 @@
         
     </div>
 </section>
-    <style>
+<style>
 		#content div{
             text-align: center;
         }
@@ -279,8 +287,8 @@
     }
 
     #reviewwrite img {
-      width: 200px;
-      height: 200px;
+      width: 30px;
+      height: 30px;
     }
 
     #reviewwrite .real-upload {
@@ -298,6 +306,70 @@
 
 
 <script>
+
+jQuery(function($){
+     
+    $("#hopedate").datepicker({
+        changeMonth:true,
+        changeYear:true,
+        yearRange:"2022:2099",
+        showOn:"both",
+        buttonImage:"<%=request.getContextPath()%>/images/adopt/calendar.gif",
+        buttonImageOnly:true,
+        dateFormat: 'yy-mm-dd',
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        showMonthAfterYear: true,
+        dayNamesMin: ['일','월', '화', '수', '목', '금', '토'],
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        monthNames: ['년 1월','년 2월','년 3월','년 4월','년 5월','년 6월','년 7월','년 8월','년 9월','년 10월','년 11월','년 12월'],
+        nextText: '다음 달',
+        prevText: '이전 달',
+        maxDate: "+5m",
+        beforeShowDay: disableAllTheseDays,
+        /* onChangeMonthYear: function(year,month,inst){
+        	beforeShowDay: disableAllTheseDays;
+        } */
+       
+    });
+    $('#hopedate').datepicker('setDate', 'today');
+    
+});
+ 
+	var disabledDays =  <%=request.getAttribute("hopeDateArr")%>;  
+	 
+	function disableAllTheseDays(date) {
+		if (date < new Date()){
+			return [false];
+		}
+		
+	    var m = date.getMonth()+1, d = date.getDate(), y = date.getFullYear();
+	    console.log(m,d,y);
+	    if(m<10) m="0"+m;
+	    if(d<10) d="0"+d;
+	    for (i = 0; i < disabledDays.length; i++) {
+	    	
+	        if($.inArray(y + '-' + m + '-' + d,disabledDays) != -1) {
+	        	
+	            return [false];
+	        }
+	    
+	    }
+	    return [true];
+	    
+	    /* $("다음 달").click(e=>{
+	    	for (i = 0; i < disabledDays.length; i++) {
+		    	
+		        if($.inArray(y + '-' +(m) + '-' + d,disabledDays) != -1) {
+		            return [false];
+		        }
+		    
+		    }
+		    return [true];
+	    }); */
+	    
+	} 
+
     $(document).ready(function() {
     $('#summernote').summernote({
         tablesize :2,
@@ -305,7 +377,7 @@
     });
     });
 	
-    $(function(){
+    /* $(function(){
         var dtToday = new Date();
 
         var month = dtToday.getMonth() + 1;
@@ -316,10 +388,24 @@
         if(day < 10)
          day = '0' + day.toString();
         var minDate = year + '-' + month + '-' + day;
+       
         var maxDate = (year+1) + '-' + month + '-' + day;
-        
+            
         $('#hopedate').attr('min', minDate).attr('max',maxDate);
-    });
+    }); */
     
+    const checkForm=()=>{
+        const roommate=$("#roommate_").val().trim();
+        const allergy=$("#allergy_").val().trim();
+        const money=$("#money_").val().trim();
+        const exp=$("#exp_").val().trim();
+        const live=$("#live_").val().trim();
+        
+        if(roommate.length<2 && allergy.length<2 && money.length<2 && exp.length<2 && live.length<2){
+           alert("2글자 이상 입력하세요");
+           return false;
+        }
+
+     }
     </script>
 <%@ include file="/views/common/footer.jsp"%>

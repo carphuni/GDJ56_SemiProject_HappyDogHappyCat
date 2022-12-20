@@ -73,10 +73,10 @@
         <div id="board-search">
             <div class="container">
                 <div class="search-window">
-                    <form action="">
+                    <form action="<%=request.getContextPath()%>/adopt/adoptmainsearch">
                         <div class="search-wrap">
-                            <label for="search" style="width:100px;">내용검색</label>
-                            <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">&nbsp;
+                            <label for="search" style="width:100px;">제목검색</label>
+                            <input id="search_" type="search" name="search" placeholder="검색어를 입력해주세요." value="">&nbsp;
                             <button type="submit" class="btn btn-dark">검색</button> &nbsp;
                         </div>
                     </form>
@@ -84,19 +84,24 @@
             </div>  
               <div id="numPerpage-container" style="float:right; width:300" >
 	        	동물 분류 
-	        	<form id="aniTypeF" action="">
+	        	<!-- <form id="aniTypeF" action=""> -->
 	        		<select name="aniType_" id="aniType">
 	        			<option value="전체">전체</option>
 	        			<option value="강아지">강아지</option>
 	        			<option value="고양이" >고양이</option>
 	        		</select>
-	        	</form>
+	        	<!-- </form> -->
         	</div> 
         </div>
        
         <br><br>
 
         	<div id="post" style="flex-wrap:wrap; width:80%;">
+        	<%if(aniList.isEmpty()){%>
+        		<div style="border-top: solid 2px rgba(211, 211, 211, 0.516); border-bottom: solid 2px rgba(211, 211, 211, 0.516); width:80%;">
+        			<br><p>조회된 리스트가 없습니다.</p>
+        		</div>
+            <%}else{ %>
         	<% for(int i=0;i<aniList.size();i++){ %>
             <div id="dog-des" style="margin-bottom:0;">
                 <a href="<%=request.getContextPath()%>/adopt/adoptdes.do?aniNo=<%= aniList.get(i).getAniNo() %>";>
@@ -121,10 +126,11 @@
                     <p style="float: right;">조회수 <%= aniList.get(i).getAdtViews() %></p>
                 </div>
             </div>
-       		 <%} %> 
+       		 <%} }%> 
         	</div>
         	
 			<div style="text-align:center;">
+			<br>
         	<%=request.getAttribute("pageBar") %>
         	</div>
         	<br><br>
@@ -141,10 +147,21 @@
 </form> */ -->
 
 <script>
+	
 	$("#aniType").change(e=>{
-		let aniType=$(e.target).val();
 		console.log($(e.target).val())
-		location.assign("<%=request.getContextPath()%>/adopt/adoptmain.do?aniType="+aniType);
+		let aniType=$(e.target).val();
+		 $.ajax({
+				url:"<%=request.getContextPath()%>/adopt/adoptmainType",
+				type:"get",
+				data:{anitype:"aniType"},
+				success:data=>{
+					console.log(data);
+				}
+	    	});
+		<%-- let aniType=$(e.target).val();
+		console.log($(e.target).val())
+		location.assign("<%=request.getContextPath()%>/adopt/adoptmain.do?aniType="+aniType); --%>
 	});
 	
 </script>

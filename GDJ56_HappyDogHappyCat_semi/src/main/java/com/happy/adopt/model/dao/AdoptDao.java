@@ -416,6 +416,157 @@ public class AdoptDao {
 		}
 		return count;
 	}
+	
+	public List<Animal> adoptMainSearch(Connection conn,int cPage, int numPerpage,String keyword){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Animal> aniList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptMainSearch"));
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setString(3, "%"+keyword+"%");
+			pstmt.setInt(4, (cPage-1)*numPerpage+1);
+			pstmt.setInt(5, cPage*numPerpage);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				aniList.add(getAnimal(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return aniList;
+	}
+	
+	public int adoptMainSearchCount(Connection conn,String keyword) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptMainSearchCount"));
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setString(3, "%"+keyword+"%");
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+	
+	public List<AdtBorad> hopeDateAll(Connection conn){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdtBorad> hopeDate=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("hopeDateAll"));
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				AdtBorad ab=AdtBorad.builder().adtVisitDate(rs.getString("ADT_VISIT_DATE")).build();
+				hopeDate.add(ab);
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return hopeDate;
+	}
+	
+	public List<AdtBorad> adoptBoardList(Connection conn,int cPage, int numPerpage,int memberNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdtBorad> adtBoardList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptBoardList"));
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				adtBoardList.add(getAdtBorad(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return adtBoardList;
+	}
+	
+	public int adoptBoardListCount(Connection conn,int memberNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptBoardListCount"));
+			pstmt.setInt(1, memberNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+	
+	public AdtBorad adoptBoardDes(Connection conn,int adtBoardNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		AdtBorad ab=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("adoptBoardDes"));
+			pstmt.setInt(1, adtBoardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				ab=getAdtBorad(rs);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return ab;
+	}
+	
+	/*
+	 * public int adoptBoardUpdate(Connection conn,int adtBoardNo) {
+	 * PreparedStatement pstmt=null; int result=0; try {
+	 * pstmt=conn.prepareStatement(sql.getProperty("")); rs=pstmt.executeUpdate(); }
+	 * }
+	 */
+	
+	public static AdtBorad getAdtBorad(ResultSet rs) throws SQLException{
+        return AdtBorad.builder()
+              .adtBoardNo(rs.getInt("ADT_BOARD_NO"))
+              .memberNo(rs.getInt("MEMBER_NO"))
+              .adtContents(rs.getString("ADT_CONTENTS"))
+              .adtRegDate(rs.getString("ADT_REG_DATE"))
+              .adtDeleteYn(rs.getString("ADT_DELETE_YN").charAt(0))
+              .adtViews(rs.getInt("ADT_VIEWS"))
+              .adtRoommate(rs.getString("ADT_ROOMMATE"))
+              .adtExper(rs.getString("ADT_EXPER"))
+              .adtMoney(rs.getString("ADT_MONEY"))
+              .adtLive(rs.getString("ADT_Live"))
+              .adtAllergy(rs.getString("ADT_Allergy"))
+              .adtVisitDate(rs.getString("ADT_VISIT_DATE"))
+              .aniNo(rs.getInt("ANI_NO"))
+              .build();
+  }
 		
 	public static AdoptPhoto getAdoptPhoto(ResultSet rs) throws SQLException{
         return AdoptPhoto.builder()

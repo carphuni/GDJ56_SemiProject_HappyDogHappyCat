@@ -80,15 +80,13 @@
 }
 
 #myPage-container>.btn-group>button{
-	border-color : #fbb6a9;
 	border: 2px solid;
-	color:  #fbb6a9;
 	font-size: 20px;
 }
 
 #myPage-container>.btn-group>button:hover{
-	border-color : #fbb6a9;
-	background-color: #fbb6a9;
+	background-color:black;
+	border-color:black;
 	color: white;
 }
 
