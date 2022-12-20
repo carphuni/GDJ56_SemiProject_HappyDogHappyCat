@@ -21,21 +21,8 @@ com.happy.animal.model.vo.Animal
             </div>
             <img src="<%=request.getContextPath() %>/images/admission/dog2.png" alt="" style="margin-left: auto;">
         </div>
-        <section class="post">
-              <div id="board-search">
-                  <div class="container">
-                      <div class="search-window">
-                          <form action="">
-                              <div class="search-wrap">
-                                  <label for="search" class="blind">내용 검색</label>
-                                  <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">&nbsp;
-                                  <button type="submit" class="btn btn-dark" id="searchbtn">검색</button> &nbsp;
-                                  <!-- <button class="btn btn-dark">입양글쓰기</button> -->
-                              </div>
-                          </form>
-                      </div>
-                  </div>
-              </div>
+  <br>
+        <input type="text" name="memberNo" value="<%=loginMember.getMemberNo()%>" hidden>
               <div id="board-list">
                   <div class="container">
                       <table class="board-table">
@@ -45,7 +32,7 @@ com.happy.animal.model.vo.Animal
                               <th scope="col" class="th-title">제목</th>
                               <th scope="col" class="th-title">작성자</th>
                               <th scope="col" class="th-date">등록일</th>
-                              <th scope="col" class="th-look">조회수</th>
+                              
                           </tr>
                           </thead>
                           <tbody>
@@ -57,12 +44,18 @@ com.happy.animal.model.vo.Animal
                             	for(AdmissionForm a: list){%>
                             <tr>
                                 <td><%=a.getAdmissionNo() %></td>
-                                <th>
-                                  <a href="<%=request.getContextPath()%>/admission/admissionView.do?admissionNo=<%=a.getAdmissionNo() %>">신청합니다:) </a>
+                                <%if(loginMember.getMemberId().equals("admin")) {%>
+                                <th>           
+                                  <a href="<%=request.getContextPath()%>/admission/admissionView.do?admissionNo=<%=a.getAdmissionNo() %>">신청합니다:)🔒 </a>
                                 </th>
+                                <%}else{ %>
+                                <th>           
+                                  <a href="#" onclick="alert('관리자만 접근 가능합니다.')">신청합니다:)🔒 </a>
+                                </th>
+                                <%} %>
                                 <td><%=a.getMemberId() %></td>
                                 <td><%=a.getWriteDate()%></td>
-                                <td>조회수</td>
+                                
                             </tr>
                             <%}%>
                           <%} %>
@@ -73,7 +66,7 @@ com.happy.animal.model.vo.Animal
                      onclick="location.assign('<%=request.getContextPath()%>/admission/writeAdmission.do');">글쓰기&#128062;</button>
                   </div>
               </div>
-          </section>
+       
           <div id="pageBar">
         	<%=request.getAttribute("pageBar") %>
         </div>
@@ -264,5 +257,6 @@ com.happy.animal.model.vo.Animal
      #text{
         font-family: "Poor story";
      }
+     
     </style>
 <%@include file="/views/common/footer.jsp"%>

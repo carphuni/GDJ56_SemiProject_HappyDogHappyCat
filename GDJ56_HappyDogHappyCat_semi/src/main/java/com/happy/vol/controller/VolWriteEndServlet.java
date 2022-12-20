@@ -69,7 +69,8 @@ public class VolWriteEndServlet extends HttpServlet {
 						.vntPhotoRename(fileName2)
 						.build());
 				}else {
-					fileList.add(VolPhoto.builder().vntPhotoOriName(oriName2).vntPhotoRename(fileName2).build());
+					fileList.add(VolPhoto.builder().vntPhotoOriName(oriName2)
+							.vntPhotoRename(fileName2).build());
 				}
 				System.out.println(fileList);
 			}
@@ -92,7 +93,8 @@ public class VolWriteEndServlet extends HttpServlet {
 		String actDay= mr.getParameter("param10");
 		String contents = mr.getParameter("content");
 		int setPerson = Integer.parseInt(mr.getParameter("param7"));
-		Volunteer v = Volunteer.builder().vntRecName(title)
+		Volunteer v = Volunteer.builder()
+					.vntRecName(title)
 					.vntAgencyNo(a.getAgencyNo())
 					.vntManagerName(managerName)
 					.vntRecPeriod(recPeriod)

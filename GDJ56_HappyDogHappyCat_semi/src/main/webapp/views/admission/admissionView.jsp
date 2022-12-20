@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.happy.animal.model.vo.Animal" %>
+<%@ page import="com.happy.animal.model.vo.Animal,
+java.util.List,
+com.happy.admission.vo.AnimalPhoto" %>
 <%
 	Animal ani=(Animal)request.getAttribute("ani");
+	List<AnimalPhoto> ap=(List<AnimalPhoto>)request.getAttribute("aniPhoto");
 %>
 <%@ include file="/views/common/header.jsp"%>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -118,9 +121,15 @@
         </div>
         <br><br>
         
+        
+        <%for(int i=0;i<ap.size();i++){ %>
         <div id="imgs">
-            <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt="" width="350" height="250">
+            <img src="<%=request.getContextPath() %>/upload/admission<%=ap.get(i).getMainPhoto() %>" alt="" width="350" height="250">
+        </div>    
+        <div id="imgs">
+            <img src="<%=request.getContextPath() %>/upload/admission<%=ap.get(i).getAdPhotoReName() %>" alt="" width="350" height="250">
         </div>
+        <%} %>
         <br><br>
 
         <div id="description">
@@ -170,18 +179,7 @@
        		</a>
         </div>
 	    <br>
-	    <div class="sideBanner">
-	        <div id="sideBanner-inner">
-	            <br>
-	            <h2 id="pick" >🤍</h2> <!-- onclick="clickpick(event);" -->
-	            <h2 id="share">
-	            <a id="kakaotalk-sharing-btn" href="javascript:shareMessage()"> 
-	            <img id="kakao-share" src="<%=request.getContextPath() %>/images/adopt/free-icon-share-3989188.png" alt="" width="33" height="33" >
-	            </a>
-	            </h2>
-	        </div>
-      </div>
-
+	    
 <script>
 	//카카오톡 공유하기
 	function shareMessage() {

@@ -74,7 +74,7 @@ public class SupportWriteEndServlet extends HttpServlet {
 			int memberNo = Integer.parseInt(mr.getParameter("memberNo"));
 			Agency a = new VolunteerService().selectAgency2(memberNo);
 			String title = mr.getParameter("param0");
-			String money = mr.getParameter("param1");
+			int money = Integer.parseInt(mr.getParameter("param1"));
 			String contents = mr.getParameter("content");
 			Support s = Support.builder().supTitle(title)
 						.supContents(contents).supTargetAmount(money)

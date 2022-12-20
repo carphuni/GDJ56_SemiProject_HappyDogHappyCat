@@ -84,10 +84,10 @@
               <ul class="list-group list-group-flush">
                 <li id="head" class="list-group-item">Q&A</li>
                 <li class="list-group-item">
-                  <a href="" class="">자주묻는질문</a>
+                  <a href="<%=request.getContextPath()%>/qa/qaList.do" class="">자주묻는질문</a>
                 </li>
                 <li class="list-group-item">
-                  <a href="">문의하기</a>
+                  <a href="<%=request.getContextPath()%>/qa/qaWrite.do">문의하기</a>
                 </li>
               </ul>
             </div>
@@ -118,11 +118,11 @@
         <small>Copyright &copy; Your Website 2022</small>
       </div>
     </div>
-  </body>
-
-</html>
 <!-- 부트스트랩 js-->
 <script src="<%=request.getContextPath() %>/js/bootstrap.bundle.min.js"></script>
 <!-- 추가적용 js -->
 <script src="<%=request.getContextPath() %>/js/main.js"></script>
+  </body>
+
+</html>
 

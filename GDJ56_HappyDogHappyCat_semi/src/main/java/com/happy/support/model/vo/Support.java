@@ -9,10 +9,11 @@ import lombok.Data;
 public class Support {
 	private int supBoardNo;
 	private String supTitle;
-	private String supTargetAmount;
+	private int supTargetAmount;
 	private String supContents;
 	private char supApvYn;
 	int supAgencyNo;
+	int supLikeCount;
 	
 	
 }

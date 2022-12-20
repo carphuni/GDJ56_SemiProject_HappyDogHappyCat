@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.happy.adopt.model.vo.AdtReviewBorad;
 import com.happy.vol.model.vo.Agency;
 import com.happy.vol.model.vo.VolPhoto;
 import com.happy.vol.model.vo.Volunteer;
@@ -226,6 +227,50 @@ public class VolunteerDao {
 		
 	}	
 		
+	
+	
+	public List<Volunteer> volSearch(Connection conn,int cPage, int numPerpage,String keyword){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Volunteer> vList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("volSearch"));
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				vList.add(getVolunteer(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return vList;
+	}
+	
+	
+	public int volSearchCount(Connection conn,String keyword) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("volSearchCount"));
+			pstmt.setString(1, "%"+keyword+"%");
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	}
+	
 		
 	private Volunteer getVolunteer(ResultSet rs) throws SQLException{
 		return Volunteer.builder()
@@ -304,5 +349,20 @@ public class VolunteerDao {
 			close(rs);
 			close(pstmt);
 		}return list;
+	}
+	
+	public int updateReadCount(Connection conn, int vntBoardNo ) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateReadCount"));
+			pstmt.setInt(1, vntBoardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
 	}
 }
