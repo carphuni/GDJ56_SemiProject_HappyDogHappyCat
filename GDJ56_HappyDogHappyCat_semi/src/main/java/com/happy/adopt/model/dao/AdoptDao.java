@@ -543,6 +543,13 @@ public class AdoptDao {
 		return ab;
 	}
 	
+	/*
+	 * public int adoptBoardUpdate(Connection conn,int adtBoardNo) {
+	 * PreparedStatement pstmt=null; int result=0; try {
+	 * pstmt=conn.prepareStatement(sql.getProperty("")); rs=pstmt.executeUpdate(); }
+	 * }
+	 */
+	
 	public static AdtBorad getAdtBorad(ResultSet rs) throws SQLException{
         return AdtBorad.builder()
               .adtBoardNo(rs.getInt("ADT_BOARD_NO"))

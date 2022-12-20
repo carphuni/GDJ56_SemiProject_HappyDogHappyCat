@@ -2,7 +2,6 @@ package com.happy.adopt.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.buf.StringUtils;
 
 import com.happy.adopt.model.service.AdoptService;
 import com.happy.adopt.model.vo.AdtBorad;
@@ -57,8 +58,13 @@ public class AdoptWriteServlet extends HttpServlet {
 			}
 		}
 		
-		//System.out.println(list1);
+		System.out.println("list"+list1);
 		//System.out.println(Arrays.toString(hopeDateArr));
+		/*
+		 * for(int i=0;i<list1.size();i++) {
+		 * 
+		 * list1=StringUtils.stripStart((String)list1.get(i), "0"); }
+		 */
 		
 		request.setAttribute("hopeDateArr", list1);
 		request.getRequestDispatcher("/views/adopt/adoptWrite.jsp").forward(request, response);
