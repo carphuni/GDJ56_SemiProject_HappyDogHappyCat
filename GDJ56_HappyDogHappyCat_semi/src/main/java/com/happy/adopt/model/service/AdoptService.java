@@ -207,4 +207,24 @@ public class AdoptService {
 		close(conn);	
 		return ab;
 	}
+	
+	/*
+	 * public int adoptBoardUpdate(int adtBoardNo){ Connection conn=getConnection();
+	 * int result =dao.adoptBoardUpdate(conn,adtBoardNo); if(result>0) commit(conn);
+	 * else rollback(conn); close(conn); return result; }
+	 * 
+	 * public int adoptBoardDelete(int adtBoardNo){ Connection conn=getConnection();
+	 * int result =dao.adoptBoardDelete(conn,adtBoardNo); if(result>0) commit(conn);
+	 * else rollback(conn); close(conn); return result; }
+	 * 
+	 * public int adoptReviewBoardUpdate(int adtBoardNo){ Connection
+	 * conn=getConnection(); int result
+	 * =dao.adoptReviewBoardUpdate(conn,adtBoardNo); if(result>0) commit(conn); else
+	 * rollback(conn); close(conn); return result; }
+	 * 
+	 * public int adoptReviewBoardDelete(int adtBoardNo){ Connection
+	 * conn=getConnection(); int result
+	 * =dao.adoptReviewBoardDelete(conn,adtBoardNo); if(result>0) commit(conn); else
+	 * rollback(conn); close(conn); return result; }
+	 */
 }

@@ -328,9 +328,11 @@ jQuery(function($){
 		if (date < new Date()){
 			return [false];
 		}
-	    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+	    var m = date.getMonth()+1, d = date.getDate(), y = date.getFullYear();
+	    if(m<10) m="0"+m;
+	    if(d<10) d="0"+d;
 	    for (i = 0; i < disabledDays.length; i++) {
-	        if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) {
+	        if($.inArray(y + '-' + m + + '-' + d,disabledDays) != -1) {
 	            return [false];
 	        }
 	    }
