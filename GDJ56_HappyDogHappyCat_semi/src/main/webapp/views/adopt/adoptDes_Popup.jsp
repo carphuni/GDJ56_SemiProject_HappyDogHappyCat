@@ -18,7 +18,8 @@
 </style>
 <body>
     <div id="checklist">
-        <h3><입양시 체크리스트></h3>
+    
+        <h3><입양시 체크리스트></h3><br>
         <!-- <form id="adp_form"  onsubmit="return checkcheck();"> -->
             <ul>
             	
@@ -32,6 +33,7 @@
                 <br><br>
                 <li>반려견의 단점까지도 사랑할 준비가 되었는가<input type="checkbox" name="ck5" id="ck5"></li>           
             </ul>
+            <br><br>
             <div id="ckbtn">
                 <input id="ck-btn" type="button" value="확인완료" >
             </div>

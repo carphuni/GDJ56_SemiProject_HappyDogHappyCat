@@ -1,11 +1,18 @@
 package com.happy.adopt.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.happy.adopt.model.service.AdoptService;
+import com.happy.adopt.model.vo.AdtBorad;
 
 /**
  * Servlet implementation class AdoptWriteServlet
@@ -27,6 +34,33 @@ public class AdoptWriteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		List<AdtBorad> hopeDate =new AdoptService().hopeDateAll();
+		
+		System.out.println(hopeDate);
+		
+		String[] hopeDateArr = new String[hopeDate.size()];
+		for(int i=0;i<hopeDateArr.length;i++) {
+			hopeDateArr[i]= '"'+(hopeDate.get(i).getAdtVisitDate()).substring(0,10)+'"';
+		}
+		
+		List list1 = new ArrayList();
+		int k=1;
+		for(int i=0;i<hopeDateArr.length;i++) {
+			int count=1;
+			for(int j=0;j<hopeDateArr.length;j++) {
+				if(i!=j&&hopeDateArr[i].equals(hopeDateArr[j])) {
+					count=count+1;
+				}
+			}
+			if(count>=3) {
+				list1.add(hopeDateArr[i]);
+			}
+		}
+		
+		//System.out.println(list1);
+		//System.out.println(Arrays.toString(hopeDateArr));
+		
+		request.setAttribute("hopeDateArr", list1);
 		request.getRequestDispatcher("/views/adopt/adoptWrite.jsp").forward(request, response);
 	}
 

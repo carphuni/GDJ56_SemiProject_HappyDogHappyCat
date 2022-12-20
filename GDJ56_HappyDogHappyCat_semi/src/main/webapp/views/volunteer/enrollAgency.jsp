@@ -13,7 +13,7 @@
             <label for="floatingInput">시설 주소</label>
         </div>
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatingAgencyPhone" placeholder="PasswordCheck" name="agencyPhone">
+          <input type="text" class="form-control" id="floatingAgencyPhone" placeholder="PasswordCheck" name="agencyPhone" maxlength=10>
           <label for="floatingPassword">시설 연락처</label>
         </div>
         <input type="button" class="btn btn-dh" value="등록하기" onclick="enrollAgencyEnd();">

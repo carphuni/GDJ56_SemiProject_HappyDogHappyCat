@@ -73,3 +73,26 @@
     padding-bottom: 0.8rem; 
     margin-top: 0;
 }
+
+#login-container input[value="중복확인"]{
+	margin-left:10px;
+	width: 100px;
+}
+
+#myPage-container>.btn-group>button{
+	border-color : #fbb6a9;
+	border: 2px solid;
+	color:  #fbb6a9;
+	font-size: 20px;
+}
+
+#myPage-container>.btn-group>button:hover{
+	border-color : #fbb6a9;
+	background-color: #fbb6a9;
+	color: white;
+}
+
+#myPage-container #board-list>table th {
+	text-align: center;
+}
+

@@ -27,5 +27,4 @@ public class Animal {
 	private char totalvac;
 	private int adtViews;
 
-
 }

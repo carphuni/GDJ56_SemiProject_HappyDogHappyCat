@@ -175,8 +175,8 @@ pageEncoding="UTF-8"%>
             >Q&A</a
           >
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="">자주묻는질문</a></li>
-            <li><a class="dropdown-item" href="">문의하기</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/qa/qaList.do">자주묻는질문</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/qa/qaWrite.do">문의하기</a></li>
           </ul>
         </li>
       </ul>
