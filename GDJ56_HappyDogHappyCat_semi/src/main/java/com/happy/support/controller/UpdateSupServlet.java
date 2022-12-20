@@ -40,10 +40,12 @@ public class UpdateSupServlet extends HttpServlet {
 		Agency a = new VolunteerService().selectAgency2(memberNo);
 		SupPhoto sp = new SupportService().selectSupPhoto(boardNo);
 		List<SupPhoto> sp2 = new SupportService().selectSupPhoto2(boardNo);
+		request.setAttribute("boardNo", boardNo);
 		request.setAttribute("agency", a);
 		request.setAttribute("s",s);
 		request.setAttribute("sp", sp);
 		request.setAttribute("sp2", sp2);
+		System.out.println(s);
 		request.getRequestDispatcher("/views/support/supUpdate.jsp").forward(request, response);
 	}
 

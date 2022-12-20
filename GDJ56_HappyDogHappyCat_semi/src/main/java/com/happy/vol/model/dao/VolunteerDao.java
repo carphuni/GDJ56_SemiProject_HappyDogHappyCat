@@ -338,7 +338,7 @@ public class VolunteerDao {
 			pstmt.setDate(4, v.getVntActPeriod());
 			pstmt.setString(5,v.getVntActDay());
 			pstmt.setString(6, v.getVntActContents());
-			pstmt.setInt(7, v.getVntSetPerson());
+			pstmt.setInt(7, v.getVntSetPerson());	
 			pstmt.setDate(8, v.getVntRecPeriodEnd());
 			pstmt.setDate(9, v.getVntActPeriodEnd());
 			pstmt.setInt(10, v.getVntBoardNo());

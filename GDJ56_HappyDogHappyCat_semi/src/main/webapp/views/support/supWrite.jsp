@@ -77,7 +77,7 @@ $("#saveBtn").click(e=>{
 			 var memberNo = $("input[name=memberNo]").val();
 			
 			inputs.each((i,v)=>{
-				/* console.log($(v).attr("name"),$(v).val()); */
+				console.log($(v).attr("name"),$(v).val());
 				form.append("param"+i,$(v).val());
 			});
 			

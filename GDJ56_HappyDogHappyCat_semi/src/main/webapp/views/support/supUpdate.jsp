@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.List,com.happy.vol.model.vo.Agency,com.happy.support.model.vo.SupPhoto,com.happy.support.model.vo.Support" %>
 <%
+	int boardNo = (int)request.getAttribute("boardNo");
 	Agency a = (Agency)request.getAttribute("agency");
 	Support s = (Support)request.getAttribute("s");
 	SupPhoto sp = (SupPhoto)request.getAttribute("sp");
@@ -15,6 +16,7 @@
 	method="post" enctype="multipart/form-data">
 	<%if(loginMember!=null){ %>
 	<input type="hidden" name="memberNo" value="<%=loginMember.getMemberNo()%>">
+    <input type="hidden" name="boardNo" value="<%=boardNo %>">
     <%} %>
     <div class="board_wrap">
         <div class="board_title">
@@ -86,9 +88,9 @@ $("#saveBtn").click(e=>{
 	/* 		console.log(inputs); */
 			 var summernoteContent = $('#summernote').summernote('code');
 			 var memberNo = $("input[name=memberNo]").val();
-			
+			 var boardNo = $("input[name=boardNo]").val();
 			inputs.each((i,v)=>{
-				/* console.log($(v).attr("name"),$(v).val()); */
+				console.log($(v).attr("name"),$(v).val());
 				form.append("param"+i,$(v).val());
 			});
 			
@@ -103,11 +105,12 @@ $("#saveBtn").click(e=>{
 			
 			 form.append("memberNo",memberNo);
 			 form.append("content",summernoteContent);
+			 form.append("boardNo",boardNo) 
 		
 			if(sumnail.length==1){
 				 if(files.length!=0){
 			 	$.ajax({
-				url :"<%=request.getContextPath()%>/supWriteEnd.do",
+				url :"<%=request.getContextPath()%>/supupdateend.do",
 				data : form,
 				type : "post",
 				contentType:false,

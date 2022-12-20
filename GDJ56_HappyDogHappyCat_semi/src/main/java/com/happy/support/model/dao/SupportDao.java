@@ -69,7 +69,7 @@ public class SupportDao {
 			}return supNo;
 		}
 		
-		public int insertVolPhoto(Connection conn, int supNo, SupPhoto sp) {
+		public int insertSupPhoto(Connection conn, int supNo, SupPhoto sp) {
 			PreparedStatement pstmt=null;
 			int result=0;
 			try {
@@ -460,13 +460,43 @@ public class SupportDao {
 				e.printStackTrace();
 			}finally {
 				close(pstmt);
-			}return result;
-			
-			
+			}return result;		
 		}
 		
+		public int updateSup(Connection conn, Support s) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateSup"));
+				pstmt.setString(1, s.getSupTitle());
+				pstmt.setInt(2, s.getSupTargetAmount());
+				pstmt.setString(3, s.getSupContents());
+				pstmt.setInt(4, s.getSupBoardNo());
+				result = pstmt.executeUpdate();		
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		
+		}		
 		
 		
+		public int deleteSupPhoto(Connection conn, int boardNo) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("deleteSupPhoto"));
+				pstmt.setInt(1, boardNo);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+		}
+			
+			
 		private Support getSupport(ResultSet rs) throws SQLException{
 			return Support.builder()
 					.supBoardNo(rs.getInt("SUP_BOARD_NO"))
@@ -478,4 +508,7 @@ public class SupportDao {
 					.supLikeCount(rs.getInt("SUP_LIKE_COUNT"))
 					.build();
 		}
+		
+		
+		
 }

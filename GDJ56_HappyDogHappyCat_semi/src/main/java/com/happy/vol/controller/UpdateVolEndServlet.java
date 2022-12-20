@@ -78,7 +78,7 @@ public class UpdateVolEndServlet extends HttpServlet {
 			
 		
 		
-		System.out.println(boardNo);
+		
 		int memberNo = Integer.parseInt(mr.getParameter("memberNo"));
 		Agency a = new VolunteerService().selectAgency2(memberNo);
 		String title= mr.getParameter("param1");
@@ -106,8 +106,8 @@ public class UpdateVolEndServlet extends HttpServlet {
 					.vntActContents(contents)
 					.vntSetPerson(setPerson)
 					.build();
-		System.out.println(fileList);
-		System.out.println(v);
+//		System.out.println(fileList);
+//		System.out.println(v);
 		int result = new VolunteerService().updateVol(v,fileList);
 	
 		String msg="", loc="";
