@@ -543,13 +543,43 @@ public class AdoptDao {
 		return ab;
 	}
 	
-	/*
-	 * public int adoptBoardUpdate(Connection conn,int adtBoardNo) {
-	 * PreparedStatement pstmt=null; int result=0; try {
-	 * pstmt=conn.prepareStatement(sql.getProperty("")); rs=pstmt.executeUpdate(); }
-	 * }
-	 */
 	
+	 public int adoptBoardUpdate(Connection conn,AdtBorad ab) {
+		 PreparedStatement pstmt=null; 
+		 int result=0; 
+		 try {
+			 pstmt=conn.prepareStatement(sql.getProperty("adoptBoardUpdate")); 
+			 pstmt.setString(1, ab.getAdtContents());
+			 pstmt.setString(2, ab.getAdtRoommate());
+			 pstmt.setString(3, ab.getAdtExper());
+			 pstmt.setString(4, ab.getAdtMoney());
+			 pstmt.setString(5, ab.getAdtLive());
+			 pstmt.setString(6, ab.getAdtAllergy());
+			 pstmt.setString(7, ab.getAdtVisitDate());
+			 pstmt.setInt(8, ab.getAdtBoardNo());
+			 result=pstmt.executeUpdate(); 
+		 	}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		 return result;
+	 }
+	 
+	 public int adoptBoardDelete(Connection conn,int adtBoardNo) {
+		 PreparedStatement pstmt=null; 
+		 int result=0; 
+		 try {
+			 pstmt=conn.prepareStatement(sql.getProperty("adoptBoardDelete")); 
+			 pstmt.setInt(1, adtBoardNo);
+			 result=pstmt.executeUpdate(); 
+		 	}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		 return result;
+	 }
 	public static AdtBorad getAdtBorad(ResultSet rs) throws SQLException{
         return AdtBorad.builder()
               .adtBoardNo(rs.getInt("ADT_BOARD_NO"))
