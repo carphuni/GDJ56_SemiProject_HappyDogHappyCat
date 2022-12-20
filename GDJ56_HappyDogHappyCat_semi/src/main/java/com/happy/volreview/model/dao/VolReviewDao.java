@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.happy.vol.model.vo.VolPhoto;
+import com.happy.adopt.model.vo.AdtReviewComment;
+import com.happy.volreview.model.vo.VolComment;
 import com.happy.volreview.model.vo.VolReview;
 import com.happy.volreview.model.vo.VolReviewPhoto;
 
@@ -71,6 +72,23 @@ public class VolReviewDao {
 		
 	}
 	
+	public int selectVolReviewNo(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int volNo=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectVolReviewNo"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) volNo=rs.getInt("volno");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return volNo;
+	}
+
+	
 	public VolReview selectVolReview(Connection conn, int boardNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -80,7 +98,10 @@ public class VolReviewDao {
 			pstmt.setInt(1, boardNo);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				vr = getVolReview(rs);
+				vr = VolReview.builder().vntBoardNo(rs.getInt("VNT_BOARD_NO"))
+						.memberNo(rs.getInt("MEMBER_NO")).vntTitle(rs.getString("VNT_TITLE"))
+						.vntContents(rs.getString("VNT_CONTENTS")).vntReviewViews(rs.getInt("VNT_REVIEW_VIEWS"))
+						.vntReviewWriteDate(rs.getDate("VNT_REVIEW_WRITE_DATE")).build();
 			}	
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -149,34 +170,96 @@ public class VolReviewDao {
 		}return vrp;
 	}
 	
-public List<VolReviewPhoto> selectVolReviewPhoto2(Connection conn, int boardNo) {
+	public List<VolReviewPhoto> selectVolReviewPhoto2(Connection conn, int boardNo) {
+			
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			VolReviewPhoto v = null;
+			List<VolReviewPhoto> vrp= new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectVolReviewPhoto2"));
+				pstmt.setInt(1, boardNo);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					v=VolReviewPhoto.builder().fileNo(rs.getInt("FILE_NO"))
+						.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
+						.mainPhoto(rs.getString("MAIN_PHOTO"))
+						.vntPhotoOriName(rs.getString("VNT_PHOTO_ORINAME"))
+						.vntPhotoRename(rs.getString("VNT_PHOTO_RENAME")).build();
+					vrp.add(v);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return vrp;
+		}
+	
+	public int updateReadCount(Connection conn, int vntBoardNo ) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateReadCount"));
+			pstmt.setInt(1, vntBoardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
 		
+	}
+	
+	
+	public int insertComment(Connection conn, String reply, String memberId, int reviewBoardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertComment"));
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, reply);
+			pstmt.setInt(3, reviewBoardNo);
+			result=pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+			
+	}
+	
+	public List<VolComment> selectCommentList(Connection conn, int boardNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		VolReviewPhoto v = null;
-		List<VolReviewPhoto> vrp= new ArrayList();
+		List<VolComment> cList=new ArrayList();
 		try {
-			pstmt=conn.prepareStatement(sql.getProperty("selectVolReviewPhoto2"));
+			pstmt=conn.prepareStatement(sql.getProperty("selectCommentList"));
 			pstmt.setInt(1, boardNo);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				v=VolReviewPhoto.builder().fileNo(rs.getInt("FILE_NO"))
-					.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
-					.mainPhoto(rs.getString("MAIN_PHOTO"))
-					.vntPhotoOriName(rs.getString("VNT_PHOTO_ORINAME"))
-					.vntPhotoRename(rs.getString("VNT_PHOTO_RENAME")).build();
-				vrp.add(v);
+				cList.add(getVolComment(rs));
 			}
-		}catch(SQLException e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			close(rs);
 			close(pstmt);
-		}return vrp;
+		}
+		return cList;
 	}
 	
 	
-	
+	private VolComment getVolComment(ResultSet rs) throws SQLException{
+		return VolComment.builder().vntCommentNo(rs.getInt("VNT_COMMENT_NO"))
+				.memberId(rs.getString("MEMBER_ID")).vntCommentWrite(rs.getDate("VNT_COMMENT_WRITE_DATE"))
+				.vntCommentContents(rs.getString("VNT_COMMENT_CONTENTS"))
+				.vntCommentDeleteYn(rs.getString("VNT_COMMENT_DELETE_YN").charAt(0))
+				.vntCommentModifyDate(rs.getDate("VNT_COMMENT_MODIFY_DATE"))
+				.vntBoardNo(rs.getInt("VNT_BOARD_NO")).build();
+		
+	}
 	
 	
 	

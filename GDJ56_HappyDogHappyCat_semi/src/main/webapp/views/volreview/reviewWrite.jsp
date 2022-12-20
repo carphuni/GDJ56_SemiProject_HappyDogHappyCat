@@ -65,17 +65,16 @@
 
 	$("#saveBtn").click(e=>{
 
-	/* if(fn_invalidate()){
-		
-	} */
 	let form=new FormData();
 	
 	const files=$("input[name=upload2]")[0].files;
-	
+
 	var summernoteContent = $('#summernote').summernote('code');
 	var memberNo = $("input[name=memberNo]").val();
 	var title = $("input[name=reviewTitle]").val();
+	
 	$.each(files,(i,v)=>{
+		console.log(v);
 		form.append("upfile"+i,v);
 	});		
 
@@ -83,7 +82,7 @@
 	 form.append("memberNo",memberNo);
 	 form.append("title",title);
 	 
-		 if(files.length!=0){
+	 if(files.length!=0){
 	 	$.ajax({
 		url :"<%=request.getContextPath()%>/reviewwriteend.do",
 		data : form,
@@ -91,20 +90,14 @@
 		contentType:false,
 		processData:false,
 		success : e=>{
-			/* console.log(e.msg);	 */
-			/* console.log(e.loc); */
+			
 			var loc2 = e.loc;
 			alert(e.msg);
 			location.replace('<%=request.getContextPath()%>'+loc2);
-//				alert("파일업로드 성공");
-//				$("#upload2").val("");
-//				},error:(r,m,e)=>{
-//					alert("업로드 실패 다시시도하세요!");
-				}
-	 	});
-			 }else{alert("사진을 1장 이상 첨부해주세요.");}
-	 
 
+				}
+	 	});} 
+	 else{alert("사진을 1장 이상 첨부해주세요.")}
 });
 
 	 

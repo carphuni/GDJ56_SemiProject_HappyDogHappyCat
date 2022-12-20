@@ -66,7 +66,6 @@ public class VolReviewWriteEndServlet extends HttpServlet {
 
 					fileList.add(VolReviewPhoto.builder().vntPhotoOriName(oriName2)
 							.vntPhotoRename(fileName2).build());
-				
 				System.out.println(fileList);
 			}
 			

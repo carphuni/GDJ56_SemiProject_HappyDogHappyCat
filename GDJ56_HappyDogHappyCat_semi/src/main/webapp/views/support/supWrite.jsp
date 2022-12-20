@@ -32,7 +32,7 @@
                     </dl>
                     <dl>
                         <dt style="font-size:17px">목표금액</dt>
-                        <dd style="font-size:17px;margin-top:14px;"><input type="text" placeholder="목표금액 금액"></dd>
+                        <dd style="font-size:17px;margin-top:14px;"><input type="text" placeholder="숫자 입력 ex)5000000"></dd>
                     </dl>
                 </div>
                 <div class="cont">

@@ -8,8 +8,8 @@ import static com.happy.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
-import com.happy.vol.model.vo.VolPhoto;
 import com.happy.volreview.model.dao.VolReviewDao;
+import com.happy.volreview.model.vo.VolComment;
 import com.happy.volreview.model.vo.VolReview;
 import com.happy.volreview.model.vo.VolReviewPhoto;
 
@@ -31,22 +31,31 @@ public class VolReviewService {
 		return result;
 	}
 	
-	public VolReview selectVolReview(int boardNo) {
+	public VolReview selectVolReview(int boardNo, boolean readflag) {
 		Connection conn = getConnection();
 		VolReview vr = vrd.selectVolReview(conn, boardNo);
+		if(vr!=null&&!readflag) {
+			int result = vrd.updateReadCount(conn, boardNo);
+			if(result>0) {
+				commit(conn);
+				vr.setVntReviewViews(vr.getVntReviewViews()+1);	
+			}
+			else rollback(conn);
+		}
 		close(conn);
-		return vr;
+		return vr;			
+		}
 		
-		
-	}
+
 	
 	public int insertVolReview(VolReview vr, List<VolReviewPhoto> fileList) {
 		Connection conn=getConnection();
 		int result=vrd.insertVolReview(conn, vr);
 		int result2=0;
 		if(result>0) {
+			int volNo=vrd.selectVolReviewNo(conn);
 			for(VolReviewPhoto vrp : fileList) {
-				result2+=vrd.insertVolReviewPhoto(conn,vr.getVntBoardNo(),vrp);
+				result2+=vrd.insertVolReviewPhoto(conn,volNo,vrp);
 			}
 			if(result2==fileList.size())commit(conn);
 			else rollback(conn);
@@ -73,8 +82,24 @@ public class VolReviewService {
 		return vrp;
 	}	
 	
+	public int insertComment(String reply,String memberId, int boardNo ) {
+		Connection conn = getConnection();
+		int result = vrd.insertComment(conn, reply, memberId, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+		
+	}
 	
+	public List<VolComment> selectCommentList(int boradNo){
+		Connection conn =getConnection();
+		List<VolComment> cList = vrd.selectCommentList(conn, boradNo);
+		close(conn);
+		return cList;
 	
+	}
 	
 		
 }

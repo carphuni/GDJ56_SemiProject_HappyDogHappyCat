@@ -61,7 +61,7 @@
 	                            <tr>           
 	                                <td><%=list.get(i).getVntBoardNo() %></td>
 	                                <th>
-	                                  <a href="<%=request.getContextPath()%>/volreviewview.do"><%=list.get(i).getVntTitle() %></a>
+	                                  <a href="<%=request.getContextPath()%>/volreviewview.do?boardNo=<%=list.get(i).getVntBoardNo()%>"><%=list.get(i).getVntTitle() %></a>
 	                                </th>
 	                                <td><%=list.get(i).getMemberId() %></td>
 	                                <td><%=list.get(i).getVntReviewWriteDate() %></td>
