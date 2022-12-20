@@ -45,7 +45,7 @@ List<AdmissionForm> list=(List<AdmissionForm>)request.getAttribute("admissions")
                             <tr>
                                 <td><%=a.getAdmissionNo() %></td>
                                 <th>           
-                                  <a href="<%=request.getContextPath()%>/admission/admissionView.do?admissionNo=<%=a.getAdmissionNo() %>&aniNo=<%=a.getAnimalNo()%>">신청합니다:)🔒 </a>
+                                  <a href="<%=request.getContextPath()%>/admission/myPageView.do?admissionNo=<%=a.getAdmissionNo() %>&aniNo=<%=a.getAnimalNo()%>">신청합니다:)🔒 </a>
                                 </th>
                                 <td><%=a.getMemberId() %></td>
                                 <td><%=a.getWriteDate()%></td>
@@ -55,8 +55,6 @@ List<AdmissionForm> list=(List<AdmissionForm>)request.getAttribute("admissions")
                           </tbody>
                       </table>
                       <br>
-                      <button type="button" id="write" class="btn btn-lgbtn-link" 
-                     onclick="location.assign('<%=request.getContextPath()%>/admission/writeAdmission.do');">글쓰기&#128062;</button>
                   </div>
               </div>
        

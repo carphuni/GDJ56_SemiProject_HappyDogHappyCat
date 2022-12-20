@@ -2,12 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.happy.animal.model.vo.Animal,
 java.util.List,
-com.happy.admission.vo.AdmissionForm,
 com.happy.admission.vo.AnimalPhoto" %>
 <%
 	Animal ani=(Animal)request.getAttribute("ani");
 	List<AnimalPhoto> ap=(List<AnimalPhoto>)request.getAttribute("aniPhoto");
-	AdmissionForm af=(AdmissionForm)request.getAttribute("admissionForm");
+	int admissionNo
 %>
 <%@ include file="/views/common/header.jsp"%>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -105,6 +104,8 @@ com.happy.admission.vo.AnimalPhoto" %>
 </style>
 
     <section id="content">
+    <input type="text" name="aniNo" value="<%=ani.getAniNo()%>" hidden>
+    <input type="text" name="" value="<%= %>" hidden>
 	    <div id="imgsbar" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
 	            <img src="<%=request.getContextPath() %>/images/admission/dog1.png" alt="" style="margin-right: auto;">
 	            <div id="text" >
@@ -170,12 +171,6 @@ com.happy.admission.vo.AnimalPhoto" %>
                         <%=ani.getAniReason() %>
                     </td>
                 </tr>
-                <tr>
-                    <th>입소희망 일자</th>
-                    <td colspan="3">
-                        <%=af.getHopeDate() %>
-                    </td>
-                </tr>
             </table>
             <br>
         <%for(int i=0;i<ap.size();i++){ %>
@@ -186,6 +181,8 @@ com.happy.admission.vo.AnimalPhoto" %>
         	<%}
         }%>
         </div>
+        <button onclick="location.assign('<%=request.getContextPath()%>/admission/modifyAd.do');">수정</button>
+        <button onclick="location.assign('<%=request.getContextPath()%>/admission/deleteAd.do');">삭제</button>
         <br><br><br><br>
         
         <div id="btnlistdiv">

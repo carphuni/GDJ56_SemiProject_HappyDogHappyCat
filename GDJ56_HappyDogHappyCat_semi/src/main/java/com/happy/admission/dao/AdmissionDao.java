@@ -265,6 +265,23 @@ public class AdmissionDao {
 			close(pstmt);
 		}return list;
 	}
+
+	public AdmissionForm selectAdmission(Connection conn, int admissionNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		AdmissionForm af=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectAdmission"));
+			pstmt.setInt(1, admissionNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) af=getAdmission(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return af;
+	}
 	
 	
 

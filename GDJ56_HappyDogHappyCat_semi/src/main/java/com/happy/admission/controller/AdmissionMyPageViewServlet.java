@@ -11,21 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.happy.admission.service.AdmissionService;
-import com.happy.admission.vo.AdmissionForm;
 import com.happy.admission.vo.AnimalPhoto;
 import com.happy.animal.model.vo.Animal;
 
 /**
- * Servlet implementation class AdmissionViewServlet
+ * Servlet implementation class AdmissionMyPageViewServlet
  */
-@WebServlet("/admission/admissionView.do")
-public class AdmissionViewServlet extends HttpServlet {
+@WebServlet("/admission/myPageView.do")
+public class AdmissionMyPageViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmissionViewServlet() {
+    public AdmissionMyPageViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,19 +39,22 @@ public class AdmissionViewServlet extends HttpServlet {
 		Animal ani=new AdmissionService().admissionView(admissionNo);
 		
 		List<AnimalPhoto> aniPhoto=new AdmissionService().selectAnimalPhoto(aniNo);
-		AdmissionForm af=new AdmissionService().selectAdmission(admissionNo);
-		
 		
 		request.setAttribute("ani",ani);
-		
+		request.setAttribute("admissionNo",admissionNo);
 		request.setAttribute("aniPhoto", aniPhoto);
-		
-		request.setAttribute("admissionForm", af);
 		
 		System.out.println("받아온 사진"+aniPhoto);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/views/admission/admissionView.jsp");
 		rd.forward(request, response);
+		
+		
+		
+		
+		
+		request.getRequestDispatcher("/views/admission/admissionMypageView.jsp")
+		.forward(request, response);
 	}
 
 	/**

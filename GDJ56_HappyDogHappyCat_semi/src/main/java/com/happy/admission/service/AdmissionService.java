@@ -84,6 +84,13 @@ public class AdmissionService {
 		return list;
 	}
 
+	public AdmissionForm selectAdmission(int admissionNo) {
+		Connection conn=getConnection();
+		AdmissionForm af=dao.selectAdmission(conn,admissionNo);
+		close(conn);
+		return af;
+	}
+
 
 	
 
