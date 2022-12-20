@@ -34,14 +34,16 @@ public class AdmissionViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int admissionNo=Integer.parseInt(request.getParameter("admissionNo"));
+		int aniNo=Integer.parseInt(request.getParameter("aniNo"));
 		
 		Animal ani=new AdmissionService().admissionView(admissionNo);
 		
-		List<AnimalPhoto> aniPhoto=new AdmissionService().selectAnimalPhoto(admissionNo);
+		List<AnimalPhoto> aniPhoto=new AdmissionService().selectAnimalPhoto(aniNo);
 		
 		request.setAttribute("ani",ani);
 		
 		request.setAttribute("aniPhoto", aniPhoto);
+		
 		System.out.println("받아온 사진"+aniPhoto);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/views/admission/admissionView.jsp");

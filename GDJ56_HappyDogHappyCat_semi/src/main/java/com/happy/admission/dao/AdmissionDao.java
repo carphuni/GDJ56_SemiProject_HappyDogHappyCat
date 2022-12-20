@@ -134,7 +134,9 @@ public class AdmissionDao {
 			pstmt.setInt(2, cPage*numPerpage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				list.add(getAdmission(rs));
+				AdmissionForm af=getAdmission(rs);
+				af.setAnimalNo(rs.getInt("ani_no"));
+				list.add(af);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -227,6 +229,7 @@ public class AdmissionDao {
 					.photoNo(rs.getInt("ani_photo_no"))
 					.adPhotoOriName(rs.getString("ani_photo_oriname"))
 					.adPhotoReName(rs.getString("ani_photo_rename"))
+					.aniNo(rs.getInt("ani_no"))
 					.mainPhoto(rs.getString("main_photo"))
 					.build();
 					
@@ -238,6 +241,29 @@ public class AdmissionDao {
 			close(rs);
 			close(pstmt);
 		}return ap;
+	}
+
+	public List<AdmissionForm> selectMyAdmission(Connection conn, int cPage, int numPerpage,int MemberNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<AdmissionForm> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectMyAdmission"));
+			pstmt.setInt(1, MemberNo);
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				AdmissionForm af=getAdmission(rs);
+				af.setAnimalNo(rs.getInt("ani_no"));
+				list.add(af);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
 	}
 	
 	

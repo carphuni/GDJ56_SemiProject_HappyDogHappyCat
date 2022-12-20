@@ -30,14 +30,15 @@ com.happy.qa.vo.QaForm
     <br><br>
  	</div>
   	<div id="description">
-            <table >
-                <tr>
-                    <th>작성날짜</th>
+    	<table >
+        	<tr>
+            	<th>작성날짜</th>
                     <td><%=q.getQaWriteDate() %></td>
-                </tr>
+           </tr>
                  <th>문의 내용</th>
                     <td><%=q.getQaContents() %></td>
-            </table>
+       </table>
+    		
     </div>
     <div id="comment-container" >
     	<%if(loginMember.getMemberId().equals("admin")) {%> 

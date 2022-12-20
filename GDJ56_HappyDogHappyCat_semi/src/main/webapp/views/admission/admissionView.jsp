@@ -121,15 +121,14 @@ com.happy.admission.vo.AnimalPhoto" %>
         </div>
         <br><br>
         
-        
         <%for(int i=0;i<ap.size();i++){ %>
+        <%if(ap.get(i).getMainPhoto()!=null){ %>    
         <div id="imgs">
-            <img src="<%=request.getContextPath() %>/upload/admission<%=ap.get(i).getMainPhoto() %>" alt="" width="350" height="250">
-        </div>    
-        <div id="imgs">
-            <img src="<%=request.getContextPath() %>/upload/admission<%=ap.get(i).getAdPhotoReName() %>" alt="" width="350" height="250">
+            <img src="<%=request.getContextPath() %>/upload/admission/<%=ap.get(i).getAdPhotoReName() %>" alt="" width="350" height="400">
         </div>
-        <%} %>
+       	 <%}
+        }%>
+        
         <br><br>
 
         <div id="description">
@@ -170,6 +169,14 @@ com.happy.admission.vo.AnimalPhoto" %>
                     </td>
                 </tr>
             </table>
+            <br>
+        <%for(int i=0;i<ap.size();i++){ %>
+        	<%if(ap.get(i).getMainPhoto()==null){ %>    
+        	<div id="imgs">
+            	<img src="<%=request.getContextPath() %>/upload/admission/<%=ap.get(i).getAdPhotoReName() %>" alt="" width="350" height="400">
+        	</div>
+        	<%}
+        }%>
         </div>
         <br><br><br><br>
         

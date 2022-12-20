@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List,
 com.happy.animal.model.vo.Animal
-,com.happy.admission.vo.AdmissionForm" %>
+,com.happy.admission.vo.AdmissionForm
+" %>
 <%
-	List<AdmissionForm> list=(List<AdmissionForm>)request.getAttribute("admissions");
+List<AdmissionForm> list=(List<AdmissionForm>)request.getAttribute("admissions");
 %>
-
 <%@include file="/views/common/header.jsp"%>
 <section id="content">
         <div id="imgs" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
@@ -44,18 +44,11 @@ com.happy.animal.model.vo.Animal
                             	for(AdmissionForm a: list){%>
                             <tr>
                                 <td><%=a.getAdmissionNo() %></td>
-                                <%if(loginMember.getMemberId().equals("admin")) {%>
                                 <th>           
                                   <a href="<%=request.getContextPath()%>/admission/admissionView.do?admissionNo=<%=a.getAdmissionNo() %>&aniNo=<%=a.getAnimalNo()%>">신청합니다:)🔒 </a>
                                 </th>
-                                <%}else{ %>
-                                <th>           
-                                  <a href="#" onclick="alert('관리자만 접근 가능합니다.')">신청합니다:)🔒 </a>
-                                </th>
-                                <%} %>
                                 <td><%=a.getMemberId() %></td>
                                 <td><%=a.getWriteDate()%></td>
-                                
                             </tr>
                             <%}%>
                           <%} %>
