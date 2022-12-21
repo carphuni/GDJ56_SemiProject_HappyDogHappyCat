@@ -14,6 +14,7 @@ import static com.happy.common.JDBCTemplate.rollback;
 
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import com.happy.qa.vo.QaForm;
 
@@ -124,11 +125,39 @@ public class QaService {
 		return q;
 	}
 
+	public List<QaForm> selectMyQa(int memberNo, int cPage, int numPerpage) {
+		Connection conn=getConnection();
+		List<QaForm> list=dao.selectMyQa(conn,memberNo,cPage,numPerpage);
+		close(conn);
+		return list;
+	}
+
+	public int deleteQa(int qaNo) {
+		Connection conn=getConnection();
+		
+		List<QaPhoto> qp=dao.selectQaPhoto(conn,qaNo);
+		List<QaComment> qc=dao.selectQaComment(conn,qaNo);
+		
+		int result2=0;
+		int result3=0;
+
+		if(qp.size()>0) {
+			int result=dao.deleteQaPhoto(conn,qaNo);
+			if(result>0) {
+				result2=dao.deleteQaComment(conn, qaNo);		
+			}if(result2>0) {
+				result3=dao.deleteQaForm(conn,qaNo);
+			}
+		
+		}
+		close(conn);
+		return result3;
+
 	
 	
 	
 	
 	
 	
-	
+	}
 }

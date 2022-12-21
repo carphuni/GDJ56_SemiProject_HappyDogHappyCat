@@ -326,6 +326,49 @@ public class QaDao {
 		}return q;
 	}
 
+	public List<QaForm> selectMyQa(Connection conn, int memberNo, int cPage, int numPerpage) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<QaForm> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectMyQa"));
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				QaForm f=getQa(rs);
+				f.setMemberId(rs.getString("member_id"));
+				list.add(f);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
+
+	public int deleteQaPhoto(Connection conn, int qaNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int deleteQaComment(Connection conn, int qaNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public List<QaComment> selectQaComment(Connection conn, int qaNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int deleteQaForm(Connection conn, int qaNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 }

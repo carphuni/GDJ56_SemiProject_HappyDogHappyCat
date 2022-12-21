@@ -42,6 +42,7 @@ public class MyPageVolReviewListServlet extends HttpServlet {
 		
 		int numPerpage=5;
 		List<VolReview> list = new VolReviewService().myPageVolReviewList(cPage, numPerpage,memberNo);
+		System.out.println(list);
 		String pageBar="";
 		System.out.println(list);
 		int totalData = new VolReviewService().myPageVolReviewCount(memberNo);

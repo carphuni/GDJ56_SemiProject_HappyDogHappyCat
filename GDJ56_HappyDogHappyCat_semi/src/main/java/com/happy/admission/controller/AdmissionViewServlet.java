@@ -50,7 +50,7 @@ public class AdmissionViewServlet extends HttpServlet {
 		request.setAttribute("admissionForm", af);
 		
 		System.out.println("받아온 사진"+aniPhoto);
-		
+		System.out.println("받아온 입소정보"+af);
 		RequestDispatcher rd=request.getRequestDispatcher("/views/admission/admissionView.jsp");
 		rd.forward(request, response);
 	}

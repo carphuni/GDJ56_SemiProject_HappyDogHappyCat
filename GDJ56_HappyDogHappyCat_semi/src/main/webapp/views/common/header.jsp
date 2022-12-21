@@ -52,8 +52,11 @@ pageEncoding="UTF-8"%>
       href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap"
       rel="stylesheet"
     />
- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+   <!-- 카카오맵 API -->
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5afb59a859566c6c4119b373bc6c474b"></script>
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5afb59a859566c6c4119b373bc6c474b&libraries=services,clusterer,drawing"></script>
   </head>
 
   <body>
@@ -99,13 +102,13 @@ pageEncoding="UTF-8"%>
           <a
             class="nav-link"
             data-bs-toggle=""
-            href="#"
+            href="<%=request.getContextPath()%>/tip/tipList.do"
             role="button"
             aria-expanded="false"
             >유기동물제보</a
           >
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">유기동물제보 목록</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/tip/tipList.do">유기동물제보 목록</a></li>
             <li><a class="dropdown-item" href="#">유기동물 제보하기</a></li>
           </ul>
         </li>
