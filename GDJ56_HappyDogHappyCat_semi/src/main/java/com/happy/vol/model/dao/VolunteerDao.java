@@ -86,7 +86,7 @@ public class VolunteerDao {
 			if(rs.next()) {
 				vp=VolPhoto.builder().fileNo(rs.getInt("FILE_NO"))
 					.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
-					.mainPhoto(rs.getString("VNT_BOARD_NO"))
+					.mainPhoto(rs.getString("MAIN_PHOTO"))
 					.vntPhotoOriName(rs.getString("VNT_PHOTO_ORINAME"))
 					.vntPhotoRename(rs.getString("VNT_PHOTO_RENAME")).build();
 			}
