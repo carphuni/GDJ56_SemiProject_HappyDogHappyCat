@@ -77,9 +77,9 @@ public class AdmissionService {
 		return ap;
 	}
 
-	public List<AdmissionForm> selectMyAdmission(int MemberNo,int cPage, int numPerpage) {
+	public List<AdmissionForm> selectMyAdmission(int  memberNo,int cPage, int numPerpage) {
 		Connection conn=getConnection();
-		List<AdmissionForm> list=dao.selectMyAdmission(conn,cPage, numPerpage,MemberNo);
+		List<AdmissionForm> list=dao.selectMyAdmission(conn,cPage, numPerpage, memberNo);
 		close(conn);
 		return list;
 	}
@@ -90,6 +90,35 @@ public class AdmissionService {
 		close(conn);
 		return af;
 	}
+
+	public Animal admissionMyPageView(int admissionNo) {
+		Connection conn=getConnection();
+		Animal ani=dao.admissionMyPageView(conn,admissionNo);
+		close(conn);
+		return ani;
+	
+	}
+
+	public int deleteAnimal(int aniNo,int admissionNo) {
+		Connection conn=getConnection();
+		int result1=dao.deleteAnimalPhoto(conn,aniNo);
+		int result2=0;
+		int result3=0;
+		System.out.println("ㅎ2"+result1);
+		if(result1>0) {
+			result2=dao.deleteAdmission(conn,admissionNo);
+			System.out.println("ㅎ22"+result2);	
+			if(result2>0) {
+				result3=dao.deleteAnimal(conn, aniNo);
+				System.out.println("ㅎ23"+result3);		
+			}
+		}
+		close(conn);
+		return result3;
+	}
+
+	
+	
 
 
 	

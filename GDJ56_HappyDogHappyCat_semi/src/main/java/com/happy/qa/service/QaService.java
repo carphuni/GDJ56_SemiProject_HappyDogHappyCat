@@ -124,6 +124,13 @@ public class QaService {
 		return q;
 	}
 
+	public List<QaForm> selectMyQa(int memberNo, int cPage, int numPerpage) {
+		Connection conn=getConnection();
+		List<QaForm> list=dao.selectMyQa(conn,memberNo,cPage,numPerpage);
+		close(conn);
+		return list;
+	}
+
 	
 	
 	

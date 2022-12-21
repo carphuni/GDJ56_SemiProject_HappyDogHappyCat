@@ -103,7 +103,7 @@ buf2.insert(3, "-"); buf2.insert(7, "-"); } } %>
       <button type="button" class="btn col-2" onclick="location.assign('')">
         제 보
       </button>
-      <button type="button" class="btn col-2" onclick="location.assign('')">
+      <button type="button" class="btn col-2" onclick="location.assign('<%=request.getContextPath()%>/admission/mypageList.do')">
         입 소
       </button>
       <button type="button" class="btn col-2" onclick="location.assign('')">
@@ -112,7 +112,7 @@ buf2.insert(3, "-"); buf2.insert(7, "-"); } } %>
       <button type="button" class="btn col-2" onclick="location.assign('')">
         자원 봉사
       </button>
-      <button type="button" class="btn col-2" onclick="location.assign('')">
+      <button type="button" class="btn col-2" onclick="location.assign('<%=request.getContextPath()%>/qa/myPageList.do')">
         문의 내역
       </button>
     </div>

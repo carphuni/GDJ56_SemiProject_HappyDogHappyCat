@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.happy.animal.model.vo.Animal,
 java.util.List,
-com.happy.admission.vo.AnimalPhoto" %>
+com.happy.admission.vo.AnimalPhoto,
+com.happy.admission.vo.AdmissionForm" %>
 <%
 	Animal ani=(Animal)request.getAttribute("ani");
 	List<AnimalPhoto> ap=(List<AnimalPhoto>)request.getAttribute("aniPhoto");
-	int admissionNo
+	AdmissionForm af=(AdmissionForm)request.getAttribute("admissionForm");	
 %>
 <%@ include file="/views/common/header.jsp"%>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -105,7 +106,6 @@ com.happy.admission.vo.AnimalPhoto" %>
 
     <section id="content">
     <input type="text" name="aniNo" value="<%=ani.getAniNo()%>" hidden>
-    <input type="text" name="" value="<%= %>" hidden>
 	    <div id="imgsbar" style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
 	            <img src="<%=request.getContextPath() %>/images/admission/dog1.png" alt="" style="margin-right: auto;">
 	            <div id="text" >
@@ -121,6 +121,11 @@ com.happy.admission.vo.AnimalPhoto" %>
 	     <br><br>
         <div id="title">
             <h2>입소신청[<%=ani.getAniType() %>]<%=ani.getAniKind() %> <%=ani.getAniName() %> </h2><br>
+        <button style="margin-left:900px;"
+        onclick="location.assign('<%=request.getContextPath()%>/admission/modifyAd.do?admissionNo=<%=af.getAdmissionNo()%>&aniNo=<%=ani.getAniNo()%>');">수정</button>
+        <button style="margin-left:10px;"
+        onclick="location.assign('<%=request.getContextPath()%>/admission/deleteAd.do?admissionNo=<%=af.getAdmissionNo()%>&aniNo=<%=ani.getAniNo()%>');">삭제</button>
+        <br><br>
         </div>
         <br><br>
         
@@ -171,6 +176,12 @@ com.happy.admission.vo.AnimalPhoto" %>
                         <%=ani.getAniReason() %>
                     </td>
                 </tr>
+                <tr>
+                    <th>입소희망 일자</th>
+                    <td colspan="3">
+                        <%=af.getHopeDate() %>
+                    </td>
+                </tr>
             </table>
             <br>
         <%for(int i=0;i<ap.size();i++){ %>
@@ -180,9 +191,8 @@ com.happy.admission.vo.AnimalPhoto" %>
         	</div>
         	<%}
         }%>
+        
         </div>
-        <button onclick="location.assign('<%=request.getContextPath()%>/admission/modifyAd.do');">수정</button>
-        <button onclick="location.assign('<%=request.getContextPath()%>/admission/deleteAd.do');">삭제</button>
         <br><br><br><br>
         
         <div id="btnlistdiv">
