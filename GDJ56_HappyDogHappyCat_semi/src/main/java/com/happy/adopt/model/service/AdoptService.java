@@ -254,7 +254,7 @@ public class AdoptService {
 			int result2=0;
 			if(result>0) {
 				for(AdoptPhoto ap : fileList) {
-					result2+=dao.updateAptPhoto(conn,arb.getAdtBoardNo(),ap);
+					result2+=dao.insertAptPhoto(conn,arb.getAdtBoardNo(),ap);
 				}
 				if(result2==fileList.size())commit(conn);
 				else rollback(conn);
@@ -308,6 +308,24 @@ public class AdoptService {
 			close(conn);
 			return result;
 		}
+	 
+	 public int deleteReviewPhoto(int adtBoardNo){ 
+		 Connection conn=getConnection();
+		 int result =dao.adtReviewDeletePhoto(conn,adtBoardNo); 
+		 if(result>0) commit(conn);
+		 else rollback(conn); 
+		 close(conn); 
+		 return result; 
+	}
+	 
+	 public int deleteComment(int coNo){ 
+		 Connection conn=getConnection();
+		 int result =dao.deleteComment(conn,coNo); 
+		 if(result>0) commit(conn);
+		 else rollback(conn); 
+		 close(conn); 
+		 return result; 
+	}
 	 
 	 /*public int adoptReviewBoardUpdate(int adtBoardNo){ Connection
 	 * conn=getConnection(); int result

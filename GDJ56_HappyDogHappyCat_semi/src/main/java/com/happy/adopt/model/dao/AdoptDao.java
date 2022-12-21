@@ -661,22 +661,22 @@ public class AdoptDao {
 			return result;
 		}
 	 
-	 public int updateAptPhoto(Connection conn, int reviewBoardNo, AdoptPhoto ap) {
-			PreparedStatement pstmt=null;
-			int result=0;
-			try {
-				pstmt=conn.prepareStatement(sql.getProperty("updateAptPhoto"));
-				pstmt.setString(1, ap.getAdtPhotoOriName());
-				pstmt.setString(2, ap.getAdtPhotoRename());
-				pstmt.setInt(3, ap.getAdtPhotoNo());
-				result=pstmt.executeUpdate();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(pstmt);
-			}return result;
-			
-		}
+//	 public int updateAptPhoto(Connection conn, int reviewBoardNo, AdoptPhoto ap) {
+//			PreparedStatement pstmt=null;
+//			int result=0;
+//			try {
+//				pstmt=conn.prepareStatement(sql.getProperty("updateAptPhoto"));
+//				pstmt.setString(1, ap.getAdtPhotoOriName());
+//				pstmt.setString(2, ap.getAdtPhotoRename());
+//				pstmt.setInt(3, ap.getAdtPhotoNo());
+//				result=pstmt.executeUpdate();
+//			}catch(SQLException e) {
+//				e.printStackTrace();
+//			}finally {
+//				close(pstmt);
+//			}return result;
+//			
+//		}
 	 
 	 public List<AnimalPhoto> mainPhoto(Connection conn) {
 			PreparedStatement pstmt=null;
@@ -770,6 +770,23 @@ public class AdoptDao {
 			}
 			return count;
 		}
+		
+		public int deleteComment(Connection conn,int coNo) {
+			 PreparedStatement pstmt=null; 
+			 int result=0; 
+			 try {
+				 pstmt=conn.prepareStatement(sql.getProperty("deleteComment")); 
+				 pstmt.setInt(1, coNo);
+				 result=pstmt.executeUpdate(); 
+			 	}catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					close(pstmt);
+				}
+			 return result;
+		 }
+		
+		
 	 
 	public static AdtBorad getAdtBorad(ResultSet rs) throws SQLException{
         return AdtBorad.builder()
