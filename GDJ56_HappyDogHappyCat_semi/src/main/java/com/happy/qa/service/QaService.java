@@ -134,24 +134,19 @@ public class QaService {
 
 	public int deleteQa(int qaNo) {
 		Connection conn=getConnection();
-		
-		List<QaPhoto> qp=dao.selectQaPhoto(conn,qaNo);
-		List<QaComment> qc=dao.selectQaComment(conn,qaNo);
-		
+		int result1=dao.deleteQaPhoto(conn, qaNo);
 		int result2=0;
-		int result3=0;
-
-		if(qp.size()>0) {
-			int result=dao.deleteQaPhoto(conn,qaNo);
-			if(result>0) {
-				result2=dao.deleteQaComment(conn, qaNo);		
-			}if(result2>0) {
-				result3=dao.deleteQaForm(conn,qaNo);
+		
+		System.out.println("확인"+result1);
+		
+		if(result1>0||result1==0) {
+			result2=dao.deleteQaForm(conn,qaNo);
+			System.out.println("확인2"+result2);
 			}
 		
-		}
 		close(conn);
-		return result3;
+		return result2;
+		}
 
 	
 	
@@ -159,5 +154,5 @@ public class QaService {
 	
 	
 	
-	}
+	
 }

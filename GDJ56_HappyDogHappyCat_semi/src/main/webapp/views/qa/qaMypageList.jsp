@@ -10,7 +10,7 @@ com.happy.qa.vo.QaForm" %>
     	<div style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
       		<img src="<%=request.getContextPath() %>/images/admission/dog1.png" alt="" style="margin-right: auto;">
       		<div id="text">
-        		<h1 style="font-size: 30px; text-align: center;">Q&A</h1>
+        		<h1 style="font-size: 30px; text-align: center;">내가 작성한 Q&A</h1>
         		<p>궁금하신 점은 언제든지 문의주세요.<br>
           		<br>해피독해피캣은 전문상담가들을 통해<br>
           		<br>정확하고 신속한 답변을 드리겠습니다.
