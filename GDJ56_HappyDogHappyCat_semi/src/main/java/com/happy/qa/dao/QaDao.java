@@ -350,23 +350,33 @@ public class QaDao {
 	}
 
 	public int deleteQaPhoto(Connection conn, int qaNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteQaPhoto"));
+			pstmt.setInt(1,qaNo);
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
 	}
-
-	public int deleteQaComment(Connection conn, int qaNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public List<QaComment> selectQaComment(Connection conn, int qaNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	
 	public int deleteQaForm(Connection conn, int qaNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteQaForm"));
+			pstmt.setInt(1,qaNo);
+			result=pstmt.executeUpdate();	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
 	}
 
 	

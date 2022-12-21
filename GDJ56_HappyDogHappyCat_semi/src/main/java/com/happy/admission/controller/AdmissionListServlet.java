@@ -17,7 +17,7 @@ import com.happy.animal.model.vo.Animal;
 /**
  * Servlet implementation class AdmissionListServlet
  */
-@WebServlet("/admission/admissionList.do")
+@WebServlet(name="AdmissionList",urlPatterns="/admission/admissionList.do")
 public class AdmissionListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

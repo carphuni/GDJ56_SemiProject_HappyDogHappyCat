@@ -13,7 +13,7 @@ List<AdmissionForm> list=(List<AdmissionForm>)request.getAttribute("admissions")
             <img src="<%=request.getContextPath() %>/images/admission/dog1.png" alt="" style="margin-right: auto;">
             <div id="text" >
                 <br>
-                <h1 style="font-size: 30px; text-align: center;">입소신청</h1>
+                <h1 style="font-size: 30px; text-align: center;">내가 작성한 입소신청</h1>
                  <p style="font-size: 20px; text-align: center;">더이상 거짓된 보호소들에 속지 마세요.<br> 
                     <br>해피독해피캣은 꼼꼼한 입소절차를 통해<br>
                     <br>아이들을 안전하게 보호하겠습니다.<br>
