@@ -295,6 +295,20 @@ public class AdoptService {
 			
 	 }
 	 
+	 public List<AdtBorad> adoptAdminBoardList(int cPage, int numPerpage){
+			Connection conn=getConnection();
+			List<AdtBorad> adtBoardList =dao.adoptAdminBoardList(conn,cPage,numPerpage);
+			close(conn);	
+			return adtBoardList;
+		}
+	 
+	 public int adoptAdminBoardListCount(){
+			Connection conn=getConnection();
+			int result=dao.adoptAdminBoardListCount(conn);
+			close(conn);
+			return result;
+		}
+	 
 	 /*public int adoptReviewBoardUpdate(int adtBoardNo){ Connection
 	 * conn=getConnection(); int result
 	 * =dao.adoptReviewBoardUpdate(conn,adtBoardNo); if(result>0) commit(conn); else

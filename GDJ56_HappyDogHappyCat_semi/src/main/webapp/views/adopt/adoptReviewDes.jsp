@@ -29,7 +29,7 @@
         	</div>
         <%}%>
         <div id="title">
-            <h2>[<%=arb.getAdtTitle() %>]</h2><br>
+            <h2>[<%=arb.getAdtTitle()==null?"후기입니다.":arb.getAdtTitle() %>]</h2><br>
         </div>
         <br><br>
         

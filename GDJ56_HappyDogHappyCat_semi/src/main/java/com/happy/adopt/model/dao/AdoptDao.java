@@ -733,6 +733,44 @@ public class AdoptDao {
 		 return result;
 	 }
 	 
+	 public List<AdtBorad> adoptAdminBoardList(Connection conn,int cPage, int numPerpage){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<AdtBorad> adtBoardList=new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("adoptAdminBoardList"));
+				pstmt.setInt(1, (cPage-1)*numPerpage+1);
+				pstmt.setInt(2, cPage*numPerpage);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					adtBoardList.add(getAdtBorad(rs));
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}
+			return adtBoardList;
+		}
+		
+		public int adoptAdminBoardListCount(Connection conn) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int count=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("adoptAdminBoardListCount"));
+				rs=pstmt.executeQuery();
+				if(rs.next()) count=rs.getInt(1); 	
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return count;
+		}
+	 
 	public static AdtBorad getAdtBorad(ResultSet rs) throws SQLException{
         return AdtBorad.builder()
               .adtBoardNo(rs.getInt("ADT_BOARD_NO"))

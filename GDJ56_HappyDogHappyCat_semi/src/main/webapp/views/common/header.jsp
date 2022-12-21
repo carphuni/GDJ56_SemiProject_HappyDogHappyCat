@@ -182,6 +182,18 @@ pageEncoding="UTF-8"%>
             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/qa/qaWrite.do">문의하기</a></li>
           </ul>
         </li>
+        <%if(loginMember!=null&&loginMember.getMemberId().equals("admin")){ %>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            data-bs-toggle=""
+            href="<%=request.getContextPath() %>/admin/adoptformmain.do"
+            role="button"
+            aria-expanded="false"
+            >입양신청내역</a
+          >
+        </li>
+        <%} %>
       </ul>
     </nav>
   </body>
