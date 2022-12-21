@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-
+<%@  page import="java.util.List, java.util.Arrays,com.happy.adopt.model.vo.AdtReviewBorad,com.happy.adopt.model.vo.AdtReviewComment,
+				com.happy.adopt.model.vo.AdoptPhoto" %>
+    <% AdtReviewBorad arb = (AdtReviewBorad)request.getAttribute("aReviewb"); 
+    List<AdoptPhoto> adtPhoto =(List<AdoptPhoto>)request.getAttribute("aphoto");
+    %>
+    
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
@@ -23,7 +28,7 @@
 <section id="reviewwrite">
     <div class="board_wrap">
         <div class="board_title">
-            <strong>입양후기</strong>
+            <strong>입양후기수정</strong>
         </div>
         <form > <%-- action="<%=request.getContextPath() %>/adopt/adoptReviewwriteEnd.do" method="post" --%>
         <div class="board_write_wrap">
@@ -31,7 +36,7 @@
                 <div class="title">
                     <dl>
                         <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력" name="title" id="title1" required></dd>
+                        <dd><input type="text" placeholder="제목 입력" name="title" id="title1" value="<%=arb.getAdtTitle() %>" required></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -39,6 +44,9 @@
                         <dt>작성자</dt>
                         <dd><input type="text" value="<%=loginMember.getMemberId() %>" readonly></dd>
                         <input type="text" value= "<%=loginMember.getMemberNo() %>" name="memberNo" id="mNo" hidden>
+                        <input type="text" value= "<%=arb.getAdtBoardNo()%>" name="boardno" id="boardno_" hidden>
+                        
+                       
                     </dl>
                     <dl>
                     </dl>
@@ -58,12 +66,18 @@
                     <input type="file" id='btnAtt' name="photos" accept="image/*"  multiple/>
                 </div>
                 <div id='att_zone' 
-                data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
-              
-            </div>
+                data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'>
+                <%-- <%for(int i=0;i<adtPhoto.size();i++){ %>
+                <div style="display:inline-block;position:relative;width:150px;height:120px;margin:5px;border:1px solid #00f;z-index:1">
+                <img style="width:100%;height:100%;z-index:none" src="<%=request.getContextPath() %>/upload/adopt/<%=adtPhoto.get(i).getAdtPhotoRename() %>">
+             <input type="button" value="x" delfile="KakaoTalk_20221102_184515655.png" style="width:30px;height:30px;position:absolute;font-size:24px;right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00">
+           </div>
+           <%} %> --%>
+           </div>
+			</div>
             <div class="bt_wrap">
-                <input type="button" id="save_btn" class="on" value="등록">
-            	<input type="button" value="취소">
+                <input type="button" id="modify_btn" class="on" value="수정">
+            	<input type="button" value="삭제" >
             </div>
 </form>
        
@@ -270,17 +284,18 @@
       gap: 20px;
     }
      </style>
-
+</style>
 
 <script>
-
+	alert('사진을 새로 넣어주세요');
 	
 
-    $(document).ready(function() {
+	$(document).ready(function() {
     $('#summernote').summernote({
         tablesize :2,
         height:500
     });
+    $('#summernote').summernote('code','<%=arb.getAdtContents() %>');
     });
 
     
@@ -403,24 +418,28 @@
     }
     }
 	
-    $("#save_btn").click(e=>{
+    $("#modify_btn").click(e=>{
     	console.log("zz");
 		let form=new FormData();
 		const files=$("input[name=photos]")[0].files;
 		const title=$("#title1").val();
 		const content = $('#summernote').summernote('code');
 		let memberNo=$("#mNo").val(); 
+		const adtBoardNo=$("#boardno_").val();
 		console.log(memberNo);
+		
 		$.each(files,(i,v)=>{
 			form.append("upfile"+i,v);
 		});	
+		console.log("d");
 		
 		form.append("title",title);
 		form.append("memberNo",memberNo);
 		form.append("content",content);
+		form.append("adtBoardNo",adtBoardNo);
 		if(files.length!=0){
 			$.ajax({
-				url :"<%=request.getContextPath()%>/adopt/adoptReviewwriteEnd.do",
+				url :"<%=request.getContextPath()%>/adopt/adoptReviewUpdateEnd.do",
 				data : form,
 				type : "post",
 				contentType:false,
