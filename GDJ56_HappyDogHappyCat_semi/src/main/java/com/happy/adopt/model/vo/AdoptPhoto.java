@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class AdoptPhoto {
-
+	private int adtPhotoNo;
 	private int fileNo;
 	private int adtBoardNo;
 	private String adtPhotoOriName;

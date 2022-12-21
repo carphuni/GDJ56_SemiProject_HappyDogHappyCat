@@ -227,6 +227,42 @@ public class AdoptService {
 		 return result; 
 	}
 	 
+	 public List<AdtReviewBorad> adoptMyReviewAll(int cPage, int numPerpage,int memberNo){
+			Connection conn=getConnection();
+			List<AdtReviewBorad> rList =dao.adoptMyReviewAll(conn,cPage,numPerpage,memberNo);
+			close(conn);	
+			return rList;
+		}
+	 
+	 public int adoptMyReviewAllCount(int memberNo) {
+			Connection conn=getConnection();
+			int result=dao.adoptMyReviewAllCount(conn, memberNo);
+			close(conn);
+			return result;
+		}
+	 
+	 public AdtReviewBorad adoptReviewUpdateView(int adbReviewBoardNo){
+			Connection conn=getConnection();
+			AdtReviewBorad arb=dao.adoptReviewUpdateView(conn,adbReviewBoardNo);
+			close(conn);
+			return arb;
+		}
+	 
+	 public int adoptReviewUpdate(AdtReviewBorad arb, List<AdoptPhoto> fileList) {
+			Connection conn=getConnection();
+			int result=dao.adoptReviewUpdate(conn,arb);
+			int result2=0;
+			if(result>0) {
+				for(AdoptPhoto ap : fileList) {
+					result2+=dao.updateAptPhoto(conn,arb.getAdtBoardNo(),ap);
+				}
+				if(result2==fileList.size())commit(conn);
+				else rollback(conn);
+				close(conn);
+			}
+			return result2;
+		}
+	 
 	 /*public int adoptReviewBoardUpdate(int adtBoardNo){ Connection
 	 * conn=getConnection(); int result
 	 * =dao.adoptReviewBoardUpdate(conn,adtBoardNo); if(result>0) commit(conn); else
