@@ -46,7 +46,7 @@ com.happy.animal.model.vo.Animal
                                 <td><%=a.getAdmissionNo() %></td>
                                 <%if(loginMember.getMemberId().equals("admin")) {%>
                                 <th>           
-                                  <a href="<%=request.getContextPath()%>/admission/admissionView.do?admissionNo=<%=a.getAdmissionNo() %>">신청합니다:)🔒 </a>
+                                  <a href="<%=request.getContextPath()%>/admission/admissionView.do?admissionNo=<%=a.getAdmissionNo() %>&aniNo=<%=a.getAnimalNo()%>">신청합니다:)🔒 </a>
                                 </th>
                                 <%}else{ %>
                                 <th>           

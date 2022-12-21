@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.happy.animal.model.vo.Animal,
 java.util.List,
+com.happy.admission.vo.AdmissionForm,
 com.happy.admission.vo.AnimalPhoto" %>
 <%
 	Animal ani=(Animal)request.getAttribute("ani");
 	List<AnimalPhoto> ap=(List<AnimalPhoto>)request.getAttribute("aniPhoto");
+	AdmissionForm af=(AdmissionForm)request.getAttribute("admissionForm");
 %>
 <%@ include file="/views/common/header.jsp"%>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -121,15 +123,14 @@ com.happy.admission.vo.AnimalPhoto" %>
         </div>
         <br><br>
         
-        
         <%for(int i=0;i<ap.size();i++){ %>
+        <%if(ap.get(i).getMainPhoto()!=null){ %>    
         <div id="imgs">
-            <img src="<%=request.getContextPath() %>/upload/admission<%=ap.get(i).getMainPhoto() %>" alt="" width="350" height="250">
-        </div>    
-        <div id="imgs">
-            <img src="<%=request.getContextPath() %>/upload/admission<%=ap.get(i).getAdPhotoReName() %>" alt="" width="350" height="250">
+            <img src="<%=request.getContextPath() %>/upload/admission/<%=ap.get(i).getAdPhotoReName() %>" alt="" width="350" height="400">
         </div>
-        <%} %>
+       	 <%}
+        }%>
+        
         <br><br>
 
         <div id="description">
@@ -169,7 +170,21 @@ com.happy.admission.vo.AnimalPhoto" %>
                         <%=ani.getAniReason() %>
                     </td>
                 </tr>
+                <tr>
+                    <th>입소희망 일자</th>
+                    <td colspan="3">
+                        <%=af.getHopeDate() %>
+                    </td>
+                </tr>
             </table>
+            <br>
+        <%for(int i=0;i<ap.size();i++){ %>
+        	<%if(ap.get(i).getMainPhoto()==null){ %>    
+        	<div id="imgs">
+            	<img src="<%=request.getContextPath() %>/upload/admission/<%=ap.get(i).getAdPhotoReName() %>" alt="" width="350" height="400">
+        	</div>
+        	<%}
+        }%>
         </div>
         <br><br><br><br>
         

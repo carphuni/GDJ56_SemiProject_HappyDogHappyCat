@@ -302,10 +302,10 @@
     btnAtt.onchange = function(e){
       var files = e.target.files;
       var fileArr = Array.prototype.slice.call(files)
-      if(files.length<=3){
+      
       for(f of fileArr){
         imageLoader(f);
-      }}else{alert("사진첨부는 3개까지만 가능합니다.")}
+      } /* else{alert("사진첨부는 3개까지만 가능합니다.")} */
     }  
     
   
@@ -351,10 +351,13 @@
     }
     
     /*첨부된 파일이 있는 경우 checkbox와 함께 attZone에 추가할 div를 만들어 반환 */
-    makeDiv = function(img, file){
-        if(document.getElementsByTagName("img").length>3){
-        alert("사진첨부는 3개까지만 가능합니다.");
-      } 
+      makeDiv = function(img, file){
+    	 /*  console.log(document.getElementsByTagName("img").length);
+        if(document.getElementsByTagName("img").length>6){
+        	console.log(document.getElementsByTagName("img").length);
+         /* alert("사진첨부는 3개까지만 가능합니다."); */ 
+        
+    /*   }  */  
       
       var div = document.createElement('div')
       div.setAttribute('style', div_style)
@@ -404,6 +407,8 @@
     }
 	
     $("#save_btn").click(e=>{
+    	
+    	console.log("zz");
 		let form=new FormData();
 		const files=$("input[name=photos]")[0].files;
 		const title=$("#title1").val();

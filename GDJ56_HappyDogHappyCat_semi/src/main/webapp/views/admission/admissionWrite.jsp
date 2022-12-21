@@ -116,9 +116,9 @@ com.happy.animal.model.vo.Animal" %>
                 
                  <div class="file2">
                     <b>📸 사진첨부</b>
-                    <input type="file" name="upload2" id='btnAtt' accept="image/*"  multiple/>
+                    <input type="file" name="upload2" id='btnAtt2' accept="image/*"  multiple/>
                 </div>
-                <div id='att_zone' 
+                <div id='att_zone2' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'>
                 </div>
            
@@ -301,7 +301,7 @@ com.happy.animal.model.vo.Animal" %>
            border: 0;
            resize: vertical;
        }
-       #att_zone{
+       #att_zone,#att_zone2{
           width: 660px;
           min-height:150px;
           padding:10px;
@@ -334,7 +334,6 @@ com.happy.animal.model.vo.Animal" %>
 
 <script>
 	$("#enroll").click(e=>{
-		
 		let form=new FormData();
 		
 		const sumnail=$("input[name=upFile]")[0].files;
@@ -349,6 +348,8 @@ com.happy.animal.model.vo.Animal" %>
 		$.each(files,(i,v)=>{
 			form.append("upload2"+i,v);
 		});
+		
+		
 		var memberNo=$("input[name=memberNo]").val();
 		//동물정보 
 		var aniName= $("input[name=aniName]").val();
@@ -357,13 +358,13 @@ com.happy.animal.model.vo.Animal" %>
 		var aniSize=$("input[name=aniSize]").val();
 		var gender=$("input[name=gender]:checked").val();
 		var aniAge=$("input[name=aniAge]").val();
-		var vcnStat1=$("#vcn1").val();
-		console.log(vcnStat1);
-		var vcnStat2=$("#vcn2").val();
-		var vcnStat3=$("#vcn3").val();
-		var vcnStat4=$("#vcn4").val();
-		var vcnStat5=$("#vcn5").val();
-		var vcnStat6=$("#vcn6").val();
+		var vcnStat1=$("#vcn1:checked").val();
+		var vcnStat2=$("#vcn2:checked").val();
+		var vcnStat3=$("#vcn3:checked").val();
+		var vcnStat4=$("#vcn4:checked").val();
+		var vcnStat5=$("#vcn5:checked").val();
+		var vcnStat6=$("#vcn6:checked").val();
+		console.log($("#vcn1:checked").val());
 		var neu=$("input[name=neu]:checked").val();
 		var character=$("input[name=character]:checked").val();
 		var aniSpecial=$("input[name=aniSpecial]").val();
@@ -377,12 +378,26 @@ com.happy.animal.model.vo.Animal" %>
 		 form.append("aniSize",aniSize);
 		 form.append("gender",gender);
 		 form.append("aniAge",aniAge);
-		 form.append("vcnStat1",vcnStat1);
-		 form.append("vcnStat2",vcnStat2);
-		 form.append("vcnStat3",vcnStat3);
-		 form.append("vcnStat4",vcnStat4);
-		 form.append("vcnStat5",vcnStat5);
-		 form.append("vcnStat6",vcnStat6);
+		 
+		 if(vcnStat1=="Y"){
+			 form.append("vcnStat1",vcnStat1);
+		 }
+		 if(vcnStat2=="Y"){
+			 form.append("vcnStat2",vcnStat2);
+		 }
+		 if(vcnStat3=="Y"){
+			 form.append("vcnStat3",vcnStat3);
+		 }
+		 if(vcnStat4=="Y"){
+			 form.append("vcnStat4",vcnStat4);
+		 }
+		 if(vcnStat5=="Y"){
+			 form.append("vcnStat5",vcnStat5);
+		 }
+		 if(vcnStat6=="Y"){
+			 form.append("vcnStat6",vcnStat6);
+		 }
+		
 		 form.append("neu",neu);
 		 form.append("character",character);
 		 form.append("aniSpecial",aniSpecial);
@@ -390,32 +405,33 @@ com.happy.animal.model.vo.Animal" %>
 		 form.append("hopeDate",hopeDate);
 		 form.append("aniReason",aniReason);
 		 form.append("memberNo",memberNo);
+		 
 		 if(sumnail.length==1){
 			 if(files.length>=3){
-		 	$.ajax({
-			url :"<%=request.getContextPath()%>/admission/writeAdmissionEnd.do",
-			data : form,
-			type : "post",
-			contentType:false,
-			processData:false,
-			success : e=>{
-				/* console.log(e.msg);	 */
-				/* console.log(e.loc); */
-				var loc2 = e.loc;
-				alert(e.msg);
-				location.replace('<%=request.getContextPath()%>'+loc2);
-	//				alert("파일업로드 성공");
-	//				$("#upload2").val("");
-	//				},error:(r,m,e)=>{
-	//					alert("업로드 실패 다시시도하세요!");
-	//				}
-		 	}
-				 });}
-		 else{alert("사진을 3장 이상 첨부해주세요.")}
-		 
-	}else{
-		alert("대표이미지는 1장으로 설정해야 합니다.");
-	}
+			 	$.ajax({
+				url :"<%=request.getContextPath()%>/admission/writeAdmissionEnd.do",
+				data : form,
+				type : "post",
+				contentType:false,
+				processData:false,
+				success : e=>{
+					/* console.log(e.msg);	 */
+					/* console.log(e.loc); */
+					var loc2 = e.loc;
+					alert(e.msg);
+					 location.replace('<%=request.getContextPath()%>'+loc2);
+						alert("파일업로드 성공");
+						$("#upload2").val("");
+						},error:(r,m,e)=>{
+							alert("업로드 실패 다시시도하세요!");
+						}
+			 	})
+			}else{
+				alert("사진을 3장 이상 첨부해주세요.");
+			}
+		}else{
+			alert("대표이미지는 1장으로 설정해야 합니다.");
+		}
 	});
 		
 	
@@ -448,11 +464,18 @@ com.happy.animal.model.vo.Animal" %>
     		      var fileArr = Array.prototype.slice.call(files)
     		      if(files.length<=3){
     		      for(f of fileArr){
-    		        imageLoader(f);
+    		        imageLoader(f,document.getElementById("att_zone"));
     		      }}else{alert("사진첨부는 3개까지만 가능합니다.")}
     		    }  
     		    
-    		  
+    		    btnAtt2.onchange=function(e){
+    		      var files = e.target.files;
+    		      var fileArr = Array.prototype.slice.call(files)
+    		      if(files.length<=3){
+    		      for(f of fileArr){
+    		        imageLoader(f, document.getElementById("att_zone2"));
+    		      }}else{alert("사진첨부는 3개까지만 가능합니다.")}
+    		    } 
     		    // 탐색기에서 드래그앤 드롭 사용
     		    attZone.addEventListener('dragenter', function(e){      
     		      e.preventDefault();
@@ -479,14 +502,14 @@ com.happy.animal.model.vo.Animal" %>
     		  
     		    
     		    /*첨부된 이미리즐을 배열에 넣고 미리보기 */
-    		    imageLoader = function(file){
+    		    imageLoader = function(file, el){
     		      sel_files.push(file);
     		      var reader = new FileReader();
     		      reader.onload = function(ee){
     		        let img = document.createElement('img')
     		        img.setAttribute('style', img_style)
     		        img.src = ee.target.result;
-    		        attZone.appendChild(makeDiv(img, file));
+    		        el.appendChild(makeDiv(img, file));
     		        
     		      }
     		      

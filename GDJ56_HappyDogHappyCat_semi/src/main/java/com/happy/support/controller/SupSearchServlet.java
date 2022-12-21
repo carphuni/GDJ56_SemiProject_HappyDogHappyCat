@@ -36,7 +36,7 @@ public class SupSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-String keyword=request.getParameter("search");
+		String keyword=request.getParameter("search");
 		
 		int cPage;
 		try {

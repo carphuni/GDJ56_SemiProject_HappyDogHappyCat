@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.happy.admission.service.AdmissionService;
+import com.happy.admission.vo.AnimalPhoto;
 import com.happy.adopt.model.service.AdoptService;
 import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
@@ -78,7 +80,11 @@ public class AdoptDesServlet extends HttpServlet {
 			}
 			
 			Animal ani = new AdoptService().adoptDesAni(aniNo,readflag);
+			
+			List<AnimalPhoto> aniPhoto=new AdmissionService().selectAnimalPhoto(aniNo);
+			//System.out.println(aniPhoto);
 		
+		request.setAttribute("aniPhoto", aniPhoto);
 		request.setAttribute("ani", ani);
 		request.getRequestDispatcher("/views/adopt/adoptDes.jsp").forward(request, response);
 	}

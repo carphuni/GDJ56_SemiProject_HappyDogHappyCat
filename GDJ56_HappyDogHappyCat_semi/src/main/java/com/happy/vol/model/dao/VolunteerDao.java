@@ -86,7 +86,7 @@ public class VolunteerDao {
 			if(rs.next()) {
 				vp=VolPhoto.builder().fileNo(rs.getInt("FILE_NO"))
 					.vntBoardNo(rs.getInt("VNT_BOARD_NO"))
-					.mainPhoto(rs.getString("VNT_BOARD_NO"))
+					.mainPhoto(rs.getString("MAIN_PHOTO"))
 					.vntPhotoOriName(rs.getString("VNT_PHOTO_ORINAME"))
 					.vntPhotoRename(rs.getString("VNT_PHOTO_RENAME")).build();
 			}
@@ -227,7 +227,30 @@ public class VolunteerDao {
 		
 	}	
 		
+	public List<Volunteer> myPageVolunteerList(Connection conn, int cPage, int numPerpage,int agencyNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Volunteer> vList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("myPageVolunteerList"));
+			pstmt.setInt(1, agencyNo);
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				vList.add(getVolunteer(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return vList;
+	}
 	
+		
 	
 	public List<Volunteer> volSearch(Connection conn,int cPage, int numPerpage,String keyword){
 		PreparedStatement pstmt=null;
@@ -253,6 +276,27 @@ public class VolunteerDao {
 		return vList;
 	}
 	
+	
+	public int myPageVolunteerCount(Connection conn, int agencyNo) {
+	
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("myPageVolunteerCount"));
+			pstmt.setInt(1, agencyNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+	
+		
+	}
 	
 	public int volSearchCount(Connection conn,String keyword) {
 		PreparedStatement pstmt=null;
@@ -575,4 +619,7 @@ public class VolunteerDao {
 		}return result;
 		
 	}
+	
+	
+	
 }

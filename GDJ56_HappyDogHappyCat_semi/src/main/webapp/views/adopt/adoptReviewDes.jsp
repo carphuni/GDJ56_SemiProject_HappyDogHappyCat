@@ -22,6 +22,12 @@
             <img src="<%=request.getContextPath() %>/images/adopt/S.jfif" alt="" style="margin-left: auto;">
         </div>
         <br><br>
+        <%if(loginMember!=null&&(loginMember.getMemberNo()==arb.getMemberNo()||loginMember.getMemberId().equals("admin"))){%>
+        	<div style="float:right; width:200px;">
+	        	<button onclick="location.assign('<%=request.getContextPath() %>/member/mypage/adoptReviewUpdate.do?adbReviewBoardNo=<%=arb.getAdtBoardNo()%>');">수정</button>
+	        	<button onclick="location.assign('<%=request.getContextPath() %>/member/mypage/adoptReviewDelete.do?adbReviewBoardNo=<%=arb.getAdtBoardNo()%>');">삭제</button>
+        	</div>
+        <%}%>
         <div id="title">
             <h2>[<%=arb.getAdtTitle() %>]</h2><br>
         </div>
@@ -47,6 +53,7 @@
             <%-- <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
             <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br> --%>
         </div>
+        
         <div id="checklist">
             <div id="detailTitle"><br>
             </div>

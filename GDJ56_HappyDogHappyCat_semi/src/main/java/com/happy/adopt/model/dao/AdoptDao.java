@@ -1,6 +1,7 @@
 package com.happy.adopt.model.dao;
 
 import static com.happy.common.JDBCTemplate.close;
+import static com.happy.common.JDBCTemplate.getConnection;
 
 import java.io.FileReader;
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.happy.admission.vo.AnimalPhoto;
 import com.happy.adopt.model.vo.AdoptPhoto;
 import com.happy.adopt.model.vo.AdtBorad;
 import com.happy.adopt.model.vo.AdtReviewBorad;
@@ -543,13 +545,194 @@ public class AdoptDao {
 		return ab;
 	}
 	
-	/*
-	 * public int adoptBoardUpdate(Connection conn,int adtBoardNo) {
-	 * PreparedStatement pstmt=null; int result=0; try {
-	 * pstmt=conn.prepareStatement(sql.getProperty("")); rs=pstmt.executeUpdate(); }
-	 * }
-	 */
 	
+	 public int adoptBoardUpdate(Connection conn,AdtBorad ab) {
+		 PreparedStatement pstmt=null; 
+		 int result=0; 
+		 try {
+			 pstmt=conn.prepareStatement(sql.getProperty("adoptBoardUpdate")); 
+			 pstmt.setString(1, ab.getAdtContents());
+			 pstmt.setString(2, ab.getAdtRoommate());
+			 pstmt.setString(3, ab.getAdtExper());
+			 pstmt.setString(4, ab.getAdtMoney());
+			 pstmt.setString(5, ab.getAdtLive());
+			 pstmt.setString(6, ab.getAdtAllergy());
+			 pstmt.setString(7, ab.getAdtVisitDate());
+			 pstmt.setInt(8, ab.getAdtBoardNo());
+			 result=pstmt.executeUpdate(); 
+		 	}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		 return result;
+	 }
+	 
+	 public int adoptBoardDelete(Connection conn,int adtBoardNo) {
+		 PreparedStatement pstmt=null; 
+		 int result=0; 
+		 try {
+			 pstmt=conn.prepareStatement(sql.getProperty("adoptBoardDelete")); 
+			 pstmt.setInt(1, adtBoardNo);
+			 result=pstmt.executeUpdate(); 
+		 	}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		 return result;
+	 }
+	 
+	 public List<AdtReviewBorad> adoptMyReviewAll(Connection conn,int cPage, int numPerpage,int memberNo){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<AdtReviewBorad> rList=new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("adoptMyReviewAll"));
+				pstmt.setInt(1, memberNo);
+				pstmt.setInt(2, (cPage-1)*numPerpage+1);
+				pstmt.setInt(3, cPage*numPerpage);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					rList.add(getAdtReviewBorad(rs));
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}
+			return rList;
+		}
+	 
+	 public int adoptMyReviewAllCount(Connection conn,int memberNo) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int count=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("adoptMyReviewAllCount"));
+				pstmt.setInt(1, memberNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) count=rs.getInt(1); 
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return count;
+		}
+	 
+	 public AdtReviewBorad adoptReviewUpdateView(Connection conn,int adbReviewBoardNo){
+		 	PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			AdtReviewBorad arb=null;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("adoptReviewUpdateView"));
+				pstmt.setInt(1, adbReviewBoardNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					arb=getAdtReviewBorad(rs);
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}
+			return arb;
+		}
+	 
+	 public int adoptReviewUpdate(Connection conn,AdtReviewBorad arb) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("adoptReviewUpdate"));		
+				pstmt.setString(1, arb.getAdtTitle());
+				pstmt.setString(2, arb.getAdtContents());	
+				pstmt.setInt(3, arb.getAdtBoardNo());
+				result=pstmt.executeUpdate();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			return result;
+		}
+	 
+	 public int updateAptPhoto(Connection conn, int reviewBoardNo, AdoptPhoto ap) {
+			PreparedStatement pstmt=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("updateAptPhoto"));
+				pstmt.setString(1, ap.getAdtPhotoOriName());
+				pstmt.setString(2, ap.getAdtPhotoRename());
+				pstmt.setInt(3, ap.getAdtPhotoNo());
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}return result;
+			
+		}
+	 
+	 public List<AnimalPhoto> mainPhoto(Connection conn) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<AnimalPhoto> ap= new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("mainPhoto"));
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					AnimalPhoto a=AnimalPhoto.builder()
+						.photoNo(rs.getInt("ani_photo_no"))
+						.adPhotoOriName(rs.getString("ani_photo_oriname"))
+						.adPhotoReName(rs.getString("ani_photo_rename"))
+						.aniNo(rs.getInt("ani_no"))
+						.mainPhoto(rs.getString("main_photo"))
+						.build();		
+						ap.add(a);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return ap;
+		}
+	 
+	 public int adtReviewDeletePhoto(Connection conn,int adbReviewBoardNo) {
+		 PreparedStatement pstmt=null; 
+		 int result=0; 
+		 try {
+			 pstmt=conn.prepareStatement(sql.getProperty("adtReviewDeletePhoto")); 
+			 pstmt.setInt(1, adbReviewBoardNo);
+			 result=pstmt.executeUpdate(); 
+		 	}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		 return result;
+	 }
+	 
+	 public int adtReviewDeleteContent(Connection conn,int adbReviewBoardNo) {
+		 PreparedStatement pstmt=null; 
+		 int result=0; 
+		 try {
+			 pstmt=conn.prepareStatement(sql.getProperty("adtReviewDeleteContent")); 
+			 pstmt.setInt(1, adbReviewBoardNo);
+			 result=pstmt.executeUpdate(); 
+		 	}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		 return result;
+	 }
+	 
 	public static AdtBorad getAdtBorad(ResultSet rs) throws SQLException{
         return AdtBorad.builder()
               .adtBoardNo(rs.getInt("ADT_BOARD_NO"))

@@ -29,7 +29,10 @@
  
  	
         <div id="post" style="flex-wrap:wrap; width:80%;">
-       
+       <%if(list.isEmpty()){ %>
+	       <tr>
+	      <td colspan="5">조회된 게시물이 없습니다.</td>
+     <%}else{%>
        <% for(int i=0;i<list.size();i++){
     	  	int amount = 0; 
     	   %> 
@@ -54,7 +57,7 @@
                 </div>
             </div>
             
-            <%} %> 
+            <%}} %> 
           </div>
           <br><br>
           
