@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.happy.adopt.model.vo.AdtReviewComment;
+import com.happy.support.model.vo.Support;
 import com.happy.vol.model.vo.Volunteer;
 import com.happy.volreview.model.vo.VolComment;
 import com.happy.volreview.model.vo.VolReview;
@@ -210,6 +211,9 @@ public class VolReviewDao {
 	}
 	
 	
+	
+	
+	
 	public int insertComment(Connection conn, String reply, String memberId, int reviewBoardNo) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -271,6 +275,56 @@ public class VolReviewDao {
 		}
 		return vList;
 	}
+	
+	public List<VolReview> myPageVolReviewList(Connection conn,int cPage, int numPerpage,	int memberNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<VolReview> sList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("myPageVolReviewList"));
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, (cPage-1)*numPerpage+1);
+			pstmt.setInt(3, cPage*numPerpage);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				sList.add(getVolReview2(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return sList;
+	}
+	
+	public int myPageVolReviewCount(Connection conn, int memberNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int count=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("myPageVolReviewCount"));
+			pstmt.setInt(1, memberNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) count=rs.getInt(1); 	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rs);
+		}
+		return count;
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 	
 	public int volReviewSearchCount(Connection conn,String keyword) {

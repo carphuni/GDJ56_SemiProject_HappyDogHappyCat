@@ -62,6 +62,24 @@ public class SupportService {
 		return s;
 	}
 	
+	public List<Support> myPageSupportList(int cPage, int numPerpage, int agencyNo){
+		Connection conn=getConnection();
+		List<Support> list = sd.myPageSupportList(conn, cPage, numPerpage,agencyNo);
+		close(conn);
+		return list;
+
+	}
+	
+	public int myPageSupportCount(int agencyNo) {
+		Connection conn=getConnection();
+		int result=sd.myPageSupportCount(conn, agencyNo);
+		close(conn);
+		return result;
+	}
+	
+	
+	
+	
 	public SupPhoto selectSupPhoto(int supBoardNo) {
 		Connection conn = getConnection();
 		SupPhoto sp = sd.selectSupPhoto(conn, supBoardNo);
@@ -178,6 +196,9 @@ public class SupportService {
 		close(conn);
 		return sList;
 	}
+	
+
+	
 	
 	public int supSearchCount(String keyword) {
 		Connection conn=getConnection();

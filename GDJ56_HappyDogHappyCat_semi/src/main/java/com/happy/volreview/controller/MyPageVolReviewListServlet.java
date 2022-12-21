@@ -13,16 +13,16 @@ import com.happy.volreview.model.service.VolReviewService;
 import com.happy.volreview.model.vo.VolReview;
 
 /**
- * Servlet implementation class VolReviewSearchServlet
+ * Servlet implementation class MyPageVolReviewListServlet
  */
-@WebServlet("/volreviewsearch.do")
-public class VolReviewSearchServlet extends HttpServlet {
+@WebServlet("/member/mypage/volreviewList.do")
+public class MyPageVolReviewListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VolReviewSearchServlet() {
+    public MyPageVolReviewListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,8 +31,8 @@ public class VolReviewSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String keyword=request.getParameter("search");
-		
+	
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		int cPage;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
@@ -41,9 +41,10 @@ public class VolReviewSearchServlet extends HttpServlet {
 		} 
 		
 		int numPerpage=5;
-		List<VolReview> list = new VolReviewService().volReviewSearch(cPage, numPerpage,keyword);
+		List<VolReview> list = new VolReviewService().myPageVolReviewList(cPage, numPerpage,memberNo);
 		String pageBar="";
-		int totalData = new VolReviewService().volReviewSearchCount(keyword);
+		System.out.println(list);
+		int totalData = new VolReviewService().myPageVolReviewCount(memberNo);
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		
 		int pageBarSize = 10;
@@ -74,7 +75,11 @@ public class VolReviewSearchServlet extends HttpServlet {
 		request.setAttribute("volReview", list);
 		request.setAttribute("pageBar", pageBar);
 		request.getRequestDispatcher("/views/volreview/reviewList.jsp").forward(request, response);
-	
+		
+		
+		
+		
+		
 	}
 
 	/**
