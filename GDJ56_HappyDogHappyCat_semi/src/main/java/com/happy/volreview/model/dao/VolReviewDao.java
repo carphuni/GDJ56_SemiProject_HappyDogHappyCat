@@ -265,7 +265,7 @@ public class VolReviewDao {
 			
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				vList.add(getVolReview2(rs));
+				vList.add(getVolReview(rs));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -288,7 +288,7 @@ public class VolReviewDao {
 			
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				sList.add(getVolReview2(rs));
+				sList.add(getVolReview(rs));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

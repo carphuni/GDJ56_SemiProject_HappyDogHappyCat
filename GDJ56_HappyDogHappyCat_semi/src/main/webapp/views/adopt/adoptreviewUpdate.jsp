@@ -77,7 +77,7 @@
 			</div>
             <div class="bt_wrap">
                 <input type="button" id="modify_btn" class="on" value="수정">
-            	<input type="button" value="삭제" >
+            	<!-- <input type="button" onclick="location.assign()" value="삭제" > -->
             </div>
 </form>
        

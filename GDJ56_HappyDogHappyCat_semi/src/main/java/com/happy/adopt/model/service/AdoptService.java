@@ -8,6 +8,7 @@ import static com.happy.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import com.happy.admission.vo.AnimalPhoto;
 import com.happy.adopt.model.dao.AdoptDao;
 import com.happy.adopt.model.vo.AdoptPhoto;
 import com.happy.adopt.model.vo.AdtBorad;
@@ -15,7 +16,6 @@ import com.happy.adopt.model.vo.AdtReviewBorad;
 import com.happy.adopt.model.vo.AdtReviewComment;
 import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
-import com.happy.vol.model.vo.VolPhoto;
 
 public class AdoptService {
 	
@@ -248,7 +248,7 @@ public class AdoptService {
 			return arb;
 		}
 	 
-	 public int adoptReviewUpdate(AdtReviewBorad arb, List<AdoptPhoto> fileList) {
+	 public int adoptReviewUpdate(AdtReviewBorad arb, List<AdoptPhoto> fileList) {//x
 			Connection conn=getConnection();
 			int result=dao.adoptReviewUpdate(conn,arb);
 			int result2=0;
@@ -262,6 +262,38 @@ public class AdoptService {
 			}
 			return result2;
 		}
+	 
+	 public List<AnimalPhoto> mainPhoto() {
+			Connection conn = getConnection();
+			List<AnimalPhoto> mainphoto = dao.mainPhoto(conn);
+			close(conn);
+			return mainphoto;
+		}
+	 
+	 public int adtReviewDelete(int adbReviewBoardNo) {
+		 Connection conn=getConnection();
+		 List<AdoptPhoto> ap=dao.adtPhotoAll(conn,adbReviewBoardNo);
+		 int result2=0;
+		 if(ap.size()>0) {
+			 int result=dao.adtReviewDeletePhoto(conn,adbReviewBoardNo);
+			 if(result>0) {
+					result2=dao.adtReviewDeleteContent(conn,adbReviewBoardNo);	
+				}
+			 
+		 }else {
+				result2=dao.adtReviewDeleteContent(conn,adbReviewBoardNo);
+			}
+		 
+		 if(result2>0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+					
+			}
+		 close(conn);
+		 return result2;
+			
+	 }
 	 
 	 /*public int adoptReviewBoardUpdate(int adtBoardNo){ Connection
 	 * conn=getConnection(); int result

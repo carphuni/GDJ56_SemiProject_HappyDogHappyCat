@@ -38,11 +38,15 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
     <!-- Card -->
     <article id="card">
       <h1>유기 동물 제보</h1>
-      <div id="card-button">
-        <button class="btn btn-dh">전체</button>
-        <button class="btn btn-dh">보호</button>
-        <button class="btn btn-dh">목격</button>
-        <button class="btn btn-dh">실종</button>
+      <div id="button-container">
+	      <div>
+	        <button class="btn btn-dh">전체</button>
+	        <button class="btn btn-dh">보호</button>
+	        <button class="btn btn-dh">목격</button>
+	        <button class="btn btn-dh">실종</button>
+	        <button class="btn btn-dh">완료</button>
+	      </div>
+	        <button class="btn btn-dh" onclick="location.assign('<%=request.getContextPath()%>/tip/tipWrite.do');">글쓰기</button>
       </div>
       <div id="cardRow">
         <div id="card-content" class="card">
@@ -264,6 +268,8 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
         </div>
       </div>
     </article>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+
   </div>
 </section>
 <%@ include file="/views/common/footer.jsp" %>
