@@ -48,6 +48,7 @@
                           <%if(rList.isEmpty()){%>
                         	  <tr>
 	                              <td colspan="5">조회된 후기가 없습니다.</td>
+	                              </tr>
                           <%}else{ %>
                           	<% for(int i=0;i<rList.size();i++){ %>
                           		<tr>

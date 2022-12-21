@@ -18,16 +18,16 @@ import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.Agency;
 
 /**
- * Servlet implementation class SupSearchServlet
+ * Servlet implementation class MyPageSupListServlet
  */
-@WebServlet("/supsearch.do")
-public class SupSearchServlet extends HttpServlet {
+@WebServlet("/member/mypage/supboardList.do")
+public class MyPageSupListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SupSearchServlet() {
+    public MyPageSupListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,8 +36,8 @@ public class SupSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String keyword=request.getParameter("search");
 		
+		int agencyNo = Integer.parseInt(request.getParameter("agencyNo"));
 		int cPage;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
@@ -47,15 +47,15 @@ public class SupSearchServlet extends HttpServlet {
 		
 		int numPerpage=8;
 		List<Agency> agency = new VolunteerService().selectAgency3();
-		List<Support> list = new SupportService().supSearch(cPage, numPerpage,keyword);
+		List<Support> list = new SupportService().myPageSupportList(cPage, numPerpage,agencyNo);
 		List<Agency> list2=new ArrayList();
 		List<SupPhoto> list3 = new ArrayList();
 		List<List<SupComment>> comments = new ArrayList<>();
 		SupPhoto sp = null;
 		for(int i=0;i<list.size();i++) {
-			int agencyNo = list.get(i).getSupAgencyNo();
+			int agencyNo2 = list.get(i).getSupAgencyNo();
 			int boardNo=list.get(i).getSupBoardNo();
-			Agency a = new VolunteerService().selectAgency(agencyNo);
+			Agency a = new VolunteerService().selectAgency(agencyNo2);
 			List<SupComment > sc = new SupportService().selectSupportComment(boardNo);
 			sp = new SupportService().selectSupPhoto(boardNo);
 			list2.add(a);
@@ -63,7 +63,7 @@ public class SupSearchServlet extends HttpServlet {
 			comments.add(sc);
 		}
 		String pageBar="";
-		int totalData = new SupportService().supSearchCount(keyword);
+		int totalData = new SupportService().myPageSupportCount(agencyNo);
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		
 		int pageBarSize = 10;
@@ -80,7 +80,7 @@ public class SupSearchServlet extends HttpServlet {
 			if(pageNo==cPage) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>"+pageNo+"</a>";
+				pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"&&agencyNo="+agencyNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
@@ -99,6 +99,11 @@ public class SupSearchServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/views/support/supList.jsp").forward(request, response);
 	}
+		
+		
+		
+		
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

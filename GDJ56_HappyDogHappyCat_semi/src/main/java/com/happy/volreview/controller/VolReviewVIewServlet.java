@@ -1,4 +1,4 @@
-package com.happy.qa.controller;
+package com.happy.volreview.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,22 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.qa.service.QaService;
-import com.happy.qa.vo.QaComment;
-import com.happy.qa.vo.QaForm;
-import com.happy.qa.vo.QaPhoto;
+import com.happy.volreview.model.service.VolReviewService;
+import com.happy.volreview.model.vo.VolComment;
+import com.happy.volreview.model.vo.VolReview;
+import com.happy.volreview.model.vo.VolReviewPhoto;
 
 /**
- * Servlet implementation class QaMyPageViewServlet
+ * Servlet implementation class VolReviewVIewServlet
  */
-@WebServlet("/qa/qaMyPageView.do")
-public class QaMyPageViewServlet extends HttpServlet {
+@WebServlet("/volreviewview.do")
+public class VolReviewVIewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QaMyPageViewServlet() {
+    public VolReviewVIewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +34,18 @@ public class QaMyPageViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int QaNo=Integer.parseInt(request.getParameter("qaBoardNo"));
 		
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		Cookie[] cookies=request.getCookies();
-		String QaRead="";
+		String reviewRead="";
 		boolean readflag=false;
 		if(cookies!=null) {
 			for(Cookie c : cookies) {
-				String name=c.getName();//key값
-				String value=c.getValue();//value값
-				if(name.equals("QaRead")) {
-					QaRead=value;
-					if(value.contains("|"+QaNo+"|")) {
+				String name=c.getName();
+				String value=c.getValue(); 
+				if(name.equals("reviewRead")) {
+					reviewRead=value;
+					if(value.contains("|"+boardNo+"|")) {
 						readflag=true;
 					}
 					break;
@@ -54,24 +54,19 @@ public class QaMyPageViewServlet extends HttpServlet {
 		}
 		
 		if(!readflag) {
-			//쿠키에 현재 게시글번호 저장
-			Cookie c=new Cookie("QaRead",(QaRead+"|"+QaNo+"|"));
+			Cookie c=new Cookie("reviewRead",(reviewRead+"|"+boardNo+"|"));
 			c.setMaxAge(60*60*24);
 			response.addCookie(c);
 		}
 		
-		QaForm qa=new QaService().QaView(QaNo,readflag);
+		VolReview vr = new VolReviewService().selectVolReview(boardNo, readflag);
+		List<VolReviewPhoto> reviewPhoto = new VolReviewService().selectVolReviewPhoto2(boardNo);
+		List<VolComment> comments = new VolReviewService().selectCommentList(boardNo);
+		request.setAttribute("reviewPhoto", reviewPhoto);
+		request.setAttribute("vr", vr);
+		request.setAttribute("comments", comments);
 		
-		List<QaComment> list =new QaService().selectCommentList(QaNo);
-		
-		List<QaPhoto> qp=new QaService().selectQaPhoto(QaNo);
-		
-		request.setAttribute("qas",qa);
-		request.setAttribute("comments", list);
-		request.setAttribute("qaPhoto", qp);
-		
-		request.getRequestDispatcher("/views/qa/qaMypageView.jsp")
-		.forward(request, response);
+		request.getRequestDispatcher("/views/volreview/reviewView.jsp").forward(request, response);
 	}
 
 	/**

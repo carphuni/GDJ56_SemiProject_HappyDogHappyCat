@@ -1,4 +1,4 @@
-package com.happy.qa.controller;
+package com.happy.volreview.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.qa.service.QaService;
+import com.happy.volreview.model.service.VolReviewService;
 
 /**
- * Servlet implementation class QaDeleteServlet
+ * Servlet implementation class VolReviewCommentServlet
  */
-@WebServlet("/qa/deleteQa.do")
-public class QaDeleteServlet extends HttpServlet {
+@WebServlet("/volreviewcomment.do")
+public class VolReviewCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QaDeleteServlet() {
+    public VolReviewCommentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,29 +28,20 @@ public class QaDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int QaNo=Integer.parseInt(request.getParameter("qaBoardNo"));
+		String reply= request.getParameter("reply");
+		String memberId= request.getParameter("memberId");
+		int boardNo= Integer.parseInt(request.getParameter("boardNo"));
 		
-		int result=new QaService().deleteQa(QaNo);
+		int result= new VolReviewService().insertComment(reply, memberId, boardNo);
 		
-		System.out.println("삭제결과"+result);
-		
-		String msg="",loc="";
-		if(result==0) {
-			
-			msg="Qa 삭제 실패,다시 등록해주세요!";
-			loc="/qa/deleteQa.do";
+		String msg="";
+		if(result>0) {
+			msg="성공";
 		}else {
-			//동물저장 성공시
-			msg="Qa 삭제 완료!:)";
-			loc="/qa/myPageList.do";
+			msg="실패";
 		}
-	      request.setAttribute("msg", msg);
-	      request.setAttribute("loc", loc);
-	      request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
-		
-		
-		
+		response.getWriter().append(msg);
 		
 	}
 

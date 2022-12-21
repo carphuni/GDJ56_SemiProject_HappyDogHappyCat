@@ -1,4 +1,4 @@
-package com.happy.qa.controller;
+package com.happy.volreview.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.qa.service.QaService;
+import com.happy.vol.model.service.VolunteerService;
+import com.happy.volreview.model.service.VolReviewService;
 
 /**
- * Servlet implementation class QaDeleteServlet
+ * Servlet implementation class DeleteVolReviewServlet
  */
-@WebServlet("/qa/deleteQa.do")
-public class QaDeleteServlet extends HttpServlet {
+@WebServlet("/deletevolreview.do")
+public class DeleteVolReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QaDeleteServlet() {
+    public DeleteVolReviewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,30 +29,11 @@ public class QaDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int QaNo=Integer.parseInt(request.getParameter("qaBoardNo"));
-		
-		int result=new QaService().deleteQa(QaNo);
-		
-		System.out.println("삭제결과"+result);
-		
-		String msg="",loc="";
-		if(result==0) {
-			
-			msg="Qa 삭제 실패,다시 등록해주세요!";
-			loc="/qa/deleteQa.do";
-		}else {
-			//동물저장 성공시
-			msg="Qa 삭제 완료!:)";
-			loc="/qa/myPageList.do";
-		}
-	      request.setAttribute("msg", msg);
-	      request.setAttribute("loc", loc);
-	      request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
-		
-		
-		
-		
-		
+		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		int result = new VolReviewService().deleteVolReview(boardNo);
+		request.setAttribute("msg", result>0?"게시물이 삭제되었습니다":"삭제 실패");
+		request.setAttribute("loc", "/reviewlist.do");
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**

@@ -107,6 +107,46 @@ public class SupportDao {
 			}return list;
 		}
 
+		public List<Support> myPageSupportList(Connection conn, int cPage, int numPerpage, int agencyNo){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<Support> list=new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("myPageSupportList"));
+				pstmt.setInt(1, agencyNo);
+				pstmt.setInt(2, (cPage-1)*numPerpage+1);
+				pstmt.setInt(3, cPage*numPerpage);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					list.add(getSupport(rs));
+				}	
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return list;
+		}
+		
+		
+		public int myPageSupportCount(Connection conn, int agencyNo) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int result=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("myPageSupportCount"));
+				pstmt.setInt(1, agencyNo);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					result=rs.getInt(1);}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return result;
+			
+		}
 		
 		
 		public int selectSupportCount(Connection conn) {
@@ -404,6 +444,9 @@ public class SupportDao {
 			
 		}
 		
+	
+		
+		
 		
 		public List<Support> supSearch(Connection conn,int cPage, int numPerpage,String keyword){
 			PreparedStatement pstmt=null;
@@ -428,6 +471,9 @@ public class SupportDao {
 			}
 			return sList;
 		}
+		
+		
+
 		
 		public int supSearchCount(Connection conn,String keyword) {
 			PreparedStatement pstmt=null;

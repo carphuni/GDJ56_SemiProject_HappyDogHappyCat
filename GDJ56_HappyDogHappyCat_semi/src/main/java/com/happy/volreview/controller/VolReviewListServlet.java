@@ -1,7 +1,6 @@
-package com.happy.support.controller;
+package com.happy.volreview.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,24 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.support.model.service.SupportService;
-import com.happy.support.model.vo.SupComment;
-import com.happy.support.model.vo.SupPhoto;
-import com.happy.support.model.vo.Support;
 import com.happy.vol.model.service.VolunteerService;
-import com.happy.vol.model.vo.Agency;
+import com.happy.volreview.model.service.VolReviewService;
+import com.happy.volreview.model.vo.VolReview;
 
 /**
- * Servlet implementation class SupSearchServlet
+ * Servlet implementation class VolReviewListServlet
  */
-@WebServlet("/supsearch.do")
-public class SupSearchServlet extends HttpServlet {
+@WebServlet("/reviewlist.do")
+public class VolReviewListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SupSearchServlet() {
+    public VolReviewListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,34 +32,20 @@ public class SupSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String keyword=request.getParameter("search");
-		
 		int cPage;
+		int numPerpage;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
-		}catch (Exception e) {
+		}catch(NumberFormatException e) {
 			cPage=1;
-		} 
-		
-		int numPerpage=8;
-		List<Agency> agency = new VolunteerService().selectAgency3();
-		List<Support> list = new SupportService().supSearch(cPage, numPerpage,keyword);
-		List<Agency> list2=new ArrayList();
-		List<SupPhoto> list3 = new ArrayList();
-		List<List<SupComment>> comments = new ArrayList<>();
-		SupPhoto sp = null;
-		for(int i=0;i<list.size();i++) {
-			int agencyNo = list.get(i).getSupAgencyNo();
-			int boardNo=list.get(i).getSupBoardNo();
-			Agency a = new VolunteerService().selectAgency(agencyNo);
-			List<SupComment > sc = new SupportService().selectSupportComment(boardNo);
-			sp = new SupportService().selectSupPhoto(boardNo);
-			list2.add(a);
-			list3.add(sp);
-			comments.add(sc);
 		}
+		
+		numPerpage=5;
+		
+		List<VolReview> list = new VolReviewService().selectVolunteerList(cPage, numPerpage);
+		System.out.println(list);
 		String pageBar="";
-		int totalData = new SupportService().supSearchCount(keyword);
+		int totalData = new VolReviewService().selectVolReviewCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		
 		int pageBarSize = 10;
@@ -90,14 +72,11 @@ public class SupSearchServlet extends HttpServlet {
 		}else {
 			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>[다음]</a>";
 		}
-		request.setAttribute("ag", agency);
-		request.setAttribute("support", list);
-		request.setAttribute("pageBar", pageBar);
-		request.setAttribute("agency", list2);
-		request.setAttribute("supPhoto", list3);
-		request.setAttribute("comments", comments);
 		
-		request.getRequestDispatcher("/views/support/supList.jsp").forward(request, response);
+		request.setAttribute("volReview", list);
+		request.setAttribute("pageBar", pageBar);
+		request.getRequestDispatcher("/views/volreview/reviewList.jsp").forward(request, response);
+		
 	}
 
 	/**
