@@ -1,7 +1,6 @@
 package com.happy.admission.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -17,24 +16,22 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.google.gson.Gson;
 import com.happy.admission.service.AdmissionService;
-import com.happy.admission.vo.AdmissionForm;
 import com.happy.admission.vo.AnimalPhoto;
 import com.happy.animal.model.vo.Animal;
-import com.happy.qa.vo.QaPhoto;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
- * Servlet implementation class AdmissionWriteEndServlet
+ * Servlet implementation class AdmissionModifyEndServlet
  */
-@WebServlet("/admission/writeAdmissionEnd.do")
-public class AdmissionWriteEndServlet extends HttpServlet {
-	private static final long serialVesionUID = 1L;
+@WebServlet("/admission/ModifyEnd.do")
+public class AdmissionModifyEndServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmissionWriteEndServlet() {
+    public AdmissionModifyEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -52,10 +49,9 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 			DefaultFileRenamePolicy dfr=new DefaultFileRenamePolicy();
 			MultipartRequest mr=new MultipartRequest(request, 
 					path,maxSize,encoding,dfr);
-		
-
-			Enumeration e=mr.getFileNames();	
-			List<AnimalPhoto> fileList=new ArrayList();
+			
+		Enumeration e=mr.getFileNames();	
+		List<AnimalPhoto> fileList=new ArrayList();
 			
 		while(e.hasMoreElements()) {
 				String name=(String)e.nextElement();
@@ -73,15 +69,7 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 				}
 				System.out.println(fileList);
 		}
-		
-		
-		
-		
-		
-		
-		//클라이언트가 입력하여 보낸 데이터를 가져와
-		//Animal에 빌더를 사용해 저장
-		
+			
 		String animalName=mr.getParameter("aniName");
 		String animalType=mr.getParameter("aniType");
 		String animalKind=mr.getParameter("aniKind");
@@ -121,34 +109,35 @@ public class AdmissionWriteEndServlet extends HttpServlet {
 				.aniColor(furColor)
 				.aniSpecial(aniSpecial)
 				.aniReason(aniReason)
-				.build();
-		
-		
+				.build();	
+			
 		int memberNo=Integer.parseInt(mr.getParameter("memberNo"));
 		//System.out.println("ㅎ2"+memberNo);
 		
 		//클라이언트에게 입력받은 입소희망일을 AdmissionForm에 저장 
-		String hopeDate=mr.getParameter("hopeDate");
+		String hopeDate=mr.getParameter("hopeDate");	
 		
 		//서비스를 빌려 동물, 희망입소일자를 보내기 
 		int result=new AdmissionService().enrollAnimal(ani,hopeDate,memberNo,fileList);
 		
 		String msg="",loc="";
 		if(result==0) {
-			//동물저장 실패시
-			msg="입소신청 실패,다시 신청해주세요!";
-			loc="/admission/writeAdmission.do";
+			msg="입소 신청 수정 실패,다시 신청해주세요!";
+			loc="/admission/myPageView.do";
 		}else {
-			//동물저장 성공시
-			msg="입소신청 완료!:)";
-			loc="/admission/admissionList.do";
+			msg="입소신청 ,수정 완료! 목록으로 돌아갑니다:)";
+			loc="/admission/mypageList.do";
 		}
 
 		Map<String,String> responseMsg=Map.of("msg",msg,"loc",loc);
 		
 		response.setContentType("application/json;charset=utf-8");
 		new Gson().toJson(responseMsg,response.getWriter());
-	}
+		
+		
+		
+		
+		}
 	}
 
 	/**

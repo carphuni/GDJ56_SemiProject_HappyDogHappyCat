@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.happy.qa.service.QaService;
+
 /**
  * Servlet implementation class QaDeleteServlet
  */
-@WebServlet("/qa/delete.do")
+@WebServlet("/qa/deleteQa.do")
 public class QaDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,8 +28,30 @@ public class QaDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/qa/qaDelete.jsp")
-		.forward(request, response);
+		int QaNo=Integer.parseInt(request.getParameter("qaBoardNo"));
+		
+		int result=new QaService().deleteQa(QaNo);
+		
+		System.out.println("삭제결과"+result);
+		
+		String msg="",loc="";
+		if(result==0) {
+			
+			msg="Qa 삭제 실패,다시 등록해주세요!";
+			loc="/qa/deleteQa.do";
+		}else {
+			//동물저장 성공시
+			msg="Qa 삭제 완료!:)";
+			loc="/qa/myPageList.do";
+		}
+	      request.setAttribute("msg", msg);
+	      request.setAttribute("loc", loc);
+	      request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		
+		
+		
+		
+		
 	}
 
 	/**
