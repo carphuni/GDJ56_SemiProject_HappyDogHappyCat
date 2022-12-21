@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@  page import="java.util.List, java.util.Arrays,com.happy.animal.model.vo.Animal,com.happy.adopt.model.vo.AnimalPick,com.happy.admission.vo.AnimalPhoto" %>
     <% Animal ani = (Animal)request.getAttribute("ani"); List<AnimalPick> pick = (List<AnimalPick>)request.getAttribute("pick"); 
-    List<AnimalPhoto> aniPhoto=(List<AnimalPhoto>)request.getAttribute("pick");
+    List<AnimalPhoto> aniPhoto=(List<AnimalPhoto>)request.getAttribute("aniPhoto");
     %>
 <%@ include file="/views/common/header.jsp"%>
 
@@ -122,7 +122,7 @@
 	        <%for(int i=0;i<aniPhoto.size();i++){ %>
 	        	<%if(aniPhoto.get(i).getMainPhoto()!=null){ %>
 		        <div id="imgs">
-		            <img src="<%=request.getContextPath() %>/upload/addmission/<%= aniPhoto.get(i).getAdPhotoReName() %>" alt="" width="350" height="250">
+		            <img src="<%=request.getContextPath() %>/upload/admission/<%=aniPhoto.get(i).getAdPhotoReName() %>" alt="" width="350" height="250">
 		        </div>
 	        
         	<%}
@@ -175,7 +175,7 @@
                 <h2>HAPPY DOG HAPPY CAT</h2>
                 <h3>무료입양</h3>
             </div>
-            <video src="./video/KakaoTalk_20221207_152317915.mp4" controls width="400" height="400" poster="./img/images.jfif"></video>
+            <!-- <video src="./video/KakaoTalk_20221207_152317915.mp4" controls width="400" height="400" poster="./img/images.jfif"></video> -->
             <br><br><br>
             <p>해피캣 해피독에서는 안락사없는 동물 보호소이므로<br>
                 안전하게 분양받으실 수 있습니다.<br>
@@ -183,11 +183,14 @@
             <br><br>
             <%if(aniPhoto!=null){ %>
 	        <%for(int i=0;i<aniPhoto.size();i++){ %>
-	        	<%if(aniPhoto.get(i).getMainPhoto()!=null){ %>	        
-	        	<img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
+        	<%if(aniPhoto.get(i).getMainPhoto()==null){ %>    
+        	<div id="imgs">
+            	<img src="<%=request.getContextPath() %>/upload/admission/<%=aniPhoto.get(i).getAdPhotoReName() %>" alt="" width="350" height="400">
+        	</div><br><br><br><br>
         	<%}
-	        }
+        }
 	     } %>
+	     
             <%-- <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br>
             <img src="<%=request.getContextPath() %>/images/adopt/images.jfif" alt=""><br><br><br><br> --%>
         </div>

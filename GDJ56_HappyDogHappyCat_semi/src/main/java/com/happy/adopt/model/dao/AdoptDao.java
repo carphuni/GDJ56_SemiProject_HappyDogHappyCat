@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.happy.admission.vo.AnimalPhoto;
 import com.happy.adopt.model.vo.AdoptPhoto;
 import com.happy.adopt.model.vo.AdtBorad;
 import com.happy.adopt.model.vo.AdtReviewBorad;
@@ -675,8 +676,62 @@ public class AdoptDao {
 				close(pstmt);
 			}return result;
 			
-		}	
+		}
 	 
+	 public List<AnimalPhoto> mainPhoto(Connection conn) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<AnimalPhoto> ap= new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("mainPhoto"));
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					AnimalPhoto a=AnimalPhoto.builder()
+						.photoNo(rs.getInt("ani_photo_no"))
+						.adPhotoOriName(rs.getString("ani_photo_oriname"))
+						.adPhotoReName(rs.getString("ani_photo_rename"))
+						.aniNo(rs.getInt("ani_no"))
+						.mainPhoto(rs.getString("main_photo"))
+						.build();		
+						ap.add(a);
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}return ap;
+		}
+	 
+	 public int adtReviewDeletePhoto(Connection conn,int adbReviewBoardNo) {
+		 PreparedStatement pstmt=null; 
+		 int result=0; 
+		 try {
+			 pstmt=conn.prepareStatement(sql.getProperty("adtReviewDeletePhoto")); 
+			 pstmt.setInt(1, adbReviewBoardNo);
+			 result=pstmt.executeUpdate(); 
+		 	}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		 return result;
+	 }
+	 
+	 public int adtReviewDeleteContent(Connection conn,int adbReviewBoardNo) {
+		 PreparedStatement pstmt=null; 
+		 int result=0; 
+		 try {
+			 pstmt=conn.prepareStatement(sql.getProperty("adtReviewDeleteContent")); 
+			 pstmt.setInt(1, adbReviewBoardNo);
+			 result=pstmt.executeUpdate(); 
+		 	}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+		 return result;
+	 }
 	 
 	public static AdtBorad getAdtBorad(ResultSet rs) throws SQLException{
         return AdtBorad.builder()
