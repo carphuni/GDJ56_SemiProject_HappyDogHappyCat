@@ -349,6 +349,26 @@ public class QaDao {
 		}return list;
 	}
 
+	public int deleteQaPhoto(Connection conn, int qaNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int deleteQaComment(Connection conn, int qaNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public List<QaComment> selectQaComment(Connection conn, int qaNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int deleteQaForm(Connection conn, int qaNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 }
