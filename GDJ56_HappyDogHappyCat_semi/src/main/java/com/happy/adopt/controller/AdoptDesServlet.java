@@ -82,7 +82,7 @@ public class AdoptDesServlet extends HttpServlet {
 			Animal ani = new AdoptService().adoptDesAni(aniNo,readflag);
 			
 			List<AnimalPhoto> aniPhoto=new AdmissionService().selectAnimalPhoto(aniNo);
-			System.out.println(aniPhoto);
+			//System.out.println(aniPhoto);
 		
 		request.setAttribute("aniPhoto", aniPhoto);
 		request.setAttribute("ani", ani);

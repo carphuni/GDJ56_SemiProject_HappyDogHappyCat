@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.happy.admission.vo.AnimalPhoto;
 import com.happy.adopt.model.service.AdoptService;
 import com.happy.adopt.model.vo.AnimalPick;
 import com.happy.animal.model.vo.Animal;
@@ -94,6 +95,10 @@ public class AdoptMainListServlet extends HttpServlet {
 				 //System.out.println(pList);
 				 }
 			 
+			 List<AnimalPhoto> mainphoto=new AdoptService().mainPhoto();
+			 //System.out.println(mainphoto);
+			 
+			 request.setAttribute("mainphoto",mainphoto);
 			 request.setAttribute("aniList",aniList); 
 			 request.setAttribute("pageBar", pageBar);
 			request.getRequestDispatcher("/views/adopt/adoptMain.jsp").forward(request,response);

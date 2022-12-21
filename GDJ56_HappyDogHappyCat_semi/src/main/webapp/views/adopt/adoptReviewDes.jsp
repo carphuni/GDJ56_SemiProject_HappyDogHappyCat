@@ -25,7 +25,7 @@
         <%if(loginMember!=null&&(loginMember.getMemberNo()==arb.getMemberNo()||loginMember.getMemberId().equals("admin"))){%>
         	<div style="float:right; width:200px;">
 	        	<button onclick="location.assign('<%=request.getContextPath() %>/member/mypage/adoptReviewUpdate.do?adbReviewBoardNo=<%=arb.getAdtBoardNo()%>');">수정</button>
-	        	<button onclick="location.assign('<%=request.getContextPath() %>/member/mypage/adoptReviewDelete.do');">삭제</button>
+	        	<button onclick="location.assign('<%=request.getContextPath() %>/member/mypage/adoptReviewDelete.do?adbReviewBoardNo=<%=arb.getAdtBoardNo()%>');">삭제</button>
         	</div>
         <%}%>
         <div id="title">
