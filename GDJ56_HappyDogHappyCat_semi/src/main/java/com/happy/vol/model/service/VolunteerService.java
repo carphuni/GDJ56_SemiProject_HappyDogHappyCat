@@ -5,6 +5,8 @@ import static com.happy.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.List;
 
+import org.eclipse.jdt.core.compiler.CharOperation;
+
 import com.happy.vol.model.dao.VolunteerDao;
 import com.happy.vol.model.vo.Agency;
 import com.happy.vol.model.vo.VolPhoto;
@@ -170,6 +172,24 @@ public class VolunteerService {
 		List<Volunteer> vList = vd.volSearch(conn, cPage, numPerpage, keyword);
 		close(conn);
 		return vList;
+	}
+	
+	
+	public List<Volunteer> myPageVolunteerList(int cPage,int numPerpage,int agencyNo){
+		Connection conn = getConnection();
+		List<Volunteer> vList = vd.myPageVolunteerList(conn, cPage, numPerpage, agencyNo);
+		close(conn);
+		return vList;
+		
+		
+	}
+	
+	public int myPageVolunteerCount(int agencyNo) {
+		Connection conn=getConnection();
+		int result=vd.myPageVolunteerCount(conn, agencyNo);
+		close(conn);
+		return result;
+		
 	}
 	
 	public int volSearchCount(String keyword) {

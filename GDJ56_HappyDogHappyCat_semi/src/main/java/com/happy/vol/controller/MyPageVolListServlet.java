@@ -1,4 +1,4 @@
-package com.happy.support.controller;
+package com.happy.vol.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,24 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.support.model.service.SupportService;
-import com.happy.support.model.vo.SupComment;
-import com.happy.support.model.vo.SupPhoto;
-import com.happy.support.model.vo.Support;
 import com.happy.vol.model.service.VolunteerService;
 import com.happy.vol.model.vo.Agency;
+import com.happy.vol.model.vo.VolPhoto;
+import com.happy.vol.model.vo.Volunteer;
 
 /**
- * Servlet implementation class SupSearchServlet
+ * Servlet implementation class MyPageVolListServlet
  */
-@WebServlet("/supsearch.do")
-public class SupSearchServlet extends HttpServlet {
+@WebServlet("/member/mypage/volboardList.do")
+public class MyPageVolListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SupSearchServlet() {
+    public MyPageVolListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +34,7 @@ public class SupSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String keyword=request.getParameter("search");
+		int agencyNo = Integer.parseInt(request.getParameter("agencyNo"));
 		
 		int cPage;
 		try {
@@ -45,42 +43,42 @@ public class SupSearchServlet extends HttpServlet {
 			cPage=1;
 		} 
 		
-		int numPerpage=8;
+		int numPerpage=5;
+		List<Volunteer> list = new VolunteerService().myPageVolunteerList(cPage, numPerpage, agencyNo);
 		List<Agency> agency = new VolunteerService().selectAgency3();
-		List<Support> list = new SupportService().supSearch(cPage, numPerpage,keyword);
 		List<Agency> list2=new ArrayList();
-		List<SupPhoto> list3 = new ArrayList();
-		List<List<SupComment>> comments = new ArrayList<>();
-		SupPhoto sp = null;
+		List<VolPhoto> list3 = new ArrayList();
+
+		VolPhoto vp = null;
 		for(int i=0;i<list.size();i++) {
-			int agencyNo = list.get(i).getSupAgencyNo();
-			int boardNo=list.get(i).getSupBoardNo();
-			Agency a = new VolunteerService().selectAgency(agencyNo);
-			List<SupComment > sc = new SupportService().selectSupportComment(boardNo);
-			sp = new SupportService().selectSupPhoto(boardNo);
+			int agencyNo2 = list.get(i).getVntAgencyNo();
+			int boardNo=list.get(i).getVntBoardNo();
+			Agency a = new VolunteerService().selectAgency(agencyNo2);
+			vp = new VolunteerService().selectVolPhoto(boardNo);
 			list2.add(a);
-			list3.add(sp);
-			comments.add(sc);
+			list3.add(vp);
 		}
+		
+		
+		
+		int totalData = new VolunteerService().myPageVolunteerCount(agencyNo);
+		
 		String pageBar="";
-		int totalData = new SupportService().supSearchCount(keyword);
+		int pageBarSize=5;
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
-		
-		int pageBarSize = 10;
-		
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
-		int pageEnd=pageNo+pageBarSize-1;
-		if(pageNo==1) {
-			pageBar+="<span>[이전]</span>";
-		}else {
-			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo-1)+"'>[이전]</a>";
-		}
-		
+	    int pageEnd=pageNo+pageBarSize-1;
+	    if(pageNo==1) {
+	         pageBar+="<span>[이전]</span>";
+	      }else {
+				pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo-1)+"'>[이전]</a>";
+			}
+	      
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(pageNo==cPage) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>"+pageNo+"</a>";
+				pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"&&agencyNo="+agencyNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
@@ -91,13 +89,13 @@ public class SupSearchServlet extends HttpServlet {
 			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>[다음]</a>";
 		}
 		request.setAttribute("ag", agency);
-		request.setAttribute("support", list);
+		request.setAttribute("volunteer", list);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("agency", list2);
-		request.setAttribute("supPhoto", list3);
-		request.setAttribute("comments", comments);
+		request.setAttribute("volPhoto", list3);
 		
-		request.getRequestDispatcher("/views/support/supList.jsp").forward(request, response);
+		
+		request.getRequestDispatcher("/views/volunteer/volView.jsp").forward(request, response);
 	}
 
 	/**

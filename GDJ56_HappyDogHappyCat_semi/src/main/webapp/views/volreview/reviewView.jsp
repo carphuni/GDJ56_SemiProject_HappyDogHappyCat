@@ -8,7 +8,15 @@
 %>   
 <%@ include file="/views/common/header.jsp"%>
 
-
+<div id="container">
+    
+<% if(loginMember!=null&&loginMember.getMemberNo()==vr.getMemberNo()||loginMember!=null&&loginMember.getMemberId().equals("admin")){ %>
+<div style="margin-top:5px;" class="bt_wrap" >
+  <a style="font-size:17px;margin-right:-65%;"href="<%=request.getContextPath()%>/updatevolreview.do?boardNo=<%=vr.getVntBoardNo()%>">수정</a>
+  <a style="font-size:17px;margin-right:20%"href="<%=request.getContextPath()%>/deletevolreview.do?boardNo=<%=vr.getVntBoardNo()%>">삭제</a>
+</div>
+<%} %>
+</div>
 
 <section id="content">
 	<div id="title">
@@ -68,7 +76,7 @@
     </div>
     <br>
         <div id="adp_btn">
-        	<a href=>
+        	<a href="<%=request.getContextPath()%>/reviewlist.do">
             <button type="button" class="btn btn-primary"><p>목록가기</p></button>
             </a>
             <br>
@@ -145,7 +153,45 @@
             height: 250px;
             opacity: 0.5; 
         }
+    #container{
+        text-align: center;
+        padding:50px;
+        /* padding-left: 210px; */
+    }
+    .bt_wrap {
+             /* padding:20px; */
+             margin-top: 50px;
+             text-align: center;
+             font-size: 0;
+             margin-left:18%
+         }
+         
+         .bt_wrap a {
+             display: inline-block;
+             min-width: 80px;
+             /* margin-left: -40%; */
+             padding: 10px;
+             border: 1px solid #000;
+             border-radius: 2px;
+             font-size: 1.4rem;
+             color:black;
+         }
+         
+         .bt_wrap a:first-child {
+             margin-left: 0;
+             background-color: rgb(207, 207, 207);
+             color:white;
+             
+         }
+        
 
+         .bt_wrap a:last-child{
+          min-width: 80px;
+          float:right;
+          margin-right:17%;
+            
+
+         }
 </style>
 <script>
 

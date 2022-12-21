@@ -8,6 +8,9 @@ import static com.happy.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import com.happy.support.model.vo.Support;
+import com.happy.vol.model.vo.VolPhoto;
+import com.happy.vol.model.vo.Volunteer;
 import com.happy.volreview.model.dao.VolReviewDao;
 import com.happy.volreview.model.vo.VolComment;
 import com.happy.volreview.model.vo.VolReview;
@@ -46,6 +49,13 @@ public class VolReviewService {
 		return vr;			
 		}
 		
+	public VolReview selectVolReview(int boardNo) {
+		Connection conn = getConnection();
+		VolReview vr = vrd.selectVolReview(conn, boardNo);
+		close(conn);
+		return vr;	
+	
+	}
 
 	
 	public int insertVolReview(VolReview vr, List<VolReviewPhoto> fileList) {
@@ -74,6 +84,24 @@ public class VolReviewService {
 	}
 	
 	
+	public List<VolReview> myPageVolReviewList(int cPage,int numPerpage, int memberNo){
+		Connection conn = getConnection();
+		List<VolReview> vList = vrd.myPageVolReviewList(conn, cPage, numPerpage, memberNo);
+		close(conn);
+		return vList;
+		
+		
+		
+	}
+	
+	public int myPageVolReviewCount(int memberNo) {
+		Connection conn=getConnection();
+		int result=vrd.myPageVolReviewCount(conn, memberNo);
+		close(conn);
+		return result;
+		
+	}
+	
 	
 	public List<VolReviewPhoto> selectVolReviewPhoto2(int boardNo) {
 		Connection conn = getConnection();
@@ -101,6 +129,58 @@ public class VolReviewService {
 	
 	}
 	
+
+	public List<VolReview> volReviewSearch(int cPage,int numPerpage, String keyword){
+		Connection conn = getConnection();
+		List<VolReview> vList = vrd.volReviewSearch(conn, cPage, numPerpage, keyword);
+		close(conn);
+		return vList;
+	}
+	
+	public int volReviewSearchCount(String keyword) {
+		Connection conn=getConnection();
+		int result=vrd.volReviewSearchCount(conn, keyword);
+		close(conn);
+		return result;
+		
+	}
+	
+	public int deleteVolReview(int vntBoardNo) {
+		Connection conn=getConnection();
+		int result = vrd.deleteVolReview(conn, vntBoardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+
+	public int updateVolReview(VolReview vr, List<VolReviewPhoto> fileList) {
+		Connection conn=getConnection();
+		int result= vrd.updateVolReview(conn, vr);
+		int result2=0;
+		if(result>0) {
+			for(VolReviewPhoto vp : fileList) {
+				result2+=vrd.insertVolReviewPhoto(conn,vr.getVntBoardNo(),vp);
+			}	
+			if(result2==fileList.size())commit(conn);
+		}else {
+			rollback(conn);
+		}close(conn);
+		return result2;
+	
+	}
+	public int deleteReviewPhoto(int boardNo) {
+		Connection conn = getConnection();
+		int result = vrd.deleteReviewPhoto(conn, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+		
+		
+		
+	}
 		
 }
 	

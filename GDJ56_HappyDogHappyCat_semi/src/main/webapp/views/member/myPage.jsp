@@ -18,7 +18,7 @@ buf2.insert(3, "-"); buf2.insert(7, "-"); } } %>
           <%=loginMember.getMemberName() %><button
             class="btn btn-dh"
             style="margin-top: 12px"
-            onclick="location.assign('<%=request.getContextPath()%>/member/memberUpdateAll.do')"
+            onclick="location.assign('<%=request.getContextPath()%>/member/memberUpdateAll.do?')"
           >
             내 정보 수정
           </button>
@@ -112,12 +112,19 @@ buf2.insert(3, "-"); buf2.insert(7, "-"); } } %>
       <button type="button" class="btn col-2" onclick="location.assign('<%=request.getContextPath() %>/member/mypage/adoptReviewList.do');">
         입양 후기
       </button>
-      <button type="button" class="btn col-2" onclick="location.assign('')">
+       <%if(loginAgency!=null){ %>
+      <button type="button" class="btn col-2" onclick="location.assign('<%=request.getContextPath()%>/member/mypage/volboardList.do?agencyNo=<%=loginAgency.getAgencyNo()%>')">
         자원 봉사
       </button>
-      <button type="button" class="btn col-2" onclick="location.assign()">
+       <%} %>
+      <button type="button" class="btn col-2" onclick="location.assign('<%=request.getContextPath()%>/member/mypage/volreviewList.do?memberNo=<%=loginMember.getMemberNo()%>');">
         자원봉사 후기
       </button>
+        <%if(loginAgency!=null){ %>
+       <button type="button" class="btn col-2" onclick="location.assign('<%=request.getContextPath()%>/member/mypage/supboardList.do?agencyNo=<%=loginAgency.getAgencyNo()%>')">
+        후 원
+      </button>
+      <%} %>
       <button type="button" class="btn col-2" onclick="location.assign()">
         문의 내역
       </button>
