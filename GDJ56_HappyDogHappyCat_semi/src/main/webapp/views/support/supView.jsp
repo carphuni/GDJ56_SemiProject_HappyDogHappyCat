@@ -92,7 +92,7 @@
 <%} %>
 </div>
 
-<div id="container2">
+<div id="container2" style="margin-left:70px;">
     <div>
         <b><%=s.getSupTitle() %></b>
     </div>
