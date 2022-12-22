@@ -477,6 +477,7 @@ $(function(){
     		    btnAtt.onchange = function(e){
     		      var files = e.target.files;
     		      var fileArr = Array.prototype.slice.call(files)
+    		      attZone=document.getElementById("att_zone");
     		      if(files.length<=1){
     		      for(f of fileArr){
     		        imageLoader(f,document.getElementById("att_zone"));
@@ -486,6 +487,7 @@ $(function(){
     		    btnAtt2.onchange=function(e){
     		      var files = e.target.files;
     		      var fileArr = Array.prototype.slice.call(files)
+  				  attZone=document.getElementById("att_zone2");
     		      if(files.length<=3){
     		      for(f of fileArr){
     		        imageLoader(f, document.getElementById("att_zone2"));
@@ -561,7 +563,7 @@ $(function(){
     		          dt.items.add(file);
     		        }
     		        btnAtt.files = dt.files;
-    		        var p = ele.parentNode;
+    		        var p = ele.parentElement;
     		        attZone.removeChild(p)
     		      }
     		      div.appendChild(img)
