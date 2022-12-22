@@ -75,9 +75,10 @@
                      	
                      	if(loginMember!=null&&enr.get(i).getMemberNo()==loginMember.getMemberNo()){ %>
  						<a href="<%=request.getContextPath()%>/volreviewwrite.do">
-                  		<%}} %>
+                  		
                   		<button id="apt_write" class="btn btn-dark">글쓰기</button>
                   		</a>
+                  		<%}} %>
                   		<%=request.getAttribute("pageBar") %>
            				
              
