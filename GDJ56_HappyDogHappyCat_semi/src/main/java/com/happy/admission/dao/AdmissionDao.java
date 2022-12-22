@@ -361,6 +361,62 @@ public class AdmissionDao {
 			close(pstmt);
 		}return result;
 	}
+
+	
+	public int updateAdmission(Connection conn, int aniNo, String hopeDate, int memberNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateAdmission"));
+			pstmt.setString(1, hopeDate);
+			pstmt.setInt(2, aniNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+		
+		
+		
+		
+
+		
+		
+		
+	}
+
+	public int updateAni(Connection conn,Animal ani,int aniNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateAni"));
+			pstmt.setString(1, ani.getAniName());
+			pstmt.setString(2, ani.getAniType());
+			pstmt.setString(3, ani.getAniKind());
+			pstmt.setString(4, String.valueOf(ani.getAniGender()));
+			pstmt.setInt(5, ani.getAniAge());
+			pstmt.setString(6, String.valueOf(ani.getAniNeuYn()));
+			pstmt.setString(7, ani.getAniSize());
+			pstmt.setString(8,ani.getAniColor());
+			pstmt.setString(9, String.join(",",ani.getAniChar()));
+			pstmt.setString(10,ani.getAniSpecial());
+			pstmt.setString(11,ani.getAniReason());
+			pstmt.setString(12, String.valueOf(ani.getMadDog()));
+			pstmt.setString(13, String.valueOf(ani.getCovid()));
+			pstmt.setString(14, String.valueOf(ani.getKennel()));
+			pstmt.setString(15, String.valueOf(ani.getInflu()));
+			pstmt.setString(16, String.valueOf(ani.getAntibody()));
+			pstmt.setString(17, String.valueOf(ani.getTotalvac()));
+			pstmt.setInt(18, aniNo);
+			result=pstmt.executeUpdate();
+			System.out.println(result);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
 	
 	
 

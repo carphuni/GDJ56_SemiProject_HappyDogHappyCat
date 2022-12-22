@@ -152,31 +152,29 @@
 			 	
 			if(sumnail.length==1){
 				 if(files.length!=0){
-			 	$.ajax({
-				url :"<%=request.getContextPath()%>/vol/volWriteEnd.do",
-				data : form,
-				type : "post",
-				contentType:false,
-				processData:false,
-				success : e=>{
-					/* console.log(e.msg);	 */
-					/* console.log(e.loc); */
-					var loc2 = e.loc;
-					alert(e.msg);
-					location.replace('<%=request.getContextPath()%>'+loc2);
-// 					alert("파일업로드 성공");
-// 					$("#upload2").val("");
-// 					},error:(r,m,e)=>{
-// 						alert("업로드 실패 다시시도하세요!");
-// 					}
-			 	}
-					 });}
-			 else{alert("사진을 1장 이상 첨부해주세요.")}
+				 	$.ajax({
+					url :"<%=request.getContextPath()%>/vol/volWriteEnd.do",
+					data : form,
+					type : "post",
+					contentType:false,
+					processData:false,
+					success : e=>{
+						/* console.log(e.msg);	 */
+						/* console.log(e.loc); */
+						var loc2 = e.loc;
+						alert(e.msg);
+						location.replace('<%=request.getContextPath()%>'+loc2);
+	// 					alert("파일업로드 성공");
+	// 					$("#upload2").val("");
+	// 					},error:(r,m,e)=>{
+	// 						alert("업로드 실패 다시시도하세요!");
+	// 					}
+			 			}
+					 });
+			 	  }else{alert("사진을 1장 이상 첨부해주세요.")}
 			 
-		}else{
-			alert("대표이미지를 설정해야 합니다.");
-		}
-	});
+			}else{alert("대표이미지를 설정해야 합니다.");}
+		});
 		
 		$(document).ready(function() {
 		    $('#summernote').summernote({
@@ -318,7 +316,10 @@
 		  });
 		 
 		  
-
+		  const dele = () =>{
+			  $("#att_zone").empty();
+		 }
+		  
 		  //저장버튼 클릭
 		  $(document).on('click', '#saveBtn', function () {
 		      saveContent();

@@ -41,7 +41,7 @@ com.happy.qa.vo.QaForm
     		
     </div>
     <div id="comment-container" >
-    	<%if(loginMember.getMemberId().equals("admin")) {%> 
+    	<%if(loginMember!=null&&loginMember.getMemberId().equals("admin")) {%> 
    		<div class="comment-editor" >
    			<form action="<%=request.getContextPath() %>/qa/commentWrite.do?qaBoardNo=<%=q.getQaBoardNo() %>" 
    			method="post" style="justify-content: center; display: flex; margin-top: 10px; align-items: flex-end; margin-left: 70px;" >
@@ -66,7 +66,11 @@ com.happy.qa.vo.QaForm
            <%}else{ 
                for(QaComment q1: qc){      %>
         <div style="border-bottom: solid rgba(0, 0, 0, 0.482); width:400px; margin:auto;">
-                     <p><%=q1.getQaCommentWriteDate() %> </p>
+                     <p>관리자:&nbsp;<%=q1.getQaCommentWriteDate() %><br> </p>
+                     <%if(loginMember!=null&&loginMember.getMemberId().equals("admin")) {%>
+                     <button style="float:right;"
+                     onclick="location.assign('<%=request.getContextPath()%>/qa/commentDelete.do?commentNo=<%=q1.getQaCommentNo()%>');">X</button>
+                     <%} %>
                     <p><%=q1.getQaCommentWriteContent() %></p>
         </div>
              <%} %>

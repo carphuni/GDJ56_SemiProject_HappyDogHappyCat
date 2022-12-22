@@ -30,7 +30,7 @@
 
 <%if(list.isEmpty()){ %>
     <tr>
-    <td colspan="5">조회된 게시물이 없습니다.</td>
+    <td><colspan="5">조회된 게시물이 없습니다.</td>
   <%}else{%>
 <div id="s1">
 <% for(int i=0;i<list.size();i++){ %>

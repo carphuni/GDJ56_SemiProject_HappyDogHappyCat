@@ -117,6 +117,31 @@ public class AdmissionService {
 		return result3;
 	}
 
+	public int updateAni(Animal ani, String hopeDate, int memberNo, List<AnimalPhoto> fileList) {
+		Connection conn=getConnection();
+		int aniNo=ani.getAniNo();
+		int result=dao.updateAni(conn,ani,aniNo);
+		int result2=0;
+		if(result>0) {
+			result2=dao.updateAdmission(conn,aniNo, hopeDate, memberNo);
+			/*
+			 * if(!fileList.isEmpty()|| fileList !=null) {
+			 * 
+			 * for(int i=0;i<fileList.size();i++) { if(i==0)
+			 * fileList.get(i).setMainPhoto("Y"); result2+=dao.insertAniPhoto(conn, aniNo,
+			 * fileList.get(i)); }
+			 * 
+			 * }
+			 */
+			
+			close(conn);		
+		}else{
+			rollback(conn);
+		} 
+		return result;
+		
+	}
+
 	
 	
 

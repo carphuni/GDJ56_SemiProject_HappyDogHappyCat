@@ -51,11 +51,11 @@
         <div id="comment_box1" style="cursor: pointer;">
         	<h3>댓글창보기(<%=comments.size() %>)</h3>
         </div>
-        <div id="comment_lists">
-	     
+        <div id="comment_lists" style="padding:5px";>
+	     	<form>
 	            <textarea name="textarea1" id="textarea2" cols="90" rows="3" placeholder="댓글을 입력해주세요."></textarea>
 	            <button id="reply-btn" type="button" class="btn btn-outline-secondary" style="float: right;">등록</button>
-	       
+	       	</form>
 	        <br><br>
 	        <div style="border-top: solid rgba(0, 0, 0, 0.614);">
 	        </div>
@@ -65,19 +65,29 @@
 	        	</div>
 	        <%}else{ %>
 	        	<%for(int i=0;i<comments.size();i++){ %> 
+	        	
 	        		<div style="border-bottom: solid rgba(0, 0, 0, 0.482);">
-	            		<p><b><%=comments.get(i).getMemberId() %></b> <small><%= comments.get(i).getVntCommentWrite() %></small></p>
-	            		<p><%=comments.get(i).getVntCommentContents() %></p>
-	        		</div>
-	     	<%} 
-	        } %> 
+		        			
+		            		<p><b><%=comments.get(i).getMemberId() %></b> <small><%= comments.get(i).getVntCommentWrite() %></small></p>
+		            		<p id="con2"><%=comments.get(i).getVntCommentContents() %></p>
+		            		<div style="text-align:right;vertical-align: top;">
+		            		<%if((loginMember!=null&&loginMember.getMemberId()==comments.get(i).getMemberId())||(loginMember!=null&&loginMember.getMemberId().equals("admin"))){ %>
+		        			<button style="margin-left:83%;margin-bottom:-30%;margin-top:-60%; margin-right:0%" class="btn-reply" value="">수정</button>
+		        			<input type="hidden" name="comNo" value="<%=comments.get(i).getVntCommentNo()%>">
+   							<button style=":right;margin-top: -7%; class="btn-delete" onclick="location.replace('<%=request.getContextPath()%>/deletecomment.do?commentNo=<%=comments.get(i).getVntCommentNo()%>&&boardNo=<%=comments.get(i).getVntBoardNo()%>')">삭제</button>
+		        			 <%}%> 
+		        			</div>
+						</div>
+	       <%  }} %> 
+		
+	   
 	    
         </div>
     </div>
     <br>
         <div id="adp_btn">
         	<a href="<%=request.getContextPath()%>/reviewlist.do">
-            <button type="button" class="btn btn-primary"><p>목록가기</p></button>
+            <button type="button" class="btn btn-primary" style="margin-top: 10%;"><p>목록가기</p></button>
             </a>
             <br>
         </div>
@@ -194,6 +204,39 @@
          }
 </style>
 <script>
+ $(()=>{
+$(".btn-reply").click(e=>{
+	
+	const form=$("#comment_lists>form").clone();
+	form.find("button").attr("onclick", "test();");
+	/* form.find("button").removeAttr("Id").removeAttr("Class").addClass("insert2"); */
+	form.find("textarea").removeAttr("Id").addClass("textarea5");
+	form.insertAfter($(e.target).parents("div#comment_lists>div>div")).slideDown(800);
+
+	
+});
+
+}) 
+
+const test = () => {
+			
+			const reply=$(".textarea5").val();
+			console.log(reply);
+			const commentNo = $("input[name=comNo]").val();
+			console.log(commentNo);
+			$.ajax({
+				url:"<%=request.getContextPath()%>/updatecomment.do",
+				type:"get",
+				data:{reply:reply,commentNo:commentNo,memberId:"<%=loginMember!=null?loginMember.getMemberId():0%>" ,boardNo:"<%=vr.getVntBoardNo()%>"},
+				success:data=>{
+					console.log(data);
+					/* $("#con2").innerHTML(data); */
+					alert("댓글 수정 성공!")
+					location.assign("<%=request.getContextPath()%>/volreviewview.do?boardNo=<%=vr.getVntBoardNo()%>");
+				}});
+			}
+	    	
+		
 
 $("#textarea2").focus(e=>{
 	if(<%=loginMember==null%>){

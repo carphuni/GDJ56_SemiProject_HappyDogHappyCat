@@ -92,7 +92,7 @@
     	var content=$('#summernote').summernote('code');
     	var openYn=$("input[name=openYn]:checked").val();
     	var password=$("input[name=passWord]").val();
-    	alert("112password" + password);
+    	//alert("112password" + password);
     	var memberNo= $("input[name=memberNo]").val();
     	//console.log(title);
     	//console.log(content);
