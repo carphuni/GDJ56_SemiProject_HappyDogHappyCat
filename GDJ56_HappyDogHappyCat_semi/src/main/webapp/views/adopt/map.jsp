@@ -98,12 +98,14 @@
         }
 </style>
 
-    
-	         
-      <input type="text" id="maphos">
-      <div id="map" style="width:100%;height:350px;"></div>
-      <button id="maphos" onclick="hospi();">병원</button>
-      <div id="divdiv"></div>
+    	<br><br>
+	   <div style="text-align:center;">     
+      동물병원 찾기 : <input type="text" id="maphos" style="width: 300px;height: 32px;font-size: 15px;border: 0;border-radius: 15px;outline: none;padding-left: 10px;background-color: rgb(233, 233, 233);" placeholder="시군명 입력" > 
+      <button id="maphos" onclick="hospi();">검색</button><br>
+      <br>
+      <div  id="map" style="width:80%;height:350px;text-align:center; margin:auto;"></div><br>
+      </div>
+      <div style="text-align:center; margin:auto;" id="divdiv"></div>
 <%@ include file="/views/common/footer.jsp"%>
 <script>
  let hospital=[];
@@ -111,12 +113,14 @@
  //console.log(hospital[0]);
  const hospi=()=>{
 	 const maphoss=$("#maphos").val();                                            
-		$.get("<%=request.getContextPath()%>/mainClass2?SIGUN_NM="+maphoss,data=>{
+		$.get("<%=request.getContextPath()%>/mainClass2?SIGUN_NM="+maphoss,
+				data=>{
 			//console.log(data);
 			const table=$("<table>");
 			const header=$("<tr>").html("<th>동물병원이름</th><th>전화번호</th><th>주소</th>");
 			table.append(header);
 			data.forEach(e=>{
+				
 				hospital.push(e);
 				if(e["BSN_STATE_NM"]=="정상"){
 					const tr=$("<tr>");
@@ -127,10 +131,13 @@
 					table.append(tr);
 				}
 			});
+			
 			$("#divdiv").html(table);
-		console.log(hospital);
-		console.log(hospital[0]);
-		console.log(hospital[0]['REFINE_WGS84_LAT']);
+			var y=document.getElementsByTagName('table')[0];
+			y.style.margin='auto';
+		//console.log(hospital);
+		//console.log(hospital[0]);
+		//console.log(hospital[0]['REFINE_WGS84_LAT']);
 		var mapContainer;
 		//console.log(hospital[0]["BIZPLC_NM"]);
 		
@@ -138,18 +145,29 @@
 			 mapContainer = document.getElementById('map'),
 			 mapOption = { 
 			     center: new kakao.maps.LatLng(38.4629693732, 126.8791539685), // 지도의 중심좌표
-			     level: 3 // 지도의 확대 레벨
+			     level: 9 // 지도의 확대 레벨
 			 };
 		 }else{
+			 for(let i=0;i<hospital.length;i++){
+		 
+			 if(hospital[i]["BSN_STATE_NM"]=="정상"){
 			 mapContainer = document.getElementById('map'),
 			 mapOption = { 
-				     center: new kakao.maps.LatLng(hospital[0]['REFINE_WGS84_LAT'],hospital[0]['REFINE_WGS84_LOGT']), // 지도의 중심좌표
-				     level: 3 // 지도의 확대 레벨
+				     center: new kakao.maps.LatLng(hospital[i]['REFINE_WGS84_LAT'],hospital[i]['REFINE_WGS84_LOGT']), // 지도의 중심좌표
+				     level: 7 // 지도의 확대 레벨
 				 };
-		 }
+		 }}}
 	//console.log(mapOption);
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		console.log(hospital);
+		
 		var positions=[];
+		console.log(positions);
+		/* console.log(positions.length); */
+		positions.length=0;
+		
+		/* console.log(positions.length); */
 		if(hospital.length==0){
 			positions = [
 				  {
@@ -159,13 +177,14 @@
 				];
 			}else{
 				for(let i=0;i<hospital.length;i++){
-					positions = [
-						  {
+					if(hospital[i]["BSN_STATE_NM"]=="정상"){
+					var j={
 						     title: '카카오', 
 						     latlng: new kakao.maps.LatLng(hospital[i]['REFINE_WGS84_LAT'], hospital[i]['REFINE_WGS84_LOGT'])
-						 } 
-						];
-				}
+						 };
+					positions.push(j);
+					
+				}}
 				
 			}
 		//마커를 표시할 위치와 title 객체 배열입니다 
@@ -190,6 +209,7 @@
 		 });
 		}	
 		});
+		hospital.length=0;
 		
  }
   // 지도를 표시할 div  
