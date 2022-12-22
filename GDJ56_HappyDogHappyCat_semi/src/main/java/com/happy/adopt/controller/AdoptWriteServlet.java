@@ -18,7 +18,7 @@ import com.happy.adopt.model.vo.AdtBorad;
 /**
  * Servlet implementation class AdoptWriteServlet
  */
-@WebServlet("/adopt/adoptwrite.do")
+@WebServlet(name="adoptwrite",urlPatterns="/adopt/adoptwrite.do")
 public class AdoptWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

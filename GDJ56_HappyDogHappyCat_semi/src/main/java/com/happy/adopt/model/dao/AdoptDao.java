@@ -661,22 +661,22 @@ public class AdoptDao {
 			return result;
 		}
 	 
-	 public int updateAptPhoto(Connection conn, int reviewBoardNo, AdoptPhoto ap) {
-			PreparedStatement pstmt=null;
-			int result=0;
-			try {
-				pstmt=conn.prepareStatement(sql.getProperty("updateAptPhoto"));
-				pstmt.setString(1, ap.getAdtPhotoOriName());
-				pstmt.setString(2, ap.getAdtPhotoRename());
-				pstmt.setInt(3, ap.getAdtPhotoNo());
-				result=pstmt.executeUpdate();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(pstmt);
-			}return result;
-			
-		}
+//	 public int updateAptPhoto(Connection conn, int reviewBoardNo, AdoptPhoto ap) {
+//			PreparedStatement pstmt=null;
+//			int result=0;
+//			try {
+//				pstmt=conn.prepareStatement(sql.getProperty("updateAptPhoto"));
+//				pstmt.setString(1, ap.getAdtPhotoOriName());
+//				pstmt.setString(2, ap.getAdtPhotoRename());
+//				pstmt.setInt(3, ap.getAdtPhotoNo());
+//				result=pstmt.executeUpdate();
+//			}catch(SQLException e) {
+//				e.printStackTrace();
+//			}finally {
+//				close(pstmt);
+//			}return result;
+//			
+//		}
 	 
 	 public List<AnimalPhoto> mainPhoto(Connection conn) {
 			PreparedStatement pstmt=null;
@@ -732,6 +732,61 @@ public class AdoptDao {
 			}
 		 return result;
 	 }
+	 
+	 public List<AdtBorad> adoptAdminBoardList(Connection conn,int cPage, int numPerpage){
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			List<AdtBorad> adtBoardList=new ArrayList();
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("adoptAdminBoardList"));
+				pstmt.setInt(1, (cPage-1)*numPerpage+1);
+				pstmt.setInt(2, cPage*numPerpage);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					adtBoardList.add(getAdtBorad(rs));
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(rs);
+				close(pstmt);
+			}
+			return adtBoardList;
+		}
+		
+		public int adoptAdminBoardListCount(Connection conn) {
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			int count=0;
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("adoptAdminBoardListCount"));
+				rs=pstmt.executeQuery();
+				if(rs.next()) count=rs.getInt(1); 	
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+				close(rs);
+			}
+			return count;
+		}
+		
+		public int deleteComment(Connection conn,int coNo) {
+			 PreparedStatement pstmt=null; 
+			 int result=0; 
+			 try {
+				 pstmt=conn.prepareStatement(sql.getProperty("deleteComment")); 
+				 pstmt.setInt(1, coNo);
+				 result=pstmt.executeUpdate(); 
+			 	}catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					close(pstmt);
+				}
+			 return result;
+		 }
+		
+		
 	 
 	public static AdtBorad getAdtBorad(ResultSet rs) throws SQLException{
         return AdtBorad.builder()

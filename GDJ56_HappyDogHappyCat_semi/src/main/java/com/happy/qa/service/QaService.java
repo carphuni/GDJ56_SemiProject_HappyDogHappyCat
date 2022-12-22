@@ -134,24 +134,68 @@ public class QaService {
 
 	public int deleteQa(int qaNo) {
 		Connection conn=getConnection();
-		
-		List<QaPhoto> qp=dao.selectQaPhoto(conn,qaNo);
-		List<QaComment> qc=dao.selectQaComment(conn,qaNo);
-		
+		int result1=dao.deleteQaPhoto(conn, qaNo);
 		int result2=0;
-		int result3=0;
-
-		if(qp.size()>0) {
-			int result=dao.deleteQaPhoto(conn,qaNo);
-			if(result>0) {
-				result2=dao.deleteQaComment(conn, qaNo);		
-			}if(result2>0) {
-				result3=dao.deleteQaForm(conn,qaNo);
+		
+		System.out.println("확인"+result1);
+		
+		if(result1>0||result1==0) {
+			result2=dao.deleteQaForm(conn,qaNo);
+			System.out.println("확인2"+result2);
 			}
 		
+		close(conn);
+		return result2;
+		}
+
+	
+
+	
+
+	public QaForm selectMyQaView(int qaNo,boolean readflag) {
+		Connection conn=getConnection();
+		QaForm q=dao.QaView(conn,qaNo);
+		if(q!=null&&!readflag) {
+			int result=dao.updateReadCount(conn,qaNo);
+			if(result>0) {
+				commit(conn);
+				q.setQaReadCount(q.getQaReadCount()+1);
+			}
+			else rollback(conn);
 		}
 		close(conn);
-		return result3;
+		return q ;
+	}
+
+	
+
+	public int modifyQa(QaForm qa, int memberNo,int qaNo) {
+		Connection conn=getConnection();
+		int result=dao.modifyQa(conn,qa,qaNo);
+//		int result2=0;
+//		if(result>0) {
+			//result2=dao.updateAdmission(conn,aniNo, hopeDate, memberNo);
+			/*
+			 * if(!fileList.isEmpty()|| fileList !=null) {
+			 * 
+			 * for(int i=0;i<fileList.size();i++) { if(i==0)
+			 * fileList.get(i).setMainPhoto("Y"); result2+=dao.insertAniPhoto(conn, aniNo,
+			 * fileList.get(i)); }
+			 * 
+			 * }
+			 */
+			
+			close(conn);		
+		
+		return result;
+	}
+
+	public int deleteComment(int commentNo) {
+		Connection conn=getConnection();
+		int result=dao.deleteComment(conn,commentNo);
+		close(conn);
+		return result;
+	}
 
 	
 	
@@ -159,5 +203,4 @@ public class QaService {
 	
 	
 	
-	}
 }

@@ -84,13 +84,13 @@
                 </div>
             </div>  
               <div id="numPerpage-container" style="float:right; width:300" >
-	        	동물 분류 
-	        	<!-- <form id="aniTypeF" action=""> -->
+	        	<!-- 동물 분류 
+	        	<form id="aniTypeF" action="">
 	        		<select name="aniType_" id="aniType">
 	        			<option value="전체">전체</option>
 	        			<option value="강아지">강아지</option>
 	        			<option value="고양이" >고양이</option>
-	        		</select>
+	        		</select> -->
 	        	<!-- </form> -->
         	</div> 
         </div>

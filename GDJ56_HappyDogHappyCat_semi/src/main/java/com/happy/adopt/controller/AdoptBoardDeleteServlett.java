@@ -6,8 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.happy.adopt.model.service.AdoptService;
+import com.happy.member.model.vo.Member;
 
 /**
  * Servlet implementation class AdoptBoardDeleteServlett
@@ -30,13 +32,20 @@ public class AdoptBoardDeleteServlett extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int adBoardNo=Integer.parseInt(request.getParameter("adBoardNo"));
 		//System.out.println(adBoardNo);
-		
+
+		HttpSession session = request.getSession();
+	    Member m=(Member)session.getAttribute("loginMember");
 		int result = new AdoptService().adoptBoardDelete(adBoardNo);
 		
 		String msg="",loc="";
 		if(result>0) {
 			msg="삭제 성공";
-			loc="/member/mypage/adoptboardList.do";
+			if(m.getMemberId().equals("admin")) {
+				loc="/admin/adoptformmain.do";
+			}else {
+				loc="/member/mypage/adoptboardList.do";
+			}
+			
 		}else {
 			msg="삭제 실패";
 			loc="/member/mypage/adoptboard.do?adtBoardNo="+adBoardNo;

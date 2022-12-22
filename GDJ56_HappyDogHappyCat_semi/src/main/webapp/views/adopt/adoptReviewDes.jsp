@@ -29,7 +29,7 @@
         	</div>
         <%}%>
         <div id="title">
-            <h2>[<%=arb.getAdtTitle() %>]</h2><br>
+            <h2>[<%=arb.getAdtTitle()==null?"후기입니다.":arb.getAdtTitle() %>]</h2><br>
         </div>
         <br><br>
         
@@ -80,6 +80,10 @@
 	        	<%for(int i=0;i<comments.size();i++){ %>
 	        		<div style="border-bottom: solid rgba(0, 0, 0, 0.482);">
 	            		<p><b><%=comments.get(i).getMemberId() %></b> <small><%= comments.get(i).getCommentWriteDate().substring(0,10) %></small></p>
+	            		<%if(loginMember!=null&&(loginMember.getMemberId().equals(comments.get(i).getMemberId())||loginMember.getMemberId().equals("admin"))){%>
+				        	<button style="float:right;" onclick="deleteComment();">삭제</button>	
+				        <%}%>
+	            		<input type="text" value="<%=comments.get(i).getCommentNo() %>" id="coNo" hidden>
 	            		<p><%=comments.get(i).getCommentContents() %></p>
 	        		</div>
 	        	<%} %>
@@ -98,6 +102,25 @@
     
     <%@ include file="/views/common/footer.jsp"%>
     <script>
+    
+    /* $("#deleteComment").click(e=>{ */
+    	const deleteComment=()=>{
+    	const coNo=$("#coNo").val();
+    	//console.log(coNo);
+    	$.ajax({
+			url:"<%=request.getContextPath()%>/adopt/adoptReviewCommentDelete.do",
+			type:"get",
+			data:{coNo:coNo},
+			success:data=>{
+				//console.log(data);
+				location.reload();
+				alert(data);
+				
+			}
+    	});
+    	}
+   /*  }); */
+    
     $("#comment_box1 h3").click(e=> {  
         $("#comment_lists").slideToggle(); 
     });
@@ -119,7 +142,8 @@
 						console.log(data);
 					
 						alert("댓글 등록 성공!")
-						location.assign("<%=request.getContextPath()%>/adopt/adoptreviewdes.do?AdtBoardNo=<%=arb.getAdtBoardNo()%>");
+						location.reload();
+						<%-- location.assign("<%=request.getContextPath()%>/adopt/adoptreviewdes.do?AdtBoardNo=<%=arb.getAdtBoardNo()%>"); --%>
 					}
 		    	});
 			});

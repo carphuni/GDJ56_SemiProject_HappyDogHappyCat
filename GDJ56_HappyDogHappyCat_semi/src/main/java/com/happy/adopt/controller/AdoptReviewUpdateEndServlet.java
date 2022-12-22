@@ -78,7 +78,7 @@ public class AdoptReviewUpdateEndServlet extends HttpServlet {
 				.adtBoardNo(adtBoardNo)
 				.build();
 		
-		//int result1=new AdoptService().adoptReviewWrite(arb,fileList);
+		int delete=new AdoptService().deleteReviewPhoto(adtBoardNo);
 		int result=new AdoptService().adoptReviewUpdate(arb,fileList);
 		
 		String msg="", loc="";
@@ -87,7 +87,7 @@ public class AdoptReviewUpdateEndServlet extends HttpServlet {
 			loc="/adopt/adoptreview.do";
 		}else {
 			msg="입양후기 글수정 실패";
-			loc="/adopt/adoptreview.do";
+			loc="/member/mypage/adoptReviewUpdate.do?adbReviewBoardNo="+arb.getAdtBoardNo();
 		}
 		
 		Map<String,String> responseMsg=Map.of("msg",msg,"loc",loc);
