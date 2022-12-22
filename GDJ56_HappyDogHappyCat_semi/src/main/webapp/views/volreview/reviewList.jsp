@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List,com.happy.volreview.model.vo.VolReview" %>
+<%@ page import="java.util.List,com.happy.volreview.model.vo.VolReview,com.happy.volreview.model.vo.VntEnr" %>
 <%
 	List<VolReview> list = (List<VolReview>)request.getAttribute("volReview");
-
+	List<VntEnr> enr = (List<VntEnr>)request.getAttribute("enr");
 
 %>    
     
@@ -71,11 +71,15 @@
                           </tbody>
                       </table>
                       <br>
+                     	<%for(int i=0;i<enr.size();i++){
+                     	
+                     	if(loginMember!=null&&enr.get(i).getMemberNo()==loginMember.getMemberNo()){ %>
  						<a href="<%=request.getContextPath()%>/volreviewwrite.do">
+                  		<%}} %>
                   		<button id="apt_write" class="btn btn-dark">글쓰기</button>
                   		</a>
                   		<%=request.getAttribute("pageBar") %>
-           
+           				
              
                      
                      

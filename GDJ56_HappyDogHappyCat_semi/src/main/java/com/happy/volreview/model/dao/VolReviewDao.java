@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.happy.adopt.model.vo.AdtReviewComment;
-import com.happy.support.model.vo.Support;
-import com.happy.vol.model.vo.Volunteer;
+import com.happy.volreview.model.vo.VntEnr;
 import com.happy.volreview.model.vo.VolComment;
 import com.happy.volreview.model.vo.VolReview;
 import com.happy.volreview.model.vo.VolReviewPhoto;
@@ -393,7 +391,25 @@ public class VolReviewDao {
 			close(pstmt);
 		}return result;
 	}
+	public List<VntEnr> enrollMember(Connection conn){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<VntEnr> vList=new ArrayList();
+		VntEnr v = null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("enrollMember"));
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				vList.add(getVntEnr(rs));
+			}	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return vList;
 	
+	}
 	
 	private VolComment getVolComment(ResultSet rs) throws SQLException{
 		return VolComment.builder().vntCommentNo(rs.getInt("VNT_COMMENT_NO"))
@@ -421,4 +437,46 @@ public class VolReviewDao {
 				.vntReviewWriteDate(rs.getDate("VNT_REVIEW_WRITE_DATE")).build();
 		
 	}
+	
+	
+	public VntEnr getVntEnr(ResultSet rs) throws SQLException{
+		return VntEnr.builder().memberNo(rs.getInt("MEMBER_NO"))
+				.build();
+		
+	}
+	
+	public int deleteComment(Connection conn, int commentNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteComment"));
+			pstmt.setInt(1, commentNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+
+	}
+	
+	public int updateComment(Connection conn, String content, int commentNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateComment"));
+			pstmt.setString(1, content);
+			pstmt.setInt(2, commentNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+
+		
+		
+	}
+	
+
 }
