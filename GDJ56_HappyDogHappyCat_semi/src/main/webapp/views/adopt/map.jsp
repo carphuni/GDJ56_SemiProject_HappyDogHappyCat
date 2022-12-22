@@ -4,6 +4,7 @@
     <% Animal ani = (Animal)request.getAttribute("ani"); List<AnimalPick> pick = (List<AnimalPick>)request.getAttribute("pick"); 
     List<AnimalPhoto> aniPhoto=(List<AnimalPhoto>)request.getAttribute("aniPhoto");
     %>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b5705da8bbf6d5f007956cd8575caa16"></script>
 <%@ include file="/views/common/header.jsp"%>
 
 
@@ -100,16 +101,100 @@
     
 	         
       <input type="text" id="maphos">
+      <div id="map" style="width:100%;height:350px;"></div>
       <button id="maphos" onclick="hospi();">병원</button>
       <div id="divdiv"></div>
 <%@ include file="/views/common/footer.jsp"%>
 <script>
- 
+ let hospital=[];
+ //console.log(hospital);
+ //console.log(hospital[0]);
  const hospi=()=>{
 	 const maphoss=$("#maphos").val();                                            
-	 location.assign("https://openapi.gg.go.kr/Animalhosptl?SIGUN_NM="+maphoss);
+		$.get("<%=request.getContextPath()%>/mainClass2?SIGUN_NM="+maphoss,data=>{
+			//console.log(data);
+			const table=$("<table>");
+			const header=$("<tr>").html("<th>동물병원이름</th><th>전화번호</th><th>주소</th>");
+			table.append(header);
+			data.forEach(e=>{
+				hospital.push(e);
+				if(e["BSN_STATE_NM"]=="정상"){
+					const tr=$("<tr>");
+					const name=$("<td>").text(e["BIZPLC_NM"]);
+					const phone=$("<td>").text(e["LOCPLC_FACLT_TELNO"]);
+					const addr=$("<td>").text(e["REFINE_ROADNM_ADDR"]);
+					tr.append(name).append(phone).append(addr);
+					table.append(tr);
+				}
+			});
+			$("#divdiv").html(table);
+		console.log(hospital);
+		console.log(hospital[0]);
+		console.log(hospital[0]['REFINE_WGS84_LAT']);
+		var mapContainer;
+		//console.log(hospital[0]["BIZPLC_NM"]);
+		
+		 if(hospital.length==0){
+			 mapContainer = document.getElementById('map'),
+			 mapOption = { 
+			     center: new kakao.maps.LatLng(38.4629693732, 126.8791539685), // 지도의 중심좌표
+			     level: 3 // 지도의 확대 레벨
+			 };
+		 }else{
+			 mapContainer = document.getElementById('map'),
+			 mapOption = { 
+				     center: new kakao.maps.LatLng(hospital[0]['REFINE_WGS84_LAT'],hospital[0]['REFINE_WGS84_LOGT']), // 지도의 중심좌표
+				     level: 3 // 지도의 확대 레벨
+				 };
+		 }
+	//console.log(mapOption);
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		var positions=[];
+		if(hospital.length==0){
+			positions = [
+				  {
+				     title: '카카오', 
+				     latlng: new kakao.maps.LatLng(38.4629693732, 126.8791539685)
+				 } 
+				];
+			}else{
+				for(let i=0;i<hospital.length;i++){
+					positions = [
+						  {
+						     title: '카카오', 
+						     latlng: new kakao.maps.LatLng(hospital[i]['REFINE_WGS84_LAT'], hospital[i]['REFINE_WGS84_LOGT'])
+						 } 
+						];
+				}
+				
+			}
+		//마커를 표시할 위치와 title 객체 배열입니다 
+
+		//마커 이미지의 이미지 주소입니다
+		var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+		 
+		for (var i = 0; i < positions.length; i ++) {
+		 
+		 // 마커 이미지의 이미지 크기 입니다
+		 var imageSize = new kakao.maps.Size(24, 35); 
+		 
+		 // 마커 이미지를 생성합니다    
+		 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		 
+		 // 마커를 생성합니다
+		 var marker = new kakao.maps.Marker({
+		     map: map, // 마커를 표시할 지도
+		     position: positions[i].latlng, // 마커를 표시할 위치
+		     title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		     image : markerImage // 마커 이미지 
+		 });
+		}	
+		});
+		
  }
-	
+  // 지도를 표시할 div  
+ //var mapOption=[];
+ 
 	
 	
     
