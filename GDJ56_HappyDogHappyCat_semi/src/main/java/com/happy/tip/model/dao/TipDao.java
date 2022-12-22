@@ -120,7 +120,7 @@ private Properties sql= new Properties();
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
 				TipBoard tb=getTipBoard(rs);
-				tb.setMemberId("member_id");
+				tb.setMemberId(rs.getString("member_id"));
 				tipBoardList.add(tb);
 			}
 		}catch (Exception e) {
@@ -158,7 +158,7 @@ private Properties sql= new Properties();
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("selectTipPhoto"));
 			rs=pstmt.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				photos.add(getTipPhoto(rs));
 			}
 		}catch (Exception e) {

@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
       <div id="line" class="col-1"></div>
       <a href="" class="col-3">아이디 찾기</a>
       <div id="line" class="col-1"></div>
-      <a href="" class="col-3">회원가입</a>
+      <a href="<%=request.getContextPath()%>/member/enroll.do" class="col-3">회원가입</a>
     </div>
   </form>
 </section>

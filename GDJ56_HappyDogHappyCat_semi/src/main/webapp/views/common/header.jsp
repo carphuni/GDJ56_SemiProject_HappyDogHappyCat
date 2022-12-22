@@ -109,7 +109,7 @@ pageEncoding="UTF-8"%>
           >
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<%=request.getContextPath()%>/tip/tipList.do">유기동물제보 목록</a></li>
-            <li><a class="dropdown-item" href="#">유기동물 제보하기</a></li>
+            <li><a class="dropdown-item" href="<%=request.getContextPath()%>/tip/tipWrite.do">유기동물 제보하기</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">

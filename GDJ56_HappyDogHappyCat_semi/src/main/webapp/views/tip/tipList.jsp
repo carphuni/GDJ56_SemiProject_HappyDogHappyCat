@@ -55,18 +55,19 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
       <div id="cardRow" style="flex-wrap:wrap;">
       	<%for(int i=0;i<tb.size();i++){ %>
 	        <div id="card-content" class="card">
-	          <img
-	            src="
 	            	<%for(int j=0;j<tp.size();j++){ %>
 		            	<%if(tb.get(i).getTipBoardNo()==tp.get(j).getTipBoardNo()){ %>
+				          <img
+				            src="
 		            		<%=request.getContextPath() %>/upload/tip/<%=tp.get(j).getTipPhotoRename() %>
+				            "
+				            class="card-img-top"
+				            alt="..."
+				            style="width: 200px;height: 200px;"
+				          />
 		            	<%break;
 		            	}%>
 	            	<%} %>
-	            "
-	            class="card-img-top"
-	            alt="..."
-	          />
 	          <div class="card-body">
 	            <div id="card-title">
 	              <p class="card-catagory col-3 
@@ -84,15 +85,15 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
 	            </div>
 	            <div><%=tb.get(i).getMemberId() %></div>
 	            <div>서울시 금천구 독산동</div>
-	            <div id="card-date">2022-08-19</div>
+	            <div id="card-date"><%=tb.get(i).getTipWriteDate() %></div>
 	            <div id="card-heart">
 	              <div class="fs-6">
 	                <img
 	                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-	                /><span>1</span>
+	                /><span>0</span>
 	              </div>
 	              <div class="ms-auto">
-	                <span class="fs-7">조회수</span><span class=""></span>
+	                <span class="fs-7">조회수</span><span class=""><%=tb.get(i).getTipViews() %></span>
 	              </div>
 	            </div>
 	          </div>
@@ -106,6 +107,5 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
 
   </div>
 </section>
-
 <script src="<%=request.getContextPath()%>/js/tipList.js"></script>
 <%@ include file="/views/common/footer.jsp" %>
