@@ -71,7 +71,7 @@
 		            		<p><b><%=comments.get(i).getMemberId() %></b> <small><%= comments.get(i).getVntCommentWrite() %></small></p>
 		            		<p id="con2"><%=comments.get(i).getVntCommentContents() %></p>
 		            		<div style="text-align:right;vertical-align: top;">
-		            		<%if((loginMember!=null&&loginMember.getMemberId()==comments.get(i).getMemberId())||(loginMember!=null&&loginMember.getMemberId().equals("admin"))){ %>
+		            		<%if((loginMember!=null&&loginMember.getMemberId().equals(comments.get(i).getMemberId()))||(loginMember!=null&&loginMember.getMemberId().equals("admin"))){ %>
 		        			<button style="margin-left:83%;margin-bottom:-30%;margin-top:-60%; margin-right:0%" class="btn-reply" value="">수정</button>
 		        			<input type="hidden" name="comNo" value="<%=comments.get(i).getVntCommentNo()%>">
    							<button style=":right;margin-top: -7%; class="btn-delete" onclick="location.replace('<%=request.getContextPath()%>/deletecomment.do?commentNo=<%=comments.get(i).getVntCommentNo()%>&&boardNo=<%=comments.get(i).getVntBoardNo()%>')">삭제</button>
@@ -247,6 +247,8 @@ $("#textarea2").focus(e=>{
 		$("#reply-btn").click(e=>{
 			const reply=$("#textarea2").val();
 			console.log(reply);
+			const commentNo = $("input[name=comNo]").val();
+			console.log(commentNo);
 			$.ajax({
 				url:"<%=request.getContextPath()%>/volreviewcomment.do",
 				type:"get",

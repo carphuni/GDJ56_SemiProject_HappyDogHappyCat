@@ -28,10 +28,10 @@
 
 <section>
 
-<%if(list.isEmpty()){ %>
+<%-- <%if(list.isEmpty()){ %>
     <tr>
     <td><colspan="5">조회된 게시물이 없습니다.</td>
-  <%}else{%>
+  <%}else{%> --%>
 <div id="s1">
 <% for(int i=0;i<list.size();i++){ %>
 	<form style="cursor:pointer; action="<%=request.getContextPath()%>/volView2.do" method="post">
@@ -96,7 +96,7 @@
           </tr>
         </table>
         <hr style="border:dotted gray 1px">
-         <%}} %>
+         <%} %>
     </div>
 </form>   
 
