@@ -29,7 +29,7 @@ com.happy.animal.model.vo.Animal" %>
             	 <div class="info">
                     <dl>
                         <dt id="aniType">동물이름</dt>
-                        <dd><input type="text" placeholder="동물이름 입력" id="inputType" name="aniName"></dd>
+                        <dd><input type="text" placeholder="동물이름 입력" id="inputType" name="aniName" required></dd>
                     </dl>
                      <dl>
                         <dt style="font-size:18px;">동물종류</dt>
@@ -96,7 +96,7 @@ com.happy.animal.model.vo.Animal" %>
                     </dl>
                     <dl>
                         <dt style="font-size:18px;">입소희망일</dt>
-                        <dd><input type="date" name="hopeDate" value="date" style="width:130px; height:30px"></dd>
+                        <dd><input type="date" id="hope" name="hopeDate" value="date" style="width:130px; height:30px"></dd>
                     </dl>
                 </div>
                 <h4 style="font-size:18px;">보호소로 오게된 이유(입소사유)</h4>
@@ -108,7 +108,7 @@ com.happy.animal.model.vo.Animal" %>
                 
                 <div class="file2">
                     <b>📸 대표사진첨부</b>
-                    <input type="file" name="upFile" id='btnAtt' accept="image/*"  multiple/>
+                    <input type="file" name="upFile"  id='btnAtt' accept="image/*"  multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'>
@@ -333,6 +333,21 @@ com.happy.animal.model.vo.Animal" %>
 </style>
 
 <script>
+$(function(){
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+     day = '0' + day.toString();
+    var maxDate = year + '-' + month + '-' + day;
+    $('#hope').attr('min', maxDate);  
+});
+
+
 	$("#enroll").click(e=>{
 		let form=new FormData();
 		
@@ -438,10 +453,10 @@ com.happy.animal.model.vo.Animal" %>
 	
 
     $(document).ready(function() {
-    $('#summernote').summernote({
-        tablesize :2,
-        height:500
-    });
+	    $('#summernote').summernote({
+	        tablesize :2,
+	        height:500
+	    });
     });
 
     ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
@@ -462,10 +477,10 @@ com.happy.animal.model.vo.Animal" %>
     		    btnAtt.onchange = function(e){
     		      var files = e.target.files;
     		      var fileArr = Array.prototype.slice.call(files)
-    		      if(files.length<=3){
+    		      if(files.length<=1){
     		      for(f of fileArr){
     		        imageLoader(f,document.getElementById("att_zone"));
-    		      }}else{alert("사진첨부는 3개까지만 가능합니다.")}
+    		      }}else{alert("사진첨부는 1개까지만 가능합니다.")}
     		    }  
     		    
     		    btnAtt2.onchange=function(e){

@@ -42,6 +42,7 @@ public class AdmissionMyPageViewServlet extends HttpServlet {
 		List<AnimalPhoto> aniPhoto=new AdmissionService().selectAnimalPhoto(aniNo);
 		AdmissionForm af=new AdmissionService().selectAdmission(admissionNo);
 		
+		
 		request.setAttribute("ani",ani);
 		
 		request.setAttribute("admissionNo",admissionNo);

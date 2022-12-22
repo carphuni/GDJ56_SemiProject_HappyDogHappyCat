@@ -379,6 +379,26 @@ public class QaDao {
 		}return result;
 	}
 
+	public int modifyQa(Connection conn, QaForm qa, int qaNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("modifyQa"));
+			pstmt.setString(1,qa.getQaContents());
+			pstmt.setString(2,String.valueOf( qa.getQaOpenYn()));
+			pstmt.setInt(3, qa.getQaPassword());
+			pstmt.setString(4, qa.getQaTitle());
+			pstmt.setInt(5, qaNo);
+
+			result=pstmt.executeUpdate();
+			System.out.println(result);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+
 	
 
 }

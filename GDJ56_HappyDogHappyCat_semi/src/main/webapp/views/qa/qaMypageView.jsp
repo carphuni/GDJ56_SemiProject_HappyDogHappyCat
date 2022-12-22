@@ -31,7 +31,7 @@ com.happy.qa.vo.QaForm
  	</div>
  	<br>
  	<button style="margin-left:1005px;"
- 	onclick="location.assign('');">수정</button>
+ 	onclick="location.assign('<%=request.getContextPath() %>/qa/modify.do?qaBoardNo=<%=q.getQaBoardNo()%>');">수정</button>
  	<button style="margin-left:5px;"
  	onclick="location.assign('<%=request.getContextPath() %>/qa/deleteQa.do?qaBoardNo=<%=q.getQaBoardNo()%>');">삭제</button>
  	<br><br>

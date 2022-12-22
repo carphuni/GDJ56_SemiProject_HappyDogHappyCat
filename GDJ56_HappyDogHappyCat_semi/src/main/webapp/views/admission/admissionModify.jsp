@@ -33,6 +33,9 @@ for(String ac : ani.getAniChar()){
 <%@include file="/views/common/header.jsp"%>
 <body>
 <section id="content">
+<input type="text" value="<%=ani.getAniNo()%>" name="aniNo">
+
+
 	<div style="width: 100%; height: 250px; background-color: rgba(211, 211, 211, 0.516); display: flex;">
     	<img src="<%=request.getContextPath() %>/images/admission/dog1.png" alt="" style="margin-right: auto;" class="dogimg">
             <div id="text" >
@@ -430,6 +433,7 @@ for(String ac : ani.getAniChar()){
 		var furColor=$("input[name=furColor]").val();
 		var hopeDate=$("input[name=hopeDate]").val();
 		var aniReason=$('#summernote').summernote('code');
+		var aniNo=$("input[name=aniNo]").val();
 		
 		 form.append("aniName",aniName);
 		 form.append("aniType",aniType);
@@ -437,6 +441,7 @@ for(String ac : ani.getAniChar()){
 		 form.append("aniSize",aniSize);
 		 form.append("gender",gender);
 		 form.append("aniAge",aniAge);
+		 form.append("aniNo",aniNo);
 		 
 		 if(vcnStat1=="Y"){
 			 form.append("vcnStat1",vcnStat1);

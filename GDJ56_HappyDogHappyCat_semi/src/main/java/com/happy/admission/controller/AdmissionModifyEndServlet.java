@@ -91,6 +91,11 @@ public class AdmissionModifyEndServlet extends HttpServlet {
 		String furColor=mr.getParameter("furColor");
 		String aniSpecial=mr.getParameter("aniSpecial");
 		String aniReason=mr.getParameter("aniReason");
+		
+		
+		
+		int aniNo=Integer.parseInt(mr.getParameter("aniNo"));
+		System.out.println("aniNo"+aniNo);
 		Animal ani=Animal.builder()
 				.aniName(animalName)
 				.aniType(animalType)
@@ -109,6 +114,7 @@ public class AdmissionModifyEndServlet extends HttpServlet {
 				.aniColor(furColor)
 				.aniSpecial(aniSpecial)
 				.aniReason(aniReason)
+				.aniNo(aniNo)
 				.build();	
 			
 		int memberNo=Integer.parseInt(mr.getParameter("memberNo"));
@@ -118,7 +124,8 @@ public class AdmissionModifyEndServlet extends HttpServlet {
 		String hopeDate=mr.getParameter("hopeDate");	
 		
 		//서비스를 빌려 동물, 희망입소일자를 보내기 
-		int result=new AdmissionService().enrollAnimal(ani,hopeDate,memberNo,fileList);
+		int result=new AdmissionService().updateAni(ani,hopeDate,memberNo,fileList);
+		System.out.println(result);
 		
 		String msg="",loc="";
 		if(result==0) {
