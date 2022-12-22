@@ -261,7 +261,6 @@
             /* webUrl: 'http://localhost:9090/happy/views/adopt/adoptDes.jsp', */
         	  <%-- webUrl: 'http://localhost:9090/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>', --%>
         	  webUrl: 'gd1class.iptime.org:9999/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
-        	  mobileWebUrl: 'gd1class.iptime.org:9999/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>', 
           },
         },
       ],
