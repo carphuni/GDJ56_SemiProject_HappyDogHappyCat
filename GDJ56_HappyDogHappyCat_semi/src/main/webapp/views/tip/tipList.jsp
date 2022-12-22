@@ -80,9 +80,9 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
 	              ">
 	              [<%=tb.get(i).getTipCategory() %>]
 	              </p>
-	              <p class="card-text"><%=tb.get(i).getTipContents() %></p>
+	              <p class="card-text"><%=tb.get(i).getTipTitle() %></p>
 	            </div>
-	            <div><%tb.get(i).getMemberId() %></div>
+	            <div><%=tb.get(i).getMemberId() %></div>
 	            <div>서울시 금천구 독산동</div>
 	            <div id="card-date">2022-08-19</div>
 	            <div id="card-heart">
@@ -92,7 +92,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
 	                /><span>1</span>
 	              </div>
 	              <div class="ms-auto">
-	                <span class="fs-7">조회수</span><span class="">2</span>
+	                <span class="fs-7">조회수</span><span class=""></span>
 	              </div>
 	            </div>
 	          </div>
@@ -101,7 +101,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
 
        
       </div>
-      <div id="pageBar"><%=request.getAttribute("pageBar") %></div>
+      <div id="pageBar" style="display: flex;justify-content: center"><%=request.getAttribute("pageBar") %></div>
     </article>
 
   </div>
