@@ -100,10 +100,10 @@ public class VolunteerService {
 			}
 			if(result2==fileList.size())commit(conn);
 			else rollback(conn);
-			close(conn);
 		}else {
 			rollback(conn);
 		}
+		close(conn);
 		return result2;
 	}
 	

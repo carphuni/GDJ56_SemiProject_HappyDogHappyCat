@@ -10,7 +10,7 @@ $(() => {
 
     $("#summernote").summernote(
       "code",
-      "<br><div>1.발견지역:</div><div>2.품종:</div><div>3.성별:</div><div>4.특이사항</div><div>5.보호자전화번호:</div>"
+      "<br><div>1.발견지역 : </div><div>2.품종 : </div><div>3.성별 : </div><div>4.특이사항 : </div><div>5.보호자전화번호 : </div>"
     );
   });
   
@@ -183,17 +183,23 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 
 $("#saveBtn").click(e=>{
 	//등록버튼 클릭 시
-	const files=$("input[name=upload2]")[0].files;//첨부파일 데이터
-	console.log("파일"+$("input[name=upload2]")[0].files);
-	let inputs=$("form input");//input 데이터
-	console.log("인풋데이터"+inputs);
-	let summernoteContent = $('#summernote').summernote('code');//섬머노트 내용
 	let memberNo = $("input[name=memberNo]").val();//회원 번호
+	console.log(memberNo);
+	let category=$("form select").val();//카테고리
+	console.log(category);
+	let inputs=$("form input").not("input[class*=note]").not("input[name=memberNo]");;//input 데이터
+	let summernoteContent = $('#summernote').summernote('code');//섬머노트 내용
+	console.log(summernoteContent);
+	const files=$("input[name=upload2]")[0].files;//첨부파일 데이터
 	
 	//폼데이터 형태에 데이터 넣기
 	let form=new FormData();
+	
+	form.append("category",category);
+	
 	inputs.each((i,v)=>{
-		console.log($(v).attr("name"),$(v).val());
+		console.dir(v);
+		console.log("param"+i+$(v).attr("name"),$(v).val());
 		form.append("param"+i,$(v).val());
 	});
 	
@@ -206,7 +212,7 @@ $("#saveBtn").click(e=>{
 	form.append("content",summernoteContent);
 	form.append("memberNo",memberNo);
 	 	
-	 if(files.length!=0){
+	 if(files.length!=0||files.length<=3){
 	 	$.ajax({
 		url :"/GDJ56_HappyDogHappyCat_semi/tip/tipWriteEnd.do",
 		data : form,
@@ -214,18 +220,13 @@ $("#saveBtn").click(e=>{
 		contentType:false,
 		processData:false,
 		success : e=>{
-			/* console.log(e.msg);	 */
-			/* console.log(e.loc); */
-			var loc2 = e.loc;
 			alert(e.msg);
-			location.replace('/GDJ56_HappyDogHappyCat_semi'+loc2);
-			//alert("파일업로드 성공");
-			//$("#upload2").val("");
-			//},error:(r,m,e)=>{
-			//	alert("업로드 실패 다시시도하세요!");
+			location.replace('/GDJ56_HappyDogHappyCat_semi'+e.loc);
 			}
 		 });
-	  }else{alert("사진을 1장 이상 첨부해주세요.")}
+	  }else{
+		alert("사진을 1장 이상 3장 이하 첨부해주세요.")
+	  }
 			 
 });
 
