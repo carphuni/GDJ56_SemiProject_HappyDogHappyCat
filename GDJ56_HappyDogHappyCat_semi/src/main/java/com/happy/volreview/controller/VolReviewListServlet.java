@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.vol.model.service.VolunteerService;
 import com.happy.volreview.model.service.VolReviewService;
+import com.happy.volreview.model.vo.VntEnr;
 import com.happy.volreview.model.vo.VolReview;
 
 /**
@@ -41,9 +41,9 @@ public class VolReviewListServlet extends HttpServlet {
 		}
 		
 		numPerpage=5;
-		
+		List<VntEnr> enr = new VolReviewService().enrollMember();
 		List<VolReview> list = new VolReviewService().selectVolunteerList(cPage, numPerpage);
-		System.out.println(list);
+
 		String pageBar="";
 		int totalData = new VolReviewService().selectVolReviewCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
@@ -73,6 +73,9 @@ public class VolReviewListServlet extends HttpServlet {
 			pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>[다음]</a>";
 		}
 		
+	
+		request.setAttribute("enr", enr);
+		System.out.println(enr);
 		request.setAttribute("volReview", list);
 		request.setAttribute("pageBar", pageBar);
 		request.getRequestDispatcher("/views/volreview/reviewList.jsp").forward(request, response);

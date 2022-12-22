@@ -12,6 +12,7 @@ import com.happy.support.model.vo.Support;
 import com.happy.vol.model.vo.VolPhoto;
 import com.happy.vol.model.vo.Volunteer;
 import com.happy.volreview.model.dao.VolReviewDao;
+import com.happy.volreview.model.vo.VntEnr;
 import com.happy.volreview.model.vo.VolComment;
 import com.happy.volreview.model.vo.VolReview;
 import com.happy.volreview.model.vo.VolReviewPhoto;
@@ -177,11 +178,38 @@ public class VolReviewService {
 		if(result>0) commit(conn);
 		else rollback(conn);
 		return result;
-		
-		
+
 		
 	}
 		
+	
+	public int deleteComment(int commentNo) {
+		Connection conn = getConnection();
+		int result = vrd.deleteComment(conn, commentNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+
+		
+	}
+	
+	public List<VntEnr> enrollMember(){
+		Connection conn = getConnection();
+		List<VntEnr> list = vrd.enrollMember(conn);
+		close(conn);
+		return list;
+	}
+	
+	public int updateComment(String content, int commentNo) {
+		Connection conn = getConnection();
+		int result = vrd.updateComment(conn,content, commentNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		return result;
+		
+		
+	}
+	
 }
 	
 	

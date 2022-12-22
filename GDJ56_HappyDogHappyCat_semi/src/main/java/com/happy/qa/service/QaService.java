@@ -149,6 +149,54 @@ public class QaService {
 		}
 
 	
+
+	
+
+	public QaForm selectMyQaView(int qaNo,boolean readflag) {
+		Connection conn=getConnection();
+		QaForm q=dao.QaView(conn,qaNo);
+		if(q!=null&&!readflag) {
+			int result=dao.updateReadCount(conn,qaNo);
+			if(result>0) {
+				commit(conn);
+				q.setQaReadCount(q.getQaReadCount()+1);
+			}
+			else rollback(conn);
+		}
+		close(conn);
+		return q ;
+	}
+
+	
+
+	public int modifyQa(QaForm qa, int memberNo,int qaNo) {
+		Connection conn=getConnection();
+		int result=dao.modifyQa(conn,qa,qaNo);
+//		int result2=0;
+//		if(result>0) {
+			//result2=dao.updateAdmission(conn,aniNo, hopeDate, memberNo);
+			/*
+			 * if(!fileList.isEmpty()|| fileList !=null) {
+			 * 
+			 * for(int i=0;i<fileList.size();i++) { if(i==0)
+			 * fileList.get(i).setMainPhoto("Y"); result2+=dao.insertAniPhoto(conn, aniNo,
+			 * fileList.get(i)); }
+			 * 
+			 * }
+			 */
+			
+			close(conn);		
+		
+		return result;
+	}
+
+	public int deleteComment(int commentNo) {
+		Connection conn=getConnection();
+		int result=dao.deleteComment(conn,commentNo);
+		close(conn);
+		return result;
+	}
+
 	
 	
 	

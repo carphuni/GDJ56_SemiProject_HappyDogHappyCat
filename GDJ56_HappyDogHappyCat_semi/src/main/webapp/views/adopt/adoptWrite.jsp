@@ -77,7 +77,7 @@
                 </div>   
                 <div class="info">
                 	<dl>
-                        <dt style="width:200px;">희망입양날짜</dt>
+                        <dt style="width:200px;">방문희망날짜</dt>
                         <dd><input type="text" name="aptHopedate" id="hopedate" required></dd>
                         <!-- <dd><input type="date" name="aptHopedate" id="hopedate" required></dd> -->
                     </dl>

@@ -56,7 +56,7 @@ public class AdoptWriteEndServlet extends HttpServlet {
 		
 		String msg="",loc="";
 		if(result>0) {
-			msg="입양하기 글등록 성공";
+			msg="방문이 확정되었습니다.입력하신날짜에 방문해주세요";
 			loc="/adopt/adoptmain.do";
 		}else {
 			msg="입양하기 글등록 실패";
