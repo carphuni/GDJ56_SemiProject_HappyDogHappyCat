@@ -36,7 +36,7 @@
                 <div class="title">
                     <dl>
                         <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력" name="title" id="title1" value="<%=arb.getAdtTitle() %>" required></dd>
+                        <dd><input type="text" placeholder="제목 입력" name="title" id="title1" value="<%=arb.getAdtTitle()==null?"후기입니다.":arb.getAdtTitle() %>" required></dd>
                     </dl>
                 </div>
                 <div class="info">
@@ -63,18 +63,19 @@
                 
                 <div class="file2">
                     <b>* 사진첨부</b>
-                    <input type="file" id='btnAtt' name="photos" accept="image/*"  multiple/>
+                    <input type="file" id='btnAtt' name="photos" accept="image/*" onclick="delphoto();"  multiple/>
                 </div>
                 <div id='att_zone' 
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'>
-                <%-- <%for(int i=0;i<adtPhoto.size();i++){ %>
+                 <%for(int i=0;i<adtPhoto.size();i++){ %>
                 <div style="display:inline-block;position:relative;width:150px;height:120px;margin:5px;border:1px solid #00f;z-index:1">
                 <img style="width:100%;height:100%;z-index:none" src="<%=request.getContextPath() %>/upload/adopt/<%=adtPhoto.get(i).getAdtPhotoRename() %>">
              <input type="button" value="x" delfile="KakaoTalk_20221102_184515655.png" style="width:30px;height:30px;position:absolute;font-size:24px;right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00">
            </div>
-           <%} %> --%>
+           <%} %>
            </div>
-			</div>
+           
+			
             <div class="bt_wrap">
                 <input type="button" id="modify_btn" class="on" value="수정">
             	<!-- <input type="button" onclick="location.assign()" value="삭제" > -->
@@ -287,7 +288,11 @@
 </style>
 
 <script>
-	alert('사진을 새로 넣어주세요');
+
+	const delphoto = () =>{
+		  $("#att_zone").empty();
+	}
+	/* alert('사진을 새로 넣어주세요'); */
 	
 
 	$(document).ready(function() {
@@ -367,9 +372,9 @@
     
     /*첨부된 파일이 있는 경우 checkbox와 함께 attZone에 추가할 div를 만들어 반환 */
     makeDiv = function(img, file){
-        if(document.getElementsByTagName("img").length>3){
+        /* if(document.getElementsByTagName("img").length>3){
         alert("사진첨부는 3개까지만 가능합니다.");
-      } 
+      }  */
       
       var div = document.createElement('div')
       div.setAttribute('style', div_style)
@@ -437,6 +442,9 @@
 		form.append("memberNo",memberNo);
 		form.append("content",content);
 		form.append("adtBoardNo",adtBoardNo);
+		if(files.length==0){
+			alert('사진을 새로 넣어주세요');
+		}
 		if(files.length!=0){
 			$.ajax({
 				url :"<%=request.getContextPath()%>/adopt/adoptReviewUpdateEnd.do",
@@ -446,7 +454,6 @@
 				processData:false,
 				success : e=>{
 					alert(e.msg);
-					
 					location.replace('<%=request.getContextPath()%>'+e.loc);
 						},error:(r,m,e)=>{
 							alert("업로드 실패 다시시도하세요!");

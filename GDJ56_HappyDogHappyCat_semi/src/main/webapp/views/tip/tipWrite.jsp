@@ -12,17 +12,13 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
 
 <section id="container1">
   <form
-    action="<%=request.getContextPath() %>/vol/volWriteEnd.do"
+    action="<%=request.getContextPath() %>/tip/tipWriteEnd.do"
     method="post"
     enctype="multipart/form-data"
   >
-    <%if(loginMember!=null){ %>
-    <input
-      type="hidden"
-      name="memberNo"
-      value="<%=loginMember.getMemberNo()%>"
-    />
-    <%} %>
+  	<%if(loginMember!=null){ %>
+		<input type="hidden" name="memberNo" value="<%=loginMember.getMemberNo()%>">
+	<%} %>
     <div class="board_wrap">
       <div class="board_title">
         <strong style="font-size: 25px">유기 동물 제보</strong>
@@ -112,13 +108,4 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
   </form>
 </section>
 <script src="<%=request.getContextPath() %>/js/tipWrite.js"></script>
-<p style="margin-top:-12px">
-    <em class="link">
-        <a href="javascript:void(0);" onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
-            혹시 주소 결과가 잘못 나오는 경우에는 여기에 제보해주세요.
-        </a>
-    </em>
-</p>
-<div id="map1" style="width:100%;height:350px;"></div>
-
 <%@ include file="/views/common/footer.jsp" %>

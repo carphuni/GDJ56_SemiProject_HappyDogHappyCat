@@ -6,22 +6,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.happy.adopt.model.service.AdoptService;
-import com.happy.member.model.vo.Member;
 
 /**
- * Servlet implementation class AdoptBoardDeleteServlett
+ * Servlet implementation class ReviewCoDeleteServlet
  */
-@WebServlet("/member/mypage/adoptBoardDelete")
-public class AdoptBoardDeleteServlett extends HttpServlet {
+@WebServlet("/adopt/adoptReviewCommentDelete.do")
+public class ReviewCoDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdoptBoardDeleteServlett() {
+    public ReviewCoDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,31 +28,21 @@ public class AdoptBoardDeleteServlett extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int adBoardNo=Integer.parseInt(request.getParameter("adBoardNo"));
-		//System.out.println(adBoardNo);
 
-		HttpSession session = request.getSession();
-	    Member m=(Member)session.getAttribute("loginMember");
-		int result = new AdoptService().adoptBoardDelete(adBoardNo);
+		int coNo=Integer.parseInt(request.getParameter("coNo"));
 		
-		String msg="",loc="";
-		if(result>0) {
-			msg="삭제 성공";
-			if(m.getMemberId().equals("admin")) {
-				loc="/admin/adoptformmain.do";
-			}else {
-				loc="/member/mypage/adoptboardList.do";
-			}
-			
-		}else {
-			msg="삭제 실패";
-			loc="/member/mypage/adoptboard.do?adtBoardNo="+adBoardNo;
-		}
+		//System.out.println(coNo);
 		
-		request.setAttribute("msg", msg);
-		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		int result=new AdoptService().deleteComment(coNo);
 		
+		String msg="";
+			 if(result>0) {
+				 msg="댓글 삭제 성공";
+			 }else {
+				 msg="댓글 삭제 실패";
+				}
+		 
+		 response.getWriter().append(msg);
 	}
 
 	/**
