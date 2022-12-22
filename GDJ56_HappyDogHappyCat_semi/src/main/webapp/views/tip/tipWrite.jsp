@@ -64,6 +64,12 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
             ></textarea>
           </div>
         </div>
+        <div style="font-size: 17px">
+          <b>* 발견한 장소</b>
+          <div id="map" style="width:350px;height:350px;"></div>
+          <input type="hidden" name="lat">
+          <input type="hidden" name="lon">
+        </div>
 
         <div class="file2" style="font-size: 17px">
           <b>* 사진첨부</b>
@@ -76,12 +82,6 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
           />
         </div>
         <div id="att_zone" data-placeholder=""></div>
-        <div style="font-size: 17px">
-          <b>* 발견한 장소</b>
-          <div id="map" style="width:350px;height:350px;"></div>
-          <input type="hidden" name="lat">
-          <input type="hidden" name="lon">
-        </div>
         
       </div>
 

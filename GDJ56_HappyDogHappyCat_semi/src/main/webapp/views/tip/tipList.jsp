@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
+<%@ page import="com.happy.tip.model.vo.*" %>
+<%@ page import="java.util.List" %>
+<% List<TipBoard> tb=(List<TipBoard>)request.getAttribute("tipBoardList");%>
+<% List<TipPhoto> tp=(List<TipPhoto>)request.getAttribute("tipPhoto");%>
 <div
   id="imgs"
   style="
@@ -46,230 +50,62 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
 	        <button class="btn btn-dh">실종</button>
 	        <button class="btn btn-dh">완료</button>
 	      </div>
-	        <button class="btn btn-dh" onclick="location.assign('<%=request.getContextPath()%>/tip/tipWrite.do');">글쓰기</button>
+	        <button class="btn btn-dh" onclick="tipWrite(<%=loginMember==null?0:1%>);">글쓰기</button>
       </div>
-      <div id="cardRow">
-        <div id="card-content" class="card">
-          <img
-            src="<%=request.getContextPath() %>/images/main/sign01.jpg"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <div id="card-title">
-              <p class="card-catagory text-warning col-3" style="">[목격]</p>
-              <p class="card-text">유기견 제보합니당 유기견 제보합니당</p>
-            </div>
-            <div>이동훈</div>
-            <div>서울시 금천구 독산동</div>
-            <div id="card-date">2022-08-19</div>
-            <div id="card-heart">
-              <div class="fs-6">
-                <img
-                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-                /><span>1</span>
-              </div>
-              <div class="ms-auto">
-                <span class="fs-7">조회수</span><span class="">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div id="cardRow" style="flex-wrap:wrap;">
+      	<%for(int i=0;i<tb.size();i++){ %>
+	        <div id="card-content" class="card">
+	          <img
+	            src="
+	            	<%for(int j=0;j<tp.size();j++){ %>
+		            	<%if(tb.get(i).getTipBoardNo()==tp.get(j).getTipBoardNo()){ %>
+		            		<%=request.getContextPath() %>/upload/tip/<%=tp.get(j).getTipPhotoRename() %>
+		            	<%break;
+		            	}%>
+	            	<%} %>
+	            "
+	            class="card-img-top"
+	            alt="..."
+	          />
+	          <div class="card-body">
+	            <div id="card-title">
+	              <p class="card-catagory col-3 
+	              	<%if(tb.get(i).getTipCategory().equals("목격")){%>
+	              		text-warning
+	              	<%}else if(tb.get(i).getTipCategory().equals("보호")){%>
+	              		text-primary
+	              	<%}else if(tb.get(i).getTipCategory().equals("실종")){%>
+	              		text-danger
+	              	<%}%>
+	              ">
+	              [<%=tb.get(i).getTipCategory() %>]
+	              </p>
+	              <p class="card-text"><%=tb.get(i).getTipContents() %></p>
+	            </div>
+	            <div><%tb.get(i).getMemberId() %></div>
+	            <div>서울시 금천구 독산동</div>
+	            <div id="card-date">2022-08-19</div>
+	            <div id="card-heart">
+	              <div class="fs-6">
+	                <img
+	                  src="<%=request.getContextPath() %>/images/main/heart.svg"
+	                /><span>1</span>
+	              </div>
+	              <div class="ms-auto">
+	                <span class="fs-7">조회수</span><span class="">2</span>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+        <%} %>
 
-        <div id="card-content" class="card">
-          <img
-            src="<%=request.getContextPath() %>/images/main/sign01.jpg"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <div id="card-title">
-              <p class="card-catagory text-warning col-3" style="">[목격]</p>
-              <p class="card-text">유기견 제보합니당 유기견 제보합니당</p>
-            </div>
-            <div>이동훈</div>
-            <div>서울시 금천구 독산동</div>
-            <div id="card-date">2022-08-19</div>
-            <div id="card-heart">
-              <div class="fs-6">
-                <img
-                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-                /><span>1</span>
-              </div>
-              <div class="ms-auto">
-                <span class="fs-7">조회수</span><span class="">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="card-content" class="card">
-          <img
-            src="<%=request.getContextPath() %>/images/main/sign01.jpg"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <div id="card-title">
-              <p class="card-catagory text-warning col-3" style="">[목격]</p>
-              <p class="card-text">유기견 제보합니당 유기견 제보합니당</p>
-            </div>
-            <div>이동훈</div>
-            <div>서울시 금천구 독산동</div>
-            <div id="card-date">2022-08-19</div>
-            <div id="card-heart">
-              <div class="fs-6">
-                <img
-                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-                /><span>1</span>
-              </div>
-              <div class="ms-auto">
-                <span class="fs-7">조회수</span><span class="">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="card-content" class="card">
-          <img
-            src="<%=request.getContextPath() %>/images/main/sign01.jpg"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <div id="card-title">
-              <p class="card-catagory text-warning col-3" style="">[목격]</p>
-              <p class="card-text">유기견 제보합니당 유기견 제보합니당</p>
-            </div>
-            <div>이동훈</div>
-            <div>서울시 금천구 독산동</div>
-            <div id="card-date">2022-08-19</div>
-            <div id="card-heart">
-              <div class="fs-6">
-                <img
-                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-                /><span>1</span>
-              </div>
-              <div class="ms-auto">
-                <span class="fs-7">조회수</span><span class="">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
+       
       </div>
-
-      <div id="cardRow">
-        <div id="card-content" class="card">
-          <img
-            src="<%=request.getContextPath() %>/images/main/sign01.jpg"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <div id="card-title">
-              <p class="card-catagory text-warning col-3" style="">[목격]</p>
-              <p class="card-text">유기견 제보합니당 유기견 제보합니당</p>
-            </div>
-            <div>이동훈</div>
-            <div>서울시 금천구 독산동</div>
-            <div id="card-date">2022-08-19</div>
-            <div id="card-heart">
-              <div class="fs-6">
-                <img
-                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-                /><span>1</span>
-              </div>
-              <div class="ms-auto">
-                <span class="fs-7">조회수</span><span class="">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="card-content" class="card">
-          <img
-            src="<%=request.getContextPath() %>/images/main/sign01.jpg"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <div id="card-title">
-              <p class="card-catagory text-warning col-3" style="">[목격]</p>
-              <p class="card-text">유기견 제보합니당 유기견 제보합니당</p>
-            </div>
-            <div>이동훈</div>
-            <div>서울시 금천구 독산동</div>
-            <div id="card-date">2022-08-19</div>
-            <div id="card-heart">
-              <div class="fs-6">
-                <img
-                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-                /><span>1</span>
-              </div>
-              <div class="ms-auto">
-                <span class="fs-7">조회수</span><span class="">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="card-content" class="card">
-          <img
-            src="<%=request.getContextPath() %>/images/main/sign01.jpg"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <div id="card-title">
-              <p class="card-catagory text-warning col-3" style="">[목격]</p>
-              <p class="card-text">유기견 제보합니당 유기견 제보합니당</p>
-            </div>
-            <div>이동훈</div>
-            <div>서울시 금천구 독산동</div>
-            <div id="card-date">2022-08-19</div>
-            <div id="card-heart">
-              <div class="fs-6">
-                <img
-                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-                /><span>1</span>
-              </div>
-              <div class="ms-auto">
-                <span class="fs-7">조회수</span><span class="">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="card-content" class="card">
-          <img
-            src="<%=request.getContextPath() %>/images/main/sign01.jpg"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <div id="card-title">
-              <p class="card-catagory text-warning col-3" style="">[목격]</p>
-              <p class="card-text">유기견 제보합니당 유기견 제보합니당</p>
-            </div>
-            <div>이동훈</div>
-            <div>서울시 금천구 독산동</div>
-            <div id="card-date">2022-08-19</div>
-            <div id="card-heart">
-              <div class="fs-6">
-                <img
-                  src="<%=request.getContextPath() %>/images/main/heart.svg"
-                /><span>1</span>
-              </div>
-              <div class="ms-auto">
-                <span class="fs-7">조회수</span><span class="">2</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="pageBar"><%=request.getAttribute("pageBar") %></div>
     </article>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
 
   </div>
 </section>
+
+<script src="<%=request.getContextPath()%>/js/tipList.js"></script>
 <%@ include file="/views/common/footer.jsp" %>

@@ -211,9 +211,17 @@ $("#saveBtn").click(e=>{
 	
 	form.append("content",summernoteContent);
 	form.append("memberNo",memberNo);
+	
+	console.log("확인"+$("input[name='tipTitle']").val());
 	 	
-	 if(files.length!=0||files.length<=3){
-	 	$.ajax({
+	 if($.trim($("input[name='tipTitle']").val())==""){
+		alert("제목을 입력해주세요");
+	 }else if(files.length==0||files.length>3){
+		alert("사진을 1장 이상 3장 이하 첨부해주세요.");
+	 }else if($("input[name='lat']").val()==""){
+		alert("지도에 발견장소를 클릭해 주세요");
+	 }else{
+		$.ajax({
 		url :"/GDJ56_HappyDogHappyCat_semi/tip/tipWriteEnd.do",
 		data : form,
 		type : "post",
@@ -224,9 +232,7 @@ $("#saveBtn").click(e=>{
 			location.replace('/GDJ56_HappyDogHappyCat_semi'+e.loc);
 			}
 		 });
-	  }else{
-		alert("사진을 1장 이상 3장 이하 첨부해주세요.")
-	  }
+	 }
 			 
 });
 

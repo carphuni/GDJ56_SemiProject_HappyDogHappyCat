@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -25,6 +26,31 @@ private Properties sql= new Properties();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private TipBoard getTipBoard(ResultSet rs) throws SQLException{
+		return TipBoard.builder()
+				.tipBoardNo(rs.getInt("tip_board_no"))
+				.memberNo(rs.getInt("member_no"))
+				.tipCategory(rs.getString("tip_category"))
+				.tipContents(rs.getString("tip_contents"))
+				.tipLat(rs.getDouble("tip_lat"))
+				.tipLon(rs.getDouble("tip_lon"))
+				.tipResultYn(rs.getString("tip_result_yn").charAt(0))
+				.tipTitle(rs.getString("tip_title"))
+				.tipViews(rs.getInt("tip_views"))
+				.tipWriteDate(rs.getDate("tip_write_date"))
+				.build();
+	}
+	
+	private TipPhoto getTipPhoto(ResultSet rs) throws SQLException{
+		return TipPhoto.builder()
+				.tipPhotoNo(rs.getInt("tip_photo_no"))
+				.tipBoardNo(rs.getInt("tip_board_no"))
+				.tipPhotoOriname(rs.getString("tip_photo_orname"))
+				.tipPhotoRename(rs.getString("tip_photo_rename"))
+				.build();
+		
 	}
 	
 	public int insertTipBoard(Connection conn, TipBoard tb) {
@@ -71,7 +97,7 @@ private Properties sql= new Properties();
 		int result=0;
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("insertTipPhoto"));
-			pstmt.setInt(1, tp.getTipBoardNo());
+			pstmt.setInt(1, tbNo);
 			pstmt.setString(2, tp.getTipPhotoOriname());
 			pstmt.setString(3, tp.getTipPhotoRename());
 			result=pstmt.executeUpdate();
@@ -81,6 +107,67 @@ private Properties sql= new Properties();
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public List<TipBoard> selectTipBoardList(Connection conn, int cPage, int numPerpage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TipBoard> tipBoardList=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectTipBoardList"));
+			pstmt.setInt(1, (cPage-1)*numPerpage+1);
+			pstmt.setInt(2, cPage*numPerpage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				TipBoard tb=getTipBoard(rs);
+				tb.setMemberId("member_id");
+				tipBoardList.add(tb);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return tipBoardList;
+	}
+	
+	public int tipBoardListCount(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int tipBoardListCount=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("tipBoardListCount"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				tipBoardListCount=rs.getInt("cnt");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return tipBoardListCount;
+	}
+	
+	public List<TipPhoto> selectTipPhoto(Connection conn){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TipPhoto> photos=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectTipPhoto"));
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				photos.add(getTipPhoto(rs));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return photos;
 	}
 	
 	

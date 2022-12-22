@@ -34,5 +34,25 @@ public class TipService {
 			return result2;
 		}
 		
+		public List<TipBoard> selectTipBoardList(int cPage, int numPerpage){
+			Connection conn=getConnection();
+			List<TipBoard> tipBoardList = dao.selectTipBoardList(conn, cPage, numPerpage);
+			close(conn);
+			return tipBoardList;
+		}
+		
+		public int tipBoardListCount() {
+			Connection conn=getConnection();
+			int tipBoardListCount = dao.tipBoardListCount(conn);
+			close(conn);
+			return tipBoardListCount;
+		}
+		
+		public List<TipPhoto> selectTipPhoto(){
+			Connection conn=getConnection();
+			List<TipPhoto> photos = dao.selectTipPhoto(conn);
+			close(conn);
+			return photos;
+		}
 		
 }

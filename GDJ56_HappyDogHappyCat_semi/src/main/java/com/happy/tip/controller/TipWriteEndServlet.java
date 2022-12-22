@@ -76,8 +76,8 @@ public class TipWriteEndServlet extends HttpServlet {
 		String category=mr.getParameter("category");//카테고리
 		String title= mr.getParameter("param0");//제목
 		String contents = mr.getParameter("content");//내용
-		double lat = Double.parseDouble(mr.getParameter("param7"));//위도
-		double lon = Double.parseDouble(mr.getParameter("param8"));//경도
+		double lat = Double.parseDouble(mr.getParameter("param3"));//위도
+		double lon = Double.parseDouble(mr.getParameter("param4"));//경도
 		TipBoard tb= TipBoard.builder()
 					.memberNo(memberNo)
 					.tipCategory(category)
@@ -89,6 +89,7 @@ public class TipWriteEndServlet extends HttpServlet {
 	
 		System.out.println(tb);
 		int result= new TipService().tipWriteEnd(tb,fileList);
+		
 		
 		
 		String msg, loc;

@@ -18,4 +18,5 @@ public class TipBoard {
 	private char tipResultYn;
 	private double tipLat;
 	private double tipLon;
+	private String memberId;
 }	
