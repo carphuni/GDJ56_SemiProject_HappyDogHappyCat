@@ -2,7 +2,6 @@ package com.happy.admission.dao;
 
 import static com.happy.common.JDBCTemplate.close;
 
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +15,6 @@ import java.util.Properties;
 import com.happy.admission.vo.AdmissionForm;
 import com.happy.admission.vo.AnimalPhoto;
 import com.happy.animal.model.vo.Animal;
-import com.happy.qa.vo.QaPhoto;
 
 
 
@@ -155,6 +153,22 @@ public class AdmissionDao {
 				.build();
 
 	}
+	
+	private AdmissionForm getAdmission2(ResultSet rs) throws SQLException {
+		return AdmissionForm.builder()
+				.admissionNo(rs.getInt("adm_board_no"))
+				.memberNo(rs.getInt("member_no"))
+				.animalNo(rs.getInt("ani_no"))
+				.writeDate(rs.getDate("adm_write_date"))
+				.hopeDate(rs.getDate("adm_hope_date"))
+				.admissionYN(rs.getString("adm_yn").charAt(0))
+				.admissionDate(rs.getDate("adm_date"))
+				.admissionDeleteYN(rs.getString("adm_del_yn").charAt(0))
+				.build();
+
+	}
+	
+	
 
 	private Animal getAnimal(ResultSet rs) throws SQLException{
 		return Animal.builder()
@@ -274,13 +288,78 @@ public class AdmissionDao {
 			pstmt=conn.prepareStatement(sql.getProperty("selectAdmission"));
 			pstmt.setInt(1, admissionNo);
 			rs=pstmt.executeQuery();
-			if(rs.next()) af=getAdmission(rs);
+			if(rs.next()) af=getAdmission2(rs);
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rs);
 			close(pstmt);
 		}return af;
+	}
+
+	public Animal admissionMyPageView(Connection conn, int admissionNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Animal a=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("admissionMyPageView"));
+			pstmt.setInt(1, admissionNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				a=getAnimal(rs);
+				a.setAniNo(rs.getInt("ani_no"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return a;
+	}
+
+	public int deleteAnimal(Connection conn, int aniNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteAnimal"));
+			pstmt.setInt(1,aniNo);
+			result=pstmt.executeUpdate();	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+
+	public int deleteAnimalPhoto(Connection conn, int aniNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteAnimalPhoto"));
+			pstmt.setInt(1,aniNo);
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+
+	public int deleteAdmission(Connection conn,int admissionNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteAf"));
+			pstmt.setInt(1,admissionNo);
+			result=pstmt.executeUpdate();	
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package com.happy.qa.controller;
+package com.happy.adopt.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.happy.qa.service.QaService;
+import com.happy.adopt.model.service.AdoptService;
 
 /**
- * Servlet implementation class QaDeleteServlet
+ * Servlet implementation class ReviewCoDeleteServlet
  */
-@WebServlet("/qa/deleteQa.do")
-public class QaDeleteServlet extends HttpServlet {
+@WebServlet("/adopt/adoptReviewCommentDelete.do")
+public class ReviewCoDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QaDeleteServlet() {
+    public ReviewCoDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,30 +28,21 @@ public class QaDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int QaNo=Integer.parseInt(request.getParameter("qaBoardNo"));
+
+		int coNo=Integer.parseInt(request.getParameter("coNo"));
 		
-		int result=new QaService().deleteQa(QaNo);
+		//System.out.println(coNo);
 		
-		System.out.println("삭제결과"+result);
+		int result=new AdoptService().deleteComment(coNo);
 		
-		String msg="",loc="";
-		if(result==0) {
-			
-			msg="Qa 삭제 실패,다시 등록해주세요!";
-			loc="/qa/deleteQa.do";
-		}else {
-			//동물저장 성공시
-			msg="Qa 삭제 완료!:)";
-			loc="/qa/myPageList.do";
-		}
-	      request.setAttribute("msg", msg);
-	      request.setAttribute("loc", loc);
-	      request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
-		
-		
-		
-		
-		
+		String msg="";
+			 if(result>0) {
+				 msg="댓글 삭제 성공";
+			 }else {
+				 msg="댓글 삭제 실패";
+				}
+		 
+		 response.getWriter().append(msg);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package com.happy.admission.controller;
+package com.happy.qa.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,20 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.happy.admission.service.AdmissionService;
-import com.happy.admission.vo.AdmissionForm;
 import com.happy.member.model.vo.Member;
+import com.happy.qa.service.QaService;
+import com.happy.qa.vo.QaForm;
 
 /**
- * Servlet implementation class AdmissionMypageListServlet
+ * Servlet implementation class QaMyPageListServlet
  */
-@WebServlet("/admission/mypageList.do")
-public class AdmissionMypageListServlet extends HttpServlet {
+@WebServlet("/qa/myPageList.do")
+public class QaMyPageListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdmissionMypageListServlet() {
+    public QaMyPageListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,14 +34,12 @@ public class AdmissionMypageListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		HttpSession session=request.getSession();
 		Member m=(Member)session.getAttribute("loginMember");
 		
 		int memberNo=m.getMemberNo();
 		
-		//Admission테이블에 있는 전체데이터를 가져와 
-		//화면에 전달하는 기능 
+		//페이징
 		int cPage;
 		int numPerpage;
 		try {
@@ -78,18 +77,16 @@ public class AdmissionMypageListServlet extends HttpServlet {
 			}else {
 				pageBar+="<a href='"+request.getRequestURL()+"?cPage="+(pageNo)+"'>[다음]</a>";
 			}
-		
 			
+		List<QaForm> list=new QaService().selectMyQa(memberNo,cPage, numPerpage);
 		
+		request.setAttribute("qas", list);
 		
-		List<AdmissionForm> list=new AdmissionService().selectMyAdmission( memberNo,cPage, numPerpage);
-		
-		request.setAttribute("admissions", list);
 		System.out.println(list);
 		
 		request.setAttribute("pageBar", pageBar);
 		
-		request.getRequestDispatcher("/views/admission/admissionMypageList.jsp")
+		request.getRequestDispatcher("/views/qa/qaMypageList.jsp")
 		.forward(request, response);
 	}
 
