@@ -69,7 +69,7 @@ com.happy.qa.vo.QaForm
                      <p>관리자:&nbsp;<%=q1.getQaCommentWriteDate() %><br> </p>
                      <%if(loginMember!=null&&loginMember.getMemberId().equals("admin")) {%>
                      <button style="float:right;"
-                     onclick="location.assign('<%=request.getContextPath()%>/qa/commentDelete.do')">X</button>
+                     onclick="location.assign('<%=request.getContextPath()%>/qa/commentDelete.do?commentNo=<%=q1.getQaCommentNo()%>');">X</button>
                      <%} %>
                     <p><%=q1.getQaCommentWriteContent() %></p>
         </div>

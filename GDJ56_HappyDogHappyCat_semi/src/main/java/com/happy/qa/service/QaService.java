@@ -190,6 +190,13 @@ public class QaService {
 		return result;
 	}
 
+	public int deleteComment(int commentNo) {
+		Connection conn=getConnection();
+		int result=dao.deleteComment(conn,commentNo);
+		close(conn);
+		return result;
+	}
+
 	
 	
 	
