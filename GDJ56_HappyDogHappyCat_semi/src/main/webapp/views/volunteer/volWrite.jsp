@@ -318,7 +318,10 @@
 		  });
 		 
 		  
-
+		  const dele = () =>{
+			  $("#att_zone").empty();
+		 }
+		  
 		  //저장버튼 클릭
 		  $(document).on('click', '#saveBtn', function () {
 		      saveContent();
