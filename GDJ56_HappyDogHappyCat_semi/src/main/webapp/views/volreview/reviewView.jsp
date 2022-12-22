@@ -72,7 +72,7 @@
 		            		<p id="con2"><%=comments.get(i).getVntCommentContents() %></p>
 		            		<div style="text-align:right;vertical-align: top;">
 		            		<%if((loginMember!=null&&loginMember.getMemberId().equals(comments.get(i).getMemberId()))||(loginMember!=null&&loginMember.getMemberId().equals("admin"))){ %>
-		        			<button style="margin-left:83%;margin-bottom:-30%;margin-top:-60%; margin-right:0%" class="btn-reply" value="">수정</button>
+		        			<button style="margin-left:83%;margin-bottom:-30%;margin-top:-60%; margin-right:0%" class="btn-reply" value="<%=comments.get(i).getVntCommentNo()%>">수정</button>
 		        			<input type="hidden" name="comNo" value="<%=comments.get(i).getVntCommentNo()%>">
    							<button style=":right;margin-top: -7%; class="btn-delete" onclick="location.replace('<%=request.getContextPath()%>/deletecomment.do?commentNo=<%=comments.get(i).getVntCommentNo()%>&&boardNo=<%=comments.get(i).getVntBoardNo()%>')">삭제</button>
 		        			 <%}%> 
@@ -208,7 +208,8 @@
 $(".btn-reply").click(e=>{
 	
 	const form=$("#comment_lists>form").clone();
-	form.find("button").attr("onclick", "test();");
+	console.log($(e.target).val());
+	form.find("button").attr("onclick", "test(event);").attr("value",$(e.target).val());
 	/* form.find("button").removeAttr("Id").removeAttr("Class").addClass("insert2"); */
 	form.find("textarea").removeAttr("Id").addClass("textarea5");
 	form.insertAfter($(e.target).parents("div#comment_lists>div>div")).slideDown(800);
@@ -218,11 +219,11 @@ $(".btn-reply").click(e=>{
 
 }) 
 
-const test = () => {
+const test = (e) => {
 			
 			const reply=$(".textarea5").val();
 			console.log(reply);
-			const commentNo = $("input[name=comNo]").val();
+			const commentNo = $(e.target).val();
 			console.log(commentNo);
 			$.ajax({
 				url:"<%=request.getContextPath()%>/updatecomment.do",

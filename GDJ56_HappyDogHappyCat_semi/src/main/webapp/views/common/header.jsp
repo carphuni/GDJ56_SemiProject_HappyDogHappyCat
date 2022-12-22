@@ -147,7 +147,7 @@ pageEncoding="UTF-8"%>
           <a
             class="nav-link"
             data-bs-toggle=""
-            href="#"
+            href="<%=request.getContextPath()%>/volview.do?memberNo=<%=loginMember!=null?loginMember.getMemberNo():"" %>"
             role="button"
             aria-expanded="false"
             >자원봉사&후원</a
@@ -162,7 +162,7 @@ pageEncoding="UTF-8"%>
           <a
             class="nav-link"
             data-bs-toggle=""
-            href="#"
+            href="<%=request.getContextPath()%>/hospital.do"
             role="button"
             aria-expanded="false"
             >동물병원찾기</a
