@@ -252,6 +252,7 @@
           'https://ifh.cc/g/DLcybp.jpg',
         link: {
         	webUrl: 'https://gd1class.iptime.org:8844/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
+        	mobileWebUrl:'https://gd1class.iptime.org:8844/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
         },
       },
       /* https://gd1class.iptime.org:8844/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=169 */
