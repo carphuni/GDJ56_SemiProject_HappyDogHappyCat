@@ -251,7 +251,7 @@
         imageUrl:
           'https://ifh.cc/g/DLcybp.jpg',
         link: {
-          webUrl: '웹 링크',
+        	webUrl: 'http://gd1class.iptime.org:9999/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
         },
       },
       buttons: [
