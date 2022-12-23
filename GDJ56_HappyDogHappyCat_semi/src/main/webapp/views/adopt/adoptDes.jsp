@@ -251,17 +251,18 @@
         imageUrl:
           'https://ifh.cc/g/DLcybp.jpg',
         link: {
-        	webUrl: 'http://gd1class.iptime.org:9999/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
+        	webUrl: 'https://gd1class.iptime.org:8844/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
         },
       },
+      /* https://gd1class.iptime.org:8844/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=169 */
       buttons: [
         {
           title: '자세히보기',  
           link: {
             /* webUrl: 'http://localhost:9090/happy/views/adopt/adoptDes.jsp', */
         	  <%-- webUrl: 'http://localhost:9090/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>', --%>
-        	  webUrl: 'http://gd1class.iptime.org:9999/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
-        	  mobileWebUrl:'http://gd1class.iptime.org:9999/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
+        	  webUrl: 'https://gd1class.iptime.org:8844/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
+        	  mobileWebUrl:'https://gd1class.iptime.org:8844/GDJ56_HappyDogHappyCat_semi/adopt/adoptdes.do?aniNo=<%=ani.getAniNo()%>',
           },
         },
       ],
