@@ -5,9 +5,9 @@
  <% AdtBorad ab= (AdtBorad)request.getAttribute("ab"); %>
 <%--  <% console.log(request.getAttribute("hopeDateArr")); %> --%> 
 
-<link type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"rel="stylesheet">
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link type="text/css" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"rel="stylesheet">
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
