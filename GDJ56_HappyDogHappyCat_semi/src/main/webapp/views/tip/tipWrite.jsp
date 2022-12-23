@@ -5,10 +5,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
   type="text/css"
   href="<%=request.getContextPath()%>/css/volWrite.css"
 />
-<script src="/js/summernote/summernote-lite.js"></script>
-<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
 
-<link rel="stylesheet" href="/css/summernote/summernote-lite.css" />
 
 <section id="container1">
   <form
@@ -36,12 +33,11 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
                   class="form-select form-select-sm"
                   aria-label=".form-select-sm example"
                   required
+                  name="category"
                 >
-                  <option selected>선택</option>
-                  <option value="목격">목격</option>
-                  <option value="보호">보호</option>
-                  <option value="실종">실종</option>
-                  <option value="완료">완료</option>
+                  <option selecte>목격</option>
+                  <option>보호</option>
+                  <option>실종</option>
                 </select>
               </dd>
             </dl>
@@ -51,7 +47,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
                 <input
                   type="text"
                   placeholder="40자 이하로 입력해주세요."
-                  name="volTitle"
+                  name="tipTitle"
                   required
                 />
               </dd>
@@ -68,6 +64,12 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
             ></textarea>
           </div>
         </div>
+        <div style="font-size: 17px">
+          <b>* 발견한 장소</b>
+          <div id="map" style="width:350px;height:350px;"></div>
+          <input type="hidden" name="lat">
+          <input type="hidden" name="lon">
+        </div>
 
         <div class="file2" style="font-size: 17px">
           <b>* 사진첨부</b>
@@ -80,12 +82,6 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
           />
         </div>
         <div id="att_zone" data-placeholder=""></div>
-        <div style="font-size: 17px">
-          <b>* 발견한 장소</b>
-          <div id="map" style="width:350px;height:350px;"></div>
-          <input type="hidden" name="lat">
-          <input type="hidden" name="lon">
-        </div>
         
       </div>
 
@@ -101,7 +97,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
           type="button"
           style="font-size: 17px"
           value="취소"
-          onclick="location.replace('<%=request.getContextPath()%>/volview.do')"
+          onclick="location.replace('<%=request.getContextPath()%>/tip/tipList.do')"
         />
       </div>
     </div>

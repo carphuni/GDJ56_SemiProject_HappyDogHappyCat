@@ -10,56 +10,25 @@ $(() => {
 
     $("#summernote").summernote(
       "code",
-      "<br><div>1.발견지역:</div><div>2.품종:</div><div>3.성별:</div><div>4.특이사항</div><div>5.보호자전화번호:</div>"
+      "<br><div>1.발견지역 : </div><div>2.품종 : </div><div>3.성별 : </div><div>4.특이사항 : </div><div>5.보호자전화번호 : </div>"
     );
   });
   
   var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-  mapOption = { 
-      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-      level: 7 // 지도의 확대 레벨 
-  }; 
+    mapOption = { 
+        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-var marker; //마커 
-
-//HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-if (navigator.geolocation) {
-  
-  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-  navigator.geolocation.getCurrentPosition(function(position) {
-      
-      var lat = position.coords.latitude, // 위도
-          lon = position.coords.longitude; // 경도
-      
-      var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-      
-      // 마커와 인포윈도우를 표시합니다
-      displayMarker(locPosition);
-          
-    });
-  
-} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-  
-  var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-      
-  displayMarker(locPosition);
-}
-
-//지도에 마커와 인포윈도우를 표시하는 함수입니다
-function displayMarker(locPosition) {
-
-  // 마커를 생성합니다
-  	  marker = new kakao.maps.Marker({  
-      map: map, 
-      position: locPosition
-  }); 
-  
-  
-  // 지도 중심좌표를 접속위치로 변경합니다
-  map.setCenter(locPosition);      
-}    
+// 지도를 클릭한 위치에 표출할 마커입니다
+var marker = new kakao.maps.Marker({ 
+    // 지도 중심좌표에 마커를 생성합니다 
+    position: map.getCenter() 
+}); 
+// 지도에 마커를 표시합니다
+marker.setMap(map)
 
 //지도에 클릭 이벤트를 등록합니다
 //지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
@@ -183,17 +152,23 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 
 $("#saveBtn").click(e=>{
 	//등록버튼 클릭 시
-	const files=$("input[name=upload2]")[0].files;//첨부파일 데이터
-	console.log("파일"+$("input[name=upload2]")[0].files);
-	let inputs=$("form input");//input 데이터
-	console.log("인풋데이터"+inputs);
-	let summernoteContent = $('#summernote').summernote('code');//섬머노트 내용
 	let memberNo = $("input[name=memberNo]").val();//회원 번호
+	console.log(memberNo);
+	let category=$("form select").val();//카테고리
+	console.log(category);
+	let inputs=$("form input").not("input[class*=note]").not("input[name=memberNo]");;//input 데이터
+	let summernoteContent = $('#summernote').summernote('code');//섬머노트 내용
+	console.log(summernoteContent);
+	const files=$("input[name=upload2]")[0].files;//첨부파일 데이터
 	
 	//폼데이터 형태에 데이터 넣기
 	let form=new FormData();
+	
+	form.append("category",category);
+	
 	inputs.each((i,v)=>{
-		console.log($(v).attr("name"),$(v).val());
+		console.dir(v);
+		console.log("param"+i+$(v).attr("name"),$(v).val());
 		form.append("param"+i,$(v).val());
 	});
 	
@@ -205,27 +180,28 @@ $("#saveBtn").click(e=>{
 	
 	form.append("content",summernoteContent);
 	form.append("memberNo",memberNo);
+	
+	console.log("확인"+$("input[name='tipTitle']").val());
 	 	
-	 if(files.length!=0){
-	 	$.ajax({
+	 if($.trim($("input[name='tipTitle']").val())==""){
+		alert("제목을 입력해주세요");
+	 }else if(files.length==0||files.length>3){
+		alert("사진을 1장 이상 3장 이하 첨부해주세요.");
+	 }else if($("input[name='lat']").val()==""){
+		alert("지도에 발견장소를 클릭해 주세요");
+	 }else{
+		$.ajax({
 		url :"/GDJ56_HappyDogHappyCat_semi/tip/tipWriteEnd.do",
 		data : form,
 		type : "post",
 		contentType:false,
 		processData:false,
 		success : e=>{
-			/* console.log(e.msg);	 */
-			/* console.log(e.loc); */
-			var loc2 = e.loc;
 			alert(e.msg);
-			location.replace('/GDJ56_HappyDogHappyCat_semi'+loc2);
-			//alert("파일업로드 성공");
-			//$("#upload2").val("");
-			//},error:(r,m,e)=>{
-			//	alert("업로드 실패 다시시도하세요!");
+			location.replace('/GDJ56_HappyDogHappyCat_semi'+e.loc);
 			}
 		 });
-	  }else{alert("사진을 1장 이상 첨부해주세요.")}
+	 }
 			 
 });
 

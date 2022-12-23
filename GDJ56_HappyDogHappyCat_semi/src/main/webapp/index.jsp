@@ -77,7 +77,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
         <!-- Menu -->
         <article id="menu">
           <div class="dh-menu-image">
-            <a href=""
+            <a href="<%=request.getContextPath()%>/tip/tipList.do"
               ><img
                 src="<%=request.getContextPath() %>/images/main/menu01-1.jpg"
                 class="img-thumbnail"
@@ -89,7 +89,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
             </a>
           </div>
           <div class="dh-menu-image">
-            <a href=""
+            <a href="<%=request.getContextPath()%>/admission/admissionList.do"
               ><img
                 src="<%=request.getContextPath() %>/images/main/menu02-1.jpg"
                 class="img-thumbnail"
@@ -113,7 +113,7 @@ pageEncoding="UTF-8"%> <%@ include file="/views/common/header.jsp" %>
             </a>
           </div>
           <div class="dh-menu-image">
-            <a href=
+            <a href=""
               ><img
                 src="<%=request.getContextPath() %>/images/main/menu04-1.jpg"
                 class="img-thumbnail"
