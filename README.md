@@ -17,7 +17,7 @@
 
 ## **📋 포트폴리오 개요**
 
-<img width="100%" alt="마이 페이지" src="./ReadMeImg/마이 페이지.png" />
+<img width="100%" alt="메인 페이지" src="./ReadMeImg/메인 페이지.png" />
 
 > <br>
 >
@@ -73,10 +73,6 @@
 
 - 로그인 성공 시 세션에 정보 저장, 입력된 정보가 없다면 로그인 실패
 - 로그아웃 시 세션 삭제
-
-<br>
-
-<img width="100%" alt="맛집 상세페이지" src="./ReadMeImg/맛집 상세페이지.gif" />
 
 <br>
 
